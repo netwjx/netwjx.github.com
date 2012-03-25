@@ -14,7 +14,7 @@ blog是生成静态页, 配合github-pages可以使用默认的2级域名或者�
 
 
 安装前提
-========
+----------------
 
 Octopress使用ruby编写, 所以需要ruby, Win下使用RubyInstaller
 
@@ -37,8 +37,8 @@ Octopress可以到<https://github.com/imathis/octopress> 下载一份zip包, 如
 前期准备基本完成, 如果没有git而打算使用git看下段
 
 
-没有git, 打算使用git
--------------------
+### 没有git, 打算使用git
+
 
 Win下使用简单的git是TortoiseGit
 
@@ -56,7 +56,7 @@ Win下使用简单的git是TortoiseGit
 
 
 安装Ruby
-=============
+-----------
 
 `rubyinstaller-1.9.3-p125.exe`建议安装到`c:\ruby`, 因为devkit中的默认配置就是这个路径
 
@@ -80,8 +80,8 @@ Win下使用简单的git是TortoiseGit
 这么做可以避免在安装ruby的本地c模块时调用gcc失败的问题, 我遇到的是无法安装RedCloth模块, 可能是devkit里面附带的gcc版本旧, 不支持这个选项吧.
 
 
-修改gem的源服务器地址
---------------------
+### 修改gem的源服务器地址
+
 
 因为神奇的原因gem可能会下载任何东西失败, 修改后可解决这个问题
 
@@ -100,7 +100,7 @@ gem是ruby的包管理程序, 类似debian的apt-get
 
 
 安装Octopress
-=============
+-------------
 
 前面那么多准备都是为了这里, 主要参考http://octopress.org/docs/setup/.
 
@@ -132,8 +132,7 @@ gem是ruby的包管理程序, 类似debian的apt-get
 接下来是设置如何部署, 参考<http://octopress.org/docs/deploying/>, 我这里使用github
 
 
-github上创建代码库
-------------------
+### github上创建代码库
 
 <http://pages.github.com> 上有详细的说明, 我使用的是User Pages, 比如我的用户名是netwjx, 那么创建项目 netwjx.github.com
 
@@ -145,7 +144,7 @@ github上创建代码库
 
 
 设置部署github
-================
+--------------
 
 参考<http://octopress.org/docs/deploying/github/> , 命令行
 
@@ -179,7 +178,7 @@ github上创建代码库
 
 
 第一篇blog
-==========
+----------
 
 参考<http://octopress.org/docs/blogging/>
 
@@ -201,7 +200,7 @@ github上创建代码库
 
 
 提交到github
-============
+------------
 
 先把`rake preview`关掉, 命令行
 
@@ -226,8 +225,7 @@ github上创建代码库
 如果Push请确认`Git Sync`时的Remote URL设置的是`origin`, 另外一个`octopress`是Octopress项目的Url, 所以Push会失败, 除非你获得了操作Octopress项目的权限.
 
 
-结构说明
--------------
+### 结构说明
 
 github上的`master`(网站)和`source`(原始文件), 与本地的对应分支/目录是平等的关系, 上面提交到github不能理解为从属关系, 了解git的话这个很容易理解.
 
@@ -237,7 +235,7 @@ github上的`master`(网站)和`source`(原始文件), 与本地的对应分支/
 
 
 还剩下些
-============
+--------
 
 Octopress的文档中github相关都是使用git命令行, 上述的操作在Push时使用的是TortoiseGit,  使用Git for Windows操作github上的代码库以后另起一篇来说.
 
