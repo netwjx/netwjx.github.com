@@ -3,7 +3,7 @@ layout: post
 title: "Octopress 笔记"
 date: 2012-03-18 14:43
 comments: true
-categories: 
+categories: Ruby
 ---
 
 Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.

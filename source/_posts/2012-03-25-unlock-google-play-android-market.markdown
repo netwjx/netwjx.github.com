@@ -3,7 +3,7 @@ layout: post
 title: "Google Play/Android Market 解锁"
 date: 2012-03-25 22:09
 comments: true
-categories: 
+categories: Android
 ---
 
 Android Market刚改名叫Google Play不久,不明白为什么改成这个名字,难道Play后面还有Game?

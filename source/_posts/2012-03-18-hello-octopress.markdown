@@ -3,7 +3,7 @@ layout: post
 title: "Hello Octopress"
 date: 2012-03-18 02:34
 comments: true
-categories: 
+categories: Hello World
 ---
 
 终于折腾起来了
