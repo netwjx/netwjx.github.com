@@ -9,7 +9,7 @@
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="在搜文本换行算法的时候发现了 这个, 问题是 编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。 可能描述的有些不明确, &hellip;">
+  <meta name="description" content="在搜文本换行算法的时候发现了编写一个截取字符串的函数, 问题是 编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,14 +93,17 @@
   </header>
 
 
-  <div class="entry-content"><p>在搜文本换行算法的时候发现了 <a href="http://www.iteye.com/topic/1037773">这个</a>, 问题是</p>
+  <div class="entry-content"><p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
 
-<blockquote><p>编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+<blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
+
+<p>但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
 
 <p>可能描述的有些不明确, 应该这样说</p>
 
-<blockquote><p>编写一个截取字符串的函数, 给定字符串, 编码格式, 这个字符串使用指定编码后的字节数组, 以及需要截取的字节数组最大长度
-要求返回实际需要截取的长度, 不能在解码指定长度字节数组后出现半个字符的现象.</p></blockquote>
+<blockquote><p>编写一个截取字符串的函数, 给定<strong>字符串</strong>, <strong>编码格式</strong>, 使用前2个参数编码之后的<strong>字节数组</strong>, 以及截取<strong>字节数组的最大长度</strong>.</p>
+
+<p>要求返回<strong>实际需要截取的长度</strong>, 不能在解码指定长度字节数组后出现<strong>半个字符</strong>的现象.</p></blockquote>
 
 <p>那么测试代码大概是这样的(就以Java为例):</p>
 
@@ -123,9 +126,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>下面的断言仅适用于gbk和utf-8的情况, 其它的不保证可用.</p>
+<p>最后一行的断言仅适用于gbk和utf-8的情况, 其它的不保证可用.</p>
 
-<p>在开始的帖子中看到过一个实现, 等价于下面:</p>
+<p>在开始的帖子中看到过一个实现, 等价于下面的代码:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -211,6 +214,8 @@
 
 
 <p>第一种会比较慢些, 后面的方法会占用更多的内存.</p>
+
+<p>这个问题始终和编码类型有关的, 因为需要返回的是字节数组/流的长度, 而不是字符数组/串/流的长度.</p>
 
 <p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取</p>
 </div>
