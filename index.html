@@ -9,9 +9,7 @@
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="前几天去爬山,记下中间需要注意的事项,有些备忘的适用场景不限于爬山. 准备工作 下面只是尽量列出,按需要准备 建议在确保前一天睡眠充足的情况下做下面的准备
-提前查看天气预报,气温,决定穿着的薄厚,一般带一件挡风的外套 如果有可能下雨,准备把雨伞
-查询路线,包括到山脚下的路线和爬山的路线, &hellip;">
+  <meta name="description" content="在搜文本换行算法的时候发现了 这个, 问题是 编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。 可能描述的有些不明确, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -39,6 +37,8 @@
   <header role="banner"><hgroup>
   <h1><a href="/">netwjx's Blog</a></h1>
   
+    <h2>混乱与有序</h2>
+  
 </hgroup>
 
 </header>
@@ -64,6 +64,223 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-15T18:35:00+08:00" pubdate data-updated="true">2012-04-15</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在搜文本换行算法的时候发现了 <a href="http://www.iteye.com/topic/1037773">这个</a>, 问题是</p>
+
+<blockquote><p>编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+
+<p>可能描述的有些不明确, 应该这样说</p>
+
+<blockquote><p>编写一个截取字符串的函数, 给定字符串, 编码格式, 这个字符串使用指定编码后的字节数组, 以及需要截取的字节数组最大长度
+要求返回实际需要截取的长度, 不能在解码指定长度字节数组后出现半个字符的现象.</p></blockquote>
+
+<p>那么测试代码大概是这样的(就以Java为例):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;我abc的def&quot;</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">charset</span> <span class="o">=</span> <span class="s">&quot;gbk&quot;</span><span class="o">;</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">6</span><span class="o">;</span>
+</span><span class='line'>  <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">charset</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">subString</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">charset</span><span class="o">,</span> <span class="n">bytes</span><span class="o">,</span>
+</span><span class='line'>      <span class="n">length</span><span class="o">),</span> <span class="n">charset</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;我abc的&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面的断言仅适用于gbk和utf-8的情况, 其它的不保证可用.</p>
+
+<p>在开始的帖子中看到过一个实现, 等价于下面:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">subString</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">,</span> <span class="n">String</span> <span class="n">charset</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">length</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">char</span> <span class="n">c</span> <span class="o">:</span> <span class="n">str</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">c</span><span class="o">).</span><span class="na">getBytes</span><span class="o">(</span><span class="n">charset</span><span class="o">).</span><span class="na">length</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="n">length</span><span class="o">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">==</span> <span class="n">length</span><span class="o">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">n</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不过想想, subString返回值一般在length-3到length之间, 可以探测截取指定长度是否会有问题, 那么就可以有下面的一个实现:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">detectByte</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">,</span> <span class="n">String</span> <span class="n">charset</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">length</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">do</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">i</span><span class="o">--;</span>
+</span><span class='line'>      <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">charset</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">while</span> <span class="o">(!</span><span class="n">str</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()).</span><span class="na">equals</span><span class="o">(</span><span class="n">s</span><span class="o">));</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再想想, 实际有差别的只是最后一个字符, 只比较最后一个字符即可:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">subString</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">,</span> <span class="n">String</span> <span class="n">charset</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">length</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">do</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">n</span><span class="o">--;</span>
+</span><span class='line'>      <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">n</span><span class="o">,</span> <span class="n">charset</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">i</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">!=</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">n</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第一种会比较慢些, 后面的方法会占用更多的内存.</p>
+
+<p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生&#8217;Object&#8217; 未定义</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-15T13:09:00+08:00" pubdate data-updated="true">2012-04-15</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 <code>'Object' 未定义</code> 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下.</p>
+
+<p>在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, document未定义之类的.</p>
+
+<p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
+
+<p>记得以前遇到过类似的现象, 这次仔细找了下发现了这个:</p>
+
+<p><a href="http://stackoverflow.com/questions/8389261/ie9-throws-exceptions-when-loading-scripts-in-iframe-why">IE9 throws exceptions when loading scripts in iframe. Why?</a></p>
+
+<p>以及msdn的 <a href="http://msdn.microsoft.com/en-us/library/gg622929%28v=VS.85%29.aspx?ppud=4">APIs Are Not Available if iFrame Is Removed from DOM Tree</a></p>
+
+<p>简单的说是在包含iframe的页面中, 如果这个iframe被移除后, 其内部的Javascript和DOM API都会无法被调用.</p>
+
+<p>上述<strong>特性</strong>在ie9标准下有效, 往后更新的版本应该也是如此.</p>
+
+<p>上面只是根本原因, 实际会有一些比较复杂的表现方式, 比如在jQuery中类似 <code>$('#id').appendTo('#foo')</code> 的代码将会先从DOM树中移除, 然后再添加进去, 这将会诱发上述现象.</p>
+
+<p>其它的比如jQuery EasyUI的Layout, 它的实现方式会修改DOM结构, 这将会移除和重新创建包含iframe的元素.</p>
+
+<h2>处理办法</h2>
+
+<p>简单的可以是避免在IE9标准模式渲染.</p>
+
+<p>麻烦点的就是先不设置iframe的src, 等移除iframe操作完成后再设置, 一般可以考虑在window.onload时做这个操作.</p>
+
+<p>可以利用setTimeout让一些操作在事件触发完毕后再执行, 关于setTimeout的特性可以参考<a href="http://ejohn.org/blog/how-javascript-timers-work/">How JavaScript Timers Work</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -556,49 +773,9 @@ categories:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-18T02:34:00+08:00" pubdate data-updated="true">2012-03-18</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>终于折腾起来了</p>
-
-<p>深深的感觉到在win上折腾实在是极端的痛苦啊</p>
-
-<p>基本是四处碰壁,还都是很难找到答案的</p>
-
-<p>5个小时就这样过去了</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -609,6 +786,14 @@ categories:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生&#8217;Object&#8217; 未定义</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/04/07/mountain-climbing/">爬山备忘</a>

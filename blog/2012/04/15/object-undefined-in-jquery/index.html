@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hello Octopress - netwjx's Blog</title>
+  <title>在jQuery中发生'Object' 未定义 - netwjx's Blog</title>
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="终于折腾起来了 深深的感觉到在win上折腾实在是极端的痛苦啊 基本是四处碰壁,还都是很难找到答案的 5个小时就这样过去了
-">
+  <meta name="description" content="之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 'Object' 未定义 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下. 在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://netwjx.github.com/blog/2012/03/18/hello-octopress">
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress</h1>
+      <h1 class="entry-title">在jQuery中发生'Object' 未定义</h1>
     
     
       <p class="meta">
@@ -84,20 +83,40 @@
   
 
 
-<time datetime="2012-03-18T02:34:00+08:00" pubdate data-updated="true">2012-03-18</time>
+<time datetime="2012-04-15T13:09:00+08:00" pubdate data-updated="true">2012-04-15</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>终于折腾起来了</p>
+<div class="entry-content"><p>之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 <code>'Object' 未定义</code> 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下.</p>
 
-<p>深深的感觉到在win上折腾实在是极端的痛苦啊</p>
+<p>在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, document未定义之类的.</p>
 
-<p>基本是四处碰壁,还都是很难找到答案的</p>
+<p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
 
-<p>5个小时就这样过去了</p>
+<p>记得以前遇到过类似的现象, 这次仔细找了下发现了这个:</p>
+
+<p><a href="http://stackoverflow.com/questions/8389261/ie9-throws-exceptions-when-loading-scripts-in-iframe-why">IE9 throws exceptions when loading scripts in iframe. Why?</a></p>
+
+<p>以及msdn的 <a href="http://msdn.microsoft.com/en-us/library/gg622929%28v=VS.85%29.aspx?ppud=4">APIs Are Not Available if iFrame Is Removed from DOM Tree</a></p>
+
+<p>简单的说是在包含iframe的页面中, 如果这个iframe被移除后, 其内部的Javascript和DOM API都会无法被调用.</p>
+
+<p>上述<strong>特性</strong>在ie9标准下有效, 往后更新的版本应该也是如此.</p>
+
+<p>上面只是根本原因, 实际会有一些比较复杂的表现方式, 比如在jQuery中类似 <code>$('#id').appendTo('#foo')</code> 的代码将会先从DOM树中移除, 然后再添加进去, 这将会诱发上述现象.</p>
+
+<p>其它的比如jQuery EasyUI的Layout, 它的实现方式会修改DOM结构, 这将会移除和重新创建包含iframe的元素.</p>
+
+<h2>处理办法</h2>
+
+<p>简单的可以是避免在IE9标准模式渲染.</p>
+
+<p>麻烦点的就是先不设置iframe的src, 等移除iframe操作完成后再设置, 一般可以考虑在window.onload时做这个操作.</p>
+
+<p>可以利用setTimeout让一些操作在事件触发完毕后再执行, 关于setTimeout的特性可以参考<a href="http://ejohn.org/blog/how-javascript-timers-work/">How JavaScript Timers Work</a></p>
 </div>
 
 
@@ -120,12 +139,12 @@
   
 
 
-<time datetime="2012-03-18T02:34:00+08:00" pubdate data-updated="true">2012-03-18</time>
+<time datetime="2012-04-15T13:09:00+08:00" pubdate data-updated="true">2012-04-15</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/hello-world/'>Hello World</a>
+    <a class='category' href='/blog/categories/ie9/'>IE9</a>, <a class='category' href='/blog/categories/javascript/'>Javascript</a>
   
 </span>
 
@@ -141,8 +160,10 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/04/07/mountain-climbing/" title="Previous Post: 爬山备忘">&laquo; 爬山备忘</a>
       
-        <a class="basic-alignment right" href="/blog/2012/03/18/octopress-note/" title="Next Post: Octopress 笔记">Octopress 笔记 &raquo;</a>
+      
+        <a class="basic-alignment right" href="/blog/2012/04/15/substring-with-bytes-length/" title="Next Post: 截取指定字节长度的字符串">截取指定字节长度的字符串 &raquo;</a>
       
     </p>
   </footer>
@@ -220,8 +241,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://netwjx.github.com/blog/2012/03/18/hello-octopress/';
-        var disqus_url = 'http://netwjx.github.com/blog/2012/03/18/hello-octopress/';
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/';
         var disqus_script = 'embed.js';
       
     (function () {
