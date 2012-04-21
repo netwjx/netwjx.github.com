@@ -11,15 +11,15 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 81.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 392.0
 	},
 	"console":
 	{
-		"height": 125.0
+		"height": 272.0
 	},
 	"distraction_free":
 	{
@@ -32,17 +32,33 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Netwjx/netwjx.github.com/_config.yml",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/asides/twitter.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/custom/navigation.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/custom/header.html",
+		"/C/Users/Netwjx/netwjx.github.com/Gemfile",
+		"/C/Users/Netwjx/netwjx.github.com/.gitignore",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-21-using-code-in-octopress.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/plugins/jsfiddle.rb",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-03-18-octopress-note.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-15-substring-with-bytes-length.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-21-camera-capture.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-07-mountain-climbing.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/cmd.cmd",
+		"/C/Users/Netwjx/netwjx.github.com/p.sublime-project",
+		"/D/Program Files/goagent/local/proxy.ini",
+		"/C/Users/Netwjx/Downloads/opml/output_all.opml",
+		"/C/Users/Netwjx/Downloads/opml/output_PM.opml",
+		"/C/Users/Netwjx/Downloads/opml/google-reader-subscriptions(1).xml",
+		"/C/Users/Netwjx/Downloads/opml/google-reader-subscriptions.xml",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-15-object-undefined-in-jquery.markdown",
 		"/C/Ruby/lib/ruby/gems/1.9.1/gems/ffi-1.0.9-x86-mingw32/lib/ffi/library.rb",
-		"/C/Users/Netwjx/netwjx.github.com/_config.yml",
 		"/C/Ruby/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython/pythonexec.rb",
 		"/C/Ruby/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython/python.rb",
 		"/C/Ruby/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython/options.rb",
 		"/C/Ruby/lib/ruby/gems/1.9.1/gems/rubypython-0.5.3/lib/rubypython.rb",
 		"/C/Users/netwjx/netwjx.github.com/p.sublime-project",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-03-25-unlock-google-play-android-market.markdown",
-		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-07-mountain-climbing.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-03-18-hello-octopress.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/plugins/pagination.rb",
 		"/C/Users/Netwjx/Downloads/google-reader-subscriptions.xml",
@@ -54,9 +70,11 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"C:\\Users\\Netwjx\\netwjx.github.com",
+			"C:\\Users\\Netwjx\\netwjx.github.com\\source",
 			"C:\\Users\\Netwjx\\netwjx.github.com",
 			"<open folders>"
 		]
@@ -66,6 +84,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"lsi",
+			"Categories",
+			"bundler",
+			"pygments",
+			"octopress",
+			"Jekyll",
+			"</outline",
+			"outline text",
 			"\\t",
 			",([^ ])",
 			"`",
@@ -95,7 +121,7 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 			"  ",
@@ -156,6 +182,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"cmd",
+				"cmd.cmd"
+			]
 		],
 		"width": 0.0
 	},
@@ -171,6 +201,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 223.0,
+	"side_bar_width": 228.0,
 	"status_bar_visible": true
 }
