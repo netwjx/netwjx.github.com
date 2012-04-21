@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[类别: DirectShow | netwjx's Blog]]></title>
+  <link href="http://netwjx.github.com/blog/categories/directshow/atom.xml" rel="self"/>
+  <link href="http://netwjx.github.com/"/>
+  <updated>2012-04-21T20:46:05+08:00</updated>
+  <id>http://netwjx.github.com/</id>
+  <author>
+    <name><![CDATA[netwjx]]></name>
+    <email><![CDATA[netwjx@mail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[捕获摄像头信息]]></title>
+    <link href="http://netwjx.github.com/blog/2012/04/21/camera-capture/"/>
+    <updated>2012-04-21T14:59:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/04/21/camera-capture</id>
+    <content type="html"><![CDATA[<p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
+
+<h2>实现方案</h2>
+
+<ol>
+<li><p>avicap32.dll 的实现 Win32API</p>
+
+<p>主要使用<code>capGetDriverDescriptionA</code>函数获取获取摄像头设备, 使用<code>capCreateCaptureWindow</code>和<code>SendMessage</code>发送一系列窗口消息控制, 图像数据使用一个<code>PictrueBox</code>控件来显示, 有可以保存到avi文件.</p>
+
+<p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
+
+<p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
+<li><p>DirectShow 的实现</p>
+
+<p>这个实现的API使用起来比上面的要繁杂很多, 但是可以使用<strong>虚拟摄像头</strong>, 现在典型的IM软件其实现应该都是基于此.</p>
+
+<p>没找到什么入门的介绍,只能从MSDN上<a href="http://msdn.microsoft.com/en-us/library/dd375454.aspx">DirectShow</a>翻看</p>
+
+<p>可以先从<a href="http://msdn.microsoft.com/en-us/library/dd390352.aspx">Introduction to DirectShow Application Programming</a>了解典型的结构和流程, <code>Filter Graph Manager</code>是核心的部分, 以及 <a href="http://msdn.microsoft.com/en-us/library/dd375470.aspx">DirectShow System Overview</a>, 结构图:</p>
+
+<p><img src="http://i.msdn.microsoft.com/dynimg/IC420381.png" alt="High level architecture" /></p>
+
+<p>DirectShow 视频捕获部分<a href="http://msdn.microsoft.com/en-us/library/dd407331.aspx">Video Capture</a></p>
+
+<p>在dotnet下有一个<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库对DirectShow的封装, 可以直接在C#和VB.Net中直接使用, 文档仍旧需要以DirectShow的文档为主, 但是DirectShow.Net提供有大量的<a href="http://sourceforge.net/projects/directshownet/files/DirectShowSamples/">代码示例</a>, 个别有些小问题, 但是简单改改都可以正常跑起来.</p></li>
+<li><p>libVLC 的实现, 源自VLC播放器</p>
+
+<p><a href="http://www.videolan.org/vlc/">VLC</a>是跨平台的影音播放器, 除了能播放传统视频外, 还可以捕获视频, <a href="http://www.videolan.org/vlc/features.html">具体的特性</a>中有描述, 可以看到Windows下<strong>Video acquisition</strong>的实现是基于DirectShow</p>
+
+<p>而<a href="http://www.videolan.org/vlc/libvlc.html">libVLC</a>是VLC播放器的底层库</p>
+
+<p><img src="http://images1.videolan.org/images/libvlc_stack.png" alt="Technical Diagram" /></p>
+
+<p>在dotnet下有一个<a href="http://www.videolan.org/vlc/">VLC</a>的封装<a href="http://vlcdotnet.codeplex.com/">vlcdotnet</a>, 也是开源的, 从介绍上可以看到能在WinForm, WPF, SilverLight 5下使用, 需要依赖<strong>libvlc.dll</strong>, <strong>libvlccore.dll</strong>, 安装<a href="http://www.videolan.org/vlc/">VLC</a>播放器后在安装目录下能找到.</p></li>
+<li><p>Microsoft Media Foundation 的实现</p>
+
+<p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms694197.aspx">MMF</a> 这个其实没什么好讲的, 主要是只有Windows Vista及以后的才支持, 说是用来代替DirectShow的, 文档仍旧是以C++为主的, 在未来也许会比较有价值.</p></li>
+</ol>
+
+
+<h2>综述</h2>
+
+<ol>
+<li><p>最简单的是avicap32的实现.</p></li>
+<li><p>需要支持虚拟摄像头, 或者是方便使用虚拟摄像头调试, 可以使用基于DirectShow的方案.</p></li>
+<li><p>需要跨平台, 或者是涉及到音视频回放之类的可以使用基于VLC的方案.</p></li>
+<li><p>MMF暂时周边相关的还不是很成熟, 除非环境允许能够使用这个方案.</p></li>
+</ol>
+
+
+<p>我最后选择的使用DirectShow, 使用<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库, 代码麻烦了点, 但是有示例还是问题不大.</p>
+]]></content>
+  </entry>
+  
+</feed>

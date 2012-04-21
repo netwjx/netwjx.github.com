@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>捕获摄像头信息 - netwjx's Blog</title>
+  <meta name="author" content="netwjx">
+
+  
+  <meta name="description" content="最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结. 实现方案 avicap32.dll 的实现 Win32API 主要使用capGetDriverDescriptionA函数获取获取摄像头设备, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/04/21/camera-capture">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="netwjx's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">netwjx's Blog</a></h1>
+  
+    <h2>混乱与有序</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:netwjx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">捕获摄像头信息</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-21T14:59:00+08:00" pubdate data-updated="true">2012-04-21</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
+
+<h2>实现方案</h2>
+
+<ol>
+<li><p>avicap32.dll 的实现 Win32API</p>
+
+<p>主要使用<code>capGetDriverDescriptionA</code>函数获取获取摄像头设备, 使用<code>capCreateCaptureWindow</code>和<code>SendMessage</code>发送一系列窗口消息控制, 图像数据使用一个<code>PictrueBox</code>控件来显示, 有可以保存到avi文件.</p>
+
+<p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
+
+<p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
+<li><p>DirectShow 的实现</p>
+
+<p>这个实现的API使用起来比上面的要繁杂很多, 但是可以使用<strong>虚拟摄像头</strong>, 现在典型的IM软件其实现应该都是基于此.</p>
+
+<p>没找到什么入门的介绍,只能从MSDN上<a href="http://msdn.microsoft.com/en-us/library/dd375454.aspx">DirectShow</a>翻看</p>
+
+<p>可以先从<a href="http://msdn.microsoft.com/en-us/library/dd390352.aspx">Introduction to DirectShow Application Programming</a>了解典型的结构和流程, <code>Filter Graph Manager</code>是核心的部分, 以及 <a href="http://msdn.microsoft.com/en-us/library/dd375470.aspx">DirectShow System Overview</a>, 结构图:</p>
+
+<p><img src="http://i.msdn.microsoft.com/dynimg/IC420381.png" alt="High level architecture" /></p>
+
+<p>DirectShow 视频捕获部分<a href="http://msdn.microsoft.com/en-us/library/dd407331.aspx">Video Capture</a></p>
+
+<p>在dotnet下有一个<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库对DirectShow的封装, 可以直接在C#和VB.Net中直接使用, 文档仍旧需要以DirectShow的文档为主, 但是DirectShow.Net提供有大量的<a href="http://sourceforge.net/projects/directshownet/files/DirectShowSamples/">代码示例</a>, 个别有些小问题, 但是简单改改都可以正常跑起来.</p></li>
+<li><p>libVLC 的实现, 源自VLC播放器</p>
+
+<p><a href="http://www.videolan.org/vlc/">VLC</a>是跨平台的影音播放器, 除了能播放传统视频外, 还可以捕获视频, <a href="http://www.videolan.org/vlc/features.html">具体的特性</a>中有描述, 可以看到Windows下<strong>Video acquisition</strong>的实现是基于DirectShow</p>
+
+<p>而<a href="http://www.videolan.org/vlc/libvlc.html">libVLC</a>是VLC播放器的底层库</p>
+
+<p><img src="http://images1.videolan.org/images/libvlc_stack.png" alt="Technical Diagram" /></p>
+
+<p>在dotnet下有一个<a href="http://www.videolan.org/vlc/">VLC</a>的封装<a href="http://vlcdotnet.codeplex.com/">vlcdotnet</a>, 也是开源的, 从介绍上可以看到能在WinForm, WPF, SilverLight 5下使用, 需要依赖<strong>libvlc.dll</strong>, <strong>libvlccore.dll</strong>, 安装<a href="http://www.videolan.org/vlc/">VLC</a>播放器后在安装目录下能找到.</p></li>
+<li><p>Microsoft Media Foundation 的实现</p>
+
+<p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms694197.aspx">MMF</a> 这个其实没什么好讲的, 主要是只有Windows Vista及以后的才支持, 说是用来代替DirectShow的, 文档仍旧是以C++为主的, 在未来也许会比较有价值.</p></li>
+</ol>
+
+
+<h2>综述</h2>
+
+<ol>
+<li><p>最简单的是avicap32的实现.</p></li>
+<li><p>需要支持虚拟摄像头, 或者是方便使用虚拟摄像头调试, 可以使用基于DirectShow的方案.</p></li>
+<li><p>需要跨平台, 或者是涉及到音视频回放之类的可以使用基于VLC的方案.</p></li>
+<li><p>MMF暂时周边相关的还不是很成熟, 除非环境允许能够使用这个方案.</p></li>
+</ol>
+
+
+<p>我最后选择的使用DirectShow, 使用<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库, 代码麻烦了点, 但是有示例还是问题不大.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">netwjx</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-21T14:59:00+08:00" pubdate data-updated="true">2012-04-21</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/directshow/'>DirectShow</a>, <a class='category' href='/blog/categories/mf/'>MF</a>, <a class='category' href='/blog/categories/vlc/'>VLC</a>, <a class='category' href='/blog/categories/win32api/'>Win32API</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/04/15/substring-with-bytes-length/" title="Previous Post: 截取指定字节长度的字符串">&laquo; 截取指定字节长度的字符串</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/04/21/using-code-in-octopress/" title="Next Post: 在Octopress中使用代码高亮">在Octopress中使用代码高亮 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生'Object' 未定义</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/07/mountain-climbing/">爬山备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/netwjx?count=5&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/netwjx">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - netwjx -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'netwjxblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/04/21/camera-capture/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/04/21/camera-capture/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

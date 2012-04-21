@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[类别: Jekyll | netwjx's Blog]]></title>
+  <link href="http://netwjx.github.com/blog/categories/jekyll/atom.xml" rel="self"/>
+  <link href="http://netwjx.github.com/"/>
+  <updated>2012-04-21T20:46:05+08:00</updated>
+  <id>http://netwjx.github.com/</id>
+  <author>
+    <name><![CDATA[netwjx]]></name>
+    <email><![CDATA[netwjx@mail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在Octopress中使用代码高亮]]></title>
+    <link href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/"/>
+    <updated>2012-04-21T16:45:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress</id>
+    <content type="html"><![CDATA[<p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
+
+<p>源</p>
+
+<pre><code>``` js Javascript Hello World 
+    alert('hello world');
+```
+</code></pre>
+
+<p>效果</p>
+
+<p>``` js Javascript Hello World</p>
+
+<pre><code>alert('hello world');
+</code></pre>
+
+<p>```</p>
+
+<p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
+
+<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题, 下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
+
+<p>将<code>Gemfile.lock</code>的<strong>33行</strong></p>
+
+<pre><code>pygments.rb (0.1.3)
+</code></pre>
+
+<p>修改为</p>
+
+<pre><code>pygments.rb (0.2.11)
+</code></pre>
+
+<p>以及<strong>40行</strong></p>
+
+<pre><code>rubypython (0.5.1)
+</code></pre>
+
+<p>修改为</p>
+
+<pre><code>rubypython (0.5.3)
+</code></pre>
+
+<p>注意上面的修改不要改变原有的缩进, 然后在命令行下执行</p>
+
+<pre><code>bundle install
+</code></pre>
+
+<p>这将会使用<a href="http://gembundler.com/">bundler</a>这个依赖管理工具安装新版本的<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>和<a href="http://rubypython.rubyforge.org/">rubypython</a>.</p>
+
+<p>如果还有问题请参考<a href="http://hivan.me/octopress-install-to-windows8/">Windows 8安装Octopress记录</a>的<strong>部署Python</strong>部分.</p>
+
+<h2>Octopress代码高亮的工作原理</h2>
+
+<p>如果上面的还是不能使用代码高亮就需要了解原理之后在自行判断如何处理.</p>
+
+<p><a href="http://octopress.org">Octopress</a>的代码高亮实际是<a href="http://jekyllrb.com/">Jekyll</a>的代码高亮, 其中插件<code>Backtick Code Blocks</code> <code>Code Blocks</code> <code>Include Code</code> 这些插件都有代码高亮功能, 其代码高亮都使用<code>Pygments Code</code>插件, 这个插件如名字所示, 其使用的gem库是<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>.</p>
+
+<p><a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>包含有<a href="http://pygments.org/">pygments</a>的代码, 可以在Ruby安装目录下的<code>\lib\ruby\gems\1.9.1\gems\pygments.rb-0.2.11\vendor</code>中看到.</p>
+
+<p>使用<a href="http://gembundler.com/">bundler</a>安装<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>时会自动的安装它依赖的<a href="http://rubypython.rubyforge.org/">rubypython</a>.</p>
+
+<p><a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>使用<a href="http://rubypython.rubyforge.org/">rubypython</a>的方式为<a href="https://github.com/ffi/ffi">ffi</a>, 这个是ruby中调用C语言写的库的工具, 在这里是调用<code>python27.dll</code>.</p>
+
+<h2>备用方案</h2>
+
+<p>上述的方法还是不能正常使用代码高亮的话, 还可以使用一些后备的方法.</p>
+
+<h3>Gist插件</h3>
+
+<p>在<a href="https://gist.github.com/">github:gist</a>上贴代码, 并使用类似下面的代码</p>
+
+<pre><code>{% gist 2436351 %}
+</code></pre>
+
+<p>将展示为</p>
+
+<p><div><script src='https://gist.github.com/2436351.js?file='></script>
+<noscript><pre><code>var parser = document.createElement('a');
+parser.href = &quot;http://example.com:3000/pathname/?search=test#hash&quot;;
+
+parser.protocol; // =&gt; &quot;http:&quot;
+parser.host;     // =&gt; &quot;example.com&quot;
+parser.port;     // =&gt; &quot;3000&quot;
+parser.pathname; // =&gt; &quot;/pathname/&quot;
+parser.search;   // =&gt; &quot;?search=test&quot;
+parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
+</p>
+
+<p><a href="http://octopress.org/docs/plugins/gist-tag/">Gist Tag 插件的更多资料</a></p>
+
+<h3>jsFiddle插件</h3>
+
+<p>这个更适合用于web前端相关的html css js的展示, 使用类似下面的代码</p>
+
+<pre><code>{% jsfiddle 3h5A4/3 %}
+</code></pre>
+
+<p>将展示为</p>
+
+<p><iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/3h5A4/3/embedded/js,resources,html,css,result/light/"></iframe></p>
+
+<p><a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsFiddle Tag 插件的更多资料</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[类别: Java | netwjx's Blog]]></title>
   <link href="http://netwjx.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-04-15T21:51:33+08:00</updated>
+  <updated>2012-04-21T20:46:05+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -22,7 +22,7 @@
 
 <blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
 
-<p>但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+<p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
 
 <p>可能描述的有些不明确, 应该这样说</p>
 
@@ -111,7 +111,7 @@ return n;
 
 <p>这个问题始终和编码类型有关的, 因为需要返回的是字节数组/流的长度, 而不是字符数组/串/流的长度.</p>
 
-<p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取</p>
+<p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取.</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,9 @@
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="在搜文本换行算法的时候发现了编写一个截取字符串的函数, 问题是 编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。 &hellip;">
+  <meta name="description" content="在Octopress中使用代码高亮, 实际就是Jekyll的Pygments代码高亮, 效果如下 源 ``` js Javascript Hello World alert('hello world');
+``` 效果 Javascript Hello World 1
+alert(&#39; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +72,228 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-21T16:45:00+08:00" pubdate data-updated="true">2012-04-21</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
+
+<p>源</p>
+
+<pre><code>``` js Javascript Hello World 
+    alert('hello world');
+```
+</code></pre>
+
+<p>效果</p>
+
+<figure class='code'><figcaption><span>Javascript Hello World </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
+
+<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题, 下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
+
+<p>将<code>Gemfile.lock</code>的<strong>33行</strong></p>
+
+<pre><code>pygments.rb (0.1.3)
+</code></pre>
+
+<p>修改为</p>
+
+<pre><code>pygments.rb (0.2.11)
+</code></pre>
+
+<p>以及<strong>40行</strong></p>
+
+<pre><code>rubypython (0.5.1)
+</code></pre>
+
+<p>修改为</p>
+
+<pre><code>rubypython (0.5.3)
+</code></pre>
+
+<p>注意上面的修改不要改变原有的缩进, 然后在命令行下执行</p>
+
+<pre><code>bundle install
+</code></pre>
+
+<p>这将会使用<a href="http://gembundler.com/">bundler</a>这个依赖管理工具安装新版本的<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>和<a href="http://rubypython.rubyforge.org/">rubypython</a>.</p>
+
+<p>如果还有问题请参考<a href="http://hivan.me/octopress-install-to-windows8/">Windows 8安装Octopress记录</a>的<strong>部署Python</strong>部分.</p>
+
+<h2>Octopress代码高亮的工作原理</h2>
+
+<p>如果上面的还是不能使用代码高亮就需要了解原理之后在自行判断如何处理.</p>
+
+<p><a href="http://octopress.org">Octopress</a>的代码高亮实际是<a href="http://jekyllrb.com/">Jekyll</a>的代码高亮, 其中插件<code>Backtick Code Blocks</code> <code>Code Blocks</code> <code>Include Code</code> 这些插件都有代码高亮功能, 其代码高亮都使用<code>Pygments Code</code>插件, 这个插件如名字所示, 其使用的gem库是<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>.</p>
+
+<p><a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>包含有<a href="http://pygments.org/">pygments</a>的代码, 可以在Ruby安装目录下的<code>\lib\ruby\gems\1.9.1\gems\pygments.rb-0.2.11\vendor</code>中看到.</p>
+
+<p>使用<a href="http://gembundler.com/">bundler</a>安装<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>时会自动的安装它依赖的<a href="http://rubypython.rubyforge.org/">rubypython</a>.</p>
+
+<p><a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>使用<a href="http://rubypython.rubyforge.org/">rubypython</a>的方式为<a href="https://github.com/ffi/ffi">ffi</a>, 这个是ruby中调用C语言写的库的工具, 在这里是调用<code>python27.dll</code>.</p>
+
+<h2>备用方案</h2>
+
+<p>上述的方法还是不能正常使用代码高亮的话, 还可以使用一些后备的方法.</p>
+
+<h3>Gist插件</h3>
+
+<p>在<a href="https://gist.github.com/">github:gist</a>上贴代码, 并使用类似下面的代码</p>
+
+<pre><code>{% gist 2436351 %}
+</code></pre>
+
+<p>将展示为</p>
+
+<div><script src='https://gist.github.com/2436351.js?file='></script>
+<noscript><pre><code>var parser = document.createElement('a');
+parser.href = &quot;http://example.com:3000/pathname/?search=test#hash&quot;;
+
+parser.protocol; // =&gt; &quot;http:&quot;
+parser.host;     // =&gt; &quot;example.com&quot;
+parser.port;     // =&gt; &quot;3000&quot;
+parser.pathname; // =&gt; &quot;/pathname/&quot;
+parser.search;   // =&gt; &quot;?search=test&quot;
+parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
+
+
+<p><a href="http://octopress.org/docs/plugins/gist-tag/">Gist Tag 插件的更多资料</a></p>
+
+<h3>jsFiddle插件</h3>
+
+<p>这个更适合用于web前端相关的html css js的展示, 使用类似下面的代码</p>
+
+<pre><code>{% jsfiddle 3h5A4/3 %}
+</code></pre>
+
+<p>将展示为</p>
+
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/3h5A4/3/embedded/js,resources,html,css,result/light/"></iframe>
+
+
+<p><a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsFiddle Tag 插件的更多资料</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-21T14:59:00+08:00" pubdate data-updated="true">2012-04-21</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
+
+<h2>实现方案</h2>
+
+<ol>
+<li><p>avicap32.dll 的实现 Win32API</p>
+
+<p>主要使用<code>capGetDriverDescriptionA</code>函数获取获取摄像头设备, 使用<code>capCreateCaptureWindow</code>和<code>SendMessage</code>发送一系列窗口消息控制, 图像数据使用一个<code>PictrueBox</code>控件来显示, 有可以保存到avi文件.</p>
+
+<p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
+
+<p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
+<li><p>DirectShow 的实现</p>
+
+<p>这个实现的API使用起来比上面的要繁杂很多, 但是可以使用<strong>虚拟摄像头</strong>, 现在典型的IM软件其实现应该都是基于此.</p>
+
+<p>没找到什么入门的介绍,只能从MSDN上<a href="http://msdn.microsoft.com/en-us/library/dd375454.aspx">DirectShow</a>翻看</p>
+
+<p>可以先从<a href="http://msdn.microsoft.com/en-us/library/dd390352.aspx">Introduction to DirectShow Application Programming</a>了解典型的结构和流程, <code>Filter Graph Manager</code>是核心的部分, 以及 <a href="http://msdn.microsoft.com/en-us/library/dd375470.aspx">DirectShow System Overview</a>, 结构图:</p>
+
+<p><img src="http://i.msdn.microsoft.com/dynimg/IC420381.png" alt="High level architecture" /></p>
+
+<p>DirectShow 视频捕获部分<a href="http://msdn.microsoft.com/en-us/library/dd407331.aspx">Video Capture</a></p>
+
+<p>在dotnet下有一个<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库对DirectShow的封装, 可以直接在C#和VB.Net中直接使用, 文档仍旧需要以DirectShow的文档为主, 但是DirectShow.Net提供有大量的<a href="http://sourceforge.net/projects/directshownet/files/DirectShowSamples/">代码示例</a>, 个别有些小问题, 但是简单改改都可以正常跑起来.</p></li>
+<li><p>libVLC 的实现, 源自VLC播放器</p>
+
+<p><a href="http://www.videolan.org/vlc/">VLC</a>是跨平台的影音播放器, 除了能播放传统视频外, 还可以捕获视频, <a href="http://www.videolan.org/vlc/features.html">具体的特性</a>中有描述, 可以看到Windows下<strong>Video acquisition</strong>的实现是基于DirectShow</p>
+
+<p>而<a href="http://www.videolan.org/vlc/libvlc.html">libVLC</a>是VLC播放器的底层库</p>
+
+<p><img src="http://images1.videolan.org/images/libvlc_stack.png" alt="Technical Diagram" /></p>
+
+<p>在dotnet下有一个<a href="http://www.videolan.org/vlc/">VLC</a>的封装<a href="http://vlcdotnet.codeplex.com/">vlcdotnet</a>, 也是开源的, 从介绍上可以看到能在WinForm, WPF, SilverLight 5下使用, 需要依赖<strong>libvlc.dll</strong>, <strong>libvlccore.dll</strong>, 安装<a href="http://www.videolan.org/vlc/">VLC</a>播放器后在安装目录下能找到.</p></li>
+<li><p>Microsoft Media Foundation 的实现</p>
+
+<p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms694197.aspx">MMF</a> 这个其实没什么好讲的, 主要是只有Windows Vista及以后的才支持, 说是用来代替DirectShow的, 文档仍旧是以C++为主的, 在未来也许会比较有价值.</p></li>
+</ol>
+
+
+<h2>综述</h2>
+
+<ol>
+<li><p>最简单的是avicap32的实现.</p></li>
+<li><p>需要支持虚拟摄像头, 或者是方便使用虚拟摄像头调试, 可以使用基于DirectShow的方案.</p></li>
+<li><p>需要跨平台, 或者是涉及到音视频回放之类的可以使用基于VLC的方案.</p></li>
+<li><p>MMF暂时周边相关的还不是很成熟, 除非环境允许能够使用这个方案.</p></li>
+</ol>
+
+
+<p>我最后选择的使用DirectShow, 使用<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库, 代码麻烦了点, 但是有示例还是问题不大.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a></h1>
     
     
@@ -97,7 +321,7 @@
 
 <blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
 
-<p>但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+<p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
 
 <p>可能描述的有些不明确, 应该这样说</p>
 
@@ -217,7 +441,7 @@
 
 <p>这个问题始终和编码类型有关的, 因为需要返回的是字节数组/流的长度, 而不是字符数组/串/流的长度.</p>
 
-<p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取</p>
+<p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取.</p>
 </div>
   
   
@@ -391,393 +615,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-25T22:09:00+08:00" pubdate data-updated="true">2012-03-25</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Android Market刚改名叫Google Play不久,不明白为什么改成这个名字,难道Play后面还有Game?</p>
-
-<p>说说标题上的事,如果使用浏览器查找应用,应用是免费的,但是安装哪里会提示&#8221;此商品无法在您设备所在的国家/地区安装&#8221;.</p>
-
-<p>在Google帐号设置里面怎么改都没作用.</p>
-
-<p>而用手机搜索,要么搜不到,要么搜到了点安装仍旧是上面的提示.</p>
-
-<p>上面提示的依据只依据一个 <strong>手机卡的网络运营商</strong>.</p>
-
-<p>搜到一些解决办法是使用Market Enabler,但是我尝试的结果是没作用,应该是升级到了Google Play以前的方法失效了.</p>
-
-<p>继续搜索发现了<a href="https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker">Market Unlocker</a> ,使用后发现可用,下面基本是Market Unlocker的中文使用说明.</p>
-
-<h2>Market Unlocker</h2>
-
-<p>这个软件只能让手机可以安装哪些限制特定地区安装的软件,比如<a href="https://play.google.com/store/apps/details?id=com.com2us.inotia3.normal.freefull.google.global.android.common">Inotia 3</a> ,不可能免费安装收费的软件.</p>
-
-<p>这个软件需要手机已经root, 或者是可以获取到root权限(我这使用小米手机会在获取root权限时提示).</p>
-
-<p>需要wifi,并开飞行模式.</p>
-
-<p>开始.</p>
-
-<p><a href="https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker">下载地址</a> , 或在手机上搜 Market Unlocker , 开发者是Evan He的那个 , 免费版的即可.</p>
-
-<p>切换到飞行模式</p>
-
-<p>安装好后会看到应用<strong>市场解锁</strong>,打开后<strong>主页</strong>中打开<strong>启用解锁</strong>,这将会有一系列的提示,如果没root这里将会失败.</p>
-
-<p>可以在<strong>市场</strong>里面选择模拟的运营商,默认是Verizon.</p>
-
-<p>退出,到系统设置 - 程序 - 程序管理 - 全部,找到<strong>Google Play 商店</strong>,进去后<strong>清除数据</strong>.</p>
-
-<p>重启手机.</p>
-
-<p>打开Wifi,在开飞行模式的情况下.</p>
-
-<p>等待Google服务同步完成或刷新Gmail.(这段是Market Unlocker的说明,我不记得我有这步操作)</p>
-
-<p>打开Google Play,查找需要安装的软件并安装.</p>
-
-<p>最后关闭飞行模式.</p>
-
-<h2>吐槽</h2>
-
-<p>免费的应用也设置地区限制,这是什么逻辑嘛.即使是收费的,地区限制也完全没必要,只要能支付就行了.</p>
-
-<p>况且上面的限制完全没有发挥任何作用,只是折腾人,或者使用其它的应用市场.</p>
-
-<h2>对艾诺迪亚 3(Inotia 3)的吐槽</h2>
-
-<p>这个游戏在480x854的解析度上看起来画面不精细,可能是我习惯了NDS哪种2D游戏的像素感了.</p>
-
-<p>这个游戏不提供多点触控支持,即使设备支持,结果就是控制移动的时候点技能没效果,而点技能没放开的话也不能移动.再加上下面的原因会很让人觉得这设计真坑人.</p>
-
-<p>人物的卡位,在场景中移动,遇到阻挡会自动向旁边划开,但是在战斗时前面有队友或者敌人挡住会被<em>粘住</em>,不大容易做到擦身而过,人物占位空间比实际看到的稍微大一点.</p>
-
-<p>再加上战斗时队友不会自动让路,自动让路也仅仅支持相邻的2个,前面再挡一个自己的队友就卡住了.</p>
-
-<p>还有一些队友AI的毛病,繁琐的物品和队伍界面.</p>
-
-<p>总感觉玩起来不那么顺畅,熟悉了能在中间环节上快点,但是还是感觉繁琐.</p>
-
-<p>上述这些可能是因为要兼容旧版本做的一些妥协吧.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-18T14:43:00+08:00" pubdate data-updated="true">2012-03-18</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
-
-<p>blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上.</p>
-
-<p>这里主要是以我自己的环境来写, 即在Windows下使用Octopress. 因为Win下折腾这个中间出的问题很多.</p>
-
-<h2>安装前提</h2>
-
-<p>Octopress使用ruby编写, 所以需要ruby, Win下使用RubyInstaller</p>
-
-<ul>
-<li><a href="http://rubyinstaller.org">http://rubyinstaller.org</a> 因为神奇的原因我这里无法访问它.</li>
-<li><a href="http://rubyforge.org/projects/rubyinstaller/">http://rubyforge.org/projects/rubyinstaller/</a> 这里可以下载到, 我现在看到的RubyInstaller最高版本是1.9.3-p125</li>
-</ul>
-
-
-<p>上面的网页先别关, 还有一个devkit需要下载, 全称Development Kit, 用途是编译一些ruby中使用的c模块, 常见的比如sqlite</p>
-
-<p>那么下载的文件有</p>
-
-<ul>
-<li>rubyinstaller-1.9.3-p125.exe</li>
-<li>devkit-3.4.5r3-20091110.7z</li>
-</ul>
-
-
-<p>Octopress可以到<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 下载一份zip包, 如果已经有git环境则直接</p>
-
-<pre><code>git clone git://github.com/imathis/octopress.git myoctopress
-</code></pre>
-
-<p>我这里使用git, 那么应该会得到一个文件夹(下面提到将名为myoctopress目录), 内容和<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 上显示的一样</p>
-
-<p>前期准备基本完成, 如果没有git而打算使用git看下段</p>
-
-<h3>没有git, 打算使用git</h3>
-
-<p>Win下使用简单的git是TortoiseGit</p>
-
-<ul>
-<li><a href="http://code.google.com/p/tortoisegit/">http://code.google.com/p/tortoisegit/</a> 因为神奇的原因它可能有时会无法访问</li>
-<li><a href="http://goo.gl/ZpyYx">http://goo.gl/ZpyYx</a> 我在金山快盘的共享, 密码为IYzDsp</li>
-</ul>
-
-
-<p>由于TortoiseGit的后端使用的是Git for Windows <a href="http://code.google.com/p/msysgit/">http://code.google.com/p/msysgit/</a> , 所以下载的文件有</p>
-
-<ul>
-<li>TortoiseGit-1.7.6.0-32bit.msi</li>
-<li>Git-1.7.8-preview20111206.exe</li>
-</ul>
-
-
-<p>版本可能不同, 名字应该都是相似的, 先安装<code>Git-1.7.8-preview20111206.exe</code>, 然后是<code>TortoiseGit-1.7.6.0-32bit.msi</code>, 然后右键菜单中就有TortoiseGit项了.</p>
-
-<p>建议将Git for Windows安装目录的bin目录加入到环境变量Path中, 默认是<code>C:\Program Files\Git\bin</code>, 因为Octopress中会使用系统中的git命令</p>
-
-<h2>安装Ruby</h2>
-
-<p><code>rubyinstaller-1.9.3-p125.exe</code>建议安装到<code>c:\ruby</code>, 因为devkit中的默认配置就是这个路径</p>
-
-<p>确保<code>C:\Ruby\bin</code>在你的环境变量Path中, 下面使用的ruby gem命令都需要</p>
-
-<p>然后是devkit-3.4.5r3-20091110.7z解压到<code>c:\ruby</code>.</p>
-
-<p>如果不是这个路径, 解压之后还需要到<code>devkit\msys\1.0.11\etc\fstab</code>修改文件内容.</p>
-
-<p>如果路径包含空格, 则需要将路径转换成8.3格式短文件名, 方法是<code>dir /-n</code>, 就可以看到8.3格式的</p>
-
-<p>建议将<code>C:\Ruby\devkit\msys\1.0.11\bin</code>也加入到环境变量Path中, 可以避免后续在安装ruby的fsevent模块时出现一个没有找到命令行的错误</p>
-
-<p>可以运行<code>C:\Ruby\devkit\msys\1.0.11\msys.bat</code>看看, 这个是msys的环境, 一个最小的UNIX环境, 类似Cygwin, 但是原理不同, 更快, 更小, 前面Git for Windows也是基于这个.</p>
-
-<p>打开<code>C:\Ruby\lib\ruby\1.9.1\i386-mingw32\rbconfig.rb</code>, 找到62行附近, 查找<code>-Wno-missing-field-initializers</code>, 将其删除, 我这里是复制一份新的修改并注释原来的</p>
-
-<pre><code>#CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-missing-field-initializers -Wno-long-long"
-CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-long-long"
-</code></pre>
-
-<p>这么做可以避免在安装ruby的本地c模块时调用gcc失败的问题, 我遇到的是无法安装RedCloth模块, 可能是devkit里面附带的gcc版本旧, 不支持这个选项吧.</p>
-
-<h3>修改gem的源服务器地址</h3>
-
-<p>因为神奇的原因gem可能会下载任何东西失败, 修改后可解决这个问题</p>
-
-<p>gem是ruby的包管理程序, 类似debian的apt-get</p>
-
-<p>打开命令行</p>
-
-<pre><code>gem sources --remove http://rubygems.org/
-gem sources -a http://ruby.taobao.org/
-gem sources -l
-*** CURRENT SOURCES ***
-
-http://ruby.taobao.org
-</code></pre>
-
-<p>最后一个命令<code>gem sources -l</code>是查看当前的配置, 确保输出和上述的一致</p>
-
-<h2>安装Octopress</h2>
-
-<p>前面那么多准备都是为了这里, 主要参考http://octopress.org/docs/setup/.</p>
-
-<p>下述的命令行工作目录都是在myoctopress目录, 为了方便, 你可以在myoctopress目录创建一个cmd.cmd, 内容是</p>
-
-<pre><code>@start
-</code></pre>
-
-<p>命令行</p>
-
-<pre><code>gem install bundler
-</code></pre>
-
-<p>会需要一会时间, 完成后打开myoctopress目录下的Gemfile, 将<code>source "http://rubygems.org"</code>注释掉, 添加<code>source 'http://ruby.taobao.org/'</code>, 如下</p>
-
-<pre><code>#source "http://rubygems.org"
-source 'http://ruby.taobao.org/'
-</code></pre>
-
-<p>这样可以让bundle不会因为神奇的原因而容易出错, 然后命令行</p>
-
-<pre><code>bundle install
-</code></pre>
-
-<p>这会安装Octopress相关依赖的包, 比前一个命令需要更多的时间, 如果打算使用github的话可以看看下一段.</p>
-
-<p><code>bundle install</code>执行完毕后再</p>
-
-<pre><code>rake install
-</code></pre>
-
-<p>这个会创建好相关的目录结构</p>
-
-<p>接下来是设置如何部署, 参考<a href="http://octopress.org/docs/deploying/">http://octopress.org/docs/deploying/</a>, 我这里使用github</p>
-
-<h3>github上创建代码库</h3>
-
-<p><a href="http://pages.github.com">http://pages.github.com</a> 上有详细的说明, 我使用的是User Pages, 比如我的用户名是netwjx, 那么创建项目 netwjx.github.com</p>
-
-<p>后续还有关于域名绑定什么的就不多说了, 主要是修改CNAME记录和A记录的</p>
-
-<p>创建好之后能看到其git访问的地址, 比如我是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
-
-<p>按照github上的说明将提交用的ssh public key都折腾好, 如果以前用过github最好</p>
-
-<h2>设置部署github</h2>
-
-<p>参考<a href="http://octopress.org/docs/deploying/github/">http://octopress.org/docs/deploying/github/</a> , 命令行</p>
-
-<pre><code>rake setup_github_pages
-</code></pre>
-
-<p>输入git的地址,比如我的是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
-
-<p>然后这个命令</p>
-
-<ul>
-<li>会把myoctopress中原来clone时的代码库origin改名为octopress,并将刚刚输入git地址作为origin的代码库地址.</li>
-<li>会把当前分支名称从master改为source</li>
-<li>其它Url的设置还有deploy目录设置等</li>
-</ul>
-
-
-<p>中间需要用到git命令, 所以之前安装Git for Windows后必须将其<code>bin</code>目录加入到Path中</p>
-
-<p>中间可能会在<code>My Octopress Page is coming soon</code>之后出现<code>hellip;</code>不是内部命令之类的错误, 可以不用管, 如果一定不想要出现这个错误可以修改myoctopress目录下的Rakefile, 搜<code>My Octopress Page is coming soon</code>, 在<code>&amp;hellip;</code>前加个<code>^</code>(这个是Windows cmd的转义符), 如下</p>
-
-<pre><code>system "echo 'My Octopress Page is coming soon ^&amp;hellip;' &gt; index.html"
-</code></pre>
-
-<p><code>rake setup_github_pages</code>命令最后出现<code>Now you can deploy to xxxxxxx with `rake deploy`</code>, 就表示成功.</p>
-
-<p>接下来</p>
-
-<pre><code>rake generate
-</code></pre>
-
-<p>将会在myoctopress的public目录中生成静态的文件, 可以使用下面的命令预览</p>
-
-<pre><code>rake preview
-</code></pre>
-
-<p>通过<a href="http://localhost:4000">http://localhost:4000</a>来访问, 现在应该只能看到空白的网站.</p>
-
-<h2>第一篇blog</h2>
-
-<p>参考<a href="http://octopress.org/docs/blogging/">http://octopress.org/docs/blogging/</a></p>
-
-<pre><code>rake new_post["title"]
-</code></pre>
-
-<p>将会在<code>source/_posts</code>目录中创建指定名称的markdown文件, 文件名前面会自动加上年月日. title不能有中文, 因为这个名字会在url中使用, 中文标题可以打开这个markdown文件后自行修改, 刚刚创建的markdown文件内容如下</p>
-
-<pre><code>---
-layout: post
-title: "title"
-date: 2012-03-18
-comments: true
-categories:
----
-</code></pre>
-
-<p>这段除了title改成自己需要的, 别的可以先不管, 详细的见这段开始提到的参考.</p>
-
-<p>如果刚刚没关闭<code>rake preview</code>, 那么现在浏览<a href="http://localhost:4000">http://localhost:4000</a>应该能看到有了新的变化.</p>
-
-<h2>提交到github</h2>
-
-<p>先把<code>rake preview</code>关掉, 命令行</p>
-
-<pre><code>rake deploy
-</code></pre>
-
-<p>如果是直接使用TortoiseGit, 而不是Git for Windows的话, 这里将会因为ssh配置相关而发生错误. 修改配置会另起一篇来说, 这里可以自行使用TortoiseGit来提交.</p>
-
-<p>先说明一下目录的情况</p>
-
-<ul>
-<li><code>myoctopress</code> 是source分支</li>
-<li><code>myoctopress/_deploy</code> 是master分支</li>
-</ul>
-
-
-<p>如果仅仅需要看到网站, 只需要在<code>myoctopress/_deploy</code>目录中用TortoiseGit的<code>Git Sync</code>, Remote Branch选择<code>master</code>, 然后Push即可</p>
-
-<p>如果同时需要将原始的markdown等文件也提交到github, 就是在<code>myoctopress</code>目录做类似的操作.</p>
-
-<p>先在<code>myoctopress</code>目录中把已经修改的文件和<code>source\_posts</code>目录下的新文件都<code>Git Commit -&gt; "source"</code></p>
-
-<p>然后<code>Git Sync</code>, 在Remote Branch选择<code>source</code>, 如果没有这个分支就自己填上, 再Push.</p>
-
-<p>如果Push请确认<code>Git Sync</code>时的Remote URL设置的是<code>origin</code>, 另外一个<code>octopress</code>是Octopress项目的Url, 所以Push会失败, 除非你获得了操作Octopress项目的权限.</p>
-
-<h3>结构说明</h3>
-
-<p>github上的<code>master</code>(网站)和<code>source</code>(原始文件), 与本地的对应分支/目录是平等的关系, 上面提交到github不能理解为从属关系, 了解git的话这个很容易理解.</p>
-
-<p>可以按照需要将<code>myoctopress/_deploy</code> (master分支) 目录放到任何Web服务器(当然会有一些绝对路径有问题)</p>
-
-<p>同样<code>myoctopress</code>(source分支)可以不向github上Push, 而保留在自己本机, 或者Push到U盘等其它备份的地方, 熟悉git的话这是很自然的事.</p>
-
-<h2>还剩下些</h2>
-
-<p>Octopress的文档中github相关都是使用git命令行, 上述的操作在Push时使用的是TortoiseGit,  使用Git for Windows操作github上的代码库以后另起一篇来说.</p>
-
-<p>这些是根据昨天的操作回忆而写的, 所以可能有疏漏和记忆偏差.</p>
-
-<p>Octopress的模版, 评论, 还有其它扩展可以Google, 以后用到也许会写些文章.</p>
-
-<p>Octopress自身的东西在<a href="http://octopress.org/docs/">http://octopress.org/docs/</a>上很全.</p>
-
-<p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -791,6 +628,14 @@ categories:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
