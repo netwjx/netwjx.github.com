@@ -56,7 +56,7 @@
   
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
-  <li><a href="/blog/categories">分类</a></li>
+  <!-- <li><a href="/blog/categories">分类</a></li> -->
   <li><a href="/blog/archives">存档</a></li>
 </ul>
 
@@ -85,6 +85,8 @@
 
 
 <time datetime="2012-03-18T14:43:00+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="#comments">评论</a>
         
       </p>
     
@@ -392,11 +394,12 @@ categories:
         <a class="basic-alignment right" href="/blog/2012/03/25/unlock-google-play-android-market/" title="Next Post: Google Play/Android Market 解锁">Google Play/Android Market 解锁 &raquo;</a>
       
     </p>
+
   </footer>
 </article>
 
   <section>
-    <h1>Comments</h1>
+    <h1><a name="comments"></a>评论</h1>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
@@ -406,7 +409,7 @@ categories:
 <aside class="sidebar">
   
     <section>
-  <h1>Recent Posts</h1>
+  <h1>近期文章</h1>
   <ul id="recent_posts">
     
       <li class="post">
@@ -448,13 +451,33 @@ categories:
   </ul>
 </section>
 
+<section>
+	<div id="recentcomments" class="dsq-widget">
+		<h1 class="dsq-widget-title">近期评论</h1>
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
 
 
 <section>
-  <h1>On Delicious</h1>
+	<div id="popularthreads" class="dsq-widget">
+		<h2 class="dsq-widget-title">热门评论</h2>
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=10"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+
+
+
+
+<section>
+  <h1>我的书签</h1>
   <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/netwjx?count=5&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/netwjx">My Delicious Bookmarks &raquo;</a></p>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/netwjx?count=10&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://d.me/netwjx">My Delicious Bookmarks &raquo;</a></p>
 </section>
 
 

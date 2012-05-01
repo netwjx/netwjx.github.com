@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
   <title><![CDATA[类别: DirectShow | netwjx's Blog]]></title>
   <link href="http://netwjx.github.com/blog/categories/directshow/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-04-29T16:13:25+08:00</updated>
+  <updated>2012-05-01T22:28:41+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
     <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
 
   
   <entry>
     <title type="html"><![CDATA[捕获摄像头信息]]></title>
+    
+      <category term="DirectShow" />
+    
+      <category term="MF" />
+    
+      <category term="VLC" />
+    
+      <category term="Win32API" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/21/camera-capture/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-21T14:59:00+08:00</published>
     <updated>2012-04-21T14:59:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/21/camera-capture</id>
     <content type="html"><![CDATA[<p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
@@ -69,7 +85,8 @@
 
 
 <p>我最后选择的使用DirectShow, 使用<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库, 代码麻烦了点, 但是有示例还是问题不大.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/21/camera-capture/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

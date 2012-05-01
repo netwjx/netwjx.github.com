@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
   <title><![CDATA[类别: Java | netwjx's Blog]]></title>
   <link href="http://netwjx.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-04-29T16:13:25+08:00</updated>
+  <updated>2012-05-01T22:28:41+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
     <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
 
   
   <entry>
     <title type="html"><![CDATA[截取指定字节长度的字符串]]></title>
+    
+      <category term="Java" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-15T18:35:00+08:00</published>
     <updated>2012-04-15T18:35:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length</id>
     <content type="html"><![CDATA[<p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
@@ -112,7 +122,8 @@ return n;
 <p>这个问题始终和编码类型有关的, 因为需要返回的是字节数组/流的长度, 而不是字符数组/串/流的长度.</p>
 
 <p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

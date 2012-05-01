@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
   <title><![CDATA[类别: Octopress | netwjx's Blog]]></title>
   <link href="http://netwjx.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-04-29T16:13:25+08:00</updated>
+  <updated>2012-05-01T22:28:41+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
     <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
 
   
   <entry>
     <title type="html"><![CDATA[在Octopress中使用代码高亮]]></title>
+    
+      <category term="Jekyll" />
+    
+      <category term="Octopress" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-21T16:45:00+08:00</published>
     <updated>2012-04-21T16:45:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress</id>
     <content type="html"><![CDATA[<p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
@@ -120,12 +132,23 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p><iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/3h5A4/3/embedded/js,resources,html,css,result/light/"></iframe></p>
 
 <p><a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsFiddle Tag 插件的更多资料</a></p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress 笔记]]></title>
+    
+      <category term="Octopress" />
+    
+      <category term="Ruby" />
+    
     <link href="http://netwjx.github.com/blog/2012/03/18/octopress-note/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-03-18T14:43:00+08:00</published>
     <updated>2012-03-18T14:43:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/03/18/octopress-note</id>
     <content type="html"><![CDATA[<p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
@@ -380,7 +403,8 @@ categories:
 <p>Octopress自身的东西在<a href="http://octopress.org/docs/">http://octopress.org/docs/</a>上很全.</p>
 
 <p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/03/18/octopress-note/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

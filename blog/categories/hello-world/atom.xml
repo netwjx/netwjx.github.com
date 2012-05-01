@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
   <title><![CDATA[类别: Hello World | netwjx's Blog]]></title>
   <link href="http://netwjx.github.com/blog/categories/hello-world/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-04-29T16:13:25+08:00</updated>
+  <updated>2012-05-01T22:28:41+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
     <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
 
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress]]></title>
+    
+      <category term="Hello World" />
+    
     <link href="http://netwjx.github.com/blog/2012/03/18/hello-octopress/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-03-18T02:34:00+08:00</published>
     <updated>2012-03-18T02:34:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/03/18/hello-octopress</id>
     <content type="html"><![CDATA[<p>终于折腾起来了</p>
@@ -25,7 +35,8 @@
 <p>基本是四处碰壁,还都是很难找到答案的</p>
 
 <p>5个小时就这样过去了</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/03/18/hello-octopress/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

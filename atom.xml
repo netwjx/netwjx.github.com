@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
   <title><![CDATA[netwjx's Blog]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-04-29T16:13:25+08:00</updated>
+  <updated>2012-05-01T22:28:41+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
     <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
 
   
   <entry>
     <title type="html"><![CDATA[WinForms开发中SynchronizationContext和Invoke的使用注意事项]]></title>
+    
+      <category term="Dotnet" />
+    
+      <category term="Thread" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-29T14:26:00+08:00</published>
     <updated>2012-04-29T14:26:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke</id>
     <content type="html"><![CDATA[<p>WinForms 开发中<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>是用于非UI线程中请求修改UI元素的方法, 一般配合<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>使用:</p>
@@ -176,12 +188,23 @@
 <p>上面代码的两处断言都通过了, 这种情况下<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.post.aspx">Form1.SyncContext.Post</a>仍旧可以调用, 但是将<strong>不产生任何效果</strong>, 也<strong>不抛出异常</strong>, 因为<code>new Form1()</code>的那个线程已经结束了, 以及那个线程并没有执行消息循环<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>.</p>
 
 <p>如果需要在<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>之后, 相关的UI元素变得可用时再执行相关代码, 可以自行定义事件, 实现相关的触发和绑定, 确保<code>new Form1</code>和<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>在同一个线程中调用, 在具体的多线程环境中解决办法会表现的完全不同.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[在Octopress中使用代码高亮]]></title>
+    
+      <category term="Jekyll" />
+    
+      <category term="Octopress" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-21T16:45:00+08:00</published>
     <updated>2012-04-21T16:45:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress</id>
     <content type="html"><![CDATA[<p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
@@ -285,12 +308,27 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 
 
 <p><a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsFiddle Tag 插件的更多资料</a></p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[捕获摄像头信息]]></title>
+    
+      <category term="DirectShow" />
+    
+      <category term="MF" />
+    
+      <category term="VLC" />
+    
+      <category term="Win32API" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/21/camera-capture/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-21T14:59:00+08:00</published>
     <updated>2012-04-21T14:59:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/21/camera-capture</id>
     <content type="html"><![CDATA[<p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
@@ -344,12 +382,21 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 
 
 <p>我最后选择的使用DirectShow, 使用<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库, 代码麻烦了点, 但是有示例还是问题不大.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/21/camera-capture/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[截取指定字节长度的字符串]]></title>
+    
+      <category term="Java" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-15T18:35:00+08:00</published>
     <updated>2012-04-15T18:35:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length</id>
     <content type="html"><![CDATA[<p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
@@ -477,12 +524,23 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>这个问题始终和编码类型有关的, 因为需要返回的是字节数组/流的长度, 而不是字符数组/串/流的长度.</p>
 
 <p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[在jQuery中发生'Object' 未定义]]></title>
+    
+      <category term="IE9" />
+    
+      <category term="Javascript" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-15T13:09:00+08:00</published>
     <updated>2012-04-15T13:09:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery</id>
     <content type="html"><![CDATA[<p>之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 <code>'Object' 未定义</code> 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下.</p>
@@ -512,12 +570,23 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>麻烦点的就是先不设置iframe的src, 等移除iframe操作完成后再设置, 一般可以考虑在window.onload时做这个操作.</p>
 
 <p>可以利用setTimeout让一些操作在事件触发完毕后再执行, 关于setTimeout的特性可以参考<a href="http://ejohn.org/blog/how-javascript-timers-work/">How JavaScript Timers Work</a></p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[爬山备忘]]></title>
+    
+      <category term="Live" />
+    
+      <category term="Memo" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-07T18:49:00+08:00</published>
     <updated>2012-04-07T18:49:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/04/07/mountain-climbing</id>
     <content type="html"><![CDATA[<p>前几天去爬山,记下中间需要注意的事项,有些备忘的适用场景不限于爬山.</p>
@@ -589,12 +658,21 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>给被偷留下二手准备,至少要有一个人做这样的准备,准备如怎么回家</p></li>
 </ol>
 
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Play/Android Market 解锁]]></title>
+    
+      <category term="Android" />
+    
     <link href="http://netwjx.github.com/blog/2012/03/25/unlock-google-play-android-market/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-03-25T22:09:00+08:00</published>
     <updated>2012-03-25T22:09:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/03/25/unlock-google-play-android-market</id>
     <content type="html"><![CDATA[<p>Android Market刚改名叫Google Play不久,不明白为什么改成这个名字,难道Play后面还有Game?</p>
@@ -662,12 +740,23 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>总感觉玩起来不那么顺畅,熟悉了能在中间环节上快点,但是还是感觉繁琐.</p>
 
 <p>上述这些可能是因为要兼容旧版本做的一些妥协吧.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/03/25/unlock-google-play-android-market/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress 笔记]]></title>
+    
+      <category term="Octopress" />
+    
+      <category term="Ruby" />
+    
     <link href="http://netwjx.github.com/blog/2012/03/18/octopress-note/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-03-18T14:43:00+08:00</published>
     <updated>2012-03-18T14:43:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/03/18/octopress-note</id>
     <content type="html"><![CDATA[<p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
@@ -922,12 +1011,21 @@ categories:
 <p>Octopress自身的东西在<a href="http://octopress.org/docs/">http://octopress.org/docs/</a>上很全.</p>
 
 <p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/03/18/octopress-note/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress]]></title>
+    
+      <category term="Hello World" />
+    
     <link href="http://netwjx.github.com/blog/2012/03/18/hello-octopress/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-03-18T02:34:00+08:00</published>
     <updated>2012-03-18T02:34:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/03/18/hello-octopress</id>
     <content type="html"><![CDATA[<p>终于折腾起来了</p>
@@ -937,7 +1035,8 @@ categories:
 <p>基本是四处碰壁,还都是很难找到答案的</p>
 
 <p>5个小时就这样过去了</p>
-]]></content>
+
+      <p><a href="http://netwjx.github.com/blog/2012/03/18/hello-octopress/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
