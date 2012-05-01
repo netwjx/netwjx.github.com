@@ -11,11 +11,19 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 81.0,
+		"height": 311.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"pc",
+				"Package Control: Install Package"
+			]
 		],
-		"width": 392.0
+		"width": 400.0
 	},
 	"console":
 	{
@@ -32,17 +40,45 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Netwjx/netwjx.github.com/README.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/after_footer.html",
 		"/C/Users/Netwjx/netwjx.github.com/_config.yml",
-		"/C/Users/Netwjx/netwjx.github.com/source/_includes/asides/twitter.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_layouts/post.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/article.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/custom/category_feed.xml",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/disqus.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/atom.xml",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/custom/after_footer.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/index.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/asides/delicious.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_layouts/page.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/post/sharing.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_layouts/default.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/archive_post.html",
+		"/C/Users/netwjx/netwjx.github.com/source/_includes/asides/disqus_popular_threads.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/asides/disqus_recent_comments.html",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/asides/recent_posts.html",
+		"/C/Users/netwjx/netwjx.github.com/source/_includes/asides/disqus_recent_comments.html",
+		"/C/Users/Netwjx/netwjx.github.com/plugins/category_generator.rb",
+		"/C/Users/Netwjx/netwjx.github.com/source/_layouts/category_index.html",
+		"/C/Users/Netwjx/netwjx.github.com/plugins/category_list.rb",
 		"/C/Users/Netwjx/netwjx.github.com/source/_includes/custom/navigation.html",
+		"/D/games/Stream/steamapps/common/Battlefield 2/mods/xpack/AI/AIDefault.ai",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-29-winforms-synchronizationcontext-and-invoke.markdown",
+		"/D/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-29-winforms-synchronizationcontext-and-invoke.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-21-using-code-in-octopress.markdown",
+		"/D/Users/Netwjx/Documents/projects_svn_work/ZhongYiPlatform_trunk/Src/Plugins/PSClient.Main/Forms/FrmMain.Designer.cs",
+		"/D/Users/Netwjx/Documents/projects_svn_work/ZhongYiPlatform_trunk/Src/Plugins/PSClient.Main/Forms/FrmMain.cs",
+		"/D/Users/Netwjx/Documents/projects_svn_work/ZhongYiPlatform_trunk/Src/Plugins/PSClient.Main/PluginDefine.cs",
+		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-21-camera-capture.markdown",
+		"/C/Users/Netwjx/netwjx.github.com/p.sublime-workspace",
+		"/C/Users/Netwjx/netwjx.github.com/source/_includes/asides/twitter.html",
 		"/C/Users/Netwjx/netwjx.github.com/source/_includes/custom/header.html",
 		"/C/Users/Netwjx/netwjx.github.com/Gemfile",
 		"/C/Users/Netwjx/netwjx.github.com/.gitignore",
-		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-21-using-code-in-octopress.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/plugins/jsfiddle.rb",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-03-18-octopress-note.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-15-substring-with-bytes-length.markdown",
-		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-21-camera-capture.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/source/_posts/2012-04-07-mountain-climbing.markdown",
 		"/C/Users/Netwjx/netwjx.github.com/cmd.cmd",
 		"/C/Users/Netwjx/netwjx.github.com/p.sublime-project",
@@ -70,9 +106,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 90.0,
+		"height": 0.0,
 		"where_history":
 		[
+			"C:\\Users\\Netwjx\\netwjx.github.com\\source",
 			"C:\\Users\\Netwjx\\netwjx.github.com",
 			"C:\\Users\\Netwjx\\netwjx.github.com\\source",
 			"C:\\Users\\Netwjx\\netwjx.github.com",
@@ -84,6 +121,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"disqus.html",
+			"count.js",
+			"count.ks",
+			"disqus_identifier",
+			"评论",
+			"TODO",
+			"category_links",
+			"write_to_tag_cloud",
+			"Close",
 			"lsi",
 			"Categories",
 			"bundler",
@@ -147,7 +193,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{

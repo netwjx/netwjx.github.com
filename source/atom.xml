@@ -3,8 +3,7 @@ layout: nil
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
-  <title><![CDATA[{{ site.title }}]]></title>
+  <title><![CDATA[{{ site.title | cdata_escape }}]]></title>
   <link href="{{ site.url }}/atom.xml" rel="self"/>
   <link href="{{ site.url }}/"/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
@@ -12,16 +11,28 @@ layout: nil
   <author>
     <name><![CDATA[{{ site.author | strip_html }}]]></name>
     {% if site.email %}<email><![CDATA[{{ site.email }}]]></email>{% endif %}
+    <uri>{{ site.url }}/</uri>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  {% if site.subtitle %}<subtitle><![CDATA[{{ site.subtitle | cdata_escape }}]]></subtitle>{% endif %}
 
   {% for post in site.posts limit: 20 %}
   <entry>
     <title type="html"><![CDATA[{{ post.title | cdata_escape }}]]></title>
+    {% for category in post.categories %}
+      <category term="{{ category }}" />
+    {% endfor %}
     <link href="{{ site.url }}{{ post.url }}"/>
+    <author>
+      <name><![CDATA[{{ site.author | strip_html }}]]></name>
+      <uri>{{ site.url }}/</uri>
+    </author>
+    <published>{{ post.date | date_to_xmlschema }}</published>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
     <id>{{ site.url }}{{ post.id }}</id>
-    <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }}]]></content>
+    <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }}
+      <p><a href="{{ site.url }}{{ post.url }}#comments">查看评论</a></p>]]></content>
   </entry>
   {% endfor %}
 </feed>

@@ -1,0 +1,11 @@
+{% if site.disqus_short_name %}
+<section>
+	<div id="popularthreads" class="dsq-widget">
+		<h2 class="dsq-widget-title">热门评论</h2>
+		<script type="text/javascript" src="http://{{ site.disqus_short_name }}.disqus.com/popular_threads_widget.js?num_items=10"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+{% endif %}
+
+
