@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://netwjx.github.com
-title: netwjx's Blog
+title: netwjx
 subtitle: 混乱与有序
 author: netwjx
 simple_search: http://google.com/search
@@ -46,7 +46,16 @@ titlecase: true       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [asides/recent_posts.html, asides/disqus_recent_comments.html, asides/disqus_popular_threads.html, asides/github.html, asides/twitter.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+default_asides:
+  - asides/recent_posts.html
+  - asides/disqus_recent_comments.html
+  - asides/disqus_popular_threads.html
+  - asides/github.html
+  - asides/twitter.html
+  - asides/delicious.html
+  - asides/pinboard.html
+  - asides/googleplus.html
+  - custom/asides/license.html
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -98,3 +107,10 @@ google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+
+#blogroll
+blogroll:
+  - ["测试网站", "http://foo.bar"]
+
+
+
