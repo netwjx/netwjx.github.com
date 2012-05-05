@@ -9,7 +9,7 @@
       <p class="meta">
         {% include post/date.html %}{{ time }}
         {% if site.disqus_short_name and page.comments != false and site.disqus_show_comment_count == true %}
-         | <a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#comments">评论</a>{% if index %}<a href="{{ root_url }}{{ post.url }}#disqus_thread"></a>{% endif %}
+         | <a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#comments">评论</a>{% if index %}<a href="{{ root_url }}{{ post.url }}#disqus_thread" class="comment-count"></a>{% endif %}
         {% endif %}
       </p>
     {% endunless %}
@@ -23,7 +23,7 @@
       <a rel="full-article" href="{{ root_url }}{{ post.url }}">{{ site.excerpt_link }}</a>
   {% endif %}
   {% if site.disqus_short_name and page.comments != false and site.disqus_show_comment_count == true %}
-      <a href="{{ root_url }}{{ post.url }}#comments">评论</a><a href="{{ root_url }}{{ post.url }}#disqus_thread"></a>
+      <a href="{{ root_url }}{{ post.url }}#comments">评论</a><a href="{{ root_url }}{{ post.url }}#disqus_thread" class="comment-count"></a>
   {% endif %}
     </footer>
 {% else %}

@@ -20,6 +20,9 @@ article {
         @extend .sans;
         text-transform: uppercase;
         position: absolute; top: 0;
+        .comment-count {
+          text-transform: none;
+        }
       }
     }
     @media only screen and (min-width: 768px) {
