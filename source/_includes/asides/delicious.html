@@ -1,8 +1,12 @@
 {% if site.delicious_user %}
 <section>
-  <h1>我的书签</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/{{ site.delicious_user }}?count={{ site.delicious_count }}&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://d.me/{{ site.delicious_user }}">My Delicious Bookmarks &raquo;</a></p>
+	<h1>我的书签</h1>
+	<div id="delicious"></div>
+	<script type="text/javascript">
+        $(window).on('load',function(){
+            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/{{ site.delicious_user }}?count={{ site.delicious_count }}&sort=date&callback=renderDeliciousLinks').appendTo('head');
+        });
+	</script>
+	<a href="http://d.me/{{ site.delicious_user }}">我的书签 &raquo;</a>
 </section>
 {% endif %}
