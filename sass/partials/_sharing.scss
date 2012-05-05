@@ -1,7 +1,12 @@
 .sharing {
   p.meta + & {
-    padding: { top: 1em; left: 0; }
+    padding: { top: 1em; bottom:1em; left: 0; }
     background: $img-border top left repeat-x;
+    #jiathis_style_32x32 {
+        height:32px;
+        overflow:hidden; _zoom:1;
+    }
+    #jiathis_box .flash-video { display: none; }
   }
 }
 
