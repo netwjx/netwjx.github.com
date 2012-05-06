@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Ruby | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-06T00:30:39+08:00</updated>
+  <updated>2012-05-06T19:19:52+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,263 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby 和 Jekyll 的笔记]]></title>
+    
+      <category term="Jekyll" />
+    
+      <category term="Liquid" />
+    
+      <category term="Octopress" />
+    
+      <category term="Ruby" />
+    
+    <link href="http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-05-06T15:57:00+08:00</published>
+    <updated>2012-05-06T15:57:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note</id>
+    <content type="html"><![CDATA[<p>之前发现<a href="http://octopress.org/">Octopress</a>产生的页面中, <strong>meta</strong>标签的<strong>content</strong>属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点.</p>
+
+<p>插件代码如下</p>
+
+<p>``` ruby plugins/html_attr_filter.rb</p>
+
+<h1>coding: utf-8</h1>
+
+<h1>html attribute filter</h1>
+
+<p>module HtmlAttrFilters</p>
+
+<pre><code>def html_attr(input)
+    input.gsub(/\r\n|\r|\n/, "\r\n"=&gt;'&amp;#13;&amp;#10;', "\r"=&gt;'&amp;#13;', "\n"=&gt;'&amp;#10;')
+end
+</code></pre>
+
+<p>end</p>
+
+<p>Liquid::Template.register_filter HtmlAttrFilters
+```</p>
+
+<p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
+
+<p><code>html source/_includes/head.html
+  &lt;meta name="description" content=""&gt;
+</code></p>
+
+<p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
+
+<h2>Jekyll扩展和Liquid扩展</h2>
+
+<p><a href="http://octopress.org/">Octopress</a>是基于<a href="https://github.com/mojombo/jekyll">Jekyll</a>的, <a href="https://github.com/mojombo/jekyll">Jekyll</a>使用的模版引擎是<a href="https://github.com/Shopify/liquid/wiki">Liquid</a>, 在模版中<code>{{ a | foo | bar}}</code>的<code>foo</code>和<code>bar</code>叫做<strong>Filter</strong>, 后面将把其称为<strong>过滤器</strong>, 在<a href="https://github.com/mojombo/jekyll">Jekyll</a>的<a href="https://github.com/mojombo/jekyll/wiki/Plugins">插件开发文档</a>中有一段是关于过滤器扩展, 我主要是参考这里来做文章开始的扩展.</p>
+
+<h3>Liquid filters</h3>
+
+<p>You can add your own filters to the liquid system much like you can add tags above. Filters are simply modules that export their methods to liquid. All methods will have to take at least one parameter which represents the input of the filter. The return value will be the output of the filter.</p>
+
+<p>``` ruby
+module Jekyll
+  module AssetFilter</p>
+
+<pre><code>def asset_url(input)      
+  "http://www.example.com/#{input}?#{Time.now.to_i}"
+end
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>Liquid::Template.register_filter(Jekyll::AssetFilter)
+```</p>
+
+<p><strong>Advanced</strong>: you can access the <code>site</code> object through the <code>@context.registers</code> feature of liquid. Registers a hash where arbitrary context objects can be attached to. In Jekyll you can access the site object through registers. As an example, you can access the global configuration (_config.yml) like this: <code>@context.registers[:site].config['cdn']</code>.</p>
+
+<h3>延伸: Octopress Jekyll和Liquid所有可用的过滤器</h3>
+
+<p><a href="http://octopress.org/">Octopress</a>扩展的过滤器在<a href="https://github.com/imathis/octopress/blob/master/plugins/octopress_filters.rb">这里</a>, 主要是从36行开始的这些:</p>
+
+<p>``` ruby plugins/octopress_filters.rb
+module OctopressLiquidFilters
+  include Octopress::Date</p>
+
+<p>  # Used on the blog index to split posts on the <!--more--> marker
+  def excerpt(input)</p>
+
+<pre><code>if input.index(/&lt;!--\s*more\s*--&gt;/i)
+  input.split(/&lt;!--\s*more\s*--&gt;/i)[0]
+else
+  input
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Checks for excerpts (helpful for template conditionals)
+  def has_excerpt(input)</p>
+
+<pre><code>input =~ /&lt;!--\s*more\s*--&gt;/i ? true : false
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Summary is used on the Archive pages to return the first block of content from a post.
+  def summary(input)</p>
+
+<pre><code>if input.index(/\n\n/)
+  input.split(/\n\n/)[0]
+else
+  input
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Extracts raw content DIV from template, used for page description as 
+  # contains complete sub-template code on main page level
+  def raw_content(input)</p>
+
+<pre><code>/&lt;div class="entry-content"&gt;(?&lt;content&gt;[\s\S]*?)&lt;\/div&gt;\s*&lt;(footer|\/article)&gt;/ =~ input
+return (content.nil?) ? input : content
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Escapes CDATA sections in post content
+  def cdata_escape(input)</p>
+
+<pre><code>input.gsub(/&lt;!\[CDATA\[/, '&amp;lt;![CDATA[').gsub(/\]\]&gt;/, ']]&amp;gt;')
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Replaces relative urls with full urls
+  def expand_urls(input, url='')</p>
+
+<pre><code>url ||= '/'
+input.gsub /(\s+(href|src)\s*=\s*["|']{1})(\/[^\"'&gt;]*)/ do
+  $1+url+$3
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Improved version of Liquid's truncate:
+  # - Doesn't cut in the middle of a word.
+  # - Uses typographically correct ellipsis (…) insted of '...'
+  def truncate(input, length)</p>
+
+<pre><code>if input.length &gt; length &amp;&amp; input[0..(length-1)] =~ /(.+)\b.+$/im
+  $1.strip + ' &amp;hellip;'
+else
+  input
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Improved version of Liquid's truncatewords:
+  # - Uses typographically correct ellipsis (…) insted of '...'
+  def truncatewords(input, length)</p>
+
+<pre><code>truncate = input.split(' ')
+if truncate.length &gt; length
+  truncate[0..length-1].join(' ').strip + ' &amp;hellip;'
+else
+  input
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Condenses multiple spaces and tabs into a single space
+  def condense_spaces(input)</p>
+
+<pre><code>input.gsub(/\s{2,}/, ' ')
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Removes trailing forward slash from a string for easily appending url segments
+  def strip_slash(input)</p>
+
+<pre><code>if input =~ /(.+)\/$|^\/$/
+  input = $1
+end
+input
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Returns a url without the protocol (http://)
+  def shorthand_url(input)</p>
+
+<pre><code>input.gsub /(https?:\/\/)(\S+)/ do
+  $2
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # Returns a title cased string based on John Gruber's title case http://daringfireball.net/2008/08/title_case_update
+  def titlecase(input)</p>
+
+<pre><code>input.titlecase
+</code></pre>
+
+<p>  end</p>
+
+<p>end
+Liquid::Template.register_filter OctopressLiquidFilters
+```</p>
+
+<p><code>def</code>后的名称即过滤器的名称.</p>
+
+<p><a href="https://github.com/mojombo/jekyll">Jekyll</a>扩展的过滤器在<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">这里</a></p>
+
+<p><a href="https://github.com/Shopify/liquid/wiki">Liquid</a>的标准过滤器在<a href="https://github.com/shopify/liquid/wiki/liquid-for-designers">这里</a></p>
+
+<h2>Ruby的字符串和正则</h2>
+
+<p>Ruby的字符串可以使用双引号<code>"foo bar"</code>, 也可以使用单引号<code>'foo bar'</code>, 区别是:</p>
+
+<ul>
+<li>双引号中可以使用<code>\r\n</code>等转义符号, 以及<code>#{bar}</code>来引入一个变量的值, <code>bar</code>表示一个变量名.</li>
+<li>单引号会将所有的字符原样保留, 包括<code>\r\n</code>, 其等价于双引号的<code>\\r\\n</code>.</li>
+</ul>
+
+
+<p>Ruby字符串的替换可以使用<code>gsub</code>方法, 类似一般语言中的<code>replace</code>, 第一个参数仍旧可以为正则, Ruby的文档中代码示例如下:</p>
+
+<p><code>ruby String#gsub
+"hello".gsub(/[aeiou]/, '*')                  #=&gt; "h*ll*"
+"hello".gsub(/([aeiou])/, '&lt;\1&gt;')             #=&gt; "h&lt;e&gt;ll&lt;o&gt;"
+"hello".gsub(/./) {|s| s.ord.to_s + ' '}      #=&gt; "104 101 108 108 111 "
+"hello".gsub(/(?&lt;foo&gt;[aeiou])/, '{\k&lt;foo&gt;}')  #=&gt; "h{e}ll{o}"
+'hello'.gsub(/[eo]/, 'e' =&gt; 3, 'o' =&gt; '*')    #=&gt; "h3ll*"
+</code></p>
+
+<p>我没有完整的看Ruby的语言规范, 根据文档的描述, 示例代码中最后一行<code>'e' =&gt; 3, 'o' =&gt; '*'</code>叫做<strong>Hash</strong>.</p>
+
+<p>另外一个方法<code>sub</code>和<code>gsub</code>区别在: <code>sub</code>只会替换一次, <code>gsub</code>会替换所有的.</p>
+
+<p>更多资料:</p>
+
+<ul>
+<li> <a href="http://www.ruby-doc.org/docs/ProgrammingRuby/html/tut_stdtypes.html">Ruby基础类型</a>中还有更多关于<code>String</code>类型的基础.</li>
+<li> <a href="http://www.ruby-doc.org/core-1.9.3/String.html">类库参考 String</a>中有完整的<code>String</code>可使用.</li>
+</ul>
+
+
+<p>Ruby中正则的使用感觉和Javascript的十分象, 当然也有一些其它的语法, 详细参考<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">Ruby类库参考 Regexp</a></p>
+
+<p>发现一个特别的地方是Javascript中正则可以使用的选项有<code>igm</code>, 而Ruby是<code>imxo</code>, 见<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">这里</a><strong>的Options</strong></p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress 笔记]]></title>
