@@ -3,7 +3,7 @@ layout: post
 title: "捕获摄像头信息"
 date: 2012-04-21 14:59
 comments: true
-categories: [Win32API, DirectShow, VLC, MF]
+categories: [Win32API, DirectShow, VLC, MF, CSharp]
 ---
 
 最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.
