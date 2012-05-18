@@ -7,9 +7,9 @@ published: false
 categories: Windows Shell Cmd Command Bat
 ---
 
-有时不想使用通用编程语言完成一些常见的目的, 会考虑使用命令行, 但是命令行的资料不容易找, 因为它中间主要是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.
+有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.
 
-下面代码示例中`>`右边表示输入的, 其下一行表示输出, `#`后面的是注释说明
+下面代码示例中`rem`表示对下一行的注释, 一般下一行以`>`开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.
 
 
 打开命令行
@@ -36,7 +36,11 @@ categories: Windows Shell Cmd Command Bat
 
 -   `(command1 & command2)`
 
-    `()`用于组合嵌入多个命令, 可以在其中使用换行符, 将类似`&`的效果, 只是写成了多行
+    `()`用于组合嵌入多个命令, 可以在其中使用换行符, 将类似`&`的效果, 只是写成了多行, 在`for`和`if`中很有用
+
+        if not defined foo (
+            set foo = bar
+        )
 
 -   `command1 param1;param2`
 
@@ -55,7 +59,7 @@ categories: Windows Shell Cmd Command Bat
 set命令用于基本的查看和设置
 
     >set
-    # ......
+    ....
     USERNAME=netwjx
 
     >set user
@@ -80,11 +84,17 @@ set命令的进一步使用可用来计算数字
 
 使用环境变量
 
-    echo %myvar%> foo.txt
+    >echo %myvar%> foo.txt
 
 `%myvar%`将会被替换成变量值, 并将这个值输出到`foo.txt`.
 
-在执行一行命令时, `%myvar%`的替换将只会执行一次, 所以在`for` `if`这种语句中, 或者使用`()`组合的多个命令中, 如果变量被修改过, 则需要使用叹号`!`扩住变量名
+检测环境变量是否有定义
+
+    if not defined foo (
+        echo need %foo%
+    )
+
+在执行一行命令时, `%myvar%`的替换将只会执行一次, 所以在`for` `if`或者`()`组合的多个命令中, 如果变量被修改过, 则需要使用叹号`!`扩住变量名
 
     set VAR=before
     if "%VAR%" == "before" (
@@ -92,16 +102,24 @@ set命令的进一步使用可用来计算数字
         if "!VAR!" == "after" @echo If you see this, it worked
     )
 
+在`for`的`do`部分, 只有`for`的循环变量是个特例, 每次执行循环都会被替换为循环变量
+
 
 ### 获取一个命令行的输出到环境变量
 
-    for /f "usebackq" %i in (`set`) do @echo %i
+执行`set`命令, 并将每行的内容作为循环变量%i输出
 
-**注意**, 如果在批处理文件中使用for则需要将`%i`写为`%%i`, 象下面这样
+    >for /f %i in ('set') do @echo %i
+    ...
+    windir=C:\windows
 
-    for /f "usebackq" %%i in (`set`) do @echo %%i
+有时可能不方便使用单引号`'`, 可以使用反引号`` ` ``
 
-将回显set命令返回的每一行, 配合自定义的命令行程序, 可以弥补[内建环境变量](#built-in-var)中`%date%`和`%time%`格式不固定的问题.
+    >for /f "usebackq" %i in (`set`) do @echo %i
+    ...
+    windir=C:\windows
+
+更多关于[`for`命令](#for-command)
 
 
 <h3 id="built-in-var">内建环境变量</h3>
@@ -212,7 +230,7 @@ set命令的进一步使用可用来计算数字
 
     返回当前的时间, 格式类似`time /t`命令返回的, 这个还和系统的区域和语言设置有关, 实际处理起来通用性不是很好.
 
--   '%USERDOMAIN%'
+-   `%USERDOMAIN%`
 
     返回当前用户所在的域, 或工作组名
 
@@ -254,7 +272,7 @@ TODO
 
 将当前工作目录切换到最近一次`pushd`时所在的工作目录.
 
-很典型的一个栈stack结构, push和pop.
+很典型的一个栈stack结构, push和pop. stack为空时pop将没有任何效果.
 
 比`cd`命令好用的是`cd`在跨盘符的时候还需要手工切换盘符.
 
@@ -262,7 +280,7 @@ TODO
 延迟 Sleep
 ----------
 
-    ping -n 4 -w 1000 127.0.0.1 > nul
+    >ping -n 4 -w 1000 127.0.0.1 > nul
 
 这将会延迟3秒, 其中`-n`参数表示的是重复ping的次数, 将决定最终的延迟的时间.
 
@@ -297,6 +315,111 @@ P.S. Linux下echo转义符号是`\`
 使用echo和输出重定向可以产生文本文件, 可以用来产生脚本批处理等.
 
 
+<h2 id="for-command">for命令</h2>
+
+如果在批处理文件中使用`for`则需要将`%i`写为`%%i`, 象下面这样
+
+    >for /f %%i in ('set') do @echo %%i
+
+使用`for`命令的循环变量时, 可以使用类似批处理哪样的[参数修饰符](#batch-param-modifiers)
+
+    >for %I in (*.log) do @echo %~nxI
+    log.log
+    ....
+
+下面例子将使用在控制台中的写法, 而不是批处理文件中的写法.
+
+`for`命令一般是用于处理多个文件, 文件的多行, 也可以用于处理另外一个命令的输出. 下面是显示`*.log`文件的例子
+    
+    >for %i in (*.log) do @echo %i
+    C:\Log\log.log
+    ....
+
+匹配目录
+    
+    >for /d %i in (.*) do @echo %i
+    .svn
+    ....
+
+枚举当前目录所有**.txt**文件
+
+    >for /r %i in (*.txt) do @echo %i
+    C:\foo.txt
+    C:\bar\foo.txt
+    ....
+
+枚举所有名字以`.`开始目录, 主要是指`.svn .hg`这些
+
+    >for /d /r %i in (.*) do @echo %i
+    C:\Users\Netwjx\.ssh
+    ....
+
+数字的循环变量
+
+    >for /l %i in (0, 1, 5) do @echo %i
+    0
+    1
+    2
+    3
+    4
+    5
+
+注意初始值`0`和最大值`5`, 都会包含在内, 也就是这个循环将执行**6次**.
+
+显示文件中的每行, 从开始到第一个空格到`tab`之间的字符串
+
+    >for /f %i in (mylog.log) do @echo %i
+    15:07:50.947:
+    15:07:50.947:
+    15:07:50.947:
+    ....
+
+`/f`还可以使用一些参数, 下面将会把`path`环境变量的第一个`;`之前的内容输出
+
+    >for /f "usebackq delims=;= tokens=2" %i in (`set path`) do @echo %i
+    C:\Ruby\bin
+    .COM
+
+详细参数如下, 空格分割
+
+-   `eol=c`
+
+    指定行注释字符, 以`c`字符开始的行将被忽略
+
+-   `skip=n`
+
+    指定忽略开始的n行
+
+-   `delims=xxx`
+
+    指定分割字符, 可以指定多个, 配合`tokens`参数使用, 类似传统编程语言中`split`函数的分割字符
+
+-   `tokens=x,y,m-n`
+
+    将`x y`以及`m-n`之间的字符串返回给循环变量, 下标从1开始, 如果有`y*`,则表示从第`y`个往后的所有都返回.
+
+-   `usebackq`
+
+    表示使用`` ` ``符号表示一个命令行, 而不是传统的`'`符号
+
+配合自定义的命令行程序, 可以自行处理控制台输入和输出, 以及弥补[内建环境变量](#built-in-var)中`%date%`和`%time%`格式不固定的问题.
+
+
+### 查询注册表
+
+这是个使用`for`执行命令并取得命令执行结果到变量的典范.
+
+    >for /f "tokens=3 skip=2" %i in ('reg query HKEY_CLASSES_ROOT\txtfile\shell\open\command /ve') do @echo %i
+    C:\windows\notepad.exe
+
+其中`reg query`命令是读取注册表, 返回的内容类似下面
+    
+    HKEY_CLASSES_ROOT\txtfile\shell\open\command
+    (默认)    REG_SZ    C:\windows\notepad.exe %1
+
+因为其开始会有一个空行, 所以`/f`参数有`skip=2`
+
+
 批处理文件
 ----------
 
@@ -309,11 +432,11 @@ P.S. Linux下echo转义符号是`\`
 
 以`@`开始的命令将不会回显
 
-    @echo hello
+    >@echo hello
 
 同时可以使用`echo off`关闭回显, 如果两者结合的话就是
 
-    @echo off
+    >@echo off
 
 一般在批处理文件第一行, 可以使所有命令都不回显.
 
@@ -344,23 +467,30 @@ echo %4
 
 `%0` 可用来删除脚本自身, 不过这行必须放结尾, 因为一旦删除就会脚本执行出错.
 
-可以用if检测参数是否提供
+可以用`if`检测参数是否提供
 
     >if not "%4"=="" echo %4
 
 1-9不够用可以使用`shift`
 
+    >rem 将参数队列弹出一个, 这将会使旧的%1值被移除, 旧的%2变成%1, 旧的%3变成%2
     >shift
-    # 将参数队列弹出一个, 这将会使旧的%1值被移除, 旧的%2变成%1, 旧的%3变成%2
+    >rem 和上面的类似, 只是一次弹出2个, 旧的%1 %2被移除, 旧的%3 %4 %5将变成%1 %2 %3
     >shift /2
-    # 和上面的类似, 只是一次弹出2个, 旧的%1 %2被移除, 旧的%3 %4 %5将变成%1 %2 %3
+
+如果仅需要将当前的参数原封不动的传递给别的命令行程序, 使用`%*`
+
+    >call foo.bat %*
+
+`%*`将包含原始的`%1-%n`的参数, 不受`shift`影响, `%*`**不能使用**[参数修饰符](#batch-param-modifiers)
 
 
-### 参数修饰符
+<h3 id="batch-param-modifiers">参数修饰符</h3>
 
 参数修饰可以将指定参数扩展为文件或目录名, 使用当前的盘符和目录信息.
 
-    >echo %~dp1 # 把%1参数扩展为包含盘符和路径的字符串
+    >rem 把%1参数扩展为包含盘符和路径的字符串
+    >echo %~dp1
 
 完整的修饰符列表
 
@@ -410,14 +540,15 @@ echo %4
 
 上述的修饰符和多重叠加
 
-    %~dp$PATH:1 # 搜索PATH环境变量的路径中名为%1的文件, 并返回第一个找到的文件的盘符和路径
+    >rem 搜索PATH环境变量的路径中名为%1的文件, 并返回第一个找到的文件的盘符和路径
+    >echo %~dp$PATH:1
 
 
 ### 调用其它批处理
 
 一般是可以直接`other.bat`, 但是可能会发生一些奇怪的现象, 如后续的命令未执行之类的, 所以
 
-    call other.bat arg1 arg2
+    >call other.bat arg1 arg2
 
 
 ### goto跳转到标记
@@ -427,7 +558,7 @@ echo %4
     if "%1"=="" goto help
 
     echo running
-    # .....
+    ....
     goto end
 
     :help
