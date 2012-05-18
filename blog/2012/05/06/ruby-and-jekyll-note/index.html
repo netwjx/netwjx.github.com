@@ -123,7 +123,7 @@
 <p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
 
 <figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&#39;{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}&#39;</span><span class="nt">&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

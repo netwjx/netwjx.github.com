@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[类别: DirectShow | netwjx]]></title>
-  <link href="http://netwjx.github.com/blog/categories/directshow/atom.xml" rel="self"/>
+  <title><![CDATA[类别: CSharp | netwjx]]></title>
+  <link href="http://netwjx.github.com/blog/categories/csharp/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
   <updated>2012-05-19T01:19:03+08:00</updated>
   <id>http://netwjx.github.com/</id>

@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-06T19:19:52+08:00</updated>
+  <updated>2012-05-19T01:19:03+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -64,7 +64,7 @@
 <p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
 
 <figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&#39;{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}&#39;</span><span class="nt">&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -647,6 +647,8 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
   
   <entry>
     <title type="html"><![CDATA[捕获摄像头信息]]></title>
+    
+      <category term="CSharp" />
     
       <category term="DirectShow" />
     

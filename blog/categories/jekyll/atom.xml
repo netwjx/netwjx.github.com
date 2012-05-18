@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Jekyll | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/jekyll/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-06T19:19:52+08:00</updated>
+  <updated>2012-05-19T01:19:03+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -59,7 +59,7 @@ end
 <p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
 
 <p><code>html source/_includes/head.html
-  &lt;meta name="description" content=""&gt;
+  &lt;meta name="description" content='{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}'&gt;
 </code></p>
 
 <p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
