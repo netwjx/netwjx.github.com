@@ -26,7 +26,7 @@ Liquid::Template.register_filter HtmlAttrFilters
 修改`source/_includes/head.html`中`<meta name="description"`所在的行
 
 ``` html source/_includes/head.html
-  <meta name="description" content="{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}">
+  {% raw %}<meta name="description" content="{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}">{% endraw %}
 ```
 
 然后`rake generate`就能看到`<meta name="description"`的**content**已经不会有换行了, 下面说说中间涉及的相关东西.
