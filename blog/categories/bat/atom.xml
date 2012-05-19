@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[类别: Bat | netwjx]]></title>
+  <link href="http://netwjx.github.com/blog/categories/bat/atom.xml" rel="self"/>
+  <link href="http://netwjx.github.com/"/>
+  <updated>2012-05-19T23:51:04+08:00</updated>
+  <id>http://netwjx.github.com/</id>
+  <author>
+    <name><![CDATA[netwjx]]></name>
+    <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Windows命令行和批处理技巧]]></title>
+    
+      <category term="Bat" />
+    
+      <category term="Cmd" />
+    
+      <category term="Command" />
+    
+      <category term="Shell" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-05-19T23:27:00+08:00</published>
+    <updated>2012-05-19T23:27:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills</id>
+    <content type="html"><![CDATA[<p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
+
+<p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
+
+<h2>打开命令行</h2>
+
+<p>除了<code>Win+R cmd</code>打开外, 还可以在文件窗口中按住<strong>Shift + 鼠标右键</strong>, <strong>在此处打开命令窗口</strong>, 在文件夹上<strong>Shift + 鼠标右键</strong>同样有这个菜单项.</p>
+
+<h2 id="multi-commands">在一行执行多个命令</h2>
+
+
+<ul>
+<li><p><code>command1 &amp; command2</code></p>
+
+<p>先执行command1, 然后是command2, 一般在<code>cmd</code>开启新的命令提示符窗口时比较有用</p>
+
+<pre><code>cmd echo 1 &amp;&amp; echo 2 &amp;&amp; echo 3
+</code></pre></li>
+<li><p><code>command1 &amp;&amp; command2</code></p>
+
+<p>先执行command1, 如果执行成功(退出码为0), 将会接着执行command2</p></li>
+<li><p><code>command1 || command2</code></p>
+
+<p>和<code>&amp;&amp;</code>相反, 如果command1执行失败将会执行command2</p></li>
+<li><p><code>(command1 &amp; command2)</code></p>
+
+<p><code>()</code>用于组合嵌入多个命令, 可以在其中使用换行符, 将类似<code>&amp;</code>的效果, 只是写成了多行, 在<code>for</code>和<code>if</code>中很有用</p>
+
+<pre><code>if not defined foo (
+    set foo = bar
+)
+</code></pre></li>
+<li><p><code>command1 param1;param2</code></p>
+
+<p>分割命令的参数, 也可以使用符号<code>,</code>.</p></li>
+</ul>
+
+
+<p>如果命令参数中有<code>&amp;</code> <code>|</code> <code>()</code> <code>&gt;</code> <code>&lt;</code> <code>^</code>则需要使用<code>^</code>转义</p>
+
+<pre><code>&gt;echo ^&amp;
+&amp;
+</code></pre>
+
+<h2>环境变量</h2>
+
+<p>set命令用于基本的查看和设置环境变量</p>
+
+<pre><code>&gt;set
+....
+USERNAME=netwjx
+
+&gt;set user
+USERNAME=netwjx
+
+&gt;set username
+USERNAME=netwjx
+
+&gt;set myvar=varvalue
+</code></pre>
+
+<p>同样的, 如果变量值包含<code>&amp;</code> <code>|</code> <code>&gt;</code> <code>&lt;</code> <code>^</code>, <a href="#multi-commands">使用<code>^</code>转义符</a></p>
+
+<p>set命令的进一步使用可用来计算数字</p>
+
+<pre><code>&gt;set /p expr=输入时间,单位分钟,例如:5*60+35
+输入时间,单位分钟,例如:5*60+35
+&gt;3*60+11
+&gt;set /a sec=%expr%
+191
+&gt;echo %sec%
+191
+</code></pre>
+
+<p>使用环境变量</p>
+
+<pre><code>&gt;echo %myvar%&gt; foo.txt
+</code></pre>
+
+<p><code>%myvar%</code>将会被替换成变量值, 并将这个值输出到<code>foo.txt</code>.</p>
+
+<p>检测环境变量是否有定义</p>
+
+<pre><code>if not defined foo (
+    echo need %foo%
+)
+</code></pre>
+
+<p>在执行一行命令时, <code>%myvar%</code>的替换将只会执行一次, 所以在<code>for</code> <code>if</code>或者<code>()</code>组合的多个命令中, 如果变量被修改过, 则需要使用叹号<code>!</code>扩住变量名</p>
+
+<pre><code>set VAR=before
+if "%VAR%" == "before" (
+    set VAR=after
+    if "!VAR!" == "after" @echo If you see this, it worked
+)
+</code></pre>
+
+<p>在<code>for</code>的<code>do</code>部分, 只有<code>for</code>的循环变量是个特例, 每次执行循环都会被替换为循环变量</p>
+
+<h3>获取一个命令行的输出到环境变量</h3>
+
+<p>执行<code>set</code>命令, 并将每行的内容作为循环变量%i输出</p>
+
+<pre><code>&gt;for /f %i in ('set') do @echo %i
+...
+windir=C:\windows
+</code></pre>
+
+<p>有时可能不方便使用单引号<code>'</code>, 可以使用反引号<code>`</code></p>
+
+<pre><code>&gt;for /f "usebackq" %i in (`set`) do @echo %i
+...
+windir=C:\windows
+</code></pre>
+
+<p>更多关于<a href="#for-command"><code>for</code>命令</a></p>
+
+<h3 id="built-in-var">内建环境变量</h3>
+
+
+<p>内建环境变量是在执行变量替换的时候最先检查的, 其中也有一些比较有用的</p>
+
+<ul>
+<li><p><code>%ALLUSERSPROFILE%</code></p>
+
+<p>返回<strong>所有用户</strong>的数据目录, 对于Win7, 它是<code>C:\ProgramData</code></p></li>
+<li><p><code>%APPDATA%</code></p>
+
+<p>返回当前用户的应用程序数据存储目录</p></li>
+<li><p><code>%CD%</code></p>
+
+<p>返回当前活动目录</p></li>
+<li><p><code>%CMDCMDLINE%</code></p>
+
+<p>返回当前命令行解释器的路径, 结果是被双引号<code>"</code>括起来的</p></li>
+<li><p><code>%CMDEXTVERSION%</code></p>
+
+<p>返回当前命令行处理扩展的版本号</p></li>
+<li><p><code>%COMPUTERNAME%</code></p>
+
+<p>返回当前计算机名称</p></li>
+<li><p><code>%COMSPEC%</code></p>
+
+<p>和<code>%CMDCMDLINE%</code>基本一样, 只是结果不是被双引号<code>"</code>括起来的</p></li>
+<li><p><code>%DATE%</code></p>
+
+<p>返回当前的日期, 格式和<code>date /t</code>命令相同, 这个还和系统的区域和语言设置有关, 实际处理起来通用性不是很好.</p></li>
+<li><p><code>%ERRORLEVEL%</code></p>
+
+<p>返回最近一次命令的执行结果, 一般非0表示发生了错误.</p></li>
+<li><p><code>%HOMEDRIVE%</code></p>
+
+<p>返回用户目录所在的盘符, 格式如<code>C:</code></p></li>
+<li><p><code>%HOMEPATH%</code></p>
+
+<p>返回用户目录的路径, 不包括盘符, 格式如<code>\Users\netwjx</code></p></li>
+<li><p><code>%HOMESHARE%</code>, <code>%LOGONSEVER%</code></p>
+
+<p>文档中有, 但是我没测试出来有效值</p></li>
+<li><p><code>%NUMBER_OF_PROCESSORS%</code></p>
+
+<p>返回系统的处理器数量</p></li>
+<li><p><code>%OS%</code></p>
+
+<p>返回操作系统名称, 基本上Win2000以后都是<code>Windows_NT</code></p></li>
+<li><p><code>%PATH%</code></p>
+
+<p>可执行文件的搜索路径</p></li>
+<li><p><code>%PATHEXT%</code></p>
+
+<p>可执行文件后缀</p></li>
+<li><p><code>%PROCESSOR_ARCHITECTURE%</code></p>
+
+<p>返回处理器架构, <code>x86</code> <code>IA64</code></p></li>
+<li><p><code>%PROCESSOR_IDENTIFIER%</code></p>
+
+<p>返回处理器描述</p></li>
+<li><p><code>%PROCESSOR_LEVEL%</code></p>
+
+<p>返回处理器的系列编号</p></li>
+<li><p><code>%PROCESSOR_REVISION%</code></p>
+
+<p>返回处理器的修订编号</p></li>
+<li><p><code>%PROMPT%</code></p>
+
+<p>返回当前命令提示符窗口的提示符, 可以通过<code>prompt</code>命令修改</p></li>
+<li><p><code>%RANDOM%</code></p>
+
+<p>返回一个随机数字, 范围在0到32767之间</p></li>
+<li><p><code>%SYSTEMDRIVE%</code></p>
+
+<p>返回操作系统所在的盘符</p></li>
+<li><p><code>%SYSTEMROOT%</code></p>
+
+<p>返回操作系统的根路径, 包含盘符</p></li>
+<li><p><code>%TEMP%</code> <code>%TMP%</code></p>
+
+<p>返回当前用户的临时目录</p></li>
+<li><p><code>%TIME%</code></p>
+
+<p>返回当前的时间, 格式类似<code>time /t</code>命令返回的, 这个还和系统的区域和语言设置有关, 实际处理起来通用性不是很好.</p></li>
+<li><p><code>%USERDOMAIN%</code></p>
+
+<p>返回当前用户所在的域, 或工作组名</p></li>
+<li><p><code>%USERNAME%</code></p>
+
+<p>返回当前登录的用户</p></li>
+<li><p><code>%USERPROFILE%</code></p>
+
+<p>返回当前用户目录</p></li>
+<li><p><code>%WINDIR%</code></p>
+
+<p>返回当前操作系统的路径, 类似<code>%SYSTEMROOT%</code></p></li>
+</ul>
+
+
+<p>在内建环境变量中没有指定名称的变量后, 会依次从下面的位置查找</p>
+
+<ul>
+<li>系统变量</li>
+<li>当前用户变量</li>
+<li>Autoexec.bat 中定义的变量</li>
+<li>登录脚本中定义的变量(如果有提供登录脚本)</li>
+<li>当前命令提示符窗口或批处理中定义的变量</li>
+</ul>
+
+
+<h2>管道和重定向</h2>
+
+<p>一个常见的场景, 查找使用特定网络端口的应用程序</p>
+
+<pre><code>&gt;netstat -ano | find ":4000"
+  UDP    0.0.0.0:4000           *:*                                    3876
+</code></pre>
+
+<p>其中最右边的<strong>3876</strong>是应用程序的进程ID, 而<code>|</code>是管道操作符.</p>
+
+<p>管道操作将会把左边命令的输出, 作为右边命令的输入. 上面例子中<code>netstat -ano</code>将会输出本机的网络连接和对应的进程, <code>find ":4000"</code>则是在输入中找包含字符串<code>:4000</code>的行.</p>
+
+<p>重定向和管道也很相似, 典型的用途是将一个命令的输出保存为文本文件.</p>
+
+<pre><code>&gt;netstat -ano &gt; foo.txt
+</code></pre>
+
+<p>可以在当前目录中看到<code>foo.txt</code>, 其内容是<code>netstat -ano</code>命令的输出.</p>
+
+<p>可以和管道操作结合, 将查出来的本地网络连接信息保存到文件</p>
+
+<pre><code>?netstat -ano | find ":4000" &gt; foo.txt
+</code></pre>
+
+<p><code>&gt;</code>会始终覆盖原来的文件, 使用<code>&gt;&gt;</code>则会在文件结尾添加</p>
+
+<pre><code>&gt;netstat -ano &gt;&gt; foo.txt
+</code></pre>
+
+<p>随着反复的运行, <code>foo.txt</code>的结尾会一直增加.</p>
+
+<p>有一个特殊的输出设备叫<code>nul</code>, 它不会产生任何文件, 效果就像执行了命令, 但是不回显命令的输出, 在<a href="#sleep-ping">延迟 Sleep</a>有这个例子.</p>
+
+<p>上述可以将命令正常执行的结果重定向到文件, 但是错误信息仍旧会输出到命令提示符窗口(<strong>标准输出</strong>)</p>
+
+<pre><code>&gt;netstat -x &gt; nul
+
+显示协议统计和当前 TCP/IP 网络连接。
+
+NETSTAT [-a] [-b] [-e] [-f] [-n] [-o] [-p proto] [-r] [-s] [-t] [interval]
+....
+</code></pre>
+
+<p>默认错误信息输出的目标叫<strong>标准错误输出</strong>, 仍旧可以让其不显示</p>
+
+<pre><code>&gt;netstat -x &gt; nul 2&gt;&amp;1
+</code></pre>
+
+<p>其中<code>&gt;&amp;</code>也是重定向操作符, 需要配合<code>&gt;</code> <code>&gt;&gt;</code>使用, 2<strong>标准错误输出</strong>, 1表示<strong>标准输出</strong>.</p>
+
+<p><code>&gt; nul 2&gt;&amp;1</code>表示在将标准输出重定向到<code>nul</code>的同时将<strong>标准错误输出</strong>重定向到<strong>标准输出</strong>, 这样就完成了完全隐藏命令行输出的正常信息和错误信息.</p>
+
+<p>关于重定向的数字下面是完整的参考</p>
+
+<ul>
+<li><p><code>0</code> STDIN</p>
+
+<p>标准输入, 键盘输入</p></li>
+<li><p><code>1</code> STDOUT</p>
+
+<p>标准输出, 命令提示符窗口输出</p></li>
+<li><p><code>2</code> STDERR</p>
+
+<p>标准错误输出, 命令提示符窗口输出</p></li>
+<li><p><code>3-9</code> UNDEFINED</p>
+
+<p>未定义, 参考文档中描述其在特定应用程序中会使用, 但是没找到具体使用的例子, 所以我目前也不清楚具体使用是怎么样的.</p></li>
+</ul>
+
+
+<p>如果仅想取得命令的错误信息可以这样</p>
+
+<pre><code>&gt;netstat -x 2&gt; foo.txt
+</code></pre>
+
+<p>在<a href="#ref-links">参考链接</a>中<strong>Using filters</strong>有管道和重定向混合使用示例.</p>
+
+<h3>输入重定向</h3>
+
+<p>上面的重定向都是输出重定向, 这里开始介绍输入重定向.</p>
+
+<p>在介绍管道的时候使用了<code>find</code>命令, 它会在<strong>标准输入</strong>中查找指定字符串, 除了使用管道外, 还可以使用输入重定向</p>
+
+<pre><code>&gt; netstat -ano &gt; foo.txt
+&gt; find ":4000" &lt; foo.txt
+  UDP    0.0.0.0:4000           *:*                                    3876
+</code></pre>
+
+<p>这会使用中间文件<code>foo.txt</code></p>
+
+<p>而<strong>标准输入</strong>实际是个特殊的输入设备<code>con</code></p>
+
+<pre><code>&gt;find "foo" &lt; con
+</code></pre>
+
+<p>等价于</p>
+
+<pre><code>&gt;find "foo"
+</code></pre>
+
+<p>每当输入包含foo的字符串并回车后, 会立即回显一次.</p>
+
+<p>比如使用用户输入来创建文件</p>
+
+<pre><code>&gt;copy con foo.txt
+&gt;bar
+&gt;hello world
+&gt;^Z
+已复制         1 个文件。
+</code></pre>
+
+<p>其中<code>^Z</code>表示<code>Ctrl+Z</code>, 输入结束.</p>
+
+<p>除了<code>find</code>会使用标准输入外, 常见的还有下列命令也会使用标准输入</p>
+
+<ul>
+<li><p><code>more</code></p>
+
+<p>用于逐屏显示标准输入</p></li>
+<li><p><code>sort</code></p>
+
+<p>按行排序标准输入</p></li>
+</ul>
+
+
+<p>还有一个<code>&lt;&amp;</code>重定向操作符, 文档中的解释是会从右边的设备读取输入, 并从左边输出, 我实在想不出来这具体是在什么场景下使用, 所以也不知道如何介绍.</p>
+
+<p>在<a href="#ref-links">参考链接</a>中<strong>Using filters</strong>有管道和重定向混合使用示例.</p>
+
+<h2>在多个目录间切换工作目录</h2>
+
+<pre><code>&gt;pushd d:\foo
+</code></pre>
+
+<p>将当前工作目录保存后, 立即将工作目录切换到<code>d:\foo</code>.</p>
+
+<pre><code>&gt;popd
+</code></pre>
+
+<p>将当前工作目录切换到最近一次<code>pushd</code>时所在的工作目录.</p>
+
+<p>很典型的一个栈stack结构, push和pop. stack为空时pop将没有任何效果.</p>
+
+<p>比<code>cd</code>命令好用的是<code>cd</code>在跨盘符的时候还需要手工切换盘符.</p>
+
+<h2 id="sleep-ping">延迟 Sleep</h2>
+
+
+<pre><code>&gt;ping -n 4 -w 1000 127.0.0.1 &gt; nul
+</code></pre>
+
+<p>这将会延迟3秒, 其中<code>-n</code>参数表示的是重复ping的次数, 将决定最终的延迟的时间.</p>
+
+<p>因为<code>ping 127.0.0.1</code>会立即返回, 所以实际延迟的时间是 <code>-n</code>参数 - 1 的秒数.</p>
+
+<h2>echo特殊字符</h2>
+
+<p>一般使用<code>%</code>作为转义字符</p>
+
+<pre><code>&gt;echo %username%
+netwjx
+
+&gt;echo %%username%
+%netwjx
+</code></pre>
+
+<p>但是<code>&amp;</code> <code>|</code>需要使用<code>^</code>转义, 这个在上面<a href="#multi-commands">在一行执行多个命令</a>已经有描述</p>
+
+<pre><code>&gt;echo ping -n 3 127.0.0.1^&gt;nul
+ping -n 3 127.0.0.1^&gt;nul
+
+&gt;echo netstat -ano^|find ":80"
+netstat -ano|find ":80"
+</code></pre>
+
+<p>P.S. Linux下echo转义符号是<code>\</code></p>
+
+<p>空行, 在echo紧跟<code>.</code></p>
+
+<pre><code>&gt;echo.
+</code></pre>
+
+<p>使用echo和输出重定向可以产生文本文件, 可以用来产生脚本批处理等.</p>
+
+<h2 id="for-command">for命令</h2>
+
+
+<p>如果在批处理文件中使用<code>for</code>则需要将<code>%i</code>写为<code>%%i</code>, 象下面这样</p>
+
+<pre><code>&gt;for /f %%i in ('set') do @echo %%i
+</code></pre>
+
+<p>使用<code>for</code>命令的循环变量时, 可以使用类似批处理哪样的<a href="#batch-param-modifiers">参数修饰符</a></p>
+
+<pre><code>&gt;for %I in (*.log) do @echo %~nxI
+log.log
+....
+</code></pre>
+
+<p>下面例子将使用在命令提示符窗口中的写法, 而不是批处理文件中的写法.</p>
+
+<p><code>for</code>命令一般是用于处理多个文件, 文件的多行, 也可以用于处理另外一个命令的输出. 下面是显示<code>*.log</code>文件的例子</p>
+
+<pre><code>&gt;for %i in (*.log) do @echo %i
+C:\Log\log.log
+....
+</code></pre>
+
+<p>匹配目录</p>
+
+<pre><code>&gt;for /d %i in (.*) do @echo %i
+.svn
+....
+</code></pre>
+
+<p>枚举当前目录所有<strong>.txt</strong>文件</p>
+
+<pre><code>&gt;for /r %i in (*.txt) do @echo %i
+C:\foo.txt
+C:\bar\foo.txt
+....
+</code></pre>
+
+<p>枚举所有名字以<code>.</code>开始目录, 主要是指<code>.svn .hg</code>这些</p>
+
+<pre><code>&gt;for /d /r %i in (.*) do @echo %i
+C:\Users\Netwjx\.ssh
+....
+</code></pre>
+
+<p>数字的循环变量</p>
+
+<pre><code>&gt;for /l %i in (0, 1, 5) do @echo %i
+0
+1
+2
+3
+4
+5
+</code></pre>
+
+<p>注意初始值<code>0</code>和最大值<code>5</code>, 都会包含在内, 也就是这个循环将执行<strong>6次</strong>.</p>
+
+<p>显示文件中的每行, 从开始到第一个空格到<code>tab</code>之间的字符串</p>
+
+<pre><code>&gt;for /f %i in (mylog.log) do @echo %i
+15:07:50.947:
+15:07:50.947:
+15:07:50.947:
+....
+</code></pre>
+
+<p><code>/f</code>还可以使用一些参数, 下面将会把<code>path</code>环境变量的第一个<code>;</code>之前的内容输出</p>
+
+<pre><code>&gt;for /f "usebackq delims=;= tokens=2" %i in (`set path`) do @echo %i
+C:\Ruby\bin
+.COM
+</code></pre>
+
+<p>详细参数如下, 空格分割</p>
+
+<ul>
+<li><p><code>eol=c</code></p>
+
+<p>指定行注释字符, 以<code>c</code>字符开始的行将被忽略</p></li>
+<li><p><code>skip=n</code></p>
+
+<p>指定忽略开始的n行</p></li>
+<li><p><code>delims=xxx</code></p>
+
+<p>指定分割字符, 可以指定多个, 配合<code>tokens</code>参数使用, 类似传统编程语言中<code>split</code>函数的分割字符</p></li>
+<li><p><code>tokens=x,y,m-n</code></p>
+
+<p>将<code>x y</code>以及<code>m-n</code>之间的字符串返回给循环变量, 下标从1开始, 如果有<code>y*</code>,则表示从第<code>y</code>个往后的所有都返回.</p></li>
+<li><p><code>usebackq</code></p>
+
+<p>表示使用<code>`</code>符号表示一个命令行, 而不是传统的<code>'</code>符号</p></li>
+</ul>
+
+
+<p>配合自定义的命令行程序, 可以自行处理命令提示符窗口的输入和输出, 以及弥补<a href="#built-in-var">内建环境变量</a>中<code>%date%</code>和<code>%time%</code>格式不固定的问题.</p>
+
+<h3>查询注册表</h3>
+
+<p>这是个使用<code>for</code>执行命令并取得命令执行结果到变量的典范.</p>
+
+<pre><code>&gt;for /f "tokens=3 skip=2" %i in ('reg query HKEY_CLASSES_ROOT\txtfile\shell\open\command /ve') do @echo %i
+C:\windows\notepad.exe
+</code></pre>
+
+<p>其中<code>reg query</code>命令是读取注册表, 返回的内容类似下面</p>
+
+<pre><code>HKEY_CLASSES_ROOT\txtfile\shell\open\command
+(默认)    REG_SZ    C:\windows\notepad.exe %1
+</code></pre>
+
+<p>因为其开始会有一个空行, 所以<code>/f</code>参数有<code>skip=2</code></p>
+
+<h2>批处理文件</h2>
+
+<p>批处理文件可以是<code>bat</code>后缀, 也可以是<code>cmd</code>后缀.</p>
+
+<p>批处理文件需要保存为ANSI格式, 对于中文Windows是GBK, 不建议用<strong>UTF-8</strong>, 也不建议有<strong>BOM</strong></p>
+
+<h3>不回显输入的命令</h3>
+
+<p>以<code>@</code>开始的命令将不会回显</p>
+
+<pre><code>&gt;@echo hello
+</code></pre>
+
+<p>同时可以使用<code>echo off</code>关闭回显, 如果两者结合的话就是</p>
+
+<pre><code>&gt;@echo off
+</code></pre>
+
+<p>一般在批处理文件第一行, 可以使所有命令都不回显.</p>
+
+<p>一般调试时可能会需要在某行之后回显, 可以再<code>echo on</code>打开回显.</p>
+
+<h3>批处理参数</h3>
+
+<p>使用<code>%1</code>到<code>%9</code>获取, 其中<code>%0</code>是当前批处理文件的路径.</p>
+
+<p><code>bat Foo\test.bat
+@echo off
+echo %0
+echo %1
+echo %2
+echo %3
+echo %4
+</code></p>
+
+<p>使用示例</p>
+
+<pre><code>&gt;Foo\test.bat 1 2 3 4
+Foo\test.bat
+1
+2
+3
+4
+</code></pre>
+
+<p><code>%0</code> 可用来删除脚本自身, 不过这行必须放结尾, 因为一旦删除就会脚本执行出错.</p>
+
+<p>可以用<code>if</code>检测参数是否提供</p>
+
+<pre><code>&gt;if not "%4"=="" echo %4
+</code></pre>
+
+<p>1-9不够用可以使用<code>shift</code></p>
+
+<pre><code>&gt;rem 将参数队列弹出一个, 这将会使旧的%1值被移除, 旧的%2变成%1, 旧的%3变成%2
+&gt;shift
+&gt;rem 和上面的类似, 只是一次弹出2个, 旧的%1 %2被移除, 旧的%3 %4 %5将变成%1 %2 %3
+&gt;shift /2
+</code></pre>
+
+<p>如果仅需要将当前的参数原封不动的传递给别的命令行程序, 使用<code>%*</code></p>
+
+<pre><code>&gt;call foo.bat %*
+</code></pre>
+
+<p><code>%*</code>将包含原始的<code>%1-%n</code>的参数, 不受<code>shift</code>影响, <code>%*</code><strong>不能使用</strong><a href="#batch-param-modifiers">参数修饰符</a></p>
+
+<h3 id="batch-param-modifiers">参数修饰符</h3>
+
+
+<p>参数修饰可以将指定参数扩展为文件或目录名, 使用当前的盘符和目录信息.</p>
+
+<pre><code>&gt;rem 把%1参数扩展为包含盘符和路径的字符串
+&gt;echo %~dp1
+</code></pre>
+
+<p>完整的修饰符列表</p>
+
+<ul>
+<li><p><code>%~1</code></p>
+
+<p>扩展%1参数并移除参数两边的双引号<code>"</code></p></li>
+<li><p><code>%~f1</code></p>
+
+<p>扩展%1参数为完整的路径</p></li>
+<li><p><code>%~d1</code></p>
+
+<p>扩展%1参数为盘符</p></li>
+<li><p><code>%~p1</code></p>
+
+<p>扩展%1参数为路径, 不包括盘符和文件名</p></li>
+<li><p><code>%~n1</code></p>
+
+<p>扩展%1参数为文件名, 不包括扩展名</p></li>
+<li><p><code>%~x1</code></p>
+
+<p>扩展%1参数为扩展名, 包含点</p></li>
+<li><p><code>%~s1</code></p>
+
+<p>扩展%1参数为仅包含短名称目录名的路径</p></li>
+<li><p><code>%~a1</code></p>
+
+<p>扩展%1参数为文件属性, 格式如<code>--a------</code>, 其它标志位的字母可以自行测试</p></li>
+<li><p><code>%~t1</code></p>
+
+<p>扩展%1参数为文件修改时间, 格式如<code>2011/07/31 17:04</code></p></li>
+<li><p><code>%~z1</code></p>
+
+<p>扩展%1参数为文件大小的数字, 单位字节</p></li>
+<li><p><code>%~$PATH:1</code></p>
+
+<p>在PATH环境变量中指定的所有目录中(分号<code>;</code>分割的目录路径)搜索名为%1的文件名, 返回第一个发现的文件路径, 如果环境变量不存在或者找不到文件, 将返回空白的字符串</p></li>
+</ul>
+
+
+<p>上述的修饰符和多重叠加</p>
+
+<pre><code>&gt;rem 搜索PATH环境变量的路径中名为%1的文件, 并返回第一个找到的文件的盘符和路径
+&gt;echo %~dp$PATH:1
+</code></pre>
+
+<h3>调用其它批处理</h3>
+
+<p>一般是可以直接<code>other.bat</code>, 但是可能会发生一些奇怪的现象, 如后续的命令未执行之类的, 所以</p>
+
+<pre><code>&gt;call other.bat arg1 arg2
+</code></pre>
+
+<h3>goto跳转到标记</h3>
+
+<p>和传统编程语言中的用法一样</p>
+
+<pre><code>if "%1"=="" goto help
+
+echo running
+....
+goto end
+
+:help
+echo help message
+goto :EOF
+
+:end
+echo completed
+</code></pre>
+
+<p>标记使用<code>:label</code>来定义, 然后是<code>goto label</code>跳转.</p>
+
+<p>有一个特殊标记<code>:EOF</code>表示结束, 使用时是<code>goto :EOF</code>.</p>
+
+<h2 id="ref-links">参考链接</h2>
+
+
+<ul>
+<li><p><a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/batch.mspx?mfr=true">Using batch files</a></p></li>
+<li><p><a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/percent.mspx">Using batch parameters</a></p></li>
+<li><p><a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/redirection.mspx?mfr=true">Using command redirection operators</a></p></li>
+<li><p><a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/filters.mspx?mfr=true">Using filters</a></p></li>
+<li><p><a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/cmd.mspx">Cmd</a></p></li>
+<li><p><a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx">Command shell overview</a></p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+</feed>

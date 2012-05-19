@@ -1,0 +1,553 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>netwjx</title>
+  <meta name="author" content="netwjx">
+
+  
+  <meta name="description" content="Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成. blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上. 这里主要是以我自己的环境来写, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://netwjx.github.com/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="netwjx" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">netwjx</a></h1>
+  
+    <h2>混乱与有序</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="订阅Feed">Feed</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:netwjx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="搜索"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <!-- <li><a href="/blog/categories">分类</a></li> -->
+  <li><a href="/blog/archives">存档</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T14:43:00+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/blog/2012/03/18/octopress-note/#comments">评论</a><a href="/blog/2012/03/18/octopress-note/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
+
+<p>blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上.</p>
+
+<p>这里主要是以我自己的环境来写, 即在Windows下使用Octopress. 因为Win下折腾这个中间出的问题很多.</p>
+
+<h2>安装前提</h2>
+
+<p>Octopress使用ruby编写, 所以需要ruby, Win下使用RubyInstaller</p>
+
+<ul>
+<li><a href="http://rubyinstaller.org">http://rubyinstaller.org</a> 因为神奇的原因我这里无法访问它.</li>
+<li><a href="http://rubyforge.org/projects/rubyinstaller/">http://rubyforge.org/projects/rubyinstaller/</a> 这里可以下载到, 我现在看到的RubyInstaller最高版本是1.9.3-p125</li>
+</ul>
+
+
+<p>上面的网页先别关, 还有一个devkit需要下载, 全称Development Kit, 用途是编译一些ruby中使用的c模块, 常见的比如sqlite</p>
+
+<p>那么下载的文件有</p>
+
+<ul>
+<li>rubyinstaller-1.9.3-p125.exe</li>
+<li>devkit-3.4.5r3-20091110.7z</li>
+</ul>
+
+
+<p>Octopress可以到<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 下载一份zip包, 如果已经有git环境则直接</p>
+
+<pre><code>git clone git://github.com/imathis/octopress.git myoctopress
+</code></pre>
+
+<p>我这里使用git, 那么应该会得到一个文件夹(下面提到将名为myoctopress目录), 内容和<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 上显示的一样</p>
+
+<p>前期准备基本完成, 如果没有git而打算使用git看下段</p>
+
+<h3>没有git, 打算使用git</h3>
+
+<p>Win下使用简单的git是TortoiseGit</p>
+
+<ul>
+<li><a href="http://code.google.com/p/tortoisegit/">http://code.google.com/p/tortoisegit/</a> 因为神奇的原因它可能有时会无法访问</li>
+<li><a href="http://goo.gl/ZpyYx">http://goo.gl/ZpyYx</a> 我在金山快盘的共享, 密码为IYzDsp</li>
+</ul>
+
+
+<p>由于TortoiseGit的后端使用的是Git for Windows <a href="http://code.google.com/p/msysgit/">http://code.google.com/p/msysgit/</a> , 所以下载的文件有</p>
+
+<ul>
+<li>TortoiseGit-1.7.6.0-32bit.msi</li>
+<li>Git-1.7.8-preview20111206.exe</li>
+</ul>
+
+
+<p>版本可能不同, 名字应该都是相似的, 先安装<code>Git-1.7.8-preview20111206.exe</code>, 然后是<code>TortoiseGit-1.7.6.0-32bit.msi</code>, 然后右键菜单中就有TortoiseGit项了.</p>
+
+<p>建议将Git for Windows安装目录的bin目录加入到环境变量Path中, 默认是<code>C:\Program Files\Git\bin</code>, 因为Octopress中会使用系统中的git命令</p>
+
+<h2>安装Ruby</h2>
+
+<p><code>rubyinstaller-1.9.3-p125.exe</code>建议安装到<code>c:\ruby</code>, 因为devkit中的默认配置就是这个路径</p>
+
+<p>确保<code>C:\Ruby\bin</code>在你的环境变量Path中, 下面使用的ruby gem命令都需要</p>
+
+<p>然后是devkit-3.4.5r3-20091110.7z解压到<code>c:\ruby</code>.</p>
+
+<p>如果不是这个路径, 解压之后还需要到<code>devkit\msys\1.0.11\etc\fstab</code>修改文件内容.</p>
+
+<p>如果路径包含空格, 则需要将路径转换成8.3格式短文件名, 方法是<code>dir /-n</code>, 就可以看到8.3格式的</p>
+
+<p>建议将<code>C:\Ruby\devkit\msys\1.0.11\bin</code>也加入到环境变量Path中, 可以避免后续在安装ruby的fsevent模块时出现一个没有找到命令行的错误</p>
+
+<p>可以运行<code>C:\Ruby\devkit\msys\1.0.11\msys.bat</code>看看, 这个是msys的环境, 一个最小的UNIX环境, 类似Cygwin, 但是原理不同, 更快, 更小, 前面Git for Windows也是基于这个.</p>
+
+<p>打开<code>C:\Ruby\lib\ruby\1.9.1\i386-mingw32\rbconfig.rb</code>, 找到62行附近, 查找<code>-Wno-missing-field-initializers</code>, 将其删除, 我这里是复制一份新的修改并注释原来的</p>
+
+<pre><code>#CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-missing-field-initializers -Wno-long-long"
+CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-long-long"
+</code></pre>
+
+<p>这么做可以避免在安装ruby的本地c模块时调用gcc失败的问题, 我遇到的是无法安装RedCloth模块, 可能是devkit里面附带的gcc版本旧, 不支持这个选项吧.</p>
+
+<h3>修改gem的源服务器地址</h3>
+
+<p>因为神奇的原因gem可能会下载任何东西失败, 修改后可解决这个问题</p>
+
+<p>gem是ruby的包管理程序, 类似debian的apt-get</p>
+
+<p>打开命令行</p>
+
+<pre><code>gem sources --remove http://rubygems.org/
+gem sources -a http://ruby.taobao.org/
+gem sources -l
+*** CURRENT SOURCES ***
+
+http://ruby.taobao.org
+</code></pre>
+
+<p>最后一个命令<code>gem sources -l</code>是查看当前的配置, 确保输出和上述的一致</p>
+
+<h2>安装Octopress</h2>
+
+<p>前面那么多准备都是为了这里, 主要参考http://octopress.org/docs/setup/.</p>
+
+<p>下述的命令行工作目录都是在myoctopress目录, 为了方便, 你可以在myoctopress目录创建一个cmd.cmd, 内容是</p>
+
+<pre><code>@start
+</code></pre>
+
+<p>命令行</p>
+
+<pre><code>gem install bundler
+</code></pre>
+
+<p>会需要一会时间, 完成后打开myoctopress目录下的Gemfile, 将<code>source "http://rubygems.org"</code>注释掉, 添加<code>source 'http://ruby.taobao.org/'</code>, 如下</p>
+
+<pre><code>#source "http://rubygems.org"
+source 'http://ruby.taobao.org/'
+</code></pre>
+
+<p>这样可以让bundle不会因为神奇的原因而容易出错, 然后命令行</p>
+
+<pre><code>bundle install
+</code></pre>
+
+<p>这会安装Octopress相关依赖的包, 比前一个命令需要更多的时间, 如果打算使用github的话可以看看下一段.</p>
+
+<p><code>bundle install</code>执行完毕后再</p>
+
+<pre><code>rake install
+</code></pre>
+
+<p>这个会创建好相关的目录结构</p>
+
+<p>接下来是设置如何部署, 参考<a href="http://octopress.org/docs/deploying/">http://octopress.org/docs/deploying/</a>, 我这里使用github</p>
+
+<h3>github上创建代码库</h3>
+
+<p><a href="http://pages.github.com">http://pages.github.com</a> 上有详细的说明, 我使用的是User Pages, 比如我的用户名是netwjx, 那么创建项目 netwjx.github.com</p>
+
+<p>后续还有关于域名绑定什么的就不多说了, 主要是修改CNAME记录和A记录的</p>
+
+<p>创建好之后能看到其git访问的地址, 比如我是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
+
+<p>按照github上的说明将提交用的ssh public key都折腾好, 如果以前用过github最好</p>
+
+<h2>设置部署github</h2>
+
+<p>参考<a href="http://octopress.org/docs/deploying/github/">http://octopress.org/docs/deploying/github/</a> , 命令行</p>
+
+<pre><code>rake setup_github_pages
+</code></pre>
+
+<p>输入git的地址,比如我的是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
+
+<p>然后这个命令</p>
+
+<ul>
+<li>会把myoctopress中原来clone时的代码库origin改名为octopress,并将刚刚输入git地址作为origin的代码库地址.</li>
+<li>会把当前分支名称从master改为source</li>
+<li>其它Url的设置还有deploy目录设置等</li>
+</ul>
+
+
+<p>中间需要用到git命令, 所以之前安装Git for Windows后必须将其<code>bin</code>目录加入到Path中</p>
+
+<p>中间可能会在<code>My Octopress Page is coming soon</code>之后出现<code>hellip;</code>不是内部命令之类的错误, 可以不用管, 如果一定不想要出现这个错误可以修改myoctopress目录下的Rakefile, 搜<code>My Octopress Page is coming soon</code>, 在<code>&amp;hellip;</code>前加个<code>^</code>(这个是Windows cmd的转义符), 如下</p>
+
+<pre><code>system "echo 'My Octopress Page is coming soon ^&amp;hellip;' &gt; index.html"
+</code></pre>
+
+<p><code>rake setup_github_pages</code>命令最后出现<code>Now you can deploy to xxxxxxx with `rake deploy`</code>, 就表示成功.</p>
+
+<p>接下来</p>
+
+<pre><code>rake generate
+</code></pre>
+
+<p>将会在myoctopress的public目录中生成静态的文件, 可以使用下面的命令预览</p>
+
+<pre><code>rake preview
+</code></pre>
+
+<p>通过<a href="http://localhost:4000">http://localhost:4000</a>来访问, 现在应该只能看到空白的网站.</p>
+
+<h2>第一篇blog</h2>
+
+<p>参考<a href="http://octopress.org/docs/blogging/">http://octopress.org/docs/blogging/</a></p>
+
+<pre><code>rake new_post["title"]
+</code></pre>
+
+<p>将会在<code>source/_posts</code>目录中创建指定名称的markdown文件, 文件名前面会自动加上年月日. title不能有中文, 因为这个名字会在url中使用, 中文标题可以打开这个markdown文件后自行修改, 刚刚创建的markdown文件内容如下</p>
+
+<pre><code>---
+layout: post
+title: "title"
+date: 2012-03-18
+comments: true
+categories:
+---
+</code></pre>
+
+<p>这段除了title改成自己需要的, 别的可以先不管, 详细的见这段开始提到的参考.</p>
+
+<p>如果刚刚没关闭<code>rake preview</code>, 那么现在浏览<a href="http://localhost:4000">http://localhost:4000</a>应该能看到有了新的变化.</p>
+
+<h2>提交到github</h2>
+
+<p>先把<code>rake preview</code>关掉, 命令行</p>
+
+<pre><code>rake deploy
+</code></pre>
+
+<p>如果是直接使用TortoiseGit, 而不是Git for Windows的话, 这里将会因为ssh配置相关而发生错误. 修改配置会另起一篇来说, 这里可以自行使用TortoiseGit来提交.</p>
+
+<p>先说明一下目录的情况</p>
+
+<ul>
+<li><code>myoctopress</code> 是source分支</li>
+<li><code>myoctopress/_deploy</code> 是master分支</li>
+</ul>
+
+
+<p>如果仅仅需要看到网站, 只需要在<code>myoctopress/_deploy</code>目录中用TortoiseGit的<code>Git Sync</code>, Remote Branch选择<code>master</code>, 然后Push即可</p>
+
+<p>如果同时需要将原始的markdown等文件也提交到github, 就是在<code>myoctopress</code>目录做类似的操作.</p>
+
+<p>先在<code>myoctopress</code>目录中把已经修改的文件和<code>source\_posts</code>目录下的新文件都<code>Git Commit -&gt; "source"</code></p>
+
+<p>然后<code>Git Sync</code>, 在Remote Branch选择<code>source</code>, 如果没有这个分支就自己填上, 再Push.</p>
+
+<p>如果Push请确认<code>Git Sync</code>时的Remote URL设置的是<code>origin</code>, 另外一个<code>octopress</code>是Octopress项目的Url, 所以Push会失败, 除非你获得了操作Octopress项目的权限.</p>
+
+<h3>结构说明</h3>
+
+<p>github上的<code>master</code>(网站)和<code>source</code>(原始文件), 与本地的对应分支/目录是平等的关系, 上面提交到github不能理解为从属关系, 了解git的话这个很容易理解.</p>
+
+<p>可以按照需要将<code>myoctopress/_deploy</code> (master分支) 目录放到任何Web服务器(当然会有一些绝对路径有问题)</p>
+
+<p>同样<code>myoctopress</code>(source分支)可以不向github上Push, 而保留在自己本机, 或者Push到U盘等其它备份的地方, 熟悉git的话这是很自然的事.</p>
+
+<h2>还剩下些</h2>
+
+<p>Octopress的文档中github相关都是使用git命令行, 上述的操作在Push时使用的是TortoiseGit,  使用Git for Windows操作github上的代码库以后另起一篇来说.</p>
+
+<p>这些是根据昨天的操作回忆而写的, 所以可能有疏漏和记忆偏差.</p>
+
+<p>Octopress的模版, 评论, 还有其它扩展可以Google, 以后用到也许会写些文章.</p>
+
+<p>Octopress自身的东西在<a href="http://octopress.org/docs/">http://octopress.org/docs/</a>上很全.</p>
+
+<p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
+</div>
+  
+    <footer>
+  
+  
+      <a href="/blog/2012/03/18/octopress-note/#comments">评论</a><a href="/blog/2012/03/18/octopress-note/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T02:34:00+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/blog/2012/03/18/hello-octopress/#comments">评论</a><a href="/blog/2012/03/18/hello-octopress/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>终于折腾起来了</p>
+
+<p>深深的感觉到在win上折腾实在是极端的痛苦啊</p>
+
+<p>基本是四处碰壁,还都是很难找到答案的</p>
+
+<p>5个小时就这样过去了</p>
+</div>
+  
+    <footer>
+  
+  
+      <a href="/blog/2012/03/18/hello-octopress/#comments">评论</a><a href="/blog/2012/03/18/hello-octopress/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">存档</a>
+    
+    <a class="next" href="/blog/page/2/">下一页 &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>近期日志</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生&#8217;Object&#8217; 未定义</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/07/mountain-climbing/">爬山备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+    <h1 class="dsq-widget-title">近期评论</h1>
+	<div id="recentcomments" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+    <h1 class="dsq-widget-title">热门话题</h1>
+	<div id="popularthreads" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=10"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+
+
+
+
+<section>
+	<h1>我的书签</h1>
+	<div id="delicious"></div>
+	<script type="text/javascript">
+        $(window).on('load',function(){
+            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=10&sort=date&callback=renderDeliciousLinks').appendTo('head');
+        });
+	</script>
+	<a href="http://d.me/netwjx">我的书签 &raquo;</a>
+</section>
+
+
+
+<section>
+  <h1>许可</h1>
+  <div id="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/2.5/cn/88x31.png" /></a><br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/">知识共享署名-相同方式共享 2.5</a></div>
+</section>
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - netwjx -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'netwjxblog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

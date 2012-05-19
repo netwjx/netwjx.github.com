@@ -3,7 +3,7 @@
   <title><![CDATA[类别: CSharp | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/csharp/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T01:19:03+08:00</updated>
+  <updated>2012-05-19T23:51:04+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,289 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[C#委托和Lambda表达式]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="Delegate" />
+    
+      <category term="Functional" />
+    
+      <category term="Lambda" />
+    
+    <link href="http://netwjx.github.com/blog/2012/05/19/csharp-delegate-and-lambda/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-05-19T19:54:00+08:00</published>
+    <updated>2012-05-19T19:54:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/05/19/csharp-delegate-and-lambda</id>
+    <content type="html"><![CDATA[<p>C#算是个多范式编程语言, 除了传统的OO风格, 还可以在部分范围中使用函数式编程的风格, 这里整理一下C#中委托和Lambda实践中的各种写法.</p>
+
+<p>这里不会解释具体的代码含义, 仅仅介绍写法, 可能不适合刚开始学习.</p>
+
+<h2>声明委托类型</h2>
+
+<p>使用前必须要有具体的委托类型, 下面的例子中会使用到这些常用的委托类型</p>
+
+<p>``` csharp</p>
+
+<pre><code>delegate void Action();
+
+delegate void Action&lt;in T1, in T2&gt;(T1 arg1, T2 arg2);
+
+delegate bool Predicate&lt;in T&gt;(T obj);
+
+delegate TResult Func&lt;in T1, in T2, out TResult&gt;(T1 arg1, T2 arg2);
+</code></pre>
+
+<p>```</p>
+
+<p><code>Action</code>和<code>Action&lt;in T1, in T2&gt;</code>是在dotnet 3.5 sp1出现的一个很实用的委托, 类似的还有1-16个参数的, 这里主要使用这2种.</p>
+
+<p><code>Predicate</code>是从dotnet 2.0就出现的, 一般是在泛型集合的查询中使用.</p>
+
+<p><code>Func&lt;in T1, in T2, out TResult&gt;</code>也是dotnet 3.5 sp1出现的, 和<code>Action</code>基本一样, 也有1-16个参数的, 和Action不同的是这个委托都声明有返回值类型, 而不是<code>Action</code>的void.</p>
+
+<h2>最初的写法</h2>
+
+<p>最简单的<code>Action</code></p>
+
+<p>``` csharp</p>
+
+<pre><code>static void Main(string[] args)
+{
+    Action foo = new Action(Foo);
+}
+
+static void Foo()
+{
+    // ...
+}
+</code></pre>
+
+<p>```</p>
+
+<p>对于复杂的委托, 比如<code>Func</code></p>
+
+<p>``` csharp</p>
+
+<pre><code>static void Main(string[] args)
+{
+    Func&lt;int, string, bool&gt; foo = new Func&lt;int, string, bool&gt;(Foo);
+}
+
+static bool Foo(int i, string s)
+{
+    // ...
+}
+</code></pre>
+
+<p>```</p>
+
+<h2>匿名委托</h2>
+
+<p>和上一个区别就是不需要创建<code>Foo</code>方法了</p>
+
+<p>``` csharp</p>
+
+<pre><code>Action foo = new Action(delegate()
+{
+    // ...
+});
+</code></pre>
+
+<p>```</p>
+
+<p><code>Predicate</code>就是这样的</p>
+
+<p>``` csharp</p>
+
+<pre><code>Predicate&lt;string&gt; foo = new Predicate&lt;string&gt;(delegate(string s)
+{
+    return false;
+});
+</code></pre>
+
+<p>```</p>
+
+<p>右边的<code>new xxxx()</code> 可以省略</p>
+
+<p>``` csharp</p>
+
+<pre><code>Action&lt;int, string&gt; foo = delegate(int i, string s)
+{
+    // ...
+};
+</code></pre>
+
+<p>```</p>
+
+<p>由于也是一行代码, 结尾的分号还是必须的.</p>
+
+<p>也适用于<strong>最初的写法</strong></p>
+
+<p>``` csharp</p>
+
+<pre><code>static void Main(string[] args)
+{
+    Func&lt;int, string, bool&gt; foo = Foo;
+}
+
+static bool Foo(int i, string s)
+{
+    // ...
+}
+</code></pre>
+
+<p>```</p>
+
+<p>如果使用的是dotnet 4的编译器, 可以使用<code>var</code>, 看起来就像是颠倒过来了</p>
+
+<p>``` csharp</p>
+
+<pre><code>var foo = new Func&lt;int, string, bool&gt;(delegate(int i, string s)
+{
+    return false;
+});
+</code></pre>
+
+<p>```</p>
+
+<p><code>var</code>是编译器提供的<strong>魔法</strong>, 会自动推导<code>=</code>右边的类型, 当然前提是右边的可以推导出来类型, 无法推导出来就会编译错误.</p>
+
+<h2>Lambda登场</h2>
+
+<p>``` csharp</p>
+
+<pre><code>Action foo = () =&gt; Console.WriteLine("hello, world");
+
+Action&lt;int, string&gt; foo = (i, s) =&gt; Console.WriteLine(i + s);
+
+Predicate&lt;string&gt; foo = s =&gt; s.startsWith("bar");
+
+Func&lt;int, string, bool&gt; foo = (i, s) =&gt; s.Length &lt; i;
+</code></pre>
+
+<p>```</p>
+
+<p>语法方面, 无参数要写成<code>()</code>, 1个参数可以省略括号, 2个及更多参数则必须括号<code>()</code>; <code>=&gt;</code> 右边必须有表达式; 表达式结果必须是委托的返回值类型, 如果委托返回值类型是void则无所谓表达式结果类型.</p>
+
+<p>Lambda也算是编译器魔法, 上述Lambda表达式特点都是左边的委托类型明确, 即委托的参数, 返回值也是明确的, 和<code>var</code>相似, 类型是可推导出来的, 那么就可以使用Lambda, 这样就省了写一堆的参数类型和return语句.</p>
+
+<p>实际使用中可能是这样的</p>
+
+<p>``` csharp</p>
+
+<pre><code>List&lt;string&gt; list = new List&lt;string&gt;();
+// ...
+
+list.FindAll(s =&gt; s.startsWith("bar"));
+</code></pre>
+
+<p>```</p>
+
+<p>即除了声明变量, 参数是明确的委托类型时, 也可以使用Lambda.</p>
+
+<p>Lambda的<code>=&gt;</code>右边也可以是多行代码</p>
+
+<p>``` csharp</p>
+
+<pre><code>Func&lt;int, string, bool&gt; foo = (i, s) =&gt;
+{
+    return false;
+};
+
+ThreadPool.QueueUserWorkItem(o =&gt;
+{
+    // ...
+});
+</code></pre>
+
+<p>```</p>
+
+<h2>委托可以叠加</h2>
+
+<p>``` csharp</p>
+
+<pre><code>Action foo;
+// ...
+foo += ()=&gt; Console.WriteLine("bar");
+
+Func&lt;int, string, bool&gt; foo
+// ...
+foo += (i, s) =&gt; s.Length &lt; i;
+</code></pre>
+
+<p>```</p>
+
+<p>执行时会按照先加先执行的顺序, 如果有返回值, 那么将使用最后加进来的委托的返回值.</p>
+
+<p>同样也可以从叠加的里面减去, 不过这里是按引用, 所以需要保留一个加进去的委托引用.</p>
+
+<p>``` csharp</p>
+
+<pre><code>Action foo;
+// ...
+Action bar = () =&gt; Console.WriteLine("foo");
+foo+=bar;
+// ...
+foo-=bar;
+</code></pre>
+
+<p>```</p>
+
+<h3>事件</h3>
+
+<p>C#提供了一个<code>event</code>关键字用于声明一种特殊的委托, 可以在类外部<code>+=</code> <code>-=</code>, 但是执行委托只能在内部</p>
+
+<p>``` csharp</p>
+
+<pre><code>event EventHandle Foo;
+
+void Bar()
+{
+    Foo += (o, e) = Console.WriteLine("Foo Event");
+}
+
+void Bar2()
+{
+    Foo(new object(), EventArgs.Empty);
+}
+</code></pre>
+
+<p>```</p>
+
+<p>默认的事件实现中<code>+=</code> <code>-=</code>是线程安全的, 这点可以在反编译<code>event</code>的源码中看到, 如果要自行实现<code>event</code>的<code>+=</code> <code>-=</code>则需要自行处理线程安全.</p>
+
+<h2>总结</h2>
+
+<p>使用委托可以避免创建太多的中间方法, 而使用Lambda, 则可以使在写委托的时候避免大量的<code>delegate</code>关键字和重复的委托参数类型声明.</p>
+
+<p>也许会让代码不是很容易理解, 但是只要遵循一些约定, 熟悉了还是没关系的.</p>
+
+<p>重要的是这会少写很多重复的东西, 同样修改时也少修改一些东西.</p>
+
+<h2>参考链接</h2>
+
+<ul>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/aa664629%28v=vs.71%29">C# 语言规范 1.10 委托</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/ms173171%28v=vs.80%29.aspx">委托（C# 编程指南）</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/900fyy8e%28v=vs.80%29.aspx">委托（C# 参考）</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/x53a06bb%28v=vs.80%29.aspx">C# 关键字</a></li>
+<li><a href="http://msdn.microsoft.com/zh-cn/library/bb397687.aspx">Lambda 表达式（C# 编程指南）</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/bfcke1bz">Predicate<T> Delegate</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/bb549311">Action&lt;T1, T2> Delegate</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/system.action">Action Delegate</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/bb534647">Func&lt;T1, T2, TResult> Delegate</a></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/05/19/csharp-delegate-and-lambda/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[捕获摄像头信息]]></title>
