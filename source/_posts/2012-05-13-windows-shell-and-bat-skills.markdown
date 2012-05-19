@@ -1,9 +1,8 @@
 ---
 layout: post
 title: "Windows命令行和批处理技巧"
-date: 2012-05-13 15:04
+date: 2012-05-19 23:27
 comments: true
-published: false
 categories: Windows Shell Cmd Command Bat
 ---
 
@@ -22,7 +21,7 @@ categories: Windows Shell Cmd Command Bat
 
 -   `command1 & command2`
 
-    先执行command1, 然后是command2, 一般在`cmd`开启新的命令控制台时比较有用
+    先执行command1, 然后是command2, 一般在`cmd`开启新的命令提示符窗口时比较有用
 
         cmd echo 1 && echo 2 && echo 3
 
@@ -56,7 +55,7 @@ categories: Windows Shell Cmd Command Bat
 环境变量
 --------
 
-set命令用于基本的查看和设置
+set命令用于基本的查看和设置环境变量
 
     >set
     ....
@@ -208,7 +207,7 @@ set命令的进一步使用可用来计算数字
 
 -   `%PROMPT%`
 
-    返回当前控制台的提示符, 可以通过`prompt`命令修改
+    返回当前命令提示符窗口的提示符, 可以通过`prompt`命令修改
 
 -   `%RANDOM%`
 
@@ -252,13 +251,126 @@ set命令的进一步使用可用来计算数字
 -   当前用户变量
 -   Autoexec.bat 中定义的变量
 -   登录脚本中定义的变量(如果有提供登录脚本)
--   当前命令控制台或批处理中定义的变量
+-   当前命令提示符窗口或批处理中定义的变量
 
 
 管道和重定向
 ------------
 
-TODO
+一个常见的场景, 查找使用特定网络端口的应用程序
+
+    >netstat -ano | find ":4000"
+      UDP    0.0.0.0:4000           *:*                                    3876
+
+其中最右边的**3876**是应用程序的进程ID, 而`|`是管道操作符.
+
+管道操作将会把左边命令的输出, 作为右边命令的输入. 上面例子中`netstat -ano`将会输出本机的网络连接和对应的进程, `find ":4000"`则是在输入中找包含字符串`:4000`的行.
+
+重定向和管道也很相似, 典型的用途是将一个命令的输出保存为文本文件.
+
+    >netstat -ano > foo.txt
+
+可以在当前目录中看到`foo.txt`, 其内容是`netstat -ano`命令的输出.
+
+可以和管道操作结合, 将查出来的本地网络连接信息保存到文件
+
+    ?netstat -ano | find ":4000" > foo.txt
+
+`>`会始终覆盖原来的文件, 使用`>>`则会在文件结尾添加
+
+    >netstat -ano >> foo.txt
+
+随着反复的运行, `foo.txt`的结尾会一直增加.
+
+有一个特殊的输出设备叫`nul`, 它不会产生任何文件, 效果就像执行了命令, 但是不回显命令的输出, 在[延迟 Sleep](#sleep-ping)有这个例子.
+
+上述可以将命令正常执行的结果重定向到文件, 但是错误信息仍旧会输出到命令提示符窗口(**标准输出**)
+
+    >netstat -x > nul
+
+    显示协议统计和当前 TCP/IP 网络连接。
+
+    NETSTAT [-a] [-b] [-e] [-f] [-n] [-o] [-p proto] [-r] [-s] [-t] [interval]
+    ....
+
+默认错误信息输出的目标叫**标准错误输出**, 仍旧可以让其不显示
+
+    >netstat -x > nul 2>&1
+
+其中`>&`也是重定向操作符, 需要配合`>` `>>`使用, 2**标准错误输出**, 1表示**标准输出**.
+
+`> nul 2>&1`表示在将标准输出重定向到`nul`的同时将**标准错误输出**重定向到**标准输出**, 这样就完成了完全隐藏命令行输出的正常信息和错误信息. 
+
+关于重定向的数字下面是完整的参考
+
+-   `0` STDIN
+
+    标准输入, 键盘输入
+
+-   `1` STDOUT
+
+    标准输出, 命令提示符窗口输出
+
+-   `2` STDERR
+    
+    标准错误输出, 命令提示符窗口输出
+
+-   `3-9` UNDEFINED
+
+    未定义, 参考文档中描述其在特定应用程序中会使用, 但是没找到具体使用的例子, 所以我目前也不清楚具体使用是怎么样的.
+
+如果仅想取得命令的错误信息可以这样
+
+    >netstat -x 2> foo.txt
+
+在[参考链接](#ref-links)中**Using filters**有管道和重定向混合使用示例.
+
+
+### 输入重定向
+
+上面的重定向都是输出重定向, 这里开始介绍输入重定向.
+
+在介绍管道的时候使用了`find`命令, 它会在**标准输入**中查找指定字符串, 除了使用管道外, 还可以使用输入重定向
+
+    > netstat -ano > foo.txt
+    > find ":4000" < foo.txt
+      UDP    0.0.0.0:4000           *:*                                    3876
+
+这会使用中间文件`foo.txt`
+
+而**标准输入**实际是个特殊的输入设备`con`
+
+    >find "foo" < con
+
+等价于
+
+    >find "foo"
+
+每当输入包含foo的字符串并回车后, 会立即回显一次.
+
+比如使用用户输入来创建文件
+
+    >copy con foo.txt
+    >bar
+    >hello world
+    >^Z
+    已复制         1 个文件。
+
+其中`^Z`表示`Ctrl+Z`, 输入结束.
+
+除了`find`会使用标准输入外, 常见的还有下列命令也会使用标准输入
+
+-   `more`
+    
+    用于逐屏显示标准输入
+
+-   `sort`
+
+    按行排序标准输入
+
+还有一个`<&`重定向操作符, 文档中的解释是会从右边的设备读取输入, 并从左边输出, 我实在想不出来这具体是在什么场景下使用, 所以也不知道如何介绍.
+
+在[参考链接](#ref-links)中**Using filters**有管道和重定向混合使用示例.
 
 
 在多个目录间切换工作目录
@@ -277,8 +389,7 @@ TODO
 比`cd`命令好用的是`cd`在跨盘符的时候还需要手工切换盘符.
 
 
-延迟 Sleep
-----------
+<h2 id="sleep-ping">延迟 Sleep</h2>
 
     >ping -n 4 -w 1000 127.0.0.1 > nul
 
@@ -327,7 +438,7 @@ P.S. Linux下echo转义符号是`\`
     log.log
     ....
 
-下面例子将使用在控制台中的写法, 而不是批处理文件中的写法.
+下面例子将使用在命令提示符窗口中的写法, 而不是批处理文件中的写法.
 
 `for`命令一般是用于处理多个文件, 文件的多行, 也可以用于处理另外一个命令的输出. 下面是显示`*.log`文件的例子
     
@@ -402,7 +513,7 @@ P.S. Linux下echo转义符号是`\`
 
     表示使用`` ` ``符号表示一个命令行, 而不是传统的`'`符号
 
-配合自定义的命令行程序, 可以自行处理控制台输入和输出, 以及弥补[内建环境变量](#built-in-var)中`%date%`和`%time%`格式不固定的问题.
+配合自定义的命令行程序, 可以自行处理命令提示符窗口的输入和输出, 以及弥补[内建环境变量](#built-in-var)中`%date%`和`%time%`格式不固定的问题.
 
 
 ### 查询注册表
@@ -573,11 +684,17 @@ echo %4
 有一个特殊标记`:EOF`表示结束, 使用时是`goto :EOF`.
 
 
-参考链接
---------
+<h2 id="ref-links">参考链接</h2>
+
+-   [Using batch files](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/batch.mspx?mfr=true)
 
 -   [Using batch parameters](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/percent.mspx)
+
+-   [Using command redirection operators](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/redirection.mspx?mfr=true)
+
+-   [Using filters](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/filters.mspx?mfr=true)
 
 -   [Cmd](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/cmd.mspx)
 
 -   [Command shell overview](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx)
+
