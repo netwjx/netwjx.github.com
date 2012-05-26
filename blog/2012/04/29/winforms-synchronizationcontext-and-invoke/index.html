@@ -56,7 +56,7 @@
   
 <ul class="main-navigation">
   <li><a href="/">首页</a></li>
-  <!-- <li><a href="/blog/categories">分类</a></li> -->
+  <li><a href="/blog/categories/">分类</a></li>
   <li><a href="/blog/archives">存档</a></li>
 </ul>
 
@@ -134,6 +134,9 @@
 
 <pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
 </code></pre>
+
+<!-- more -->
+
 
 <p>当在非UI线程和多个窗口之间操作时, 可能会有一些麻烦的情况发生, 这种情况可能会考虑使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>.</p>
 

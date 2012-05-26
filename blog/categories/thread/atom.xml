@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Thread | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/thread/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -60,6 +60,9 @@ public partial class Form1 : Form
 
 <pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
 </code></pre>
+
+<!-- more -->
+
 
 <p>当在非UI线程和多个窗口之间操作时, 可能会有一些麻烦的情况发生, 这种情况可能会考虑使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>.</p>
 

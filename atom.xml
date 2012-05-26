@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -43,6 +43,11 @@
 <h2>打开命令行</h2>
 
 <p>除了<code>Win+R cmd</code>打开外, 还可以在文件窗口中按住<strong>Shift + 鼠标右键</strong>, <strong>在此处打开命令窗口</strong>, 在文件夹上<strong>Shift + 鼠标右键</strong>同样有这个菜单项.</p>
+
+<!-- more -->
+
+
+
 
 <h2 id="multi-commands">在一行执行多个命令</h2>
 
@@ -783,6 +788,9 @@ echo completed
 
 <p><code>Func&lt;in T1, in T2, out TResult&gt;</code>也是dotnet 3.5 sp1出现的, 和<code>Action</code>基本一样, 也有1-16个参数的, 和Action不同的是这个委托都声明有返回值类型, 而不是<code>Action</code>的void.</p>
 
+<!-- more -->
+
+
 <h2>最初的写法</h2>
 
 <p>最简单的<code>Action</code></p>
@@ -1123,6 +1131,9 @@ echo completed
 
 <p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
 
+<!-- more -->
+
+
 <h2>Jekyll扩展和Liquid扩展</h2>
 
 <p><a href="http://octopress.org/">Octopress</a>是基于<a href="https://github.com/mojombo/jekyll">Jekyll</a>的, <a href="https://github.com/mojombo/jekyll">Jekyll</a>使用的模版引擎是<a href="https://github.com/Shopify/liquid/wiki">Liquid</a>, 在模版中<code>{{ a | foo | bar}}</code>的<code>foo</code>和<code>bar</code>叫做<strong>Filter</strong>, 后面将把其称为<strong>过滤器</strong>, 在<a href="https://github.com/mojombo/jekyll">Jekyll</a>的<a href="https://github.com/mojombo/jekyll/wiki/Plugins">插件开发文档</a>中有一段是关于过滤器扩展, 我主要是参考这里来做文章开始的扩展.</p>
@@ -1458,6 +1469,9 @@ echo completed
 <pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
 </code></pre>
 
+<!-- more -->
+
+
 <p>当在非UI线程和多个窗口之间操作时, 可能会有一些麻烦的情况发生, 这种情况可能会考虑使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>.</p>
 
 <p><a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>可以在当前线程第一次<code>new Form1()</code>之后通过<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>取得, 之后使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.post.aspx">Post</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.send.aspx">Send</a>实现在UI线程执行指定的委托, 下面使用的<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.windowsformssynchronizationcontext.aspx">WindowsFormsSynchronizationContext</a>.Current在WinForms程序中等价于<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>:</p>
@@ -1611,7 +1625,12 @@ echo completed
 
 <p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
 
-<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题, 下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
+<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题.</p>
+
+<!-- more -->
+
+
+<p>下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
 
 <p>将<code>Gemfile.lock</code>的<strong>33行</strong></p>
 
@@ -1731,6 +1750,13 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
 
 <p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
+</ol>
+
+
+<!-- more -->
+
+
+<ol>
 <li><p>DirectShow 的实现</p>
 
 <p>这个实现的API使用起来比上面的要繁杂很多, 但是可以使用<strong>虚拟摄像头</strong>, 现在典型的IM软件其实现应该都是基于此.</p>
@@ -1792,6 +1818,9 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
 
 <p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+
+<!--more -->
+
 
 <p>可能描述的有些不明确, 应该这样说</p>
 
@@ -1937,6 +1966,9 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 
 <p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
 
+<!--more -->
+
+
 <p>记得以前遇到过类似的现象, 这次仔细找了下发现了这个:</p>
 
 <p><a href="http://stackoverflow.com/questions/8389261/ie9-throws-exceptions-when-loading-scripts-in-iframe-why">IE9 throws exceptions when loading scripts in iframe. Why?</a></p>
@@ -1982,6 +2014,9 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <h2>准备工作</h2>
 
 <p>下面只是尽量列出,按需要准备</p>
+
+<!--more -->
+
 
 <ol>
 <li><p>建议在确保前一天睡眠充足的情况下做下面的准备</p></li>
@@ -2075,6 +2110,9 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 
 <p>搜到一些解决办法是使用Market Enabler,但是我尝试的结果是没作用,应该是升级到了Google Play以前的方法失效了.</p>
 
+<!--more -->
+
+
 <p>继续搜索发现了<a href="https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker">Market Unlocker</a> ,使用后发现可用,下面基本是Market Unlocker的中文使用说明.</p>
 
 <h2>Market Unlocker</h2>
@@ -2152,6 +2190,9 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上.</p>
 
 <p>这里主要是以我自己的环境来写, 即在Windows下使用Octopress. 因为Win下折腾这个中间出的问题很多.</p>
+
+<!--more -->
+
 
 <h2>安装前提</h2>
 

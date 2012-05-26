@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Android | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -39,6 +39,9 @@
 <p>上面提示的依据只依据一个 <strong>手机卡的网络运营商</strong>.</p>
 
 <p>搜到一些解决办法是使用Market Enabler,但是我尝试的结果是没作用,应该是升级到了Google Play以前的方法失效了.</p>
+
+<!--more -->
+
 
 <p>继续搜索发现了<a href="https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker">Market Unlocker</a> ,使用后发现可用,下面基本是Market Unlocker的中文使用说明.</p>
 

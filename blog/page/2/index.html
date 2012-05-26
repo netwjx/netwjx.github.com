@@ -9,7 +9,7 @@
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结. 实现方案 avicap32.dll 的实现 Win32API 主要使用capGetDriverDescriptionA函数获取获取摄像头设备, &hellip;">
+  <meta name="description" content="之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 'Object' 未定义 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下. 在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -56,7 +56,7 @@
   
 <ul class="main-navigation">
   <li><a href="/">首页</a></li>
-  <!-- <li><a href="/blog/categories">分类</a></li> -->
+  <li><a href="/blog/categories/">分类</a></li>
   <li><a href="/blog/archives">存档</a></li>
 </ul>
 
@@ -65,266 +65,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-21T14:59:00+08:00" pubdate data-updated="true">2012-04-21</time>
-        
-         | <a href="/blog/2012/04/21/camera-capture/#comments">评论</a><a href="/blog/2012/04/21/camera-capture/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
-
-<h2>实现方案</h2>
-
-<ol>
-<li><p>avicap32.dll 的实现 Win32API</p>
-
-<p>主要使用<code>capGetDriverDescriptionA</code>函数获取获取摄像头设备, 使用<code>capCreateCaptureWindow</code>和<code>SendMessage</code>发送一系列窗口消息控制, 图像数据使用一个<code>PictrueBox</code>控件来显示, 有可以保存到avi文件.</p>
-
-<p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
-
-<p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
-<li><p>DirectShow 的实现</p>
-
-<p>这个实现的API使用起来比上面的要繁杂很多, 但是可以使用<strong>虚拟摄像头</strong>, 现在典型的IM软件其实现应该都是基于此.</p>
-
-<p>没找到什么入门的介绍,只能从MSDN上<a href="http://msdn.microsoft.com/en-us/library/dd375454.aspx">DirectShow</a>翻看</p>
-
-<p>可以先从<a href="http://msdn.microsoft.com/en-us/library/dd390352.aspx">Introduction to DirectShow Application Programming</a>了解典型的结构和流程, <code>Filter Graph Manager</code>是核心的部分, 以及 <a href="http://msdn.microsoft.com/en-us/library/dd375470.aspx">DirectShow System Overview</a>, 结构图:</p>
-
-<p><img src="http://i.msdn.microsoft.com/dynimg/IC420381.png" alt="High level architecture" /></p>
-
-<p>DirectShow 视频捕获部分<a href="http://msdn.microsoft.com/en-us/library/dd407331.aspx">Video Capture</a></p>
-
-<p>在dotnet下有一个<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库对DirectShow的封装, 可以直接在C#和VB.Net中直接使用, 文档仍旧需要以DirectShow的文档为主, 但是DirectShow.Net提供有大量的<a href="http://sourceforge.net/projects/directshownet/files/DirectShowSamples/">代码示例</a>, 个别有些小问题, 但是简单改改都可以正常跑起来.</p></li>
-<li><p>libVLC 的实现, 源自VLC播放器</p>
-
-<p><a href="http://www.videolan.org/vlc/">VLC</a>是跨平台的影音播放器, 除了能播放传统视频外, 还可以捕获视频, <a href="http://www.videolan.org/vlc/features.html">具体的特性</a>中有描述, 可以看到Windows下<strong>Video acquisition</strong>的实现是基于DirectShow</p>
-
-<p>而<a href="http://www.videolan.org/vlc/libvlc.html">libVLC</a>是VLC播放器的底层库</p>
-
-<p><img src="http://images1.videolan.org/images/libvlc_stack.png" alt="Technical Diagram" /></p>
-
-<p>在dotnet下有一个<a href="http://www.videolan.org/vlc/">VLC</a>的封装<a href="http://vlcdotnet.codeplex.com/">vlcdotnet</a>, 也是开源的, 从介绍上可以看到能在WinForm, WPF, SilverLight 5下使用, 需要依赖<strong>libvlc.dll</strong>, <strong>libvlccore.dll</strong>, 安装<a href="http://www.videolan.org/vlc/">VLC</a>播放器后在安装目录下能找到.</p></li>
-<li><p>Microsoft Media Foundation 的实现</p>
-
-<p><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms694197.aspx">MMF</a> 这个其实没什么好讲的, 主要是只有Windows Vista及以后的才支持, 说是用来代替DirectShow的, 文档仍旧是以C++为主的, 在未来也许会比较有价值.</p></li>
-</ol>
-
-
-<h2>综述</h2>
-
-<ol>
-<li><p>最简单的是avicap32的实现.</p></li>
-<li><p>需要支持虚拟摄像头, 或者是方便使用虚拟摄像头调试, 可以使用基于DirectShow的方案.</p></li>
-<li><p>需要跨平台, 或者是涉及到音视频回放之类的可以使用基于VLC的方案.</p></li>
-<li><p>MMF暂时周边相关的还不是很成熟, 除非环境允许能够使用这个方案.</p></li>
-</ol>
-
-
-<p>我最后选择的使用DirectShow, 使用<a href="http://directshownet.sourceforge.net/index.html">DirectShow.Net</a>库, 代码麻烦了点, 但是有示例还是问题不大.</p>
-</div>
-  
-    <footer>
-  
-  
-      <a href="/blog/2012/04/21/camera-capture/#comments">评论</a><a href="/blog/2012/04/21/camera-capture/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-15T18:35:00+08:00" pubdate data-updated="true">2012-04-15</time>
-        
-         | <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
-
-<blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
-
-<p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
-
-<p>可能描述的有些不明确, 应该这样说</p>
-
-<blockquote><p>编写一个截取字符串的函数, 给定<strong>字符串</strong>, <strong>编码格式</strong>, 使用前2个参数编码之后的<strong>字节数组</strong>, 以及截取<strong>字节数组的最大长度</strong>.</p>
-
-<p>要求返回<strong>实际需要截取的长度</strong>, 不能在解码指定长度字节数组后出现<strong>半个字符</strong>的现象.</p></blockquote>
-
-<p>那么测试代码大概是这样的(就以Java为例):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;我abc的def&quot;</span><span class="o">;</span>
-</span><span class='line'>  <span class="n">String</span> <span class="n">charset</span> <span class="o">=</span> <span class="s">&quot;gbk&quot;</span><span class="o">;</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">6</span><span class="o">;</span>
-</span><span class='line'>  <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">charset</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">subString</span><span class="o">(</span><span class="n">str</span><span class="o">,</span> <span class="n">charset</span><span class="o">,</span> <span class="n">bytes</span><span class="o">,</span>
-</span><span class='line'>      <span class="n">length</span><span class="o">),</span> <span class="n">charset</span><span class="o">);</span>
-</span><span class='line'>  <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;我abc的&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最后一行的断言仅适用于gbk和utf-8的情况, 其它的不保证可用.</p>
-
-<p>在开始的帖子中看到过一个实现, 等价于下面的代码:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">subString</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">,</span> <span class="n">String</span> <span class="n">charset</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">length</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">char</span> <span class="n">c</span> <span class="o">:</span> <span class="n">str</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">c</span><span class="o">).</span><span class="na">getBytes</span><span class="o">(</span><span class="n">charset</span><span class="o">).</span><span class="na">length</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="n">length</span><span class="o">)</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
-</span><span class='line'>      <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">==</span> <span class="n">length</span><span class="o">)</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">n</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>不过想想, subString返回值一般在length-3到length之间, 可以探测截取指定长度是否会有问题, 那么就可以有下面的一个实现:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">detectByte</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">,</span> <span class="n">String</span> <span class="n">charset</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">length</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">i</span><span class="o">--;</span>
-</span><span class='line'>      <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">charset</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">while</span> <span class="o">(!</span><span class="n">str</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()).</span><span class="na">equals</span><span class="o">(</span><span class="n">s</span><span class="o">));</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>再想想, 实际有差别的只是最后一个字符, 只比较最后一个字符即可:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">subString</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">,</span> <span class="n">String</span> <span class="n">charset</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span><span class="o">,</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">length</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">UnsupportedEncodingException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">n</span><span class="o">--;</span>
-</span><span class='line'>      <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">n</span><span class="o">,</span> <span class="n">charset</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">i</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">!=</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">n</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>第一种会比较慢些, 后面的方法会占用更多的内存.</p>
-
-<p>这个问题始终和编码类型有关的, 因为需要返回的是字节数组/流的长度, 而不是字符数组/串/流的长度.</p>
-
-<p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取.</p>
-</div>
-  
-    <footer>
-  
-  
-      <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
   
   
     <article>
@@ -362,30 +102,11 @@
 
 <p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
 
-<p>记得以前遇到过类似的现象, 这次仔细找了下发现了这个:</p>
-
-<p><a href="http://stackoverflow.com/questions/8389261/ie9-throws-exceptions-when-loading-scripts-in-iframe-why">IE9 throws exceptions when loading scripts in iframe. Why?</a></p>
-
-<p>以及msdn的 <a href="http://msdn.microsoft.com/en-us/library/gg622929%28v=VS.85%29.aspx?ppud=4">APIs Are Not Available if iFrame Is Removed from DOM Tree</a></p>
-
-<p>简单的说是在包含iframe的页面中, 如果这个iframe被移除后, 其内部的Javascript和DOM API都会无法被调用.</p>
-
-<p>上述<strong>特性</strong>在ie9标准下有效, 往后更新的版本应该也是如此.</p>
-
-<p>上面只是根本原因, 实际会有一些比较复杂的表现方式, 比如在jQuery中类似 <code>$('#id').appendTo('#foo')</code> 的代码将会先从DOM树中移除, 然后再添加进去, 这将会诱发上述现象.</p>
-
-<p>其它的比如jQuery EasyUI的Layout, 它的实现方式会修改DOM结构, 这将会移除和重新创建包含iframe的元素.</p>
-
-<h2>处理办法</h2>
-
-<p>简单的可以是避免在IE9标准模式渲染.</p>
-
-<p>麻烦点的就是先不设置iframe的src, 等移除iframe操作完成后再设置, 一般可以考虑在window.onload时做这个操作.</p>
-
-<p>可以利用setTimeout让一些操作在事件触发完毕后再执行, 关于setTimeout的特性可以参考<a href="http://ejohn.org/blog/how-javascript-timers-work/">How JavaScript Timers Work</a></p>
 </div>
   
     <footer>
+  
+      <a rel="full-article" href="/blog/2012/04/15/object-undefined-in-jquery/">继续阅读 &rarr;</a>
   
   
       <a href="/blog/2012/04/15/object-undefined-in-jquery/#comments">评论</a><a href="/blog/2012/04/15/object-undefined-in-jquery/#disqus_thread" class="comment-count"></a>
@@ -431,72 +152,11 @@
 
 <p>下面只是尽量列出,按需要准备</p>
 
-<ol>
-<li><p>建议在确保前一天睡眠充足的情况下做下面的准备</p></li>
-<li><p>提前查看天气预报,气温,决定穿着的薄厚,一般带一件挡风的外套</p>
-
-<p>如果有可能下雨,准备把雨伞</p></li>
-<li><p>查询路线,包括到山脚下的路线和爬山的路线,记录沿途的标识</p></li>
-<li><p>查询路线顺便估计时间,尽量将登顶或休息放到合适的时间</p></li>
-<li><p>如果是节假日,估计中间可能会堵车之类的事,考虑不容易误点的交通方式或线路</p></li>
-<li><p>准备舒适的鞋子,会步行挺久,所以这个很重要,不建议穿新鞋</p></li>
-<li><p>手机,电子设备充电,如果有电子地图,考虑预先下载好地图,山上可能会有无信号的区域.</p></li>
-<li><p>水和零食,山上的东西会很贵,一般是山下的3倍.水不能太少,也不宜太多,以具体到每人的实际情况决定</p>
-
-<p>容易出汗的人会需要更多的水</p>
-
-<p>爬山途中温度会比较高,不宜带太多遇热会融化的零食,比如巧克力</p>
-
-<p>必要的话用双肩包携带</p></li>
-<li><p>如果人多,可以考虑带纸牌,野餐垫,其它想带的东西,当然还是量力而行,也估计好时间,不要负担太多</p>
-
-<p>相机,考虑是否一定有必要,除了手机可能作为替代,目的地也许还有其它途径可以拍照</p></li>
-<li><p>风景区的话,在网上找一份风景区的简单宣传资料,里面的电话 缩略地图可能会用到</p>
-
-<p>有GPS或类似功能的设备虽然可以定位,但是山上的小路多,一般互联网上的地图都没有山上的详图,而卫星地图有可能没对准,树木茂盛等原因不容易找到自己的位置,而宣传资料上一般会有简略爬山路线</p></li>
-<li><p>简单估计下山计划,如果有缆车下山速度会很快,这样可以有多一些时间在山上.</p>
-
-<p>下山路线,如果可能的话多考虑几条路线</p>
-
-<p>下山的实现,下山后休息的地点,交通方式</p></li>
-<li><p>上述按需要记录到纸上或电子设备,确保电子设备不会中途电量耗尽</p></li>
-<li><p>如果路线是人烟稀少的,请确保有一个家人知道行程安排,什么时间到什么地方</p></li>
-</ol>
-
-
-<h2>出行</h2>
-
-<ol>
-<li><p>携带上面提及的水和零食等,手机,钱包,钥匙,卡(公交 银行 信用卡等)</p></li>
-<li><p>女的考虑怎么化妆,避免出汗后会花的</p></li>
-<li><p>行进途中如果自己感觉身体状况异常,必须立即告知其它同行的人,并理解停下来实施缓解措施.状态异常比如眩晕</p>
-
-<p>爬山消耗不小,身体处于脱水状态不是很好,别刻意不喝水,只要中途能买到水.毕竟爬山还是出来玩嘛</p>
-
-<p>因为在一直活动,喝水不宜大口喝</p>
-
-<p>同时也注意同行的人,有些人性格内向可能会勉强自己,避免同行的人发生状况</p></li>
-<li><p>中途需要休息就休息,没必要挑战自己的极限,爬山需要耐久</p>
-
-<p>可能会有人中途下山</p></li>
-<li><p>山上会有风,出汗后不宜吹风太多,容易感冒,挡风的外套在这里比较有用</p></li>
-<li><p>别做傻事,山上会有一些比较险的地形.同时也注意同行的人中哪些可能会干傻事的人,虽然这样的人很少</p></li>
-<li><p>在计划的最迟下山时间即将到来前开始下山,可以考虑乘缆车下山,如果有的话</p></li>
-<li><p>早点休息,一般这个时候会比较累</p></li>
-</ol>
-
-
-<h2>其它事项</h2>
-
-<ol>
-<li><p>任何人多的地方都要注意小偷,避免注意力被转移</p>
-
-<p>给被偷留下二手准备,至少要有一个人做这样的准备,准备如怎么回家</p></li>
-</ol>
-
 </div>
   
     <footer>
+  
+      <a rel="full-article" href="/blog/2012/04/07/mountain-climbing/">继续阅读 &rarr;</a>
   
   
       <a href="/blog/2012/04/07/mountain-climbing/#comments">评论</a><a href="/blog/2012/04/07/mountain-climbing/#disqus_thread" class="comment-count"></a>
@@ -548,62 +208,11 @@
 
 <p>搜到一些解决办法是使用Market Enabler,但是我尝试的结果是没作用,应该是升级到了Google Play以前的方法失效了.</p>
 
-<p>继续搜索发现了<a href="https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker">Market Unlocker</a> ,使用后发现可用,下面基本是Market Unlocker的中文使用说明.</p>
-
-<h2>Market Unlocker</h2>
-
-<p>这个软件只能让手机可以安装哪些限制特定地区安装的软件,比如<a href="https://play.google.com/store/apps/details?id=com.com2us.inotia3.normal.freefull.google.global.android.common">Inotia 3</a> ,不可能免费安装收费的软件.</p>
-
-<p>这个软件需要手机已经root, 或者是可以获取到root权限(我这使用小米手机会在获取root权限时提示).</p>
-
-<p>需要wifi,并开飞行模式.</p>
-
-<p>开始.</p>
-
-<p><a href="https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker">下载地址</a> , 或在手机上搜 Market Unlocker , 开发者是Evan He的那个 , 免费版的即可.</p>
-
-<p>切换到飞行模式</p>
-
-<p>安装好后会看到应用<strong>市场解锁</strong>,打开后<strong>主页</strong>中打开<strong>启用解锁</strong>,这将会有一系列的提示,如果没root这里将会失败.</p>
-
-<p>可以在<strong>市场</strong>里面选择模拟的运营商,默认是Verizon.</p>
-
-<p>退出,到系统设置 - 程序 - 程序管理 - 全部,找到<strong>Google Play 商店</strong>,进去后<strong>清除数据</strong>.</p>
-
-<p>重启手机.</p>
-
-<p>打开Wifi,在开飞行模式的情况下.</p>
-
-<p>等待Google服务同步完成或刷新Gmail.(这段是Market Unlocker的说明,我不记得我有这步操作)</p>
-
-<p>打开Google Play,查找需要安装的软件并安装.</p>
-
-<p>最后关闭飞行模式.</p>
-
-<h2>吐槽</h2>
-
-<p>免费的应用也设置地区限制,这是什么逻辑嘛.即使是收费的,地区限制也完全没必要,只要能支付就行了.</p>
-
-<p>况且上面的限制完全没有发挥任何作用,只是折腾人,或者使用其它的应用市场.</p>
-
-<h2>对艾诺迪亚 3(Inotia 3)的吐槽</h2>
-
-<p>这个游戏在480x854的解析度上看起来画面不精细,可能是我习惯了NDS哪种2D游戏的像素感了.</p>
-
-<p>这个游戏不提供多点触控支持,即使设备支持,结果就是控制移动的时候点技能没效果,而点技能没放开的话也不能移动.再加上下面的原因会很让人觉得这设计真坑人.</p>
-
-<p>人物的卡位,在场景中移动,遇到阻挡会自动向旁边划开,但是在战斗时前面有队友或者敌人挡住会被<em>粘住</em>,不大容易做到擦身而过,人物占位空间比实际看到的稍微大一点.</p>
-
-<p>再加上战斗时队友不会自动让路,自动让路也仅仅支持相邻的2个,前面再挡一个自己的队友就卡住了.</p>
-
-<p>还有一些队友AI的毛病,繁琐的物品和队伍界面.</p>
-
-<p>总感觉玩起来不那么顺畅,熟悉了能在中间环节上快点,但是还是感觉繁琐.</p>
-
-<p>上述这些可能是因为要兼容旧版本做的一些妥协吧.</p>
 </div>
   
     <footer>
+  
+      <a rel="full-article" href="/blog/2012/03/25/unlock-google-play-android-market/">继续阅读 &rarr;</a>
   
   
       <a href="/blog/2012/03/25/unlock-google-play-android-market/#comments">评论</a><a href="/blog/2012/03/25/unlock-google-play-android-market/#disqus_thread" class="comment-count"></a>
@@ -613,9 +222,106 @@
 
     </article>
   
-  <div class="pagination">
+  
+    <article>
+      
+  <header>
     
-      <a class="prev" href="/blog/page/3/">&larr; 上一页</a>
+      <h1 class="entry-title"><a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T14:43:00+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/blog/2012/03/18/octopress-note/#comments">评论</a><a href="/blog/2012/03/18/octopress-note/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
+
+<p>blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上.</p>
+
+<p>这里主要是以我自己的环境来写, 即在Windows下使用Octopress. 因为Win下折腾这个中间出的问题很多.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/03/18/octopress-note/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/03/18/octopress-note/#comments">评论</a><a href="/blog/2012/03/18/octopress-note/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T02:34:00+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/blog/2012/03/18/hello-octopress/#comments">评论</a><a href="/blog/2012/03/18/hello-octopress/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>终于折腾起来了</p>
+
+<p>深深的感觉到在win上折腾实在是极端的痛苦啊</p>
+
+<p>基本是四处碰壁,还都是很难找到答案的</p>
+
+<p>5个小时就这样过去了</p>
+</div>
+  
+    <footer>
+  
+  
+      <a href="/blog/2012/03/18/hello-octopress/#comments">评论</a><a href="/blog/2012/03/18/hello-octopress/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  <div class="pagination">
     
     <a href="/blog/archives">存档</a>
     

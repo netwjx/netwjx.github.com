@@ -56,7 +56,7 @@
   
 <ul class="main-navigation">
   <li><a href="/">首页</a></li>
-  <!-- <li><a href="/blog/categories">分类</a></li> -->
+  <li><a href="/blog/categories/">分类</a></li>
   <li><a href="/blog/archives">存档</a></li>
 </ul>
 
@@ -105,6 +105,13 @@
 <p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
 
 <p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
+</ol>
+
+
+<!-- more -->
+
+
+<ol>
 <li><p>DirectShow 的实现</p>
 
 <p>这个实现的API使用起来比上面的要繁杂很多, 但是可以使用<strong>虚拟摄像头</strong>, 现在典型的IM软件其实现应该都是基于此.</p>

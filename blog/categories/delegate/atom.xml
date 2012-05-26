@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Delegate | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/delegate/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -60,6 +60,9 @@ delegate TResult Func&lt;in T1, in T2, out TResult&gt;(T1 arg1, T2 arg2);
 <p><code>Predicate</code>是从dotnet 2.0就出现的, 一般是在泛型集合的查询中使用.</p>
 
 <p><code>Func&lt;in T1, in T2, out TResult&gt;</code>也是dotnet 3.5 sp1出现的, 和<code>Action</code>基本一样, 也有1-16个参数的, 和Action不同的是这个委托都声明有返回值类型, 而不是<code>Action</code>的void.</p>
+
+<!-- more -->
+
 
 <h2>最初的写法</h2>
 

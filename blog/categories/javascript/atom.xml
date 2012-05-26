@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Javascript | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -35,6 +35,9 @@
 <p>在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, document未定义之类的.</p>
 
 <p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
+
+<!--more -->
+
 
 <p>记得以前遇到过类似的现象, 这次仔细找了下发现了这个:</p>
 

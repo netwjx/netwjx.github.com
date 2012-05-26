@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Jekyll | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/jekyll/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -63,6 +63,9 @@ end
 </code></p>
 
 <p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
+
+<!-- more -->
+
 
 <h2>Jekyll扩展和Liquid扩展</h2>
 
@@ -307,7 +310,12 @@ Liquid::Template.register_filter OctopressLiquidFilters
 
 <p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
 
-<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题, 下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
+<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题.</p>
+
+<!-- more -->
+
+
+<p>下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
 
 <p>将<code>Gemfile.lock</code>的<strong>33行</strong></p>
 

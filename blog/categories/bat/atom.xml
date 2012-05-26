@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Bat | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/bat/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-19T23:51:04+08:00</updated>
+  <updated>2012-05-26T21:51:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -43,6 +43,11 @@
 <h2>打开命令行</h2>
 
 <p>除了<code>Win+R cmd</code>打开外, 还可以在文件窗口中按住<strong>Shift + 鼠标右键</strong>, <strong>在此处打开命令窗口</strong>, 在文件夹上<strong>Shift + 鼠标右键</strong>同样有这个菜单项.</p>
+
+<!-- more -->
+
+
+
 
 <h2 id="multi-commands">在一行执行多个命令</h2>
 
