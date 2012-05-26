@@ -18,6 +18,8 @@ Android Market刚改名叫Google Play不久,不明白为什么改成这个名字
 
 搜到一些解决办法是使用Market Enabler,但是我尝试的结果是没作用,应该是升级到了Google Play以前的方法失效了.
 
+<!--more -->
+
 继续搜索发现了[Market Unlocker](https://play.google.com/store/apps/details?id=com.evanhe.marketunlocker) ,使用后发现可用,下面基本是Market Unlocker的中文使用说明.
 
 

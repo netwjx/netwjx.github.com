@@ -32,6 +32,7 @@ C#算是个多范式编程语言, 除了传统的OO风格, 还可以在部分范
 
 `Func<in T1, in T2, out TResult>`也是dotnet 3.5 sp1出现的, 和`Action`基本一样, 也有1-16个参数的, 和Action不同的是这个委托都声明有返回值类型, 而不是`Action`的void.
 
+<!-- more -->
 
 最初的写法
 --------------

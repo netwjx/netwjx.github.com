@@ -21,7 +21,11 @@ categories: [Octopress, Jekyll]
 
 而默认安装[Octopress][]时对代码高亮还是不支持的, 还需要安装[Python][], 我没有使用[ActivePython][], 而是[CPython][], 安装好后应该会有`c:\Windows\System32\python27.dll`.
 
-但是现在还可能会出现`Could not open library’.dll’`的问题, 下面的修改会和版本有关, 我目前使用的Octopress版本是`2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982`
+但是现在还可能会出现`Could not open library’.dll’`的问题.
+
+<!-- more -->
+
+下面的修改会和版本有关, 我目前使用的Octopress版本是`2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982`
 
 将`Gemfile.lock`的**33行**
 

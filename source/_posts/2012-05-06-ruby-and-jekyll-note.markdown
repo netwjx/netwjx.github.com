@@ -31,6 +31,7 @@ Liquid::Template.register_filter HtmlAttrFilters
 
 然后`rake generate`就能看到`<meta name="description"`的**content**已经不会有换行了, 下面说说中间涉及的相关东西.
 
+<!-- more -->
 
 Jekyll扩展和Liquid扩展
 ----------------------

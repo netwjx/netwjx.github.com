@@ -24,6 +24,8 @@ categories: [Win32API, DirectShow, VLC, MF, CSharp]
 [avicap32_2]: http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx
 [avicap32_3]: http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx
 
+<!-- more -->
+
 1.  DirectShow 的实现
 
     这个实现的API使用起来比上面的要繁杂很多, 但是可以使用**虚拟摄像头**, 现在典型的IM软件其实现应该都是基于此.

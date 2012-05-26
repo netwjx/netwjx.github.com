@@ -16,6 +16,7 @@ categories: Windows Shell Cmd Command Bat
 
 除了`Win+R cmd`打开外, 还可以在文件窗口中按住**Shift + 鼠标右键**, **在此处打开命令窗口**, 在文件夹上**Shift + 鼠标右键**同样有这个菜单项.
 
+<!-- more -->
 
 <h2 id="multi-commands">在一行执行多个命令</h2>
 

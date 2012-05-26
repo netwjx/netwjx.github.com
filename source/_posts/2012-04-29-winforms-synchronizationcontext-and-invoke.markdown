@@ -33,6 +33,8 @@ public partial class Form1 : Form
 
     System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
 
+<!-- more -->
+
 当在非UI线程和多个窗口之间操作时, 可能会有一些麻烦的情况发生, 这种情况可能会考虑使用[SynchronizationContext][].
 
 [SynchronizationContext][]可以在当前线程第一次`new Form1()`之后通过[SynchronizationContext.Current][]取得, 之后使用[Post][]和[Send][]实现在UI线程执行指定的委托, 下面使用的[WindowsFormsSynchronizationContext][].Current在WinForms程序中等价于[SynchronizationContext.Current][]:

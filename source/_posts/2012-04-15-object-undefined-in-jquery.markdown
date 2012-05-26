@@ -12,6 +12,8 @@ categories: [Javascript, IE9]
 
 仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.
 
+<!--more -->
+
 记得以前遇到过类似的现象, 这次仔细找了下发现了这个:
 
 [IE9 throws exceptions when loading scripts in iframe. Why?](http://stackoverflow.com/questions/8389261/ie9-throws-exceptions-when-loading-scripts-in-iframe-why)
