@@ -1,0 +1,11 @@
+---
+layout: page
+title: 分类
+footer: false
+---
+
+<div class="category-cloud">
+    {% for item in page.cloud %}
+        <span class="rank-{{ item.rank }}"><a href="{{ item.link }}">{{ item.title }}</a></span>
+    {% endfor %}
+</div>

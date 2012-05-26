@@ -61,7 +61,9 @@ default_asides:
 # and add an array with the asides you want to use.
 # blog_index_asides:
 # post_asides:
-# page_asides:
+page_asides:
+  - asides/recent_posts.html
+  - custom/asides/license.html
 
 # ----------------------- #
 #   3rd Party Settings    #

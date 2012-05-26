@@ -1,0 +1,7 @@
+.category-cloud {
+    @for $i from 1 through 5 {
+        .rank-#{$i} { font-size: nth(230% 210% 180% 140% 90%, $i); }
+    }
+    .rank-1, .rank-2, .rank-3, .rank-4 { font-weight:bold; }
+    span { line-height: 1.25em; padding:0 5px; }
+}
