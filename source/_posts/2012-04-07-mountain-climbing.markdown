@@ -3,7 +3,7 @@ layout: post
 title: "爬山备忘"
 date: 2012-04-07 18:49
 comments: true
-categories: [Live, Memo]
+categories: Live Memo
 ---
 
 前几天去爬山,记下中间需要注意的事项,有些备忘的适用场景不限于爬山.

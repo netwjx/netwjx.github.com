@@ -3,7 +3,7 @@ layout: post
 title: "在Octopress中使用代码高亮"
 date: 2012-04-21 16:45
 comments: true
-categories: [Octopress, Jekyll]
+categories: Octopress Jekyll
 ---
 
 在[Octopress][]中使用代码高亮, 实际就是[Jekyll][]的[Pygments][]代码高亮, 效果如下

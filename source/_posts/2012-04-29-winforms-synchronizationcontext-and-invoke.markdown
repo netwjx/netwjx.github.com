@@ -3,7 +3,7 @@ layout: post
 title: "WinForms开发中SynchronizationContext和Invoke的使用注意事项"
 date: 2012-04-29 14:26
 comments: true
-categories: Dotnet Thread
+categories: CSharp WinForms Thread
 ---
 
 WinForms 开发中[Control.Invoke][]是用于非UI线程中请求修改UI元素的方法, 一般配合[Control.InvokeRequired][]使用:
