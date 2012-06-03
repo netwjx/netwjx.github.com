@@ -3,7 +3,7 @@
   <title><![CDATA[类别: CSharp | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/csharp/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-26T21:51:26+08:00</updated>
+  <updated>2012-06-03T15:57:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,83 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="IPC" />
+    
+      <category term="Remoting" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-06-03T12:09:00+08:00</published>
+    <updated>2012-06-03T12:09:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel</id>
+    <content type="html"><![CDATA[<p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+
+<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+
+<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+
+<!-- more -->
+
+
+<p><code>csharp
+var dict = new Dictionary&lt;string, string&gt;();
+dict["name"] = dict["portName"] = portName;
+dict["authorizedGroup"] = "Everyone";
+serverChannel = new IpcServerChannel(dict, null);
+ChannelServices.RegisterChannel(serverChannel, false);
+</code></p>
+
+<p>其中<code>portName</code>变量是IPC信道的名称</p>
+
+<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
+
+<p>``` xml
+&lt;?xml version="1.0"?><br/>
+<configuration><br/>
+ &lt;system.runtime.remoting><br/>
+   <application></p>
+
+<pre><code> &lt;client&gt;  
+   &lt;wellknown type="fragrank.FragRankRemoting,FragRankLogic" url="ipc://FragRankChannel/FragRank" /&gt;  
+ &lt;/client&gt;  
+ &lt;channels&gt;  
+   &lt;channel ref="ipc" authorizedGroup="Everyone"&gt;  
+     &lt;clientProviders&gt;  
+      &lt;formatter ref="binary"/&gt;  
+     &lt;/clientProviders&gt;  
+   &lt;/channel&gt;  
+ &lt;/channels&gt;  
+</code></pre>
+
+<p>   </application><br/>
+ &lt;/system.runtime.remoting><br/>
+</configuration>
+```</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
+
+<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[C#委托和Lambda表达式]]></title>
@@ -299,6 +376,138 @@ void Bar2()
 
 
       <p><a href="http://netwjx.github.com/blog/2012/05/19/csharp-delegate-and-lambda/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WinForms开发中SynchronizationContext和Invoke的使用注意事项]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="Thread" />
+    
+      <category term="WinForms" />
+    
+    <link href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-04-29T14:26:00+08:00</published>
+    <updated>2012-04-29T14:26:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke</id>
+    <content type="html"><![CDATA[<p>WinForms 开发中<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>是用于非UI线程中请求修改UI元素的方法, 一般配合<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>使用:</p>
+
+<p>``` csharp Control.Invoke and Control.InvokeRequired
+public partial class Form1 : Form
+{</p>
+
+<pre><code>private void Foo(string text)
+{
+    if (InvokeRequired)
+    {
+        Invoke((Action&lt;string&gt;)Foo, text);
+    }
+    else
+    {
+        textBox1.Text = text;
+    }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>类似<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>的还有<a href="http://msdn.microsoft.com/zh-cn/library/0b1bf3y3.aspx">Control.BeginInvoke</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.endinvoke.aspx">Control.EndInvoke</a>, 它们是异步调用.</p>
+
+<p>这些方法和属性都依赖于<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>时, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>表示窗口句柄是否已创建, 它并不是指是否<code>new Form1()</code>过, 而是指是否<code>Show()</code>过, 包括<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.show.aspx">Show</a>, <a href="http://msdn.microsoft.com/zh-cn/library/c7ykbedk.aspx">ShowDialog</a>这些调用都会使<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>.</p>
+
+<p>而在<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>false</code>时, 比如刚刚<code>new Form1()</code>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>返回<code>false</code>, 调用<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>会抛出异常:</p>
+
+<pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
+</code></pre>
+
+<!-- more -->
+
+
+<p>当在非UI线程和多个窗口之间操作时, 可能会有一些麻烦的情况发生, 这种情况可能会考虑使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>.</p>
+
+<p><a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>可以在当前线程第一次<code>new Form1()</code>之后通过<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>取得, 之后使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.post.aspx">Post</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.send.aspx">Send</a>实现在UI线程执行指定的委托, 下面使用的<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.windowsformssynchronizationcontext.aspx">WindowsFormsSynchronizationContext</a>.Current在WinForms程序中等价于<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>:</p>
+
+<p>``` csharp SynchronizationContext.Post
+public partial class Form1 : Form
+{</p>
+
+<pre><code>public static SynchronizationContext SyncContext { get; set; }
+
+public Form1()
+{
+    InitializeComponent();
+    SyncContext = WindowsFormsSynchronizationContext.Current;
+}
+
+private void Foo(string text)
+{
+    SyncContext.Post(delegate(object obj)
+    {
+        textBox1.Text = text;
+    }, null);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>从<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>的文档可知它只会返回当前线程的同步上下文, 要在别的线程中访问需要自行保存它的引用, 即这里属性<code>SyncContext</code>, 使用时确保在访问<code>SyncContext</code>之前<code>new Form1()</code>过一次, 且只能一次, 否则后续的会覆盖之前的, 在符合需求的情况下会很自然想到单例模式:</p>
+
+<p>``` csharp 线程安全的单例模式</p>
+
+<pre><code>static Form1[] _Instance = { null };
+
+public static Form1 Instance
+{
+    get
+    {
+        if (_Instance[0] == null)
+        {
+            lock (_Instance)
+            {
+                if (_Instance[0] == null)
+                {
+                    _Instance[0] = new Form1();
+                }
+            }
+        }
+        return _Instance[0];
+    }
+}
+</code></pre>
+
+<p>```</p>
+
+<p>目前看起来是没什么问题了, 现实总是会出点问题, 比如<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>总是返回当前线程的, 结合上述的单例模式, 如果第一次访问<code>Instance</code>属性是在别的线程中, 测试代码如下:</p>
+
+<p>``` csharp 在不同的线程中访问Form1.Instance</p>
+
+<pre><code>new Thread(delegate()
+{
+    Form1.Instance.ToString();
+    Debug.Assert(SynchronizationContext.Current != null);
+}).Start();
+
+Thread.Sleep(3000);
+
+var f = Form1.Instance;
+Debug.Assert(SynchronizationContext.Current == null);
+Application.Run(f);
+</code></pre>
+
+<p>```</p>
+
+<p>上面代码的两处断言都通过了, 这种情况下<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.post.aspx">Form1.SyncContext.Post</a>仍旧可以调用, 但是将<strong>不产生任何效果</strong>, 也<strong>不抛出异常</strong>, 因为<code>new Form1()</code>的那个线程已经结束了, 以及那个线程并没有执行消息循环<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>.</p>
+
+<p>如果需要在<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>之后, 相关的UI元素变得可用时再执行相关代码, 可以自行定义事件, 实现相关的触发和绑定, 确保<code>new Form1</code>和<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>在同一个线程中调用, 在具体的多线程环境中解决办法会表现的完全不同.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>

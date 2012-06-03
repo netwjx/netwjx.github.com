@@ -9,7 +9,7 @@
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 'Object' 未定义 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下. 在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, &hellip;">
+  <meta name="description" content="最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结. 实现方案 avicap32.dll 的实现 Win32API 主要使用capGetDriverDescriptionA函数获取获取摄像头设备, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-21T14:59:00+08:00" pubdate data-updated="true">2012-04-21</time>
+        
+         | <a href="/blog/2012/04/21/camera-capture/#comments">评论</a><a href="/blog/2012/04/21/camera-capture/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结.</p>
+
+<h2>实现方案</h2>
+
+<ol>
+<li><p>avicap32.dll 的实现 Win32API</p>
+
+<p>主要使用<code>capGetDriverDescriptionA</code>函数获取获取摄像头设备, 使用<code>capCreateCaptureWindow</code>和<code>SendMessage</code>发送一系列窗口消息控制, 图像数据使用一个<code>PictrueBox</code>控件来显示, 有可以保存到avi文件.</p>
+
+<p>其属于<strong>Video for Windows</strong>技术, 代码示例可以参考<a href="http://kadaitcha.cx/vb/capture_webcam_video.html">How to Interface to a Video Device and Capture Video and Images</a>, C#的代码示例可以参考<a href="http://www.koders.com/csharp/fidFEFD079826A1CB5ACB35A56EC33C4651456FA0A7.aspx">_VideoCapturer.cs</a>, 以及MSDN上的参考<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd757692.aspx">Video Capture </a></p>
+
+<p>这个实现方法无法使用<strong>虚拟摄像头</strong>, <code>capGetDriverDescriptionA</code>不会返回任何虚拟摄像头设备.</p></li>
+</ol>
+
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/04/21/camera-capture/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/04/21/camera-capture/#comments">评论</a><a href="/blog/2012/04/21/camera-capture/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-15T18:35:00+08:00" pubdate data-updated="true">2012-04-15</time>
+        
+         | <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
+
+<blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
+
+<p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/04/15/substring-with-bytes-length/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -334,6 +443,14 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/05/19/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a>

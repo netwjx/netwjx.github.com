@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-26T21:51:26+08:00</updated>
+  <updated>2012-06-03T15:57:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,296 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Jekyll插件:分类云]]></title>
+    
+      <category term="Jekyll" />
+    
+      <category term="Octopress" />
+    
+      <category term="Plugin" />
+    
+      <category term="Ruby" />
+    
+    <link href="http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-06-03T14:55:00+08:00</published>
+    <updated>2012-06-03T14:55:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll</id>
+    <content type="html"><![CDATA[<p>Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接<a href="http://netwjx.github.com/blog/categories/">分类</a> 哪样.</p>
+
+<p>以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span>plugins/category_cloud.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">CategoryCloudPage</span> <span class="o">&lt;</span> <span class="no">Page</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">cloud</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
+</span><span class='line'>      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
+</span><span class='line'>      <span class="vi">@dir</span> <span class="o">=</span> <span class="n">dir</span>
+</span><span class='line'>      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;index.html&#39;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;_layouts&#39;</span><span class="p">),</span> <span class="s1">&#39;category_cloud.html&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;cloud&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="n">cloud</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">CategoryCloudGenerator</span> <span class="o">&lt;</span> <span class="no">Generator</span>
+</span><span class='line'>    <span class="n">safe</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">site</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">key?</span> <span class="s1">&#39;category_cloud&#39;</span>
+</span><span class='line'>        <span class="n">dir</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;category_dir&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;categories&#39;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>          <span class="o">[</span><span class="n">item</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">item</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">length</span><span class="o">]</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">maxsize</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>        <span class="n">minsize</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="n">min</span><span class="p">,</span> <span class="n">max</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:last</span><span class="p">)</span><span class="o">.</span><span class="n">minmax</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">cloud</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">posts</span><span class="o">|</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="s2">&quot;title&quot;</span> <span class="o">=&gt;</span> <span class="nb">name</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;rank&quot;</span>  <span class="o">=&gt;</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="n">minsize</span> <span class="o">-</span> <span class="p">((</span><span class="n">posts</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">maxsize</span> <span class="o">-</span> <span class="n">minsize</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max</span> <span class="o">-</span> <span class="n">min</span><span class="p">)</span> <span class="o">+</span> <span class="n">minsize</span><span class="p">),</span>
+</span><span class='line'>            <span class="s2">&quot;link&quot;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;/</span><span class="si">#{</span><span class="n">dir</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="nb">name</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/_|\P{Word}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/-{2,}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">downcase</span><span class="si">}</span><span class="s2">/&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">index</span> <span class="o">=</span> <span class="no">CategoryCloudPage</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">cloud</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">index</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">layouts</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">site_payload</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">index</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">site</span><span class="o">.</span><span class="n">pages</span> <span class="o">&lt;&lt;</span> <span class="n">index</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>sass/partials/_category_cloud.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.category-cloud</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">@for</span> <span class="nv">$i</span> <span class="ow">from</span> <span class="mi">1</span> <span class="ow">through</span> <span class="mi">5</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nc">.rank-</span><span class="si">#{</span><span class="nv">$i</span><span class="si">}</span> <span class="p">{</span> <span class="na">font-size</span><span class="o">:</span> <span class="nf">nth</span><span class="p">(</span><span class="mi">230</span><span class="kt">%</span> <span class="mi">210</span><span class="kt">%</span> <span class="mi">180</span><span class="kt">%</span> <span class="mi">140</span><span class="kt">%</span> <span class="mi">90</span><span class="kt">%</span><span class="o">,</span> <span class="nv">$i</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nc">.rank-1</span><span class="o">,</span> <span class="nc">.rank-2</span><span class="o">,</span> <span class="nc">.rank-3</span><span class="o">,</span> <span class="nc">.rank-4</span> <span class="p">{</span> <span class="nt">font-weight</span><span class="nd">:bold</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'>    <span class="nt">span</span> <span class="p">{</span> <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.25</span><span class="kt">em</span><span class="p">;</span> <span class="na">padding</span><span class="o">:</span><span class="mi">0</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>需要修改<code>sass/_partials.scss</code>, 结尾加入一行</p>
+
+<figure class='code'><figcaption><span>sass/_partials.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="k">@import</span> <span class="s2">&quot;partials/category_cloud&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>source/_layouts/category_cloud.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>---
+</span><span class='line'>layout: page
+</span><span class='line'>title: 分类
+</span><span class='line'>footer: false
+</span><span class='line'>---
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;category-cloud&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    {% for item in page.cloud %}
+</span><span class='line'>        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;rank-{{ item.rank }}&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;{{ item.link }}&quot;</span><span class="nt">&gt;</span>{{ item.title }}<span class="nt">&lt;/a&gt;&lt;/span&gt;</span>
+</span><span class='line'>    {% endfor %}
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>目前只做了生成分类页面, 侧边栏还没有做, 以后有做的冲动了再说吧.</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/">Migrating from Wordpress to Jekyll - Part 2</a> Tag cloud 段落</p></li>
+<li><p><a href="http://blog.16codes.com/2007/12/how-to-create-tag-cloud-with-formula.html">How to create a tag cloud? (With formula and sample calculation) </a> 算法</p></li>
+<li><p><a href="https://github.com/imathis/octopress/blob/master/plugins/category_generator.rb">octopress / plugins / category_generator.rb</a> Octopress修改的具体分类页面生成插件</p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="IPC" />
+    
+      <category term="Remoting" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-06-03T12:09:00+08:00</published>
+    <updated>2012-06-03T12:09:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel</id>
+    <content type="html"><![CDATA[<p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+
+<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+
+<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="kt">var</span> <span class="n">dict</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;();</span>
+</span><span class='line'><span class="n">dict</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">dict</span><span class="p">[</span><span class="s">&quot;portName&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">portName</span><span class="p">;</span>
+</span><span class='line'><span class="n">dict</span><span class="p">[</span><span class="s">&quot;authorizedGroup&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&quot;Everyone&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">serverChannel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">IpcServerChannel</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+</span><span class='line'><span class="n">ChannelServices</span><span class="p">.</span><span class="n">RegisterChannel</span><span class="p">(</span><span class="n">serverChannel</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中<code>portName</code>变量是IPC信道的名称</p>
+
+<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+</span><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'> <span class="nt">&lt;system.runtime.remoting&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;application&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;client&gt;</span>
+</span><span class='line'>       <span class="nt">&lt;wellknown</span> <span class="na">type=</span><span class="s">&quot;fragrank.FragRankRemoting,FragRankLogic&quot;</span> <span class="na">url=</span><span class="s">&quot;ipc://FragRankChannel/FragRank&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;/client&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;channels&gt;</span>
+</span><span class='line'>       <span class="nt">&lt;channel</span> <span class="na">ref=</span><span class="s">&quot;ipc&quot;</span> <span class="na">authorizedGroup=</span><span class="s">&quot;Everyone&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;clientProviders&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;formatter</span> <span class="na">ref=</span><span class="s">&quot;binary&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;/clientProviders&gt;</span>
+</span><span class='line'>       <span class="nt">&lt;/channel&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;/channels&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;/application&gt;</span>
+</span><span class='line'> <span class="nt">&lt;/system.runtime.remoting&gt;</span>
+</span><span class='line'><span class="nt">&lt;/configuration&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
+
+<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Windows命令行和批处理技巧]]></title>
@@ -1083,6 +1373,8 @@ echo completed
     
       <category term="Liquid" />
     
+      <category term="Memo" />
+    
       <category term="Octopress" />
     
       <category term="Ruby" />
@@ -1415,9 +1707,11 @@ echo completed
   <entry>
     <title type="html"><![CDATA[WinForms开发中SynchronizationContext和Invoke的使用注意事项]]></title>
     
-      <category term="Dotnet" />
+      <category term="CSharp" />
     
       <category term="Thread" />
+    
+      <category term="WinForms" />
     
     <link href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/"/>
     <author>
@@ -1952,6 +2246,8 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
     
       <category term="Javascript" />
     
+      <category term="jQuery" />
+    
     <link href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
@@ -2172,6 +2468,8 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
   
   <entry>
     <title type="html"><![CDATA[Octopress 笔记]]></title>
+    
+      <category term="Memo" />
     
       <category term="Octopress" />
     

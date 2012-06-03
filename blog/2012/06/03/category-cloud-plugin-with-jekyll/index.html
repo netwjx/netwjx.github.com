@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Jekyll插件:分类云 - netwjx</title>
+  <meta name="author" content="netwjx">
+
+  
+  <meta name="description" content="Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接分类 哪样. 以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="netwjx" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">netwjx</a></h1>
+  
+    <h2>混乱与有序</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="订阅Feed">Feed</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:netwjx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="搜索"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/categories/">分类</a></li>
+  <li><a href="/blog/archives">存档</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Jekyll插件:分类云</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-03T14:55:00+08:00" pubdate data-updated="true">2012-06-03</time>
+        
+         | <a href="#comments">评论</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接<a href="/blog/categories/">分类</a> 哪样.</p>
+
+<p>以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span>plugins/category_cloud.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">CategoryCloudPage</span> <span class="o">&lt;</span> <span class="no">Page</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">cloud</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
+</span><span class='line'>      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
+</span><span class='line'>      <span class="vi">@dir</span> <span class="o">=</span> <span class="n">dir</span>
+</span><span class='line'>      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;index.html&#39;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;_layouts&#39;</span><span class="p">),</span> <span class="s1">&#39;category_cloud.html&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;cloud&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="n">cloud</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">CategoryCloudGenerator</span> <span class="o">&lt;</span> <span class="no">Generator</span>
+</span><span class='line'>    <span class="n">safe</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">site</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">key?</span> <span class="s1">&#39;category_cloud&#39;</span>
+</span><span class='line'>        <span class="n">dir</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;category_dir&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;categories&#39;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>          <span class="o">[</span><span class="n">item</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">item</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">length</span><span class="o">]</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">maxsize</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>        <span class="n">minsize</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="n">min</span><span class="p">,</span> <span class="n">max</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:last</span><span class="p">)</span><span class="o">.</span><span class="n">minmax</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">cloud</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">posts</span><span class="o">|</span>
+</span><span class='line'>          <span class="p">{</span>
+</span><span class='line'>            <span class="s2">&quot;title&quot;</span> <span class="o">=&gt;</span> <span class="nb">name</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;rank&quot;</span>  <span class="o">=&gt;</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="n">minsize</span> <span class="o">-</span> <span class="p">((</span><span class="n">posts</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">maxsize</span> <span class="o">-</span> <span class="n">minsize</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max</span> <span class="o">-</span> <span class="n">min</span><span class="p">)</span> <span class="o">+</span> <span class="n">minsize</span><span class="p">),</span>
+</span><span class='line'>            <span class="s2">&quot;link&quot;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;/</span><span class="si">#{</span><span class="n">dir</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="nb">name</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/_|\P{Word}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/-{2,}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">downcase</span><span class="si">}</span><span class="s2">/&quot;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">index</span> <span class="o">=</span> <span class="no">CategoryCloudPage</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">cloud</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">index</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">layouts</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">site_payload</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">index</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">site</span><span class="o">.</span><span class="n">pages</span> <span class="o">&lt;&lt;</span> <span class="n">index</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>sass/partials/_category_cloud.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.category-cloud</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">@for</span> <span class="nv">$i</span> <span class="ow">from</span> <span class="mi">1</span> <span class="ow">through</span> <span class="mi">5</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nc">.rank-</span><span class="si">#{</span><span class="nv">$i</span><span class="si">}</span> <span class="p">{</span> <span class="na">font-size</span><span class="o">:</span> <span class="nf">nth</span><span class="p">(</span><span class="mi">230</span><span class="kt">%</span> <span class="mi">210</span><span class="kt">%</span> <span class="mi">180</span><span class="kt">%</span> <span class="mi">140</span><span class="kt">%</span> <span class="mi">90</span><span class="kt">%</span><span class="o">,</span> <span class="nv">$i</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nc">.rank-1</span><span class="o">,</span> <span class="nc">.rank-2</span><span class="o">,</span> <span class="nc">.rank-3</span><span class="o">,</span> <span class="nc">.rank-4</span> <span class="p">{</span> <span class="nt">font-weight</span><span class="nd">:bold</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'>    <span class="nt">span</span> <span class="p">{</span> <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.25</span><span class="kt">em</span><span class="p">;</span> <span class="na">padding</span><span class="o">:</span><span class="mi">0</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>需要修改<code>sass/_partials.scss</code>, 结尾加入一行</p>
+
+<figure class='code'><figcaption><span>sass/_partials.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="k">@import</span> <span class="s2">&quot;partials/category_cloud&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>source/_layouts/category_cloud.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>---
+</span><span class='line'>layout: page
+</span><span class='line'>title: 分类
+</span><span class='line'>footer: false
+</span><span class='line'>---
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;category-cloud&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    {% for item in page.cloud %}
+</span><span class='line'>        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;rank-{{ item.rank }}&quot;</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;{{ item.link }}&quot;</span><span class="nt">&gt;</span>{{ item.title }}<span class="nt">&lt;/a&gt;&lt;/span&gt;</span>
+</span><span class='line'>    {% endfor %}
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>目前只做了生成分类页面, 侧边栏还没有做, 以后有做的冲动了再说吧.</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/">Migrating from Wordpress to Jekyll - Part 2</a> Tag cloud 段落</p></li>
+<li><p><a href="http://blog.16codes.com/2007/12/how-to-create-tag-cloud-with-formula.html">How to create a tag cloud? (With formula and sample calculation) </a> 算法</p></li>
+<li><p><a href="https://github.com/imathis/octopress/blob/master/plugins/category_generator.rb">octopress / plugins / category_generator.rb</a> Octopress修改的具体分类页面生成插件</p></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">netwjx</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-03T14:55:00+08:00" pubdate data-updated="true">2012-06-03</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/jekyll/'>Jekyll</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>, <a class='category' href='/blog/categories/plugin/'>Plugin</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  <div id="jiathis_box">
+    <div id="jiathis_style_32x32">
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_kaixin001"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+  </div>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/" title="Previous Post: 使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常">&laquo; 使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
+      
+      
+    </p>
+
+  </footer>
+</article>
+
+  <section>
+    <h1><a name="comments"></a>评论</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>近期日志</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生'Object' 未定义</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/07/mountain-climbing/">爬山备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+    <h1 class="dsq-widget-title">近期评论</h1>
+	<div id="recentcomments" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+    <h1 class="dsq-widget-title">热门话题</h1>
+	<div id="popularthreads" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=10"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+
+
+
+
+<section>
+	<h1>我的书签</h1>
+	<div id="delicious"></div>
+	<script type="text/javascript">
+        $(window).on('load',function(){
+            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=10&sort=date&callback=renderDeliciousLinks').appendTo('head');
+        });
+	</script>
+	<a href="http://d.me/netwjx">我的书签 &raquo;</a>
+</section>
+
+
+
+<section>
+  <h1>许可</h1>
+  <div id="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/2.5/cn/88x31.png" /></a><br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/">知识共享署名-相同方式共享 2.5</a></div>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - netwjx -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'netwjxblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

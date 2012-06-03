@@ -2,11 +2,11 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://netwjx.github.com/blog/2012/03/18/hello-octopress/</loc>
-        <lastmod>2012-05-01T22:09:35+08:00</lastmod>
+        <lastmod>2012-05-27T21:42:18+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/03/18/octopress-note/</loc>
-        <lastmod>2012-05-26T15:41:01+08:00</lastmod>
+        <lastmod>2012-05-27T21:46:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/03/25/unlock-google-play-android-market/</loc>
@@ -14,11 +14,11 @@
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/07/mountain-climbing/</loc>
-        <lastmod>2012-05-26T15:51:20+08:00</lastmod>
+        <lastmod>2012-05-27T21:42:03+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/</loc>
-        <lastmod>2012-05-26T15:41:42+08:00</lastmod>
+        <lastmod>2012-05-27T21:42:39+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/</loc>
@@ -26,21 +26,21 @@
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/21/camera-capture/</loc>
-        <lastmod>2012-05-26T15:50:39+08:00</lastmod>
+        <lastmod>2012-05-27T21:41:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/</loc>
-        <lastmod>2012-05-26T15:44:04+08:00</lastmod>
+        <lastmod>2012-05-27T21:41:33+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/
         </loc>
-        <lastmod>2012-05-26T15:44:43+08:00</lastmod>
+        <lastmod>2012-05-27T21:44:53+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/</loc>
-        <lastmod>2012-05-26T15:45:05+08:00</lastmod>
+        <lastmod>2012-05-27T21:46:34+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/05/19/csharp-delegate-and-lambda/</loc>
@@ -51,11 +51,21 @@
         <lastmod>2012-05-26T15:45:47+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/
+        </loc>
+        <lastmod>2012-06-03T15:49:09+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/</loc>
+        <lastmod>2012-06-03T15:26:46+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://netwjx.github.com/blog/archives/</loc>
-        <lastmod>2012-05-26T21:34:21+08:00</lastmod>
+        <lastmod>2012-06-03T15:49:09+08:00</lastmod>
     </url>
     <url>
         <loc>http://netwjx.github.com/</loc>
-        <lastmod>2012-05-26T15:51:20+08:00</lastmod>
+        <lastmod>2012-06-03T15:49:09+08:00</lastmod>
     </url>
 </urlset>

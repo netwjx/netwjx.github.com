@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Liquid | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/liquid/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-26T21:51:26+08:00</updated>
+  <updated>2012-06-03T15:57:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -21,6 +21,8 @@
       <category term="Jekyll" />
     
       <category term="Liquid" />
+    
+      <category term="Memo" />
     
       <category term="Octopress" />
     

@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常 - netwjx</title>
+  <meta name="author" content="netwjx">
+
+  
+  <meta name="description" content="在一个使用IPC进行单机跨进称的通讯时发生了 RemotingException : 拒绝访问 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="netwjx" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">netwjx</a></h1>
+  
+    <h2>混乱与有序</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="订阅Feed">Feed</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:netwjx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="搜索"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/categories/">分类</a></li>
+  <li><a href="/blog/archives">存档</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-03T12:09:00+08:00" pubdate data-updated="true">2012-06-03</time>
+        
+         | <a href="#comments">评论</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+
+<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+
+<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="kt">var</span> <span class="n">dict</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;();</span>
+</span><span class='line'><span class="n">dict</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">dict</span><span class="p">[</span><span class="s">&quot;portName&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">portName</span><span class="p">;</span>
+</span><span class='line'><span class="n">dict</span><span class="p">[</span><span class="s">&quot;authorizedGroup&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&quot;Everyone&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="n">serverChannel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">IpcServerChannel</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+</span><span class='line'><span class="n">ChannelServices</span><span class="p">.</span><span class="n">RegisterChannel</span><span class="p">(</span><span class="n">serverChannel</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中<code>portName</code>变量是IPC信道的名称</p>
+
+<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+</span><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'> <span class="nt">&lt;system.runtime.remoting&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;application&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;client&gt;</span>
+</span><span class='line'>       <span class="nt">&lt;wellknown</span> <span class="na">type=</span><span class="s">&quot;fragrank.FragRankRemoting,FragRankLogic&quot;</span> <span class="na">url=</span><span class="s">&quot;ipc://FragRankChannel/FragRank&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;/client&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;channels&gt;</span>
+</span><span class='line'>       <span class="nt">&lt;channel</span> <span class="na">ref=</span><span class="s">&quot;ipc&quot;</span> <span class="na">authorizedGroup=</span><span class="s">&quot;Everyone&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;clientProviders&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;formatter</span> <span class="na">ref=</span><span class="s">&quot;binary&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>         <span class="nt">&lt;/clientProviders&gt;</span>
+</span><span class='line'>       <span class="nt">&lt;/channel&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;/channels&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;/application&gt;</span>
+</span><span class='line'> <span class="nt">&lt;/system.runtime.remoting&gt;</span>
+</span><span class='line'><span class="nt">&lt;/configuration&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
+
+<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">netwjx</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-03T12:09:00+08:00" pubdate data-updated="true">2012-06-03</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/csharp/'>CSharp</a>, <a class='category' href='/blog/categories/ipc/'>IPC</a>, <a class='category' href='/blog/categories/remoting/'>Remoting</a>, <a class='category' href='/blog/categories/windows/'>Windows</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  <div id="jiathis_box">
+    <div id="jiathis_style_32x32">
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_kaixin001"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+  </div>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/05/19/windows-shell-and-bat-skills/" title="Previous Post: Windows命令行和批处理技巧">&laquo; Windows命令行和批处理技巧</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/" title="Next Post: Jekyll插件:分类云">Jekyll插件:分类云 &raquo;</a>
+      
+    </p>
+
+  </footer>
+</article>
+
+  <section>
+    <h1><a name="comments"></a>评论</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>近期日志</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生'Object' 未定义</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/07/mountain-climbing/">爬山备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+    <h1 class="dsq-widget-title">近期评论</h1>
+	<div id="recentcomments" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+    <h1 class="dsq-widget-title">热门话题</h1>
+	<div id="popularthreads" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=10"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+
+
+
+
+<section>
+	<h1>我的书签</h1>
+	<div id="delicious"></div>
+	<script type="text/javascript">
+        $(window).on('load',function(){
+            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=10&sort=date&callback=renderDeliciousLinks').appendTo('head');
+        });
+	</script>
+	<a href="http://d.me/netwjx">我的书签 &raquo;</a>
+</section>
+
+
+
+<section>
+  <h1>许可</h1>
+  <div id="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/2.5/cn/88x31.png" /></a><br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/">知识共享署名-相同方式共享 2.5</a></div>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - netwjx -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'netwjxblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

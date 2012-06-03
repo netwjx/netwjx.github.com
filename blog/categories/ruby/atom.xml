@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Ruby | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-05-26T21:51:26+08:00</updated>
+  <updated>2012-06-03T15:57:26+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -16,11 +16,146 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Jekyll插件:分类云]]></title>
+    
+      <category term="Jekyll" />
+    
+      <category term="Octopress" />
+    
+      <category term="Plugin" />
+    
+      <category term="Ruby" />
+    
+    <link href="http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-06-03T14:55:00+08:00</published>
+    <updated>2012-06-03T14:55:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll</id>
+    <content type="html"><![CDATA[<p>Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接<a href="/blog/categories/">分类</a> 哪样.</p>
+
+<p>以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的.</p>
+
+<!-- more -->
+
+
+<p>``` ruby plugins/category_cloud.rb
+module Jekyll
+  class CategoryCloudPage &lt; Page</p>
+
+<pre><code>def initialize(site, base, dir, cloud)
+  @site = site
+  @base = base
+  @dir = dir
+  @name = 'index.html'
+
+  self.process(@name)
+  self.read_yaml(File.join(base, '_layouts'), 'category_cloud.html')
+
+  self.data['cloud'] = cloud
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  class CategoryCloudGenerator &lt; Generator</p>
+
+<pre><code>safe true
+
+def generate(site)
+  if site.layouts.key? 'category_cloud'
+    dir = site.config['category_dir'] || 'categories'
+
+    count = site.categories.map do |item|
+      [item[0], item[1].length]
+    end
+
+    maxsize = 5
+    minsize = 1
+    min, max = count.map(&amp;:last).minmax
+
+    cloud = site.categories.map do |name, posts|
+      {
+        "title" =&gt; name,
+        "rank"  =&gt; maxsize + minsize - ((posts.length - min) * (maxsize - minsize) / (max - min) + minsize),
+        "link"  =&gt; "/#{dir}/#{name.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase}/"
+      }
+    end
+
+    index = CategoryCloudPage.new(site, site.source, dir, cloud)
+    index.render(site.layouts, site.site_payload)
+    index.write(site.dest)
+    site.pages &lt;&lt; index
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>end
+```</p>
+
+<p>``` scss sass/partials/_category_cloud.scss
+.category-cloud {</p>
+
+<pre><code>@for $i from 1 through 5 {
+    .rank-#{$i} { font-size: nth(230% 210% 180% 140% 90%, $i); }
+}
+.rank-1, .rank-2, .rank-3, .rank-4 { font-weight:bold; }
+span { line-height: 1.25em; padding:0 5px; }
+</code></pre>
+
+<p>}
+```</p>
+
+<p>需要修改<code>sass/_partials.scss</code>, 结尾加入一行
+<code>scss sass/_partials.scss
+@import "partials/category_cloud"
+</code></p>
+
+<h2>``` html source/_layouts/category_cloud.html</h2>
+
+<p>layout: page
+title: 分类</p>
+
+<h2>footer: false</h2>
+
+<p></p>
+
+<div class="category-cloud">
+    {% for item in page.cloud %}
+        <span class="rank-{{ item.rank }}"><a href="{{ item.link }}">{{ item.title }}</a></span>
+    {% endfor %}
+</div>
+
+
+<p>
+```</p>
+
+<p>目前只做了生成分类页面, 侧边栏还没有做, 以后有做的冲动了再说吧.</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/">Migrating from Wordpress to Jekyll - Part 2</a> Tag cloud 段落</p></li>
+<li><p><a href="http://blog.16codes.com/2007/12/how-to-create-tag-cloud-with-formula.html">How to create a tag cloud? (With formula and sample calculation) </a> 算法</p></li>
+<li><p><a href="https://github.com/imathis/octopress/blob/master/plugins/category_generator.rb">octopress / plugins / category_generator.rb</a> Octopress修改的具体分类页面生成插件</p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Ruby 和 Jekyll 的笔记]]></title>
     
       <category term="Jekyll" />
     
       <category term="Liquid" />
+    
+      <category term="Memo" />
     
       <category term="Octopress" />
     
@@ -277,6 +412,8 @@ Liquid::Template.register_filter OctopressLiquidFilters
   
   <entry>
     <title type="html"><![CDATA[Octopress 笔记]]></title>
+    
+      <category term="Memo" />
     
       <category term="Octopress" />
     

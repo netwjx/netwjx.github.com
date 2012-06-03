@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[类别: Remoting | netwjx]]></title>
+  <link href="http://netwjx.github.com/blog/categories/remoting/atom.xml" rel="self"/>
+  <link href="http://netwjx.github.com/"/>
+  <updated>2012-06-03T15:57:26+08:00</updated>
+  <id>http://netwjx.github.com/</id>
+  <author>
+    <name><![CDATA[netwjx]]></name>
+    <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
+
+  
+  <entry>
+    <title type="html"><![CDATA[使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="IPC" />
+    
+      <category term="Remoting" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-06-03T12:09:00+08:00</published>
+    <updated>2012-06-03T12:09:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel</id>
+    <content type="html"><![CDATA[<p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+
+<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+
+<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+
+<!-- more -->
+
+
+<p><code>csharp
+var dict = new Dictionary&lt;string, string&gt;();
+dict["name"] = dict["portName"] = portName;
+dict["authorizedGroup"] = "Everyone";
+serverChannel = new IpcServerChannel(dict, null);
+ChannelServices.RegisterChannel(serverChannel, false);
+</code></p>
+
+<p>其中<code>portName</code>变量是IPC信道的名称</p>
+
+<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
+
+<p>``` xml
+&lt;?xml version="1.0"?><br/>
+<configuration><br/>
+ &lt;system.runtime.remoting><br/>
+   <application></p>
+
+<pre><code> &lt;client&gt;  
+   &lt;wellknown type="fragrank.FragRankRemoting,FragRankLogic" url="ipc://FragRankChannel/FragRank" /&gt;  
+ &lt;/client&gt;  
+ &lt;channels&gt;  
+   &lt;channel ref="ipc" authorizedGroup="Everyone"&gt;  
+     &lt;clientProviders&gt;  
+      &lt;formatter ref="binary"/&gt;  
+     &lt;/clientProviders&gt;  
+   &lt;/channel&gt;  
+ &lt;/channels&gt;  
+</code></pre>
+
+<p>   </application><br/>
+ &lt;/system.runtime.remoting><br/>
+</configuration>
+```</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
+
+<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+</feed>
