@@ -3,7 +3,7 @@ layout: post
 title: "在jQuery中发生'Object' 未定义"
 date: 2012-04-15 13:09
 comments: true
-categories: Javascript IE9 jQuery
+categories: Javascript IE jQuery Error
 ---
 
 之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 `'Object' 未定义` 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下.

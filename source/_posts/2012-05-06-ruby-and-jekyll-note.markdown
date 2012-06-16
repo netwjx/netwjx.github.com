@@ -3,7 +3,7 @@ layout: post
 title: "Ruby 和 Jekyll 的笔记"
 date: 2012-05-06 15:57
 comments: true
-categories: Ruby Octopress Jekyll Liquid Memo
+categories: Ruby Octopress Jekyll Liquid
 ---
 
 之前发现[Octopress][]产生的页面中, **meta**标签的**content**属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点.
