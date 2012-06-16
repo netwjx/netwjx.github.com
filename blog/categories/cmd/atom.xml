@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Cmd | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/cmd/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-06-03T15:57:26+08:00</updated>
+  <updated>2012-06-16T23:24:48+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -28,14 +28,14 @@
     
       <category term="Windows" />
     
-    <link href="http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills/"/>
+    <link href="http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
       <uri>http://netwjx.github.com/</uri>
     </author>
-    <published>2012-05-19T23:27:00+08:00</published>
-    <updated>2012-05-19T23:27:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills</id>
+    <published>2012-06-16T23:23:00+08:00</published>
+    <updated>2012-06-16T23:23:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills</id>
     <content type="html"><![CDATA[<p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
 
 <p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
@@ -299,7 +299,9 @@ windir=C:\windows
 
 <p>随着反复的运行, <code>foo.txt</code>的结尾会一直增加.</p>
 
-<p>有一个特殊的输出设备叫<code>nul</code>, 它不会产生任何文件, 效果就像执行了命令, 但是不回显命令的输出, 在<a href="#sleep-ping">延迟 Sleep</a>有这个例子.</p>
+<p>有一个特殊的管道目标叫<code>clip</code>, 可以用来操作系统剪贴板</p>
+
+<p>还有一个特殊的输出设备叫<code>nul</code>, 它不会产生任何文件, 效果就像执行了命令, 但是不回显命令的输出, 在<a href="#sleep-ping">延迟 Sleep</a>有这个例子.</p>
 
 <p>上述可以将命令正常执行的结果重定向到文件, 但是错误信息仍旧会输出到命令提示符窗口(<strong>标准输出</strong>)</p>
 
@@ -541,7 +543,7 @@ C:\Ruby\bin
 <p>指定分割字符, 可以指定多个, 配合<code>tokens</code>参数使用, 类似传统编程语言中<code>split</code>函数的分割字符</p></li>
 <li><p><code>tokens=x,y,m-n</code></p>
 
-<p>将<code>x y</code>以及<code>m-n</code>之间的字符串返回给循环变量, 下标从1开始, 如果有<code>y*</code>,则表示从第<code>y</code>个往后的所有都返回.</p></li>
+<p>将<code>x y</code>以及<code>m-n</code>之间的字符串返回给循环变量, 下标从1开始, 如果有<code>y*</code>, 则表示从第<code>y</code>个往后的所有都返回, 下一段有详细的使用示例.</p></li>
 <li><p><code>usebackq</code></p>
 
 <p>表示使用<code>`</code>符号表示一个命令行, 而不是传统的<code>'</code>符号</p></li>
@@ -549,6 +551,32 @@ C:\Ruby\bin
 
 
 <p>配合自定义的命令行程序, 可以自行处理命令提示符窗口的输入和输出, 以及弥补<a href="#built-in-var">内建环境变量</a>中<code>%date%</code>和<code>%time%</code>格式不固定的问题.</p>
+
+<h3>使用for的tokens参数</h3>
+
+<p><code>tokens</code>参数可以用来提取命令行或文件的返回值, 最基本的如:</p>
+
+<pre><code>&gt;for /f "tokens=2" %i in ("1 2 3 4 5 6 7 8") do @echo %i
+2
+</code></pre>
+
+<p><code>tokens</code>可以指定多个, 会隐式的将对应索引的值赋给按照字母顺序命名的循环变量:</p>
+
+<pre><code>&gt;for /f "tokens=2,4,6-8" %i in ("1 2 3 4 5 6 7 8") do @echo %i %j %k %l %m %n
+2 4 6 7 8 %n
+</code></pre>
+
+<p>可以看到<code>tokens=2,4,6-8</code>分别会给<code>%i %j %k %l %m</code>赋值, 而<code>%n</code>则原样显示.</p>
+
+<p>还有<code>y*</code>的例子</p>
+
+<pre><code>&gt;for /f "tokens=2*" %i in ("1 2 3 4 5 6 7 8") do @echo %j %k
+3 4 5 6 7 8 %k
+&gt;for /f "tokens=2*" %i in ("1 2 3 4 5 6 7 8") do @echo %i %j %k
+2 3 4 5 6 7 8 %k
+</code></pre>
+
+<p><code>2*</code>将会把从第2个开始(不包括)往后所有的都赋给了<code>%j</code></p>
 
 <h3>查询注册表</h3>
 
@@ -729,7 +757,7 @@ echo completed
 </ul>
 
 
-      <p><a href="http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
+      <p><a href="http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

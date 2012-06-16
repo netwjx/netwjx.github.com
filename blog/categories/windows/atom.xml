@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Windows | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/windows/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-06-03T15:57:26+08:00</updated>
+  <updated>2012-06-16T23:24:48+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,83 +14,6 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
-  
-  <entry>
-    <title type="html"><![CDATA[使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常]]></title>
-    
-      <category term="CSharp" />
-    
-      <category term="IPC" />
-    
-      <category term="Remoting" />
-    
-      <category term="Windows" />
-    
-    <link href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-06-03T12:09:00+08:00</published>
-    <updated>2012-06-03T12:09:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel</id>
-    <content type="html"><![CDATA[<p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
-
-<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
-
-<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
-
-<!-- more -->
-
-
-<p><code>csharp
-var dict = new Dictionary&lt;string, string&gt;();
-dict["name"] = dict["portName"] = portName;
-dict["authorizedGroup"] = "Everyone";
-serverChannel = new IpcServerChannel(dict, null);
-ChannelServices.RegisterChannel(serverChannel, false);
-</code></p>
-
-<p>其中<code>portName</code>变量是IPC信道的名称</p>
-
-<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
-
-<p>``` xml
-&lt;?xml version="1.0"?><br/>
-<configuration><br/>
- &lt;system.runtime.remoting><br/>
-   <application></p>
-
-<pre><code> &lt;client&gt;  
-   &lt;wellknown type="fragrank.FragRankRemoting,FragRankLogic" url="ipc://FragRankChannel/FragRank" /&gt;  
- &lt;/client&gt;  
- &lt;channels&gt;  
-   &lt;channel ref="ipc" authorizedGroup="Everyone"&gt;  
-     &lt;clientProviders&gt;  
-      &lt;formatter ref="binary"/&gt;  
-     &lt;/clientProviders&gt;  
-   &lt;/channel&gt;  
- &lt;/channels&gt;  
-</code></pre>
-
-<p>   </application><br/>
- &lt;/system.runtime.remoting><br/>
-</configuration>
-```</p>
-
-<h2>参考资料</h2>
-
-<ul>
-<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
-
-<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
-<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
-<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
-</ul>
-
-
-      <p><a href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">查看评论</a></p>]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Windows命令行和批处理技巧]]></title>
@@ -105,14 +28,14 @@ ChannelServices.RegisterChannel(serverChannel, false);
     
       <category term="Windows" />
     
-    <link href="http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills/"/>
+    <link href="http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
       <uri>http://netwjx.github.com/</uri>
     </author>
-    <published>2012-05-19T23:27:00+08:00</published>
-    <updated>2012-05-19T23:27:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills</id>
+    <published>2012-06-16T23:23:00+08:00</published>
+    <updated>2012-06-16T23:23:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills</id>
     <content type="html"><![CDATA[<p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
 
 <p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
@@ -376,7 +299,9 @@ windir=C:\windows
 
 <p>随着反复的运行, <code>foo.txt</code>的结尾会一直增加.</p>
 
-<p>有一个特殊的输出设备叫<code>nul</code>, 它不会产生任何文件, 效果就像执行了命令, 但是不回显命令的输出, 在<a href="#sleep-ping">延迟 Sleep</a>有这个例子.</p>
+<p>有一个特殊的管道目标叫<code>clip</code>, 可以用来操作系统剪贴板</p>
+
+<p>还有一个特殊的输出设备叫<code>nul</code>, 它不会产生任何文件, 效果就像执行了命令, 但是不回显命令的输出, 在<a href="#sleep-ping">延迟 Sleep</a>有这个例子.</p>
 
 <p>上述可以将命令正常执行的结果重定向到文件, 但是错误信息仍旧会输出到命令提示符窗口(<strong>标准输出</strong>)</p>
 
@@ -618,7 +543,7 @@ C:\Ruby\bin
 <p>指定分割字符, 可以指定多个, 配合<code>tokens</code>参数使用, 类似传统编程语言中<code>split</code>函数的分割字符</p></li>
 <li><p><code>tokens=x,y,m-n</code></p>
 
-<p>将<code>x y</code>以及<code>m-n</code>之间的字符串返回给循环变量, 下标从1开始, 如果有<code>y*</code>,则表示从第<code>y</code>个往后的所有都返回.</p></li>
+<p>将<code>x y</code>以及<code>m-n</code>之间的字符串返回给循环变量, 下标从1开始, 如果有<code>y*</code>, 则表示从第<code>y</code>个往后的所有都返回, 下一段有详细的使用示例.</p></li>
 <li><p><code>usebackq</code></p>
 
 <p>表示使用<code>`</code>符号表示一个命令行, 而不是传统的<code>'</code>符号</p></li>
@@ -626,6 +551,32 @@ C:\Ruby\bin
 
 
 <p>配合自定义的命令行程序, 可以自行处理命令提示符窗口的输入和输出, 以及弥补<a href="#built-in-var">内建环境变量</a>中<code>%date%</code>和<code>%time%</code>格式不固定的问题.</p>
+
+<h3>使用for的tokens参数</h3>
+
+<p><code>tokens</code>参数可以用来提取命令行或文件的返回值, 最基本的如:</p>
+
+<pre><code>&gt;for /f "tokens=2" %i in ("1 2 3 4 5 6 7 8") do @echo %i
+2
+</code></pre>
+
+<p><code>tokens</code>可以指定多个, 会隐式的将对应索引的值赋给按照字母顺序命名的循环变量:</p>
+
+<pre><code>&gt;for /f "tokens=2,4,6-8" %i in ("1 2 3 4 5 6 7 8") do @echo %i %j %k %l %m %n
+2 4 6 7 8 %n
+</code></pre>
+
+<p>可以看到<code>tokens=2,4,6-8</code>分别会给<code>%i %j %k %l %m</code>赋值, 而<code>%n</code>则原样显示.</p>
+
+<p>还有<code>y*</code>的例子</p>
+
+<pre><code>&gt;for /f "tokens=2*" %i in ("1 2 3 4 5 6 7 8") do @echo %j %k
+3 4 5 6 7 8 %k
+&gt;for /f "tokens=2*" %i in ("1 2 3 4 5 6 7 8") do @echo %i %j %k
+2 3 4 5 6 7 8 %k
+</code></pre>
+
+<p><code>2*</code>将会把从第2个开始(不包括)往后所有的都赋给了<code>%j</code></p>
 
 <h3>查询注册表</h3>
 
@@ -806,7 +757,84 @@ echo completed
 </ul>
 
 
-      <p><a href="http://netwjx.github.com/blog/2012/05/19/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
+      <p><a href="http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="IPC" />
+    
+      <category term="Remoting" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-06-03T12:09:00+08:00</published>
+    <updated>2012-06-03T12:09:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel</id>
+    <content type="html"><![CDATA[<p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+
+<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+
+<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+
+<!-- more -->
+
+
+<p><code>csharp
+var dict = new Dictionary&lt;string, string&gt;();
+dict["name"] = dict["portName"] = portName;
+dict["authorizedGroup"] = "Everyone";
+serverChannel = new IpcServerChannel(dict, null);
+ChannelServices.RegisterChannel(serverChannel, false);
+</code></p>
+
+<p>其中<code>portName</code>变量是IPC信道的名称</p>
+
+<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
+
+<p>``` xml
+&lt;?xml version="1.0"?><br/>
+<configuration><br/>
+ &lt;system.runtime.remoting><br/>
+   <application></p>
+
+<pre><code> &lt;client&gt;  
+   &lt;wellknown type="fragrank.FragRankRemoting,FragRankLogic" url="ipc://FragRankChannel/FragRank" /&gt;  
+ &lt;/client&gt;  
+ &lt;channels&gt;  
+   &lt;channel ref="ipc" authorizedGroup="Everyone"&gt;  
+     &lt;clientProviders&gt;  
+      &lt;formatter ref="binary"/&gt;  
+     &lt;/clientProviders&gt;  
+   &lt;/channel&gt;  
+ &lt;/channels&gt;  
+</code></pre>
+
+<p>   </application><br/>
+ &lt;/system.runtime.remoting><br/>
+</configuration>
+```</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
+
+<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
+<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
