@@ -1,0 +1,16 @@
+---
+layout: post
+title: "IE KB927917 错误 Unable to modify the parent container element before the child element is closed"
+date: 2012-06-16 23:07
+comments: true
+published: false
+categories: IE Javascript Bug
+---
+
+[http://kennylee26.iteye.com/blog/479687]()
+
+具体的场景 使用UEditor编辑器 在iframe中 asp.net的环境中使用 初始化脚本在form标签中 而不是body标签 使用jquery的dom ready将会正常, 而使用UE.util.domReady则完全不会正常显示
+
+将初始化脚本移动到尽量结尾将能解决,  但是如果不在body标签中则会发生抛出一个异常, 但能正常使用
+
+上述现在在ie8中发生, 估计会在ie6 ie7中也发生
