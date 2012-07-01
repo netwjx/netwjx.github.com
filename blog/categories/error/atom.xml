@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[类别: IE9 | netwjx]]></title>
-  <link href="http://netwjx.github.com/blog/categories/ie9/atom.xml" rel="self"/>
+  <title><![CDATA[类别: Error | netwjx]]></title>
+  <link href="http://netwjx.github.com/blog/categories/error/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-06-16T23:24:48+08:00</updated>
+  <updated>2012-07-01T19:01:48+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -18,7 +18,9 @@
   <entry>
     <title type="html"><![CDATA[在jQuery中发生'Object' 未定义]]></title>
     
-      <category term="IE9" />
+      <category term="Error" />
+    
+      <category term="IE" />
     
       <category term="Javascript" />
     

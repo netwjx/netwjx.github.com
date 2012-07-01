@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Ruby | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-06-16T23:24:48+08:00</updated>
+  <updated>2012-07-01T19:01:48+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -154,8 +154,6 @@ title: 分类</p>
       <category term="Jekyll" />
     
       <category term="Liquid" />
-    
-      <category term="Memo" />
     
       <category term="Octopress" />
     
@@ -412,8 +410,6 @@ Liquid::Template.register_filter OctopressLiquidFilters
   
   <entry>
     <title type="html"><![CDATA[Octopress 笔记]]></title>
-    
-      <category term="Memo" />
     
       <category term="Octopress" />
     

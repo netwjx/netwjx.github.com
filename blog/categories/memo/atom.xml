@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-06-16T23:24:48+08:00</updated>
+  <updated>2012-07-01T19:01:48+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -16,265 +16,339 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ruby 和 Jekyll 的笔记]]></title>
+    <title type="html"><![CDATA[黑莓使用备忘]]></title>
     
-      <category term="Jekyll" />
-    
-      <category term="Liquid" />
+      <category term="BlackBerry" />
     
       <category term="Memo" />
     
-      <category term="Octopress" />
-    
-      <category term="Ruby" />
-    
-    <link href="http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/"/>
+    <link href="http://netwjx.github.com/blog/2012/07/01/blackberry-memo/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
       <uri>http://netwjx.github.com/</uri>
     </author>
-    <published>2012-05-06T15:57:00+08:00</published>
-    <updated>2012-05-06T15:57:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note</id>
-    <content type="html"><![CDATA[<p>之前发现<a href="http://octopress.org/">Octopress</a>产生的页面中, <strong>meta</strong>标签的<strong>content</strong>属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点.</p>
+    <published>2012-07-01T18:58:00+08:00</published>
+    <updated>2012-07-01T18:58:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/01/blackberry-memo</id>
+    <content type="html"><![CDATA[<p>我曾经使用过将近1年时间黑莓的手机, 期间零零碎碎的有一些使用资料, 这里将这个整理成一篇独立的文章, 算是对过去的一些留念吧.</p>
 
-<p>插件代码如下</p>
+<h2>概况</h2>
 
-<p>``` ruby plugins/html_attr_filter.rb</p>
+<p>考虑购买黑莓主要是想试试全键盘的手机, 黑莓的全键盘手机是Bold 经典设计, Curve 小巧设计, 其实大小和Bold的就是几毫米的差异.</p>
 
-<h1>coding: utf-8</h1>
+<p>每个系列的不同系列就是屏幕, 性能, 外观差异. 同一系列的主要是网络制式, GPS, WiFi, 发行地区, 键盘Y/Z倒置之类的差异.</p>
 
-<h1>html attribute filter</h1>
-
-<p>module HtmlAttrFilters</p>
-
-<pre><code>def html_attr(input)
-    input.gsub(/\r\n|\r|\n/, "\r\n"=&gt;'&amp;#13;&amp;#10;', "\r"=&gt;'&amp;#13;', "\n"=&gt;'&amp;#10;')
-end
-</code></pre>
-
-<p>end</p>
-
-<p>Liquid::Template.register_filter HtmlAttrFilters
-```</p>
-
-<p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
-
-<p><code>html source/_includes/head.html
-  &lt;meta name="description" content="{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}"&gt;
-</code></p>
-
-<p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
+<p>黑莓的数字型号大小和发布日期最初是有些对应关系的, 但是后来就很混乱了, 不仔细找资料还真很难区分.</p>
 
 <!-- more -->
 
 
-<h2>Jekyll扩展和Liquid扩展</h2>
+<h2>硬件</h2>
 
-<p><a href="http://octopress.org/">Octopress</a>是基于<a href="https://github.com/mojombo/jekyll">Jekyll</a>的, <a href="https://github.com/mojombo/jekyll">Jekyll</a>使用的模版引擎是<a href="https://github.com/Shopify/liquid/wiki">Liquid</a>, 在模版中<code>{{ a | foo | bar}}</code>的<code>foo</code>和<code>bar</code>叫做<strong>Filter</strong>, 后面将把其称为<strong>过滤器</strong>, 在<a href="https://github.com/mojombo/jekyll">Jekyll</a>的<a href="https://github.com/mojombo/jekyll/wiki/Plugins">插件开发文档</a>中有一段是关于过滤器扩展, 我主要是参考这里来做文章开始的扩展.</p>
+<p><img class="right" src="/i/bb8310.png" title="BlackBerry 8310" alt="BlackBerry 8310"></p>
 
-<h3>Liquid filters</h3>
-
-<p>You can add your own filters to the liquid system much like you can add tags above. Filters are simply modules that export their methods to liquid. All methods will have to take at least one parameter which represents the input of the filter. The return value will be the output of the filter.</p>
-
-<p>``` ruby
-module Jekyll
-  module AssetFilter</p>
-
-<pre><code>def asset_url(input)      
-  "http://www.example.com/#{input}?#{Time.now.to_i}"
-end
-</code></pre>
-
-<p>  end
-end</p>
-
-<p>Liquid::Template.register_filter(Jekyll::AssetFilter)
-```</p>
-
-<p><strong>Advanced</strong>: you can access the <code>site</code> object through the <code>@context.registers</code> feature of liquid. Registers a hash where arbitrary context objects can be attached to. In Jekyll you can access the site object through registers. As an example, you can access the global configuration (_config.yml) like this: <code>@context.registers[:site].config['cdn']</code>.</p>
-
-<h3>延伸: Octopress Jekyll和Liquid所有可用的过滤器</h3>
-
-<p><a href="http://octopress.org/">Octopress</a>扩展的过滤器在<a href="https://github.com/imathis/octopress/blob/master/plugins/octopress_filters.rb">这里</a>, 主要是从36行开始的这些:</p>
-
-<p>``` ruby plugins/octopress_filters.rb
-module OctopressLiquidFilters
-  include Octopress::Date</p>
-
-<p>  # Used on the blog index to split posts on the <!--more--> marker
-  def excerpt(input)</p>
-
-<pre><code>if input.index(/&lt;!--\s*more\s*--&gt;/i)
-  input.split(/&lt;!--\s*more\s*--&gt;/i)[0]
-else
-  input
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Checks for excerpts (helpful for template conditionals)
-  def has_excerpt(input)</p>
-
-<pre><code>input =~ /&lt;!--\s*more\s*--&gt;/i ? true : false
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Summary is used on the Archive pages to return the first block of content from a post.
-  def summary(input)</p>
-
-<pre><code>if input.index(/\n\n/)
-  input.split(/\n\n/)[0]
-else
-  input
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Extracts raw content DIV from template, used for page description as 
-  # contains complete sub-template code on main page level
-  def raw_content(input)</p>
-
-<pre><code>/&lt;div class="entry-content"&gt;(?&lt;content&gt;[\s\S]*?)&lt;\/div&gt;\s*&lt;(footer|\/article)&gt;/ =~ input
-return (content.nil?) ? input : content
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Escapes CDATA sections in post content
-  def cdata_escape(input)</p>
-
-<pre><code>input.gsub(/&lt;!\[CDATA\[/, '&amp;lt;![CDATA[').gsub(/\]\]&gt;/, ']]&amp;gt;')
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Replaces relative urls with full urls
-  def expand_urls(input, url='')</p>
-
-<pre><code>url ||= '/'
-input.gsub /(\s+(href|src)\s*=\s*["|']{1})(\/[^\"'&gt;]*)/ do
-  $1+url+$3
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Improved version of Liquid's truncate:
-  # - Doesn't cut in the middle of a word.
-  # - Uses typographically correct ellipsis (…) insted of '...'
-  def truncate(input, length)</p>
-
-<pre><code>if input.length &gt; length &amp;&amp; input[0..(length-1)] =~ /(.+)\b.+$/im
-  $1.strip + ' &amp;hellip;'
-else
-  input
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Improved version of Liquid's truncatewords:
-  # - Uses typographically correct ellipsis (…) insted of '...'
-  def truncatewords(input, length)</p>
-
-<pre><code>truncate = input.split(' ')
-if truncate.length &gt; length
-  truncate[0..length-1].join(' ').strip + ' &amp;hellip;'
-else
-  input
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Condenses multiple spaces and tabs into a single space
-  def condense_spaces(input)</p>
-
-<pre><code>input.gsub(/\s{2,}/, ' ')
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Removes trailing forward slash from a string for easily appending url segments
-  def strip_slash(input)</p>
-
-<pre><code>if input =~ /(.+)\/$|^\/$/
-  input = $1
-end
-input
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Returns a url without the protocol (http://)
-  def shorthand_url(input)</p>
-
-<pre><code>input.gsub /(https?:\/\/)(\S+)/ do
-  $2
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  # Returns a title cased string based on John Gruber's title case http://daringfireball.net/2008/08/title_case_update
-  def titlecase(input)</p>
-
-<pre><code>input.titlecase
-</code></pre>
-
-<p>  end</p>
-
-<p>end
-Liquid::Template.register_filter OctopressLiquidFilters
-```</p>
-
-<p><code>def</code>后的名称即过滤器的名称.</p>
-
-<p><a href="https://github.com/mojombo/jekyll">Jekyll</a>扩展的过滤器在<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">这里</a></p>
-
-<p><a href="https://github.com/Shopify/liquid/wiki">Liquid</a>的标准过滤器在<a href="https://github.com/shopify/liquid/wiki/liquid-for-designers">这里</a></p>
-
-<h2>Ruby的字符串和正则</h2>
-
-<p>Ruby的字符串可以使用双引号<code>"foo bar"</code>, 也可以使用单引号<code>'foo bar'</code>, 区别是:</p>
+<p>我购买的是水货的<a href="http://cn.blackberry.com/devices/blackberrycurve8300/">BlackBerry Curve 8310</a>, 以下简称<strong>bb8310</strong>, 铁灰色, 和图片上哪种颜色不同.</p>
 
 <ul>
-<li>双引号中可以使用<code>\r\n</code>等转义符号, 以及<code>#{bar}</code>来引入一个变量的值, <code>bar</code>表示一个变量名.</li>
-<li>单引号会将所有的字符原样保留, 包括<code>\r\n</code>, 其等价于双引号的<code>\\r\\n</code>.</li>
+<li><p>GSM网络制式, 国内能用移动 联通的2G网络.</p></li>
+<li><p>支持GPRS/EDGE上网, EDGE是GPRS升级, 理论上快一点, 但是我没感觉到. EDGE移动支持的比较多, 联通挺多的还是GPRS.</p></li>
+<li><p>Intel PXA901 312 MHz, 就实际使用的流畅感觉来说, <strong>所有点击操作都有延迟的感觉, 列表滚动经常短暂的卡顿.</strong></p></li>
+<li><p>内置存储 64M, 精简ROM后还能剩30M左右, 安装第三方应用都需要占用内置存储空间.</p></li>
+<li><p>支持MicroSD(TF)卡, 但是建议最大使用2G的, <strong>因为bb8310读写速度极慢, 写入速度低于1M/s</strong>.</p></li>
+<li><p>320x240解析度的TFT屏幕, <strong>阳光下可以看清字, 因为会自动调整背光强度.</strong></p></li>
+<li><p>带GPS, 带200w像素的摄像头, 无自动对焦, 带闪光灯, <strong>实际我当手电筒使用</strong>.</p></li>
+<li><p>无WiFi, <strong>有WiFi的那个型号只能使用系统自带浏览器上网, 第三方应用无法使用WiFi.</strong></p></li>
+<li><p>滚迹球导航键, <strong>相对于侧边的滚轮能提供4个方向, 相对于更新型号的光学触控板容易变油腻, 老化明显.</strong></p></li>
+<li><p>图片JPG, BMP, TIFF. 音乐AMR, MP3, WMA. 视频MPEG4, 3GP(H.263), <strong>不建议考虑视频, 即使是录制的视频质量也太差</strong>, 没有实际意义.</p></li>
 </ul>
 
 
-<p>Ruby字符串的替换可以使用<code>gsub</code>方法, 类似一般语言中的<code>replace</code>, 第一个参数仍旧可以为正则, Ruby的文档中代码示例如下:</p>
+<p>硬件参数什么的只能说是, 哪个时期, 水货哪个价格还行, 行货价格极高.</p>
 
-<p><code>ruby String#gsub
-"hello".gsub(/[aeiou]/, '*')                  #=&gt; "h*ll*"
-"hello".gsub(/([aeiou])/, '&lt;\1&gt;')             #=&gt; "h&lt;e&gt;ll&lt;o&gt;"
-"hello".gsub(/./) {|s| s.ord.to_s + ' '}      #=&gt; "104 101 108 108 111 "
-"hello".gsub(/(?&lt;foo&gt;[aeiou])/, '{\k&lt;foo&gt;}')  #=&gt; "h{e}ll{o}"
-'hello'.gsub(/[eo]/, 'e' =&gt; 3, 'o' =&gt; '*')    #=&gt; "h3ll*"
-</code></p>
-
-<p>我没有完整的看Ruby的语言规范, 根据文档的描述, 示例代码中最后一行<code>'e' =&gt; 3, 'o' =&gt; '*'</code>叫做<strong>Hash</strong>.</p>
-
-<p>另外一个方法<code>sub</code>和<code>gsub</code>区别在: <code>sub</code>只会替换一次, <code>gsub</code>会替换所有的.</p>
-
-<p>更多资料:</p>
+<h3>硬件设计方面</h3>
 
 <ul>
-<li> <a href="http://www.ruby-doc.org/docs/ProgrammingRuby/html/tut_stdtypes.html">Ruby基础类型</a>中还有更多关于<code>String</code>类型的基础.</li>
-<li> <a href="http://www.ruby-doc.org/core-1.9.3/String.html">类库参考 String</a>中有完整的<code>String</code>可使用.</li>
+<li><p>正面的LED灯十分有用, 能够表示未接来电, 新短信, 充电中, 充电完成, 电量低. 配合第三方软件还可以有其它的提醒用途.</p></li>
+<li><p>侧面框和顶部都是橡胶油涂层, 手感好, 但是bb8310的这个有点问题, 用一段时间后, 磨损等会让所有涂层都脱落, 然后就是普通的塑料了.</p></li>
+<li><p>外部扬声器在顶部, 有缝隙, 不怕手机压到什么地方后声音太小.</p></li>
+<li><p>bb8310的键盘按键有些特殊, 是比较硬的哪种, 按下后会响. 由于是Curve的小巧设计, 有些人可能会觉得按键太小, 我感觉还好.</p></li>
+<li><p>左右两侧, 中间的按键可以设置为启动应用, 我是其中一个设置为摄像机, 用于开启闪光灯, 当手电筒用, 另外一个设置为百度输入法, 具体为何会在下文说明.</p></li>
+<li><p>最好也买一个休眠套, 一般是牛皮的, 除了省电外, 还能在拿出休眠套后自动点亮屏幕, 可以理解为直板手机的翻盖开关.</p></li>
 </ul>
 
 
-<p>Ruby中正则的使用感觉和Javascript的十分象, 当然也有一些其它的语法, 详细参考<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">Ruby类库参考 Regexp</a></p>
+<h2>软件</h2>
 
-<p>发现一个特别的地方是Javascript中正则可以使用的选项有<code>igm</code>, 而Ruby是<code>imxo</code>, 见<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">这里</a><strong>的Options</strong></p>
+<p>黑莓中可以安装的软件主要是alx, jad, cod:</p>
 
-      <p><a href="http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/#comments">查看评论</a></p>]]></content>
+<ul>
+<li><p>alx是黑莓自己的格式, 可以使用黑莓的PC工具中带的AppLoader刷机工具安装.</p></li>
+<li><p>jad是JavaME的标准, 一般是在线安装, 如果已经下载好了可以用 <strong>多媒体</strong> 中 <strong>黑莓键</strong> <strong>浏览</strong> 打开来安装.</p></li>
+<li><p>cod, 上面2个一般都是安装描述格式, 这个才是软件自身, 一般需要使用工具生成alx或jad然后来安装.</p></li>
+</ul>
+
+
+<h3>常用软件</h3>
+
+<p>排名不分先后.</p>
+
+<ul>
+<li><p><a href="http://www.uc.cn/product/product_choose_browser.shtml">UC浏览器黑莓版</a></p>
+
+<p>比黑莓自带的浏览器靠谱很多的第三方浏览器.</p></li>
+<li><p><a href="http://m.google.cn/maps/">Google 地图</a></p>
+
+<p>bb8310只能使用在线地图, 必须将 <strong>选项</strong> <strong>高级选项</strong> <strong>TCP</strong> 中的 <strong>APN</strong> 设置为<code>cmnet</code>才行, 非中国移动的设置成对应的XXnet. 感觉Google地图的定位速度比较快.</p></li>
+<li><p><a href="http://www.gpslook.net/">乐图</a></p>
+
+<p>可以使用离线地图包, 也可以制作自己的地图包. 地图保存在TF卡上, 刷机后一般建议重新导入离线地图包.</p></li>
+<li><p><a href="http://bbdev.org/">黑莓来电助手</a> <a href="http://bbdev.org/active/">注册</a></p>
+
+<p>来电归属地显示, 不过这个在bb8310上并不总是一定能看到, 还好可以在通话记录中手工查找归属地, 归属地数据库不定期更新.</p>
+
+<p>提供IP电话功能, 可能受限于API, 不能高度和系统集成, 只是拨号时增加了一个菜单项.</p>
+
+<p>提供接通震动, 拨号后等待接通的这段时间可以不必要一直听着手机.</p></li>
+<li><p><a href="http://bbdev.org/">黑莓热键大师</a></p>
+
+<p>和来电助手是同一个开发者, 是一个快捷启动的工具, 用来对付哪些没有热键设置的软件.</p></li>
+<li><p>百度黑莓输入法</p>
+
+<p>曾经的点讯梅花输入法, 利用黑莓键盘最下方的5个键来选字, 比默认的输入法选字速度快, 支持自定义双拼.</p>
+
+<p>在bb8310上缺点是它是在独立程序中输入好之后再粘贴的, 基本上BlackBerry OS 4.5的全部都是这样的, 黑莓的公司一直以来对开发者不怎么待见.</p>
+
+<p>由于基本都是泄漏出来的, 所以没有什么官方地址, 自行Google或者到<a href="http://www.bber.info/post/baiduinput">这里下载</a></p></li>
+<li><p><a href="http://hi.baidu.com/feng131719/archive/tag/%E7%81%B0%E5%A4%AA%E7%8B%BC%E5%85%88%E7%94%9F-%E9%BB%91%E8%8E%93%E4%B8%93%E5%8C%BA">黑莓键盘锁 AutoLock</a></p>
+
+<p>直板手机都有的, 因为黑莓提供了休眠套, 所以黑莓自身没有超时自动锁键盘的功能, 所以用这个软件来完成超时自动锁键盘.</p></li>
+<li><p><a href="http://www.berryon.com/blackberry/1051.htm">桌面农历 LunarHome</a></p>
+
+<p>桌面图标显示为农历的日期, 包括24节气什么的.</p>
+
+<p>还有一个PanvsCalendar, 功能更多一些, 收费的, 和桌面农历不是同一个开发者, <a href="http://panvs.taobao.com/">作者的淘宝店</a>.</p></li>
+<li><p><a href="http://www.mowriter.com">MoWriter</a></p>
+
+<p>黑莓上的微博工具, 支持新浪微博, 街旁网, 做啥网, 我多数时候用新浪微博.</p>
+
+<p>不过bb8310及同系列的, 要么没WiFi, 要么第三方软件不能使用WiFi, GPRS速度太慢了, 就算是EDGE也没太大提高.</p></li>
+<li><p>贝贝词典</p>
+
+<p>十分快速小巧的词典软件, 可以自定义词库, 作者提供有一个英汉词典.</p>
+
+<p>作者没有设置网站, 主要在maxpda论坛发布, 可以自行Google或者到<a href="http://bbs.maxpda.com/thread-24798-1-1.html">这里下载</a></p>
+
+<p>连接电脑后, 使用导入客户端导入时必须同时启动手机上的贝贝词典.</p>
+
+<p>需要注意的是词库会导入到黑莓的数据库, 这会在使用黑莓桌面工具备份数据库的时候速度极慢.</p></li>
+<li><p><a href="http://coolove.pcriot.com">BBNotePad</a></p>
+
+<p>如名字所示, 记事本, 可以编辑txt和系统内部的记事本. 名字是英文的, 但是界面有中文.</p>
+
+<p>可以用这个把系统记事本保存到TF卡上.</p></li>
+<li><p>GBBReader</p>
+
+<p>文本格式阅读器, 打开速度极快, 我觉得这个是作为BBNotePad的搭配, 这个阅读十分方便, 中文字体可以开反锯齿, 效果会好点.</p>
+
+<p>作者没有设置网站, 我也没找到主要在什么网站发布, 只能自行Google.</p></li>
+<li><p>Nintaii</p>
+
+<p>磨时间的移植类游戏, 自行Google</p></li>
+<li><p><a href="http://oteam.cn/BerryBox/">BerryBox</a></p>
+
+<p>这是个PC端工具, 需要dotnet 2.0运行环境, 可以实现黑莓上的安装软件, 备份软件, cod生成alx和jad, 完整刷机前的清除, 同步时间, 截屏, 工程模式激活码, OTA下载功能.</p></li>
+</ul>
+
+
+<h3>拨号前的设置</h3>
+
+<p><strong>拨号键</strong> <strong>黑莓键</strong> <strong>选项</strong> <strong>智能拨号</strong> 中 <strong>国家地区号码</strong>设置为<code>+86</code>表示中国, <strong>国内号码长度</strong>设置为<code>11</code>表示国内的手机号码长度.</p>
+
+<p>可以避免一些拨号的问题, 国行应该不需要这样的设置吧.</p>
+
+<h3>导入SIM卡中的联系人</h3>
+
+<p>在通讯簿中, <strong>黑莓键</strong> <strong>SIM 电话簿</strong> <strong>黑莓键</strong> <strong>全部复制到通讯簿</strong>.</p>
+
+<h3>快速查找联系人</h3>
+
+<p>bb8310的通讯簿不能以拼音索引联系人, 必须输入汉字才行, 这算是黑莓做产品本地化的失败之处.</p>
+
+<p>替代的办法是给联系人设置上公司名字, 可以仅填上首字母, 或者按照英文人名规则哪样空格分割.</p>
+
+<p>有一个软件叫 <strong>通讯簿批量添加拼音缩写小工具</strong> , 来自uulab.org, 但是目前只能访问<a href="http://uulab.cn/">uulab.cn</a>, 第三方网站上还能下载到, <a href="http://www.52blackberry.com/thread-418860-1-1.html">比如这里</a></p>
+
+<p>还有<a href="http://berryware360.cn/">莓软360</a>的<strong>凌波微步 SmartDial</strong>通过其它方式实现按拼音索引, 但都受限于黑莓的API, 和系统集成的不是很好. 听说新的机型已经支持拼音索引了.</p>
+
+<p>同样还是通讯簿, 可以给联系人设置图像, 但是哪个图像却限制大小, 来电时会显示一个很小的头像, 很莫名其妙的设计.</p>
+
+<h3>字体</h3>
+
+<p>bb8310默认带的字体在英文的表现比较好, 中文的则必须把字号设置大一点才方便看, 中文没有反锯齿.</p>
+
+<p>但是奇怪的是GBBReader中显示中文却可以反锯齿, 难道是黑莓有意为之?</p>
+
+<h3>黑莓断网问题</h3>
+
+<p>断网主要是在APN为net接入点时, 第三方软件间歇性无法访问网络, 原因比较奇怪, 看表现应该是黑莓对不同运营商网络设备不兼容.</p>
+
+<p>这个问题在比bb8310更新的机型中也存在, 我不知道最新的是否有解决这个问题.</p>
+
+<h3>黑莓桌面工具无法和手机连接</h3>
+
+<p>这个一般是在安装一些主题或软件后会发生, 处理办法是将语言设置为英文后重启, 重启方法见下文.</p>
+
+<h3>手电筒</h3>
+
+<p>我看过黑莓的应用程序开发SDK, 没有发现任何明确的, 控制手电筒的API, 也没有找到能单独打开闪光灯的应用, 这个好像都只有在新的黑莓手机和SDK中存在.</p>
+
+<p>所以只能将左侧的键设置为摄像机, 用空格键切换闪光灯为强制开, 以后要开手电筒就按左侧的键, 等一会就能打开, 只是需要过一会动一下滚迹球, 否则会自动锁屏.</p>
+
+<h3>彩信</h3>
+
+<p>发送彩信基本没有什么特殊的设置, 但是接收彩信需要确保是下面的设置</p>
+
+<ul>
+<li><p><strong>选项</strong> <strong>高级选项</strong>  <strong>浏览器推入</strong>中, 选中<strong>启用 WAP 推入</strong>.</p></li>
+<li><p><strong>选项</strong>  <strong>彩信</strong>中, <strong>多媒体接收</strong>和<strong>自动检索</strong>选中, <strong>消息过滤中的拒绝</strong>最好取消掉.</p></li>
+</ul>
+
+
+<p>接收彩信必须打开<strong>移动网络</strong>中的<strong>数据服务</strong>.</p>
+
+<h3>用数据线连接电脑作为U盘使用</h3>
+
+<p><strong>选项</strong> <strong>媒体卡</strong>中的<strong>外部存储器支持</strong>:开, <strong>加密模式</strong>:无, <strong>"大容量模式"支持</strong>:开, <strong>连接时自动启用"大容量模式"</strong>:是</p>
+
+<p>然后连接电脑就应该能看到新的盘符.</p>
+
+<p>需要注意的是, bb8310确实是USB 2.0的接口, 使用的TF卡确实是Class 4的, 读取至少在10M/s以上, 写入至少在4M/s. 但是在bb8310上读取应该在1M/s左右, 写入大概0.8M/s左右, 不确定是硬件还是软件限制的原因. 所以如果是大文件建议拔出来用读卡器.</p>
+
+<h3>关机和重启手机</h3>
+
+<p>bb8310桌面上的<strong>关闭电源</strong>打开后会有<strong>关闭</strong>和<strong>完全切断电源</strong></p>
+
+<ul>
+<li><p><strong>关闭</strong>类似待机, 如果设置了自动开机会生效.</p></li>
+<li><p><strong>完全切断电源</strong>类似休眠, 自动开机不会生效, <strong>闹钟也不会生效</strong>, 但是启动很快.</p></li>
+</ul>
+
+
+<p>bb8310没有通过软件真正关机的办法, 只能是拔电池. 下次安装电池就会自动开机.</p>
+
+<p>重启推荐使用 <strong>左Alt + 右Shift(左下角和右下角的键) + Del</strong> 重启, 毕竟拔电池再安装太麻烦了.</p>
+
+<p>重启速度很慢, 大概3分钟.</p>
+
+<h3>浏览器的首页设置被锁定</h3>
+
+<p>这个是黑莓故意为之, 他会配合运营商限制用户对手机的一些功能的使用和设置, 包括浏览器, 彩信, WiFi.</p>
+
+<p>这么做的好处是运营商相关的一些网络配置是自动化设置好的, 坏处是运营商会在很多地方和用户为敌, 而黑莓正好处处配合运营商.</p>
+
+<p>网上有导入<strong>服务预订</strong>设置的可以解除锁定, 但是可能会影响上网.</p>
+
+<h3>蓝牙传输文件</h3>
+
+<p>发送文件一般比较简单, 但是用黑莓接受就需要绕点弯了.</p>
+
+<p><strong>多媒体</strong> <strong>黑莓键</strong> <strong>使用蓝牙接收</strong>, 后续按照说明设置就可以了.</p>
+
+<p>总体感觉蓝牙的使用极其繁琐.</p>
+
+<h3>把通讯簿的联系人复制到SIM卡</h3>
+
+<p>在通讯簿中, 查看一个联系人的信息, 将光标移动到联系人的号码上, <strong>黑莓键</strong> <strong>复制到SIM电话簿</strong>.</p>
+
+<p>没有批量操作方式, 我也没找到第三方软件有这样的功能, 好像是bb8310的API限制.</p>
+
+<p>黑莓桌面工具的同步功能可以将通讯簿导出为逗号分割的文本格式, 可以在Excel或者WPS表格中编辑, 但是这个操作过程还是很麻烦的.</p>
+
+<h3>快捷键启动软件</h3>
+
+<p>黑莓的设计很是奇怪, 软件的快捷键启动方式可以由</p>
+
+<ul>
+<li>软件自身设置, 比如启动BBNotePad的快捷键是<strong>P</strong>.</li>
+<li>界面皮肤设置, 很多第三方皮肤都设置了大量的快捷键.</li>
+</ul>
+
+
+<p>没有快捷键软件可以使用上文中提到的<a href="http://bbdev.org/">黑莓热键大师</a>, 黑莓系统内的快捷键可以<a href="http://www.google.com.hk/search?q=%E9%BB%91%E8%8E%93%E5%BF%AB%E6%8D%B7%E9%94%AE">自行Google</a></p>
+
+<h3>通话录音</h3>
+
+<p>黑莓禁止这种功能, 估计现在的API也不提供这样的功能.</p>
+
+<h3>音乐播放一段时间后自动停止</h3>
+
+<p>一般是睡觉前使用的, 在睡着后自动停止.</p>
+
+<p>bb8310的音乐播放功能好像完全被系统自身的音乐播放器控制, 所有的播放都由系统自身的音乐播放器实现.</p>
+
+<p>我没有找到bb8310可用的这种音乐播放软件.</p>
+
+<h3>一些Bug</h3>
+
+<ul>
+<li><p>自带的拼音输入法, 在极个别的情况下会导致系统死机, 我没有能找出重现这个现象的方法, 但是出现过一次. 我使用的是东亚版ROM, 输入法应该不是黑莓开发的, 就是黑莓的合作运营商开发的.</p></li>
+<li><p>在插入耳机的情况下, 并且使用了自动开关机, 自动开机后可能闹钟不实用外放.</p></li>
+</ul>
+
+
+<h2>刷机</h2>
+
+<p>一般水货商卖的机器会安装好很多东西, 也基本够用, 如果想精简成完全适合自己的就需要刷机了. 当然也可以是为了使用更新版本的ROM而刷机.</p>
+
+<p>刷机前先要确定使用哪个版本的ROM, 不同的机型对应不同的ROM, 我的bb8310主要用过的是</p>
+
+<ul>
+<li>174版本 <code>8310EastAsia_PBr4.5.0_rel294_PL2.7.0.105_A4.5.0.174_Hutchison_maxpda.exe</code></li>
+<li>182版本 <code>8310EastAsia_PBr4.5.0_rel306_PL2.7.0.106_A4.5.0.182_AT_amp_T.exe</code></li>
+</ul>
+
+
+<p>相关的下载可以用文件名搜. 这两个ROM实际差异感觉不明显, 后一个第三方软件兼容好一点点, 只是因为黑莓的软件不多而显得可能比较重要.</p>
+
+<p>可靠的刷机方式是使用黑莓桌面工具中的<strong>AppLoader</strong>, 路径是<code>C:\Program Files\Common Files\Research In Motion\AppLoader\Loader.exe</code>.</p>
+
+<p>一般完整刷机(WIPE刷机)需要1小时, 再加上安装和配置软件什么的估计需要2小时, 赶上重装Windows了.</p>
+
+<p><strong>AppLoader</strong>也用于安装alx格式的软件, 不过我更推荐使用<a href="http://oteam.cn/BerryBox/">BerryBox</a>作为日常安装软件, 除非某些软件必须使用AppLoader.</p>
+
+<p>刷机或者安装软件后可能需要重启, 这个重启近乎和<strong>左Alt + 右Shift(左下角和右下角的键) + Del</strong>一样, 显然黑莓给自己留了重启的API.</p>
+
+<h4>输入法</h4>
+
+<p>使用AppLoader刷机时会看到有2个拼音输入法和2个笔画输入法, 每个里面第2个是繁体的, 简体中文只需要使用第一个.</p>
+
+<h3>ROM的精简</h3>
+
+<p>ROM中一般会携带一些运营商和合作伙伴的软件, 很多的其实用不到, 所以就出现了各种ROM精简方法, 这个可以Google到很多</p>
+
+<h3>刷机的备份和恢复</h3>
+
+<p>黑莓桌面工具可以完整的备份黑莓中的配置, 但不包括安装上的软件. 恢复也是覆盖式恢复, 不会合并, 实际用途好像仅限于刷机前的备份.</p>
+
+<p>能有价值备份的也主要是联系人, 短信, 通讯记录, 日程, 任务, 笔记之类的.</p>
+
+<p>全面备份可能会因为类似贝贝词典这样的软件而中间卡很长时间.</p>
+
+<p>备份的格式是ipd格式, 一种私有的2进制格式, 不是很方便修改.</p>
+
+<h2>现状</h2>
+
+<p>在黑莓公司开始下坡之前, 黑莓一直都和各个国家的运营商走的近, 上文多处也提到一些事的端倪.</p>
+
+<p>对开发者比较不待见, 比如曾经不给中国开发者提供SDK下载. 在Android大量抢夺开发者的时候, 黑莓仍旧搞的和苹果一样, 对开发者收取签名用的证书费用, 后来降成1$, 最后免费, 不过为时已晚. SDK的维护不力, 大量私有的API. 后来情况有些改观, 但是也是太晚了, 坏的印象留下就无法抹去, 况且当时Android和iOS已经抢了主要的开发者.</p>
+
+<p>对最终用户有一种很奇怪的态度, 一方面积极完善BIS BES这种"企业级"应用, 另一方面对旧产品疏于维护, 甚至一些问题会从旧的到新的产品中持续存在, 迟迟到来的应用商店对旧型号的支持还不如一些商店中的软件, 虽然四处和运营商合作, 但是黑莓的网站仍旧慢的可以, 无论是用户还是开发者的感受会十分差. 大肆扩张业务涉及的国家和地区, 但是对应的本地化却太肤浅, 至少我觉得和中国地区的一些优秀本地化应用开发者或公司合作太少, 感觉还是走亲近运营商的老路了.</p>
+
+<p>中国地区的BIS是好容易才能用, 不过感觉还是太贵了, 多数人可能更在乎的是手机上方便的发邮件, 收邮件并不需要实时, 况且我根本不相信运营商能把实时这个事做好. BES好像还没什么消息, 除了贵之外, 可能也和国内公司没有使用Email的习惯吧.</p>
+
+<p>黑莓公司现在的状况很差, 股价大跌, 新产品销量达不到预期, 可能和Android关系更多, 公司高层的频繁变动, 还有政策变动等, 反正是这个坎很难过.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/07/01/blackberry-memo/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
@@ -366,282 +440,6 @@ Liquid::Template.register_filter OctopressLiquidFilters
 
 
       <p><a href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress 笔记]]></title>
-    
-      <category term="Memo" />
-    
-      <category term="Octopress" />
-    
-      <category term="Ruby" />
-    
-    <link href="http://netwjx.github.com/blog/2012/03/18/octopress-note/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-03-18T14:43:00+08:00</published>
-    <updated>2012-03-18T14:43:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/03/18/octopress-note</id>
-    <content type="html"><![CDATA[<p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
-
-<p>blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上.</p>
-
-<p>这里主要是以我自己的环境来写, 即在Windows下使用Octopress. 因为Win下折腾这个中间出的问题很多.</p>
-
-<!--more -->
-
-
-<h2>安装前提</h2>
-
-<p>Octopress使用ruby编写, 所以需要ruby, Win下使用RubyInstaller</p>
-
-<ul>
-<li><a href="http://rubyinstaller.org">http://rubyinstaller.org</a> 因为神奇的原因我这里无法访问它.</li>
-<li><a href="http://rubyforge.org/projects/rubyinstaller/">http://rubyforge.org/projects/rubyinstaller/</a> 这里可以下载到, 我现在看到的RubyInstaller最高版本是1.9.3-p125</li>
-</ul>
-
-
-<p>上面的网页先别关, 还有一个devkit需要下载, 全称Development Kit, 用途是编译一些ruby中使用的c模块, 常见的比如sqlite</p>
-
-<p>那么下载的文件有</p>
-
-<ul>
-<li>rubyinstaller-1.9.3-p125.exe</li>
-<li>devkit-3.4.5r3-20091110.7z</li>
-</ul>
-
-
-<p>Octopress可以到<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 下载一份zip包, 如果已经有git环境则直接</p>
-
-<pre><code>git clone git://github.com/imathis/octopress.git myoctopress
-</code></pre>
-
-<p>我这里使用git, 那么应该会得到一个文件夹(下面提到将名为myoctopress目录), 内容和<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 上显示的一样</p>
-
-<p>前期准备基本完成, 如果没有git而打算使用git看下段</p>
-
-<h3>没有git, 打算使用git</h3>
-
-<p>Win下使用简单的git是TortoiseGit</p>
-
-<ul>
-<li><a href="http://code.google.com/p/tortoisegit/">http://code.google.com/p/tortoisegit/</a> 因为神奇的原因它可能有时会无法访问</li>
-<li><a href="http://goo.gl/ZpyYx">http://goo.gl/ZpyYx</a> 我在金山快盘的共享, 密码为IYzDsp</li>
-</ul>
-
-
-<p>由于TortoiseGit的后端使用的是Git for Windows <a href="http://code.google.com/p/msysgit/">http://code.google.com/p/msysgit/</a> , 所以下载的文件有</p>
-
-<ul>
-<li>TortoiseGit-1.7.6.0-32bit.msi</li>
-<li>Git-1.7.8-preview20111206.exe</li>
-</ul>
-
-
-<p>版本可能不同, 名字应该都是相似的, 先安装<code>Git-1.7.8-preview20111206.exe</code>, 然后是<code>TortoiseGit-1.7.6.0-32bit.msi</code>, 然后右键菜单中就有TortoiseGit项了.</p>
-
-<p>建议将Git for Windows安装目录的bin目录加入到环境变量Path中, 默认是<code>C:\Program Files\Git\bin</code>, 因为Octopress中会使用系统中的git命令</p>
-
-<h2>安装Ruby</h2>
-
-<p><code>rubyinstaller-1.9.3-p125.exe</code>建议安装到<code>c:\ruby</code>, 因为devkit中的默认配置就是这个路径</p>
-
-<p>确保<code>C:\Ruby\bin</code>在你的环境变量Path中, 下面使用的ruby gem命令都需要</p>
-
-<p>然后是devkit-3.4.5r3-20091110.7z解压到<code>c:\ruby</code>.</p>
-
-<p>如果不是这个路径, 解压之后还需要到<code>devkit\msys\1.0.11\etc\fstab</code>修改文件内容.</p>
-
-<p>如果路径包含空格, 则需要将路径转换成8.3格式短文件名, 方法是<code>dir /-n</code>, 就可以看到8.3格式的</p>
-
-<p>建议将<code>C:\Ruby\devkit\msys\1.0.11\bin</code>也加入到环境变量Path中, 可以避免后续在安装ruby的fsevent模块时出现一个没有找到命令行的错误</p>
-
-<p>可以运行<code>C:\Ruby\devkit\msys\1.0.11\msys.bat</code>看看, 这个是msys的环境, 一个最小的UNIX环境, 类似Cygwin, 但是原理不同, 更快, 更小, 前面Git for Windows也是基于这个.</p>
-
-<p>打开<code>C:\Ruby\lib\ruby\1.9.1\i386-mingw32\rbconfig.rb</code>, 找到62行附近, 查找<code>-Wno-missing-field-initializers</code>, 将其删除, 我这里是复制一份新的修改并注释原来的</p>
-
-<pre><code>#CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-missing-field-initializers -Wno-long-long"
-CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-long-long"
-</code></pre>
-
-<p>这么做可以避免在安装ruby的本地c模块时调用gcc失败的问题, 我遇到的是无法安装RedCloth模块, 可能是devkit里面附带的gcc版本旧, 不支持这个选项吧.</p>
-
-<h3>修改gem的源服务器地址</h3>
-
-<p>因为神奇的原因gem可能会下载任何东西失败, 修改后可解决这个问题</p>
-
-<p>gem是ruby的包管理程序, 类似debian的apt-get</p>
-
-<p>打开命令行</p>
-
-<pre><code>gem sources --remove http://rubygems.org/
-gem sources -a http://ruby.taobao.org/
-gem sources -l
-*** CURRENT SOURCES ***
-
-http://ruby.taobao.org
-</code></pre>
-
-<p>最后一个命令<code>gem sources -l</code>是查看当前的配置, 确保输出和上述的一致</p>
-
-<h2>安装Octopress</h2>
-
-<p>前面那么多准备都是为了这里, 主要参考http://octopress.org/docs/setup/.</p>
-
-<p>下述的命令行工作目录都是在myoctopress目录, 为了方便, 你可以在myoctopress目录创建一个cmd.cmd, 内容是</p>
-
-<pre><code>@start
-</code></pre>
-
-<p>命令行</p>
-
-<pre><code>gem install bundler
-</code></pre>
-
-<p>会需要一会时间, 完成后打开myoctopress目录下的Gemfile, 将<code>source "http://rubygems.org"</code>注释掉, 添加<code>source 'http://ruby.taobao.org/'</code>, 如下</p>
-
-<pre><code>#source "http://rubygems.org"
-source 'http://ruby.taobao.org/'
-</code></pre>
-
-<p>这样可以让bundle不会因为神奇的原因而容易出错, 然后命令行</p>
-
-<pre><code>bundle install
-</code></pre>
-
-<p>这会安装Octopress相关依赖的包, 比前一个命令需要更多的时间, 如果打算使用github的话可以看看下一段.</p>
-
-<p><code>bundle install</code>执行完毕后再</p>
-
-<pre><code>rake install
-</code></pre>
-
-<p>这个会创建好相关的目录结构</p>
-
-<p>接下来是设置如何部署, 参考<a href="http://octopress.org/docs/deploying/">http://octopress.org/docs/deploying/</a>, 我这里使用github</p>
-
-<h3>github上创建代码库</h3>
-
-<p><a href="http://pages.github.com">http://pages.github.com</a> 上有详细的说明, 我使用的是User Pages, 比如我的用户名是netwjx, 那么创建项目 netwjx.github.com</p>
-
-<p>后续还有关于域名绑定什么的就不多说了, 主要是修改CNAME记录和A记录的</p>
-
-<p>创建好之后能看到其git访问的地址, 比如我是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
-
-<p>按照github上的说明将提交用的ssh public key都折腾好, 如果以前用过github最好</p>
-
-<h2>设置部署github</h2>
-
-<p>参考<a href="http://octopress.org/docs/deploying/github/">http://octopress.org/docs/deploying/github/</a> , 命令行</p>
-
-<pre><code>rake setup_github_pages
-</code></pre>
-
-<p>输入git的地址,比如我的是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
-
-<p>然后这个命令</p>
-
-<ul>
-<li>会把myoctopress中原来clone时的代码库origin改名为octopress,并将刚刚输入git地址作为origin的代码库地址.</li>
-<li>会把当前分支名称从master改为source</li>
-<li>其它Url的设置还有deploy目录设置等</li>
-</ul>
-
-
-<p>中间需要用到git命令, 所以之前安装Git for Windows后必须将其<code>bin</code>目录加入到Path中</p>
-
-<p>中间可能会在<code>My Octopress Page is coming soon</code>之后出现<code>hellip;</code>不是内部命令之类的错误, 可以不用管, 如果一定不想要出现这个错误可以修改myoctopress目录下的Rakefile, 搜<code>My Octopress Page is coming soon</code>, 在<code>&amp;hellip;</code>前加个<code>^</code>(这个是Windows cmd的转义符), 如下</p>
-
-<pre><code>system "echo 'My Octopress Page is coming soon ^&amp;hellip;' &gt; index.html"
-</code></pre>
-
-<p><code>rake setup_github_pages</code>命令最后出现<code>Now you can deploy to xxxxxxx with `rake deploy`</code>, 就表示成功.</p>
-
-<p>接下来</p>
-
-<pre><code>rake generate
-</code></pre>
-
-<p>将会在myoctopress的public目录中生成静态的文件, 可以使用下面的命令预览</p>
-
-<pre><code>rake preview
-</code></pre>
-
-<p>通过<a href="http://localhost:4000">http://localhost:4000</a>来访问, 现在应该只能看到空白的网站.</p>
-
-<h2>第一篇blog</h2>
-
-<p>参考<a href="http://octopress.org/docs/blogging/">http://octopress.org/docs/blogging/</a></p>
-
-<pre><code>rake new_post["title"]
-</code></pre>
-
-<p>将会在<code>source/_posts</code>目录中创建指定名称的markdown文件, 文件名前面会自动加上年月日. title不能有中文, 因为这个名字会在url中使用, 中文标题可以打开这个markdown文件后自行修改, 刚刚创建的markdown文件内容如下</p>
-
-<pre><code>---
-layout: post
-title: "title"
-date: 2012-03-18
-comments: true
-categories:
----
-</code></pre>
-
-<p>这段除了title改成自己需要的, 别的可以先不管, 详细的见这段开始提到的参考.</p>
-
-<p>如果刚刚没关闭<code>rake preview</code>, 那么现在浏览<a href="http://localhost:4000">http://localhost:4000</a>应该能看到有了新的变化.</p>
-
-<h2>提交到github</h2>
-
-<p>先把<code>rake preview</code>关掉, 命令行</p>
-
-<pre><code>rake deploy
-</code></pre>
-
-<p>如果是直接使用TortoiseGit, 而不是Git for Windows的话, 这里将会因为ssh配置相关而发生错误. 修改配置会另起一篇来说, 这里可以自行使用TortoiseGit来提交.</p>
-
-<p>先说明一下目录的情况</p>
-
-<ul>
-<li><code>myoctopress</code> 是source分支</li>
-<li><code>myoctopress/_deploy</code> 是master分支</li>
-</ul>
-
-
-<p>如果仅仅需要看到网站, 只需要在<code>myoctopress/_deploy</code>目录中用TortoiseGit的<code>Git Sync</code>, Remote Branch选择<code>master</code>, 然后Push即可</p>
-
-<p>如果同时需要将原始的markdown等文件也提交到github, 就是在<code>myoctopress</code>目录做类似的操作.</p>
-
-<p>先在<code>myoctopress</code>目录中把已经修改的文件和<code>source\_posts</code>目录下的新文件都<code>Git Commit -&gt; "source"</code></p>
-
-<p>然后<code>Git Sync</code>, 在Remote Branch选择<code>source</code>, 如果没有这个分支就自己填上, 再Push.</p>
-
-<p>如果Push请确认<code>Git Sync</code>时的Remote URL设置的是<code>origin</code>, 另外一个<code>octopress</code>是Octopress项目的Url, 所以Push会失败, 除非你获得了操作Octopress项目的权限.</p>
-
-<h3>结构说明</h3>
-
-<p>github上的<code>master</code>(网站)和<code>source</code>(原始文件), 与本地的对应分支/目录是平等的关系, 上面提交到github不能理解为从属关系, 了解git的话这个很容易理解.</p>
-
-<p>可以按照需要将<code>myoctopress/_deploy</code> (master分支) 目录放到任何Web服务器(当然会有一些绝对路径有问题)</p>
-
-<p>同样<code>myoctopress</code>(source分支)可以不向github上Push, 而保留在自己本机, 或者Push到U盘等其它备份的地方, 熟悉git的话这是很自然的事.</p>
-
-<h2>还剩下些</h2>
-
-<p>Octopress的文档中github相关都是使用git命令行, 上述的操作在Push时使用的是TortoiseGit,  使用Git for Windows操作github上的代码库以后另起一篇来说.</p>
-
-<p>这些是根据昨天的操作回忆而写的, 所以可能有疏漏和记忆偏差.</p>
-
-<p>Octopress的模版, 评论, 还有其它扩展可以Google, 以后用到也许会写些文章.</p>
-
-<p>Octopress自身的东西在<a href="http://octopress.org/docs/">http://octopress.org/docs/</a>上很全.</p>
-
-<p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/03/18/octopress-note/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
