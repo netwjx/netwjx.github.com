@@ -3,7 +3,7 @@ layout: post
 title: Unicode转义(\uXXXX)的编码和解码
 date: 2012-07-07 12:23
 comments: true
-categories: Javascript CSharp Java RegExp Memo
+categories: Javascript CSharp Java RegExp Encode Decode
 ---
 
 在涉及Web前端开发时, 有时会遇到`\uXXXX`格式表示的字符, 其中`XXXX`是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和`\n` `\r`同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式.
