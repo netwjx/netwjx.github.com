@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-01T20:31:47+08:00</updated>
+  <updated>2012-07-07T14:28:47+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,331 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Unicode转义(\uXXXX)的编码和解码]]></title>
+    
+      <category term="CSharp" />
+    
+      <category term="Java" />
+    
+      <category term="Javascript" />
+    
+      <category term="Memo" />
+    
+      <category term="RegExp" />
+    
+    <link href="http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-07-07T12:23:00+08:00</published>
+    <updated>2012-07-07T12:23:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string</id>
+    <content type="html"><![CDATA[<p>在涉及Web前端开发时, 有时会遇到<code>\uXXXX</code>格式表示的字符, 其中<code>XXXX</code>是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和<code>\n</code> <code>\r</code>同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式.</p>
+
+<p>多数时候遇到需要解码的情况多点, 所以会先介绍解码decode, 后介绍编码encode.</p>
+
+<p>下文会提供Javascript C# Java三种语言下不同方法的实现和简单说明, 会涉及到正则和位运算的典型用法.</p>
+
+<!-- more -->
+
+
+<h2>Javascript的实现</h2>
+
+<h3>解码的实现</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">decode</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">unescape</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\(u[0-9a-fA-F]{4})/gm</span><span class="p">,</span> <span class="s1">&#39;%$1&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>unescape</code>是用来处理<code>%uXXXX</code>这样格式的字符串, 将<code>\uXXXX</code>替换成<code>%uXXXX</code>后<code>unescape</code>就可以处理了.</p>
+
+<h3>编码的实现</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">encode1</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">escape</span><span class="p">(</span><span class="nx">s</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/%(u[0-9A-F]{4})|(%[0-9A-F]{2})/gm</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$0</span><span class="p">,</span> <span class="nx">$1</span><span class="p">,</span> <span class="nx">$2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">$1</span> <span class="o">&amp;&amp;</span> <span class="s1">&#39;\\&#39;</span> <span class="o">+</span> <span class="nx">$1</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">||</span> <span class="nx">unescape</span><span class="p">(</span><span class="nx">$2</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>和解码中相对应, 使用<code>escape</code>编码, 然后将<code>%uXXXX</code>替换为<code>\uXXXX</code>, 因为<code>escape</code>还可能把一些字符编码成<code>%XX</code>的格式, 所以这些字符还需要使用<code>unescape</code>还原回来.</p>
+
+<p><code>escape</code>编码结果<code>%uXXXX</code>中的<code>XXXX</code>是大写的, 所以后面的<code>replace</code>只处理大写的<code>A-F</code>.</p>
+
+<h3>另一种编码的实现</h3>
+
+<p>不使用正则和<code>escape</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">encode2</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[],</span>
+</span><span class='line'>        <span class="nx">pad</span> <span class="o">=</span> <span class="s1">&#39;000&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">c</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">c</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">c</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;\\u&#39;</span> <span class="o">+</span> <span class="nx">pad</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span> <span class="o">-</span> <span class="nx">c</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">+</span> <span class="nx">c</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>遍历字符串中的字符, 那些<code>charCode</code>大于256的会转换成16进制字符串<code>c.toString(16)</code>, 如果不足4位则左边补0<code>pad.substr(0, 4 - c.length)</code>. 结尾将遍历的结果合并成字符串返回.</p>
+
+<h2>C#的实现</h2>
+
+<h3>解码的实现</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">static</span> <span class="n">Regex</span> <span class="n">reUnicode</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Regex</span><span class="p">(</span><span class="s">@&quot;\\u([0-9a-fA-F]{4})&quot;</span><span class="p">,</span> <span class="n">RegexOptions</span><span class="p">.</span><span class="n">Compiled</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">Decode</span><span class="p">(</span><span class="kt">string</span> <span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">reUnicode</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">m</span> <span class="p">=&gt;</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">short</span> <span class="n">c</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="kt">short</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">Groups</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">Value</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">Globalization</span><span class="p">.</span><span class="n">NumberStyles</span><span class="p">.</span><span class="n">HexNumber</span><span class="p">,</span> <span class="n">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="p">,</span> <span class="k">out</span> <span class="n">c</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;&quot;</span> <span class="p">+</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">c</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">m</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>正则和js中的一样, 将<code>XXXX</code>转换以16进制<code>System.Globalization.NumberStyles.HexNumber</code>解析为<code>short</code>类型, 然后直接<code>(char)c</code>就能转换成对应的字符, <code>"" + (char)c</code>用于转换成字符串类型返回.</p>
+
+<p>由于正则中也有<code>\uXXXX</code>, 所以需要写成<code>\\uXXXX</code>来表示匹配字符串<code>\uXXXX</code>, 而不是具体的字符.</p>
+
+<p>上面使用到了Lambda, 需要至少dotnet 4的SDK才能编译通过, 可以在dotnet 2下运行.</p>
+
+<h3>编码的实现</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">static</span> <span class="n">Regex</span> <span class="n">reUnicodeChar</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Regex</span><span class="p">(</span><span class="s">@&quot;[^\u0000-\u00ff]&quot;</span><span class="p">,</span> <span class="n">RegexOptions</span><span class="p">.</span><span class="n">Compiled</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">Encode</span><span class="p">(</span><span class="kt">string</span> <span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">reUnicodeChar</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">m</span> <span class="p">=&gt;</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">@&quot;\u{0:x4}&quot;</span><span class="p">,</span> <span class="p">(</span><span class="kt">short</span><span class="p">)</span><span class="n">m</span><span class="p">.</span><span class="n">Value</span><span class="p">[</span><span class="m">0</span><span class="p">]));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>和C#的解码实现正好相反, 0-255之外的字符, 从<code>char</code>转换成<code>short</code>, 然后<code>string.Format</code>以16进制, 至少输出4位.</p>
+
+<h2>Java的实现</h2>
+
+<h3>解码的实现</h3>
+
+<p>和C#相似的, 使用正则</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">static</span> <span class="kd">final</span> <span class="n">Pattern</span> <span class="n">reUnicode</span> <span class="o">=</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">&quot;\\\\u([0-9a-zA-Z]{4})&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">decode1</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Matcher</span> <span class="n">m</span> <span class="o">=</span> <span class="n">reUnicode</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">m</span><span class="o">.</span><span class="na">appendReplacement</span><span class="o">(</span><span class="n">sb</span><span class="o">,</span>
+</span><span class='line'>                <span class="n">Character</span><span class="o">.</span><span class="na">toString</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span> <span class="mi">16</span><span class="o">)));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">m</span><span class="o">.</span><span class="na">appendTail</span><span class="o">(</span><span class="n">sb</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Java语言没有内嵌正则语法, 也没有类似C#的<code>@"\u1234"</code>原始形式字符串的语法, 所以要表示正则中匹配<code>\</code>, 就需要<code>\\\\</code>, 其中2个是用于Java中字符转义, 2个是正则中的字符转义.</p>
+
+<p>Java语言中没有设计函数或者委托的语法, 所以它的正则库提供的是<code>find</code> <code>appendReplacement</code> <code>appendTail</code>这些方法的组合, 等价于js和C#中的<code>replace</code>.</p>
+
+<p>这里使用<code>StringBuffer</code>类型是由于<code>appendReplacement</code>只接受这个类型, <code>StringBuffer</code>有线程安全的额外操作, 所以性能差一点. 也许第三方的正则库能把API设计的更好用点.</p>
+
+<p><code>Integer.parseInt(m.group(1), 16)</code>用于解析为<code>int</code>类型, 之后再<code>(char)</code>, 以及<code>Character.toString</code>转换成字符串.</p>
+
+<h3>解码的另一种实现</h3>
+
+<p>因为<code>StringBuffer</code>的原因, 不使用正则的实现</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">decode2</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+</span><span class='line'>    <span class="kt">char</span><span class="o">[]</span> <span class="n">chars</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">chars</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">chars</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">chars</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">==</span> <span class="sc">&#39;u&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="kt">char</span> <span class="n">cc</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">(</span><span class="n">chars</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">j</span><span class="o">]);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="sc">&#39;0&#39;</span> <span class="o">&lt;=</span> <span class="n">ch</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span> <span class="o">||</span> <span class="sc">&#39;a&#39;</span> <span class="o">&lt;=</span> <span class="n">ch</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;f&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">cc</span> <span class="o">|=</span> <span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">digit</span><span class="o">(</span><span class="n">ch</span><span class="o">,</span> <span class="mi">16</span><span class="o">)</span> <span class="o">&lt;&lt;</span> <span class="o">(</span><span class="mi">3</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span> <span class="o">*</span> <span class="mi">4</span><span class="o">);</span>
+</span><span class='line'>                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">cc</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>                    <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">cc</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">i</span> <span class="o">+=</span> <span class="mi">5</span><span class="o">;</span>
+</span><span class='line'>                <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">cc</span><span class="o">);</span>
+</span><span class='line'>                <span class="k">continue</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>手工做就是麻烦很多, 代码中也一坨的符号.</p>
+
+<p>遍历所有字符<code>chars</code>, 检测到<code>\u</code>这样的字符串, 检测后续的4个字符是否是16进制数字的字符表示. 因为<code>Character.isDigit</code>会把一些其它语系的数字也算进来, 所以保险的做法<code>'0' &lt;= ch &amp;&amp; ch &lt;= '9'</code>.</p>
+
+<p><code>Character.digit</code>会把<code>0-9</code>返回为<code>int</code>类型的0-9, 第2个参数是16时会把<code>a-f</code>返回为<code>int</code>类型的10-15.</p>
+
+<p>剩下的就是用<code>|=</code>把各个部分的数字合并到一起, 转换成char类型. 还有一些调整遍历位置等.</p>
+
+<h3>编码的实现</h3>
+
+<p>考虑到Java正则的杯具, 还是继续手工来吧, 相对解码来说代码少点.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">encode</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">*</span> <span class="mi">3</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">char</span> <span class="n">c</span> <span class="o">:</span> <span class="n">s</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;\\u&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">forDigit</span><span class="o">((</span><span class="n">c</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">12</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="o">,</span> <span class="mi">16</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">forDigit</span><span class="o">((</span><span class="n">c</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">8</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="o">,</span> <span class="mi">16</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">forDigit</span><span class="o">((</span><span class="n">c</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">4</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="o">,</span> <span class="mi">16</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">forDigit</span><span class="o">((</span><span class="n">c</span><span class="o">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="o">,</span> <span class="mi">16</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对应于上文Java编码的实现正好是反向的实现, 依旧遍历字符, 遇到大于256的字符, 用位运算提取出4部分并使用<code>Character.forDigit</code>转换成16进制数对应的字符.</p>
+
+<p>剩下就是<code>sb.toString()</code>返回了.</p>
+
+<h2>总结</h2>
+
+<ul>
+<li>编码从逻辑上比解码简单点.</li>
+<li>对付字符串, js还是最顺手的, 也方便测试.</li>
+<li>位运算的性能很高.</li>
+<li>Java的正则库设计的很不方便, 可以考虑第三方.</li>
+<li>Java的语法设计现在看来呆板, 落后, 也没有js那种灵活.</li>
+<li>上文Java的非正则实现可以写成等价的C#代码.</li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[黑莓使用备忘]]></title>

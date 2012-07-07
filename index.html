@@ -10,7 +10,7 @@
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="我曾经使用过将近1年时间黑莓的手机, 期间零零碎碎的有一些使用资料, 这段时间整理成一篇独立的文章, 算是对过去的一些留念吧. 概况 购买黑莓主要是想试试全键盘的手机, 黑莓全键盘手机主要是两个系列, Bold 经典设计, Curve 小巧设计, 其实Curve和Bold的大小差异就是几毫米. &hellip;">
+  <meta name="description" content="在涉及Web前端开发时, 有时会遇到\uXXXX格式表示的字符, 其中XXXX是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和\n \r同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式. 多数时候遇到需要解码的情况多点, 所以会先介绍解码decode &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-07T12:23:00+08:00" pubdate data-updated="true">2012-07-07</time>
+        
+         | <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">评论</a><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在涉及Web前端开发时, 有时会遇到<code>\uXXXX</code>格式表示的字符, 其中<code>XXXX</code>是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和<code>\n</code> <code>\r</code>同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式.</p>
+
+<p>多数时候遇到需要解码的情况多点, 所以会先介绍解码decode, 后介绍编码encode.</p>
+
+<p>下文会提供Javascript C# Java三种语言下不同方法的实现和简单说明, 会涉及到正则和位运算的典型用法.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">评论</a><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -446,92 +496,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-29T14:26:00+08:00" pubdate data-updated="true">2012-04-29</time>
-        
-         | <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">评论</a><a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>WinForms 开发中<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>是用于非UI线程中请求修改UI元素的方法, 一般配合<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>使用:</p>
-
-<figure class='code'><figcaption><span>Control.Invoke and Control.InvokeRequired</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Form1</span> <span class="p">:</span> <span class="n">Form</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">private</span> <span class="k">void</span> <span class="nf">Foo</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">InvokeRequired</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">Invoke</span><span class="p">((</span><span class="n">Action</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;)</span><span class="n">Foo</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">else</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">textBox1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">text</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>类似<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>的还有<a href="http://msdn.microsoft.com/zh-cn/library/0b1bf3y3.aspx">Control.BeginInvoke</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.endinvoke.aspx">Control.EndInvoke</a>, 它们是异步调用.</p>
-
-<p>这些方法和属性都依赖于<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>时, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>表示窗口句柄是否已创建, 它并不是指是否<code>new Form1()</code>过, 而是指是否<code>Show()</code>过, 包括<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.show.aspx">Show</a>, <a href="http://msdn.microsoft.com/zh-cn/library/c7ykbedk.aspx">ShowDialog</a>这些调用都会使<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>.</p>
-
-<p>而在<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>false</code>时, 比如刚刚<code>new Form1()</code>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>返回<code>false</code>, 调用<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>会抛出异常:</p>
-
-<pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
-</code></pre>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">评论</a><a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -545,6 +509,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/01/blackberry-memo/">黑莓使用备忘</a>
@@ -600,10 +568,6 @@
     
       <li class="post">
         <a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a>
       </li>
     
   </ul>
