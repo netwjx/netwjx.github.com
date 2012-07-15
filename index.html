@@ -6,11 +6,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>netwjx</title>
+  <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="在涉及Web前端开发时, 有时会遇到\uXXXX格式表示的字符, 其中XXXX是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和\n \r同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式. 多数时候遇到需要解码的情况多点, 所以会先介绍解码decode &hellip;">
+  <meta name="description" content="平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性. 棉 棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/15/garment-fabric-knowledge/">服装布料常识</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-15T11:39:00+08:00" pubdate data-updated="true">2012-07-15</time>
+        
+         | <a href="/blog/2012/07/15/garment-fabric-knowledge/#comments">评论</a><a href="/blog/2012/07/15/garment-fabric-knowledge/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性.</p>
+
+<h2>棉</h2>
+
+<p>棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水.</p>
+
+<p>一般洗多次之后表面会起毛, 根据材料和织法, 轻重程度不同.</p>
+
+<p>容易染色, 白色的不能和褪色的衣物一起洗, 有些衣服图案使用的印染技术不好图案会花, 发粘, 我说的是在以纯买的一件.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/15/garment-fabric-knowledge/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/07/15/garment-fabric-knowledge/#comments">评论</a><a href="/blog/2012/07/15/garment-fabric-knowledge/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -416,86 +470,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-06T15:57:00+08:00" pubdate data-updated="true">2012-05-06</time>
-        
-         | <a href="/blog/2012/05/06/ruby-and-jekyll-note/#comments">评论</a><a href="/blog/2012/05/06/ruby-and-jekyll-note/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>之前发现<a href="http://octopress.org/">Octopress</a>产生的页面中, <strong>meta</strong>标签的<strong>content</strong>属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点.</p>
-
-<p>插件代码如下</p>
-
-<figure class='code'><figcaption><span>plugins/html_attr_filter.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># coding: utf-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#html attribute filter</span>
-</span><span class='line'><span class="k">module</span> <span class="nn">HtmlAttrFilters</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">html_attr</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">input</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\r\n|\r|\n/</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#13;&amp;#10;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#13;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#10;&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="o">.</span><span class="n">register_filter</span> <span class="no">HtmlAttrFilters</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
-
-<figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/05/06/ruby-and-jekyll-note/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/05/06/ruby-and-jekyll-note/#comments">评论</a><a href="/blog/2012/05/06/ruby-and-jekyll-note/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -509,6 +483,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/15/garment-fabric-knowledge/">服装布料常识</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a>
@@ -564,10 +542,6 @@
     
       <li class="post">
         <a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/octopress-note/">Octopress 笔记</a>
       </li>
     
   </ul>

@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Java | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-07T14:28:47+08:00</updated>
+  <updated>2012-07-15T15:27:30+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -20,11 +20,13 @@
     
       <category term="CSharp" />
     
+      <category term="Decode" />
+    
+      <category term="Encode" />
+    
       <category term="Java" />
     
       <category term="Javascript" />
-    
-      <category term="Memo" />
     
       <category term="RegExp" />
     

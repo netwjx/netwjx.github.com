@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-07T14:28:47+08:00</updated>
+  <updated>2012-07-15T15:27:30+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -16,257 +16,122 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Unicode转义(\uXXXX)的编码和解码]]></title>
+    <title type="html"><![CDATA[服装布料常识]]></title>
     
-      <category term="CSharp" />
-    
-      <category term="Java" />
-    
-      <category term="Javascript" />
+      <category term="Live" />
     
       <category term="Memo" />
     
-      <category term="RegExp" />
-    
-    <link href="http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string/"/>
+    <link href="http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
       <uri>http://netwjx.github.com/</uri>
     </author>
-    <published>2012-07-07T12:23:00+08:00</published>
-    <updated>2012-07-07T12:23:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string</id>
-    <content type="html"><![CDATA[<p>在涉及Web前端开发时, 有时会遇到<code>\uXXXX</code>格式表示的字符, 其中<code>XXXX</code>是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和<code>\n</code> <code>\r</code>同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式.</p>
+    <published>2012-07-15T11:39:00+08:00</published>
+    <updated>2012-07-15T11:39:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge</id>
+    <content type="html"><![CDATA[<p>平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性.</p>
 
-<p>多数时候遇到需要解码的情况多点, 所以会先介绍解码decode, 后介绍编码encode.</p>
+<h2>棉</h2>
 
-<p>下文会提供Javascript C# Java三种语言下不同方法的实现和简单说明, 会涉及到正则和位运算的典型用法.</p>
+<p>棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水.</p>
+
+<p>一般洗多次之后表面会起毛, 根据材料和织法, 轻重程度不同.</p>
+
+<p>容易染色, 白色的不能和褪色的衣物一起洗, 有些衣服图案使用的印染技术不好图案会花, 发粘, 我说的是在以纯买的一件.</p>
 
 <!-- more -->
 
 
-<h2>Javascript的实现</h2>
+<p>纯棉(Pure Cotton) 一般还会和一些别的纤维混纺, 以拥有两种纤维的特性, 多数是合成纤维.</p>
 
-<h3>解码的实现</h3>
+<h3>莱卡/氨纶/聚氨酯 + 棉</h3>
 
-<p>``` js
-function decode(s) {</p>
+<p>莱卡(Lycra) 是杜邦公司的注册商标, 也就是只有杜邦授权的才能叫莱卡, 否则都叫氨纶(Spandex).</p>
 
-<pre><code>return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1'));
-</code></pre>
+<p>加了氨纶的服装会弹性十分好, 能防止缩水, 也不会折皱, 吸水后比纯棉干的快, 洗多次后表面起毛比纯棉少很多.</p>
 
-<p>}
-```</p>
+<p>其它特性和纯棉一致. 一般T恤中氨纶会占1%-10%.</p>
 
-<p><code>unescape</code>是用来处理<code>%uXXXX</code>这样格式的字符串, 将<code>\uXXXX</code>替换成<code>%uXXXX</code>后<code>unescape</code>就可以处理了.</p>
+<h3>涤纶/聚酯纤维/的确凉 + 棉</h3>
 
-<h3>编码的实现</h3>
+<p>涤纶(Terylene) 聚酯纤维(Polyester Fiber)算是第一大合成纤维, 价格可能比氨纶的便宜点.</p>
 
-<p>``` js
-function encode1(s) {</p>
+<p>弹性比纯棉好, 但是比氨纶的差, 和纯棉混纺会有轻微缩水, 折皱情况和涤纶的含量有关, 越多折皱越不容易, 但是涤纶自身透气吸湿较差. 平时穿着不是很容易折皱, 洗多次后表面起毛少.</p>
 
-<pre><code>return escape(s).replace(/%(u[0-9A-F]{4})|(%[0-9A-F]{2})/gm, function($0, $1, $2) {
-    return $1 &amp;&amp; '\\' + $1.toLowerCase() || unescape($2);
-});
-</code></pre>
+<p>其它特性和纯棉一致. 一般T恤中涤纶会占15%左右.</p>
 
-<p>}
-```</p>
+<h3>锦纶/尼龙/聚酰胺纤维 + 棉</h3>
 
-<p>和解码中相对应, 使用<code>escape</code>编码, 然后将<code>%uXXXX</code>替换为<code>\uXXXX</code>, 因为<code>escape</code>还可能把一些字符编码成<code>%XX</code>的格式, 所以这些字符还需要使用<code>unescape</code>还原回来.</p>
+<p>尼龙(Nylon) 聚酰胺纤维(Polyamide Fibre) 是最早的合成纤维, 有光泽, 手感顺滑, 耐磨, 会折皱, 容易产生静电.</p>
 
-<p><code>escape</code>编码结果<code>%uXXXX</code>中的<code>XXXX</code>是大写的, 所以后面的<code>replace</code>只处理大写的<code>A-F</code>.</p>
+<p>一般会用于服装的面料, 比如羽绒服. 或者是需要耐磨的, 比如袜子.</p>
 
-<h3>另一种编码的实现</h3>
+<p>靠近火焰会缩, 燃烧有毛发味, 挺多把这个当羊毛材料用.</p>
 
-<p>不使用正则和<code>escape</code></p>
+<h3>麻/亚麻 + 棉</h3>
 
-<p>``` js
-function encode2(s) {</p>
+<p>亚麻(Flax) 是天然植物纤维, 透气效果极好, 吸湿, 吸水后干的十分快, 纯亚麻的穿着会有刺痒, 一般都是和纯棉混纺, 麻含量从35%到60%都有.</p>
 
-<pre><code>var i, c, ret = [],
-    pad = '000';
-for (i = 0; i &lt; s.length; i++) {
-    c = s.charCodeAt(i);
-    if (c &gt; 256) {
-        c = c.toString(16);
-        ret[i] = '\\u' + pad.substr(0, 4 - c.length) + c;
-    } else {
-        ret[i] = s[i];
-    }
-}
-return ret.join('');
-</code></pre>
+<p>一般亚麻混纺的织法都很粗犷, 有薄而不透的效果.</p>
 
-<p>}
-```</p>
+<p>不耐磨, 所以一般是不能机洗的, 只是现在可以有洗衣袋装起来洗, 避免扭到一起. 手洗的话也不能揉搓和使劲扭. 清洗时也不能使用酸性和碱性洗涤剂, 只能使用专用的中性洗涤剂. 洗多次之后会越来越软.</p>
 
-<p>遍历字符串中的字符, 那些<code>charCode</code>大于256的会转换成16进制字符串<code>c.toString(16)</code>, 如果不足4位则左边补0<code>pad.substr(0, 4 - c.length)</code>. 结尾将遍历的结果合并成字符串返回.</p>
+<h2>莫代尔/再生纤维素纤维</h2>
 
-<h2>C#的实现</h2>
+<p>莫代尔(Modal) 原料是欧洲的灌木林, 和棉一样属于天然纤维, 柔软, 有光泽, 吸湿, 透气较纯棉好一些. 不容易被染色, 几乎不缩水, 特别是加了氨纶后.</p>
 
-<h3>解码的实现</h3>
+<p>一般会和一些合成纤维混纺, 使布料具有一定的弹性. 也有和纯棉混纺.</p>
 
-<p>``` csharp
-static Regex reUnicode = new Regex(@"\u([0-9a-fA-F]{4})", RegexOptions.Compiled);</p>
+<p>清洗多次没有明显的变化.</p>
 
-<p>public static string Decode(string s)
-{</p>
+<h2>丝/蚕丝</h2>
 
-<pre><code>return reUnicode.Replace(s, m =&gt;
-{
-    short c;
-    if (short.TryParse(m.Groups[1].Value, System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out c))
-    {
-        return "" + (char)c;
-    }
-    return m.Value;
-});
-</code></pre>
+<p>丝(Silk) 天然动物纤维, 属于蛋白质纤维(Protein Fibre). 有光泽, 柔软, 透气优于纯棉, 会缩水.</p>
 
-<p>}
-```</p>
+<p>一般也可能加其它合成纤维, 比如氨纶, 以增加弹性, 减少缩水.</p>
 
-<p>正则和js中的一样, 将<code>XXXX</code>转换以16进制<code>System.Globalization.NumberStyles.HexNumber</code>解析为<code>short</code>类型, 然后直接<code>(char)c</code>就能转换成对应的字符, <code>"" + (char)c</code>用于转换成字符串类型返回.</p>
+<p>只适合手洗, 不可揉搓, 不可拧干, 不能用洗衣粉, 洗衣皂, 香皂等洗涤品. 只能用专门的洗涤剂, 或者洗发水, 不能暴晒, 只能阴干.</p>
 
-<p>由于正则中也有<code>\uXXXX</code>, 所以需要写成<code>\\uXXXX</code>来表示匹配字符串<code>\uXXXX</code>, 而不是具体的字符.</p>
+<h2>帆布</h2>
 
-<p>上面使用到了Lambda, 需要至少dotnet 4的SDK才能编译通过, 可以在dotnet 2下运行.</p>
+<p>帆布(Canvas) 是粗厚的棉织物或麻织物, 日常主要是帆布鞋, 帆布包. 坚硬, 耐磨, 相对于皮革比较透气, 重量轻.</p>
 
-<h3>编码的实现</h3>
+<h2>皮革</h2>
 
-<p>``` csharp
-static Regex reUnicodeChar = new Regex(@"[<sup>\u0000-\u00ff]",</sup> RegexOptions.Compiled);</p>
+<p>主要是指动物毛皮, 衣服主要有牛皮, 猪皮, 小牛皮, 山羊皮, 绵羊皮. 皮革衣服普遍很贵, 并且只适用于特定场合, 所以基本不普及, 很多场合也有特性更好的合成纤维代替.</p>
 
-<p>public static string Encode(string s)
-{</p>
+<p>另一个大量使用皮革的是鞋, 主要有牛皮, 羊皮, 猪皮, 当然现在也有部分场合被人造革代替.</p>
 
-<pre><code>return reUnicodeChar.Replace(s, m =&gt; string.Format(@"\u{0:x4}", (short)m.Value[0]));
-</code></pre>
+<p>皮革都需要特别的护理, 不宜浸水, 需要防霉, 防蛀.</p>
 
-<p>}
-```</p>
+<h3>人造革/合成革</h3>
 
-<p>和C#的解码实现正好相反, 0-255之外的字符, 从<code>char</code>转换成<code>short</code>, 然后<code>string.Format</code>以16进制, 至少输出4位.</p>
+<p>人造革主要是高分子聚合物, 主要原料是PVC, PU, 无纺布.</p>
 
-<h2>Java的实现</h2>
+<p>早期的人造革耐磨都不如皮革, 还有过以人造革假冒皮革的, 但是现代制造出了一些比较好的人造革. 现在多数运动鞋都使用人造革, 比皮革轻, 有光泽, 颜色美观, 耐磨程度相当, 还易于加工, 日常护理相对较皮革容易.</p>
 
-<h3>解码的实现</h3>
+<p>目前人造革就是透气上可能不如皮革, 一般鞋会通过设计透气孔, 搭配其它材料来改善透气.</p>
 
-<p>和C#相似的, 使用正则</p>
+<p>合成革和人造革据说是不同的东西, 不过我现在区分不出来, 在运动鞋的材料说明上很多也写的有合成革.</p>
 
-<p>``` java
-static final Pattern reUnicode = Pattern.compile("\\u([0-9a-zA-Z]{4})");</p>
+<p>白色运动鞋清洗完最好使用吸水纸包裹避光晾干, 也避免鞋面发黄.</p>
 
-<p>public static String decode1(String s) {</p>
+<h2>参考</h2>
 
-<pre><code>Matcher m = reUnicode.matcher(s);
-StringBuffer sb = new StringBuffer(s.length());
-while (m.find()) {
-    m.appendReplacement(sb,
-            Character.toString((char) Integer.parseInt(m.group(1), 16)));
-}
-m.appendTail(sb);
-return sb.toString();
-</code></pre>
-
-<p>}
-```</p>
-
-<p>Java语言没有内嵌正则语法, 也没有类似C#的<code>@"\u1234"</code>原始形式字符串的语法, 所以要表示正则中匹配<code>\</code>, 就需要<code>\\\\</code>, 其中2个是用于Java中字符转义, 2个是正则中的字符转义.</p>
-
-<p>Java语言中没有设计函数或者委托的语法, 所以它的正则库提供的是<code>find</code> <code>appendReplacement</code> <code>appendTail</code>这些方法的组合, 等价于js和C#中的<code>replace</code>.</p>
-
-<p>这里使用<code>StringBuffer</code>类型是由于<code>appendReplacement</code>只接受这个类型, <code>StringBuffer</code>有线程安全的额外操作, 所以性能差一点. 也许第三方的正则库能把API设计的更好用点.</p>
-
-<p><code>Integer.parseInt(m.group(1), 16)</code>用于解析为<code>int</code>类型, 之后再<code>(char)</code>, 以及<code>Character.toString</code>转换成字符串.</p>
-
-<h3>解码的另一种实现</h3>
-
-<p>因为<code>StringBuffer</code>的原因, 不使用正则的实现</p>
-
-<p>``` java
-public static String decode2(String s) {</p>
-
-<pre><code>StringBuilder sb = new StringBuilder(s.length());
-char[] chars = s.toCharArray();
-for (int i = 0; i &lt; chars.length; i++) {
-    char c = chars[i];
-    if (c == '\\' &amp;&amp; chars[i + 1] == 'u') {
-        char cc = 0;
-        for (int j = 0; j &lt; 4; j++) {
-            char ch = Character.toLowerCase(chars[i + 2 + j]);
-            if ('0' &lt;= ch &amp;&amp; ch &lt;= '9' || 'a' &lt;= ch &amp;&amp; ch &lt;= 'f') {
-                cc |= (Character.digit(ch, 16) &lt;&lt; (3 - j) * 4);
-            } else {
-                cc = 0;
-                break;
-            }
-        }
-        if (cc &gt; 0) {
-            i += 5;
-            sb.append(cc);
-            continue;
-        }
-    }
-    sb.append(c);
-}
-return sb.toString();
-</code></pre>
-
-<p>}
-```</p>
-
-<p>手工做就是麻烦很多, 代码中也一坨的符号.</p>
-
-<p>遍历所有字符<code>chars</code>, 检测到<code>\u</code>这样的字符串, 检测后续的4个字符是否是16进制数字的字符表示. 因为<code>Character.isDigit</code>会把一些其它语系的数字也算进来, 所以保险的做法<code>'0' &lt;= ch &amp;&amp; ch &lt;= '9'</code>.</p>
-
-<p><code>Character.digit</code>会把<code>0-9</code>返回为<code>int</code>类型的0-9, 第2个参数是16时会把<code>a-f</code>返回为<code>int</code>类型的10-15.</p>
-
-<p>剩下的就是用<code>|=</code>把各个部分的数字合并到一起, 转换成char类型. 还有一些调整遍历位置等.</p>
-
-<h3>编码的实现</h3>
-
-<p>考虑到Java正则的杯具, 还是继续手工来吧, 相对解码来说代码少点.</p>
-
-<p>``` java
-public static String encode(String s) {</p>
-
-<pre><code>StringBuilder sb = new StringBuilder(s.length() * 3);
-for (char c : s.toCharArray()) {
-    if (c &lt; 256) {
-        sb.append(c);
-    } else {
-        sb.append("\\u");
-        sb.append(Character.forDigit((c &gt;&gt;&gt; 12) &amp; 0xf, 16));
-        sb.append(Character.forDigit((c &gt;&gt;&gt; 8) &amp; 0xf, 16));
-        sb.append(Character.forDigit((c &gt;&gt;&gt; 4) &amp; 0xf, 16));
-        sb.append(Character.forDigit((c) &amp; 0xf, 16));
-    }
-}
-return sb.toString();
-</code></pre>
-
-<p>}
-```</p>
-
-<p>对应于上文Java编码的实现正好是反向的实现, 依旧遍历字符, 遇到大于256的字符, 用位运算提取出4部分并使用<code>Character.forDigit</code>转换成16进制数对应的字符.</p>
-
-<p>剩下就是<code>sb.toString()</code>返回了.</p>
-
-<h2>总结</h2>
+<p>前文参考了以下网站的资料</p>
 
 <ul>
-<li>编码从逻辑上比解码简单点.</li>
-<li>对付字符串, js还是最顺手的, 也方便测试.</li>
-<li>位运算的性能很高.</li>
-<li>Java的正则库设计的很不方便, 可以考虑第三方.</li>
-<li>Java的语法设计现在看来呆板, 落后, 也没有js那种灵活.</li>
-<li>上文Java的非正则实现可以写成等价的C#代码.</li>
+<li><a href="http://zh.wikipedia.org/">Wikipedia 中文</a></li>
+<li><a href="http://en.wikipedia.org/">Wikipedia 英文</a></li>
+<li><a href="http://www.hudong.com/">互动百科</a></li>
+<li><a href="http://baike.baidu.com/">百度百科</a></li>
 </ul>
 
 
-      <p><a href="http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">查看评论</a></p>]]></content>
+<p>使用 <a href="http://www.google.com/">Google</a> 搜索.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>

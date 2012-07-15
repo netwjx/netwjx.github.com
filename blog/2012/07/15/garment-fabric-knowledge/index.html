@@ -6,11 +6,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常 - netwjx 混乱与有序</title>
+  <title>服装布料常识 - netwjx 混乱与有序</title>
   <meta name="author" content="netwjx">
 
   
-  <meta name="description" content="在一个使用IPC进行单机跨进称的通讯时发生了 RemotingException : 拒绝访问 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下. &hellip;">
+  <meta name="description" content="平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性. 棉 棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel">
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</h1>
+      <h1 class="entry-title">服装布料常识</h1>
     
     
       <p class="meta">
@@ -85,7 +85,7 @@
   
 
 
-<time datetime="2012-06-03T12:09:00+08:00" pubdate data-updated="true">2012-06-03</time>
+<time datetime="2012-07-15T11:39:00+08:00" pubdate data-updated="true">2012-07-15</time>
         
          | <a href="#comments">评论</a>
         
@@ -94,81 +94,106 @@
   </header>
 
 
-<div class="entry-content"><p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+<div class="entry-content"><p>平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性.</p>
 
-<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+<h2>棉</h2>
 
-<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+<p>棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水.</p>
+
+<p>一般洗多次之后表面会起毛, 根据材料和织法, 轻重程度不同.</p>
+
+<p>容易染色, 白色的不能和褪色的衣物一起洗, 有些衣服图案使用的印染技术不好图案会花, 发粘, 我说的是在以纯买的一件.</p>
 
 <!-- more -->
 
 
+<p>纯棉(Pure Cotton) 一般还会和一些别的纤维混纺, 以拥有两种纤维的特性, 多数是合成纤维.</p>
 
+<h3>莱卡/氨纶/聚氨酯 + 棉</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="kt">var</span> <span class="n">dict</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;();</span>
-</span><span class='line'><span class="n">dict</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">dict</span><span class="p">[</span><span class="s">&quot;portName&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">portName</span><span class="p">;</span>
-</span><span class='line'><span class="n">dict</span><span class="p">[</span><span class="s">&quot;authorizedGroup&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&quot;Everyone&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="n">serverChannel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">IpcServerChannel</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
-</span><span class='line'><span class="n">ChannelServices</span><span class="p">.</span><span class="n">RegisterChannel</span><span class="p">(</span><span class="n">serverChannel</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>莱卡(Lycra) 是杜邦公司的注册商标, 也就是只有杜邦授权的才能叫莱卡, 否则都叫氨纶(Spandex).</p>
 
+<p>加了氨纶的服装会弹性十分好, 能防止缩水, 也不会折皱, 吸水后比纯棉干的快, 洗多次后表面起毛比纯棉少很多.</p>
 
-<p>其中<code>portName</code>变量是IPC信道的名称</p>
+<p>其它特性和纯棉一致. 一般T恤中氨纶会占1%-10%.</p>
 
-<p>在IIS中运行的Web应用一般也是由一个<code>IUSER_xxxxx</code>的用户运行, 所以还有通过<code>web.config</code>配置方式在IPC信道注册的方式:</p>
+<h3>涤纶/聚酯纤维/的确凉 + 棉</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
-</span><span class='line'><span class="nt">&lt;configuration&gt;</span>
-</span><span class='line'> <span class="nt">&lt;system.runtime.remoting&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;application&gt;</span>
-</span><span class='line'>     <span class="nt">&lt;client&gt;</span>
-</span><span class='line'>       <span class="nt">&lt;wellknown</span> <span class="na">type=</span><span class="s">&quot;fragrank.FragRankRemoting,FragRankLogic&quot;</span> <span class="na">url=</span><span class="s">&quot;ipc://FragRankChannel/FragRank&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>     <span class="nt">&lt;/client&gt;</span>
-</span><span class='line'>     <span class="nt">&lt;channels&gt;</span>
-</span><span class='line'>       <span class="nt">&lt;channel</span> <span class="na">ref=</span><span class="s">&quot;ipc&quot;</span> <span class="na">authorizedGroup=</span><span class="s">&quot;Everyone&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>         <span class="nt">&lt;clientProviders&gt;</span>
-</span><span class='line'>          <span class="nt">&lt;formatter</span> <span class="na">ref=</span><span class="s">&quot;binary&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>         <span class="nt">&lt;/clientProviders&gt;</span>
-</span><span class='line'>       <span class="nt">&lt;/channel&gt;</span>
-</span><span class='line'>     <span class="nt">&lt;/channels&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;/application&gt;</span>
-</span><span class='line'> <span class="nt">&lt;/system.runtime.remoting&gt;</span>
-</span><span class='line'><span class="nt">&lt;/configuration&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>涤纶(Terylene) 聚酯纤维(Polyester Fiber)算是第一大合成纤维, 价格可能比氨纶的便宜点.</p>
 
+<p>弹性比纯棉好, 但是比氨纶的差, 和纯棉混纺会有轻微缩水, 折皱情况和涤纶的含量有关, 越多折皱越不容易, 但是涤纶自身透气吸湿较差. 平时穿着不是很容易折皱, 洗多次后表面起毛少.</p>
 
-<h2>参考资料</h2>
+<p>其它特性和纯棉一致. 一般T恤中涤纶会占15%左右.</p>
+
+<h3>锦纶/尼龙/聚酰胺纤维 + 棉</h3>
+
+<p>尼龙(Nylon) 聚酰胺纤维(Polyamide Fibre) 是最早的合成纤维, 有光泽, 手感顺滑, 耐磨, 会折皱, 容易产生静电.</p>
+
+<p>一般会用于服装的面料, 比如羽绒服. 或者是需要耐磨的, 比如袜子.</p>
+
+<p>靠近火焰会缩, 燃烧有毛发味, 挺多把这个当羊毛材料用.</p>
+
+<h3>麻/亚麻 + 棉</h3>
+
+<p>亚麻(Flax) 是天然植物纤维, 透气效果极好, 吸湿, 吸水后干的十分快, 纯亚麻的穿着会有刺痒, 一般都是和纯棉混纺, 麻含量从35%到60%都有.</p>
+
+<p>一般亚麻混纺的织法都很粗犷, 有薄而不透的效果.</p>
+
+<p>不耐磨, 所以一般是不能机洗的, 只是现在可以有洗衣袋装起来洗, 避免扭到一起. 手洗的话也不能揉搓和使劲扭. 清洗时也不能使用酸性和碱性洗涤剂, 只能使用专用的中性洗涤剂. 洗多次之后会越来越软.</p>
+
+<h2>莫代尔/再生纤维素纤维</h2>
+
+<p>莫代尔(Modal) 原料是欧洲的灌木林, 和棉一样属于天然纤维, 柔软, 有光泽, 吸湿, 透气较纯棉好一些. 不容易被染色, 几乎不缩水, 特别是加了氨纶后.</p>
+
+<p>一般会和一些合成纤维混纺, 使布料具有一定的弹性. 也有和纯棉混纺.</p>
+
+<p>清洗多次没有明显的变化.</p>
+
+<h2>丝/蚕丝</h2>
+
+<p>丝(Silk) 天然动物纤维, 属于蛋白质纤维(Protein Fibre). 有光泽, 柔软, 透气优于纯棉, 会缩水.</p>
+
+<p>一般也可能加其它合成纤维, 比如氨纶, 以增加弹性, 减少缩水.</p>
+
+<p>只适合手洗, 不可揉搓, 不可拧干, 不能用洗衣粉, 洗衣皂, 香皂等洗涤品. 只能用专门的洗涤剂, 或者洗发水, 不能暴晒, 只能阴干.</p>
+
+<h2>帆布</h2>
+
+<p>帆布(Canvas) 是粗厚的棉织物或麻织物, 日常主要是帆布鞋, 帆布包. 坚硬, 耐磨, 相对于皮革比较透气, 重量轻.</p>
+
+<h2>皮革</h2>
+
+<p>主要是指动物毛皮, 衣服主要有牛皮, 猪皮, 小牛皮, 山羊皮, 绵羊皮. 皮革衣服普遍很贵, 并且只适用于特定场合, 所以基本不普及, 很多场合也有特性更好的合成纤维代替.</p>
+
+<p>另一个大量使用皮革的是鞋, 主要有牛皮, 羊皮, 猪皮, 当然现在也有部分场合被人造革代替.</p>
+
+<p>皮革都需要特别的护理, 不宜浸水, 需要防霉, 防蛀.</p>
+
+<h3>人造革/合成革</h3>
+
+<p>人造革主要是高分子聚合物, 主要原料是PVC, PU, 无纺布.</p>
+
+<p>早期的人造革耐磨都不如皮革, 还有过以人造革假冒皮革的, 但是现代制造出了一些比较好的人造革. 现在多数运动鞋都使用人造革, 比皮革轻, 有光泽, 颜色美观, 耐磨程度相当, 还易于加工, 日常护理相对较皮革容易.</p>
+
+<p>目前人造革就是透气上可能不如皮革, 一般鞋会通过设计透气孔, 搭配其它材料来改善透气.</p>
+
+<p>合成革和人造革据说是不同的东西, 不过我现在区分不出来, 在运动鞋的材料说明上很多也写的有合成革.</p>
+
+<p>白色运动鞋清洗完最好使用吸水纸包裹避光晾干, 也避免鞋面发黄.</p>
+
+<h2>参考</h2>
+
+<p>前文参考了以下网站的资料</p>
 
 <ul>
-<li><p><a href="http://www.codedblog.com/2007/09/01/calling-a-windows-service-from-aspnet-via-remoting-ipcchannel/">Calling a Windows Service from ASP.NET via Remoting &amp; IpcChannel</a></p>
-
-<p>MSDN的文档对属性值并没有太多的说明, 这个里面有多个示例.</p></li>
-<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397847.aspx">信道属性</a></p></li>
-<li><p><a href="http://msdn.microsoft.com/zh-cn/library/bb397831.aspx">服务器信道属性</a></p></li>
+<li><a href="http://zh.wikipedia.org/">Wikipedia 中文</a></li>
+<li><a href="http://en.wikipedia.org/">Wikipedia 英文</a></li>
+<li><a href="http://www.hudong.com/">互动百科</a></li>
+<li><a href="http://baike.baidu.com/">百度百科</a></li>
 </ul>
 
+
+<p>使用 <a href="http://www.google.com/">Google</a> 搜索.</p>
 </div>
 
 
@@ -191,12 +216,12 @@
   
 
 
-<time datetime="2012-06-03T12:09:00+08:00" pubdate data-updated="true">2012-06-03</time>
+<time datetime="2012-07-15T11:39:00+08:00" pubdate data-updated="true">2012-07-15</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/csharp/'>CSharp</a>, <a class='category' href='/blog/categories/ipc/'>IPC</a>, <a class='category' href='/blog/categories/remoting/'>Remoting</a>, <a class='category' href='/blog/categories/windows/'>Windows</a>
+    <a class='category' href='/blog/categories/live/'>Live</a>, <a class='category' href='/blog/categories/memo/'>Memo</a>
   
 </span>
 
@@ -224,10 +249,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/05/19/csharp-delegate-and-lambda/" title="Previous Post: C#委托和Lambda表达式">&laquo; C#委托和Lambda表达式</a>
+        <a class="basic-alignment left" href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/" title="Previous Post: Unicode转义(\uXXXX)的编码和解码">&laquo; Unicode转义(\uXXXX)的编码和解码</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/" title="Next Post: Jekyll插件:分类云">Jekyll插件:分类云 &raquo;</a>
       
     </p>
 
@@ -369,8 +392,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/';
-        var disqus_url = 'http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/';
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/';
         var disqus_script = 'embed.js';
       
     (function () {
