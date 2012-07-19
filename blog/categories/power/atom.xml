@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[类别: Power | netwjx]]></title>
+  <link href="http://netwjx.github.com/blog/categories/power/atom.xml" rel="self"/>
+  <link href="http://netwjx.github.com/"/>
+  <updated>2012-07-19T23:16:55+08:00</updated>
+  <id>http://netwjx.github.com/</id>
+  <author>
+    <name><![CDATA[netwjx]]></name>
+    <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
+
+  
+  <entry>
+    <title type="html"><![CDATA[移动电源备忘]]></title>
+    
+      <category term="Memo" />
+    
+      <category term="Portable" />
+    
+      <category term="Power" />
+    
+    <link href="http://netwjx.github.com/blog/2012/07/19/portable-power-memo/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-07-19T21:17:00+08:00</published>
+    <updated>2012-07-19T21:17:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/19/portable-power-memo</id>
+    <content type="html"><![CDATA[<p>买了移动电源之后就计划写点关于移动电源的事, 翻看todo的时候才想起来该把这个补上.</p>
+
+<p>因为有2个手机和NDS, 手机一个是之前提过的黑莓8310, 另外一个是小米手机, 而平时玩小米手机时间挺多, 再加上临近过年, 要回家, 路上肯定会玩手机, 很可能电力不足.</p>
+
+<p>在淘宝上搜移动电源的话, 品牌主要是<a href="http://www.yoobao.com/">羽博</a>和<a href="http://www.pisen.com.cn/">品胜</a>的, 外观时尚, 体积和电容量给设备充一次是没问题.</p>
+
+<p>在电玩网站发现还有<a href="http://www.powerunite.com.cn/">联力众(续航大师)</a>, <a href="http://www.sino-ele.cn/">西诺电子</a>, <a href="http://www.tposchina.com/">TPOS</a>, <a href="http://www.fanmei.net/">微发</a>, 因为是给电玩充电的, 所以电容量都比较大, 相应体积重量也提高了.</p>
+
+<p>另外还有淘宝聚划算和淘宝试用中心还有一些我感觉很冷门的品牌, 如力杰, 还是做时尚外观, 电容量一般充一次没问题.</p>
+
+<p>移动电源目前都是锂电池, 因为锂电池有可能发生爆炸, 所以我专门找了些关于锂电池拆机的评测, 主要在电玩网站上有, 下面是我根据回忆整理的一些信息.</p>
+
+<h2>锂电池和聚合物电池</h2>
+
+<p><img class="left" src="http://image.made-in-china.com/2f0j00QMbtBfNRaIqk/Li-ion-Battery-Cylinder-18650-18490-17650-14500-.jpg" width="260" title="18650锂电芯" alt="18650锂电芯"></p>
+
+<p><strong>锂电池</strong> 指的是传统的锂离子电池, 一般移动电源中使用的锂电池是18650圆柱形锂电芯, 18650的意思是18mm直径, 65mm高度的圆柱形.</p>
+
+<p>羽博和品胜的移动电源使用的是这个电芯, 多数笔记本也使用的是这样的电池.</p>
+
+<p>在高温中工作是一定会爆炸的, 漏液什么的现在应该几乎见不到了.</p>
+
+<hr />
+
+<p><img class="right" src="http://i05.c.aliimg.com/img/ibank/2011/502/186/449681205_886818038.jpg" width="260" title="ATL聚合物电芯" alt="ATL聚合物电芯"></p>
+
+<p><strong>聚合物电池</strong> 指的是聚合物锂离子电池, 还是锂电池, 只是一般聚合物电池的特性可以做成片状, 现在新的手机哪些高容量电池都是这种的. 而且聚合物电池不会爆炸,</p>
+
+<p>电玩网站提到的移动电源基本都使用的是ATL电芯.</p>
+
+<p>我看过一个视频是把电池放下面点火的铁盘上加热, 最后膨胀, 冒烟, 但是没有爆炸. 对照视频中的锂离子电池在加热到一定程度就爆炸, 电池残骸飞出去了.</p>
+
+<h2>移动电源的电容量</h2>
+
+<p>电池的电容量一般是mhA标注, 1000mhA的意思是以1000mA电流, 电池的额定电压放电, 能持续放电1小时.</p>
+
+<p>考虑电容量不能简单的除以现在电池的容量, 应按照放电时间来计算是比较靠谱的.</p>
+
+<p>比如我的小米手机充电器的放电是5V 1A, 充满1930mhA的小米手机电池, 需要2小时40分钟左右.</p>
+
+<p>我购买的微发移动电源, 电容量是8800mhA, 因为锂电池的放电电压不足5V, 所以会有升压电路. 如果要提供5V 1A的输出, 输出电流可能在1300mhA左右, 因为锂电池会随着持续放电而电压降低, 一般是从4.2V到3.2V, 低于3V会使电芯受损, 所以一般都有过放电保护, 越往后需要的输出电流越多.</p>
+
+<p>使用1300mhA计算, 那么8800mhA以5V 1A输出能持续放电6小时46分钟左右, 用总放电时间除以充满一次点需要的时间, 结果就是2次半左右, 以我实际使用的测试情况来计算也是如此.</p>
+
+<p><blockquote><p></p></p><p><p>简单估算方法: 充满1000mhA的电池, 移动电源需要消耗大概1800mhA的电量.</p></p><p><p></p></blockquote></p>
+
+<h2>移动电源的输出效率</h2>
+
+<p>简单的可以理解为转换效率高能对电池利用的更多, 比如微发8800mhA电源在1A的输出下可以达到97%的输出效率. 一般在90%以上为佳.</p>
+
+<p>这个参数一般看不到, 最好是看看评测, 一般移动电源有一个最佳的放电电流, 能够得到十分高的转换效率, 在这种情况下工作对移动电源利用的最多.</p>
+
+<p>和这个参数关联最大的是移动电源的电路用料, 这个我不是很熟悉, 就是看到微发的拆解中提到钽电容, 可以作为参考.</p>
+
+<h2>接口, 线材, 设计</h2>
+
+<p><img class="right" src="http://image.shutterstock.com/display_pic_with_logo/427411/427411,1277141040,1/stock-photo-usb-mini-usb-and-micro-usb-cable-55662274.jpg" width="300" title="USB, Mini-USB, Micro-USB" alt="USB, Mini-USB, Micro-USB"></p>
+
+<p>移动电源上的接口最好是标准USB口, 大, 牢固, 也很耐用. 一般还有独立的充电接口, 会为了和放电接口区分开而使用不同的接口, 我觉得最好是其它USB接口, 这样比较通用, 比如目前流行的MicroUSB, 以及以前挺流行的MiniUSB. MicroUSB更好点, 它更牢固.</p>
+
+<p>充电线一般有1拖2 + N种转接头, 或者是1拖2固定接口, 我建议用固定接口, 因为转接头可能会有接触不良, 而成为最薄弱的环节.</p>
+
+<p>再者现在很多设备充电线都是USB口, 移动电源的充电线不一定总是能用到, 针对没有USB口充电线的设备买个对应的充电线就行了.</p>
+
+<p>设计其实没什么好说的, 高亮LED用于照明, 接口尽量设计为方便放包中的同时给设备充电为好.</p>
+
+<h2>总结</h2>
+
+<p>以前看的时候羽博和品胜还没有明显能确定是聚合物电芯的移动电源, 现在应该都有了吧, 这个得找具体的评测.</p>
+
+<p>当时我购买的是微发8800mhA的, 但是并不推荐现在仍旧购买这个, 因为现在已经有超过10000mhA的移动电源了.</p>
+
+<p>电容量篇说过如何评估移动电源能充电的次数, 一般越大越重, 体积也越大, 选购应先确定一个理想的电容量范围, 然后就是自己决定外观接口设计, 品牌, 电芯类型这些东西.</p>
+
+<p>电池这个东西是一分钱一分货, 只要不是特别去挑便宜, 一般不会被骗到.</p>
+
+<p>虽然聚合物电池不会爆炸, 但是高温环境电池还是会膨胀, 也会影响到电器性能的, 所以应该减少和避免移动电源和电子设备在高温环境中.</p>
+
+<h3>附</h3>
+
+<p>在找这些资料的时候, 还发现有人自己做移动电源, 用的都是上乘的材料, 主要是外壳看起来比较粗糙, 后来的好很多, 有开淘宝店卖自己做的电源, 有兴趣的可以看看. <a href="http://shop67813373.taobao.com/">小于电源</a></p>
+
+<p>文中图片来自搜索引擎找到的, 懒得自己处理, 上面的水印还在, 不是我可以给做广告啊.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/07/19/portable-power-memo/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+</feed>
