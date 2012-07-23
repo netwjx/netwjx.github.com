@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Command | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/command/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-19T23:21:03+08:00</updated>
+  <updated>2012-07-23T21:28:55+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -28,26 +28,36 @@
     
       <category term="Windows" />
     
-    <link href="http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills/"/>
+    <link href="http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
       <uri>http://netwjx.github.com/</uri>
     </author>
-    <published>2012-06-16T23:23:00+08:00</published>
-    <updated>2012-06-16T23:23:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills</id>
+    <published>2012-07-23T21:17:00+08:00</published>
+    <updated>2012-07-23T21:17:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills</id>
     <content type="html"><![CDATA[<p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
 
 <p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
 
-<h2>打开命令行</h2>
-
-<p>除了<code>Win+R cmd</code>打开外, 还可以在文件窗口中按住<strong>Shift + 鼠标右键</strong>, <strong>在此处打开命令窗口</strong>, 在文件夹上<strong>Shift + 鼠标右键</strong>同样有这个菜单项.</p>
-
 <!-- more -->
 
 
+<h2>更新日志</h2>
 
+<p>最新的在最开始</p>
+
+<ol>
+<li>2012-07-23  <strong>延缓环境变量扩展</strong>特性的说明</li>
+<li>2012-06-16  完善输出重定向, for命令的tokens参数说明</li>
+<li>2012-05-19  完成最初计划的内容</li>
+<li>2012-05-13  初稿, 未完成</li>
+</ol>
+
+
+<h2>打开命令行</h2>
+
+<p>除了<code>Win+R cmd</code>打开外, 还可以在文件窗口中按住<strong>Shift + 鼠标右键</strong>, <strong>在此处打开命令窗口</strong>, 在文件夹上<strong>Shift + 鼠标右键</strong>同样有这个菜单项.</p>
 
 <h2 id="multi-commands">在一行执行多个命令</h2>
 
@@ -129,13 +139,28 @@ USERNAME=netwjx
 )
 </code></pre>
 
-<p>在执行一行命令时, <code>%myvar%</code>的替换将只会执行一次, 所以在<code>for</code> <code>if</code>或者<code>()</code>组合的多个命令中, 如果变量被修改过, 则需要使用叹号<code>!</code>扩住变量名</p>
+<p>在执行一行命令时, <code>%myvar%</code>的替换将只会执行一次, 所以在<code>for</code> <code>if</code>或者<code>()</code>组合的多个命令中, 如果变量被修改过, 就需要使用<strong>延缓环境变量扩展</strong>, 使用下列命令</p>
+
+<pre><code>setlocal enabledelayedexpansion
+</code></pre>
+
+<p>然后在需要的地方将原来的<code>%</code>替换为<code>!</code>, 如下</p>
 
 <pre><code>set VAR=before
 if "%VAR%" == "before" (
     set VAR=after
     if "!VAR!" == "after" @echo If you see this, it worked
 )
+</code></pre>
+
+<p>要关闭<strong>延缓环境变量扩展</strong>特性除了</p>
+
+<pre><code>setlocal disabledelayedexpansion
+</code></pre>
+
+<p>还可以</p>
+
+<pre><code>endlocal
 </code></pre>
 
 <p>在<code>for</code>的<code>do</code>部分, 只有<code>for</code>的循环变量是个特例, 每次执行循环都会被替换为循环变量</p>
@@ -757,7 +782,7 @@ echo completed
 </ul>
 
 
-      <p><a href="http://netwjx.github.com/blog/2012/06/16/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
+      <p><a href="http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
