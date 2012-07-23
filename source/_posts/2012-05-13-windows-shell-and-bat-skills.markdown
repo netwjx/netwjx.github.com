@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Windows命令行和批处理技巧"
-date: 2012-06-16 23:23
+date: 2012-07-23 21:17
 comments: true
 categories: Windows Shell Cmd Command Bat
 ---
@@ -10,13 +10,24 @@ categories: Windows Shell Cmd Command Bat
 
 下面代码示例中`rem`表示对下一行的注释, 一般下一行以`>`开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.
 
+<!-- more -->
+
+更新日志
+--------
+
+最新的在最开始
+
+1.  2012-07-23  **延缓环境变量扩展**特性的说明
+1.  2012-06-16  完善输出重定向, for命令的tokens参数说明
+1.  2012-05-19  完成最初计划的内容
+1.  2012-05-13  初稿, 未完成
+
 
 打开命令行
 ----------
 
 除了`Win+R cmd`打开外, 还可以在文件窗口中按住**Shift + 鼠标右键**, **在此处打开命令窗口**, 在文件夹上**Shift + 鼠标右键**同样有这个菜单项.
 
-<!-- more -->
 
 <h2 id="multi-commands">在一行执行多个命令</h2>
 
@@ -94,13 +105,25 @@ set命令的进一步使用可用来计算数字
         echo need %foo%
     )
 
-在执行一行命令时, `%myvar%`的替换将只会执行一次, 所以在`for` `if`或者`()`组合的多个命令中, 如果变量被修改过, 则需要使用叹号`!`扩住变量名
+在执行一行命令时, `%myvar%`的替换将只会执行一次, 所以在`for` `if`或者`()`组合的多个命令中, 如果变量被修改过, 就需要使用**延缓环境变量扩展**, 使用下列命令
+
+    setlocal enabledelayedexpansion
+
+然后在需要的地方将原来的`%`替换为`!`, 如下
 
     set VAR=before
     if "%VAR%" == "before" (
         set VAR=after
         if "!VAR!" == "after" @echo If you see this, it worked
     )
+
+要关闭**延缓环境变量扩展**特性除了
+
+    setlocal disabledelayedexpansion
+
+还可以
+
+    endlocal
 
 在`for`的`do`部分, 只有`for`的循环变量是个特例, 每次执行循环都会被替换为循环变量
 
