@@ -2,88 +2,134 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://netwjx.github.com/blog/2012/03/18/hello-octopress/</loc>
-        <lastmod>2012-05-27T21:42:18+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/03/18/octopress-note/</loc>
-        <lastmod>2012-06-16T23:48:00+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/03/25/unlock-google-play-android-market/</loc>
-        <lastmod>2012-05-26T15:41:19+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/07/mountain-climbing/</loc>
-        <lastmod>2012-05-27T21:42:03+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/</loc>
-        <lastmod>2012-06-16T23:47:59+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/</loc>
-        <lastmod>2012-05-26T15:41:52+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/21/camera-capture/</loc>
-        <lastmod>2012-05-27T21:41:58+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/</loc>
-        <lastmod>2012-05-27T21:41:33+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>
             http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/
         </loc>
-        <lastmod>2012-05-27T21:44:53+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/</loc>
-        <lastmod>2012-06-16T23:47:57+08:00</lastmod>
+        <lastmod>2012-07-29T17:08:49+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/05/19/csharp-delegate-and-lambda/</loc>
-        <lastmod>2012-05-26T15:49:18+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>
             http://netwjx.github.com/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/
         </loc>
-        <lastmod>2012-06-03T15:49:09+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/06/03/category-cloud-plugin-with-jekyll/</loc>
-        <lastmod>2012-06-03T15:26:46+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/07/01/blackberry-memo/</loc>
-        <lastmod>2012-07-01T20:29:07+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>
             http://netwjx.github.com/blog/2012/07/07/encode-and-decode-unicode-escape-string/
         </loc>
-        <lastmod>2012-07-07T14:36:51+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/</loc>
-        <lastmod>2012-07-15T15:26:10+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/07/19/portable-power-memo/</loc>
-        <lastmod>2012-07-19T23:20:15+08:00</lastmod>
+        <lastmod>2012-07-29T15:03:40+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
     <url>
-        <loc>http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills/</loc>
-        <lastmod>2012-07-23T21:25:49+08:00</lastmod>
+        <loc>http://netwjx.github.com/blog/2012/07/29/windows-shell-and-bat-skills/</loc>
+        <lastmod>2012-07-29T18:05:41+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>http://netwjx.github.com/404.html</loc>
+        <lastmod>2012-07-29T16:46:59+08:00</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.0</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/archives/</loc>
-        <lastmod>2012-07-23T21:25:49+08:00</lastmod>
+        <lastmod>2012-07-29T18:05:41+08:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/</loc>
-        <lastmod>2012-07-23T21:25:49+08:00</lastmod>
+        <lastmod>2012-07-29T18:05:41+08:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
     </url>
 </urlset>

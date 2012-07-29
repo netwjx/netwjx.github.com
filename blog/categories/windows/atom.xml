@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Windows | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/windows/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-23T21:28:55+08:00</updated>
+  <updated>2012-07-29T18:07:27+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -28,14 +28,14 @@
     
       <category term="Windows" />
     
-    <link href="http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills/"/>
+    <link href="http://netwjx.github.com/blog/2012/07/29/windows-shell-and-bat-skills/"/>
     <author>
       <name><![CDATA[netwjx]]></name>
       <uri>http://netwjx.github.com/</uri>
     </author>
-    <published>2012-07-23T21:17:00+08:00</published>
-    <updated>2012-07-23T21:17:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills</id>
+    <published>2012-07-29T18:05:00+08:00</published>
+    <updated>2012-07-29T18:05:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/29/windows-shell-and-bat-skills</id>
     <content type="html"><![CDATA[<p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
 
 <p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
@@ -45,9 +45,10 @@
 
 <h2>更新日志</h2>
 
-<p>最新的在最开始</p>
+<p>最近的修改在列表开始</p>
 
 <ol>
+<li>2012-07-29  增加<strong>环境变量扩展增强</strong>特性的说明, 增加<strong>对环境变量使用参数修饰符</strong>, 更详细的说明<strong>延缓环境变量扩展</strong>特性</li>
 <li>2012-07-23  <strong>延缓环境变量扩展</strong>特性的说明</li>
 <li>2012-06-16  完善输出重定向, for命令的tokens参数说明</li>
 <li>2012-05-19  完成最初计划的内容</li>
@@ -130,21 +131,30 @@ USERNAME=netwjx
 <pre><code>&gt;echo %myvar%&gt; foo.txt
 </code></pre>
 
-<p><code>%myvar%</code>将会被替换成变量值, 并将这个值输出到<code>foo.txt</code>.</p>
+<p><code>%myvar%</code>将会被扩展成<code>myvar</code>环境变量的值, 后面的<a href="#pipe-and-redirect">输出重定向</a>将这个值输出到<code>foo.txt</code>.</p>
 
-<p>检测环境变量是否有定义</p>
+<p>在执行一行命令时, <code>%myvar%</code>将只扩展一次</p>
 
-<pre><code>if not defined foo (
-    echo need %foo%
+<pre><code>set VAR=before
+if "%VAR%" == "before" (
+    set VAR=after
+    if "%VAR%" == "after" @echo If you see this, it worked
 )
 </code></pre>
 
-<p>在执行一行命令时, <code>%myvar%</code>的替换将只会执行一次, 所以在<code>for</code> <code>if</code>或者<code>()</code>组合的多个命令中, 如果变量被修改过, 就需要使用<strong>延缓环境变量扩展</strong>, 使用下列命令</p>
+<p>因为<code>if</code>和后面括号中的多行命令只属于一个<code>if</code>命令, 括号内的<code>%VAR%</code>在指定外面的<code>if</code>命令时已经被扩展了, 所以括号内的<code>if</code>命令实际是</p>
+
+<pre><code>if "before" == "after" @echo If you see this, it worked
+</code></pre>
+
+<p>将始终不会输出, 类似的, 在<code>for</code>命令和使用括号的组合命令中同样会有上述现象.</p>
+
+<p>如果要使用<code>VAR</code>被修改后的值, 则需要使用<strong>延缓环境变量扩展</strong>, 下列命令用于开启<strong>延缓环境变量扩展</strong></p>
 
 <pre><code>setlocal enabledelayedexpansion
 </code></pre>
 
-<p>然后在需要的地方将原来的<code>%</code>替换为<code>!</code>, 如下</p>
+<p>然后在延缓环境变量扩展的地方将<code>%</code>替换为<code>!</code>, 如下</p>
 
 <pre><code>set VAR=before
 if "%VAR%" == "before" (
@@ -163,7 +173,41 @@ if "%VAR%" == "before" (
 <pre><code>endlocal
 </code></pre>
 
-<p>在<code>for</code>的<code>do</code>部分, 只有<code>for</code>的循环变量是个特例, 每次执行循环都会被替换为循环变量</p>
+<p>只有<code>for</code>命令的循环变量是个特例, 每次执行循环都会被扩展为具体的值.</p>
+
+<h3>环境变量扩展增强</h3>
+
+<p>字符串替换</p>
+
+<pre><code>&gt;set foo=abcdef
+&gt;echo %foo:bcd=_%
+a_ef
+&gt;echo %foo:bcd=%
+aef
+</code></pre>
+
+<p>字符串截取</p>
+
+<pre><code>&gt;echo %foo:~1%
+bcdef
+&gt;echo %foo:~-1%
+f
+&gt;echo %foo:~1,2%
+bc
+&gt;echo %foo:~-3,2%
+de
+&gt;echo %foo:~1,-2%
+bcd
+</code></pre>
+
+<p>输出如上所示, 使用2个数字时, 第2个是截取长度, 负数表示截取到字符串结尾还剩指定个字符, 第2个是负数时表示截取到离结尾还有指定个字符.</p>
+
+<h3>　检测环境变量是否有定义</h3>
+
+<pre><code>if not defined foo (
+    echo need %foo%
+)
+</code></pre>
 
 <h3>获取一个命令行的输出到环境变量</h3>
 
@@ -183,10 +227,26 @@ windir=C:\windows
 
 <p>更多关于<a href="#for-command"><code>for</code>命令</a></p>
 
+<h3>对环境变量使用参数修饰符</h3>
+
+<p>环境变量扩展增强没有能获取文件名, 文件路径等等的功能, 也不能直接使用<a href="#batch-param-modifiers">参数修饰符</a>来实现获取文件名等目的, 但是可以配合上一段介绍的来实现</p>
+
+<p><code>bat foo.bat
+@echo %~nx1
+</code></p>
+
+<p><code>foo.bat</code>用于输出第一个参数的文件名部分, 下面是获取环境变量值的文件名部分</p>
+
+<pre><code>&gt;set foo=%cd%\bar.foo
+&gt;for /f %i in ('foo.bat %foo%') do set foo=%i
+&gt;echo %foo%
+bar.foo
+</code></pre>
+
 <h3 id="built-in-var">内建环境变量</h3>
 
 
-<p>内建环境变量是在执行变量替换的时候最先检查的, 其中也有一些比较有用的</p>
+<p>内建环境变量是在执行环境变量扩展的时候最先检查的, 其中有一些比较有用的</p>
 
 <ul>
 <li><p><code>%ALLUSERSPROFILE%</code></p>
@@ -293,7 +353,8 @@ windir=C:\windows
 </ul>
 
 
-<h2>管道和重定向</h2>
+<h2 id="pipe-and-redirect">管道和重定向</h2>
+
 
 <p>一个常见的场景, 查找使用特定网络端口的应用程序</p>
 
@@ -782,7 +843,7 @@ echo completed
 </ul>
 
 
-      <p><a href="http://netwjx.github.com/blog/2012/07/23/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
+      <p><a href="http://netwjx.github.com/blog/2012/07/29/windows-shell-and-bat-skills/#comments">查看评论</a></p>]]></content>
   </entry>
   
   <entry>
