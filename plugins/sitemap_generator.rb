@@ -46,7 +46,7 @@ module Jekyll
   SITEMAP_FILE_NAME = "sitemap.xml"
 
   # Any files to exclude from being included in the sitemap.xml
-  EXCLUDED_FILES = ["atom.xml"]
+  EXCLUDED_FILES = ["atom.xml", "robot.txt"]
 
   # Any files that include posts, so that when a new post is added, the last
   # modified date of these pages should take that into account
@@ -184,30 +184,28 @@ module Jekyll
       lastmod = fill_last_modified(site, page_or_post)
       url.add_element(lastmod) if lastmod
 
-      if (page_or_post.data[CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME])
-        change_frequency =
-          page_or_post.data[CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME].downcase
-
+      change_frequency = data_or_layout_data(page_or_post, site.layouts[page_or_post.data["layout"]] , CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME)
+      if change_frequency
+        change_frequency = change_frequency.downcase
         if (valid_change_frequency?(change_frequency))
           changefreq = REXML::Element.new "changefreq"
           changefreq.text = change_frequency
           url.add_element(changefreq)
         else
-          puts "ERROR: Invalid Change Frequency In #{page_or_post.name}"
+          puts "ERROR: Invalid Change Frequency In #{page_or_post.name} or _layouts/#{page_or_post.data['layout']}"
         end
       end
 
-      if (page_or_post.data[PRIORITY_CUSTOM_VARIABLE_NAME])
-        priority_value = page_or_post.data[PRIORITY_CUSTOM_VARIABLE_NAME]
+      priority_value = data_or_layout_data(page_or_post, site.layouts[page_or_post.data["layout"]], PRIORITY_CUSTOM_VARIABLE_NAME)
+      if priority_value
         if valid_priority?(priority_value)
           priority = REXML::Element.new "priority"
-          priority.text = page_or_post.data[PRIORITY_CUSTOM_VARIABLE_NAME]
+          priority.text = priority_value
           url.add_element(priority)
         else
-          puts "ERROR: Invalid Priority In #{page_or_post.name}"
+          puts "ERROR: Invalid Priority In #{page_or_post.name} or _layouts/#{page_or_post.data['layout']}"
         end
       end
-
       url
     end
 
@@ -264,6 +262,15 @@ module Jekyll
       end
 
       latest_date
+    end
+
+    # return Page or post's data[key]
+    def data_or_layout_data(page_or_post, layout, key)
+      ret = page_or_post.data[key]
+      if !ret
+        ret = layout.data[key]
+      end
+      ret
     end
 
     # Which of the two dates is later

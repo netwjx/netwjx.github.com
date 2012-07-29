@@ -1,0 +1,14 @@
+---
+layout: page
+title: "404"
+date: 2012-07-29 15:23
+comments: false
+change_frequency: yearly
+priority: 0.0
+description: HTTP 404
+---
+
+HTTP 404
+--------
+
+你要访问的页面已经不存在了
