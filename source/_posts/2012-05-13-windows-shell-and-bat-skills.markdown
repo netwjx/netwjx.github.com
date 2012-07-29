@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Windows命令行和批处理技巧"
-date: 2012-07-23 21:17
+date: 2012-07-29 18:05
 comments: true
 categories: Windows Shell Cmd Command Bat
 ---
@@ -15,8 +15,9 @@ categories: Windows Shell Cmd Command Bat
 更新日志
 --------
 
-最新的在最开始
+最近的修改在列表开始
 
+1.  2012-07-29  增加**环境变量扩展增强**特性的说明, 增加**对环境变量使用参数修饰符**, 更详细的说明**延缓环境变量扩展**特性
 1.  2012-07-23  **延缓环境变量扩展**特性的说明
 1.  2012-06-16  完善输出重定向, for命令的tokens参数说明
 1.  2012-05-19  完成最初计划的内容
@@ -97,19 +98,27 @@ set命令的进一步使用可用来计算数字
 
     >echo %myvar%> foo.txt
 
-`%myvar%`将会被替换成变量值, 并将这个值输出到`foo.txt`.
+`%myvar%`将会被扩展成`myvar`环境变量的值, 后面的[输出重定向](#pipe-and-redirect)将这个值输出到`foo.txt`.
 
-检测环境变量是否有定义
+在执行一行命令时, `%myvar%`将只扩展一次
 
-    if not defined foo (
-        echo need %foo%
+    set VAR=before
+    if "%VAR%" == "before" (
+        set VAR=after
+        if "%VAR%" == "after" @echo If you see this, it worked
     )
 
-在执行一行命令时, `%myvar%`的替换将只会执行一次, 所以在`for` `if`或者`()`组合的多个命令中, 如果变量被修改过, 就需要使用**延缓环境变量扩展**, 使用下列命令
+因为`if`和后面括号中的多行命令只属于一个`if`命令, 括号内的`%VAR%`在指定外面的`if`命令时已经被扩展了, 所以括号内的`if`命令实际是
+
+    if "before" == "after" @echo If you see this, it worked
+
+将始终不会输出, 类似的, 在`for`命令和使用括号的组合命令中同样会有上述现象.
+
+如果要使用`VAR`被修改后的值, 则需要使用**延缓环境变量扩展**, 下列命令用于开启**延缓环境变量扩展**
 
     setlocal enabledelayedexpansion
 
-然后在需要的地方将原来的`%`替换为`!`, 如下
+然后在延缓环境变量扩展的地方将`%`替换为`!`, 如下
 
     set VAR=before
     if "%VAR%" == "before" (
@@ -125,8 +134,38 @@ set命令的进一步使用可用来计算数字
 
     endlocal
 
-在`for`的`do`部分, 只有`for`的循环变量是个特例, 每次执行循环都会被替换为循环变量
+只有`for`命令的循环变量是个特例, 每次执行循环都会被扩展为具体的值.
 
+### 环境变量扩展增强
+
+字符串替换
+
+    >set foo=abcdef
+    >echo %foo:bcd=_%
+    a_ef
+    >echo %foo:bcd=%
+    aef
+
+字符串截取
+
+    >echo %foo:~1%
+    bcdef
+    >echo %foo:~-1%
+    f
+    >echo %foo:~1,2%
+    bc
+    >echo %foo:~-3,2%
+    de
+    >echo %foo:~1,-2%
+    bcd
+
+输出如上所示, 使用2个数字时, 第2个是截取长度, 负数表示截取到字符串结尾还剩指定个字符, 第2个是负数时表示截取到离结尾还有指定个字符.
+
+###　检测环境变量是否有定义
+
+    if not defined foo (
+        echo need %foo%
+    )
 
 ### 获取一个命令行的输出到环境变量
 
@@ -144,10 +183,25 @@ set命令的进一步使用可用来计算数字
 
 更多关于[`for`命令](#for-command)
 
+### 对环境变量使用参数修饰符
+
+环境变量扩展增强没有能获取文件名, 文件路径等等的功能, 也不能直接使用[参数修饰符](#batch-param-modifiers)来实现获取文件名等目的, 但是可以配合上一段介绍的来实现
+
+``` bat foo.bat
+@echo %~nx1
+```
+
+`foo.bat`用于输出第一个参数的文件名部分, 下面是获取环境变量值的文件名部分
+
+    >set foo=%cd%\bar.foo
+    >for /f %i in ('foo.bat %foo%') do set foo=%i
+    >echo %foo%
+    bar.foo
+
 
 <h3 id="built-in-var">内建环境变量</h3>
 
-内建环境变量是在执行变量替换的时候最先检查的, 其中也有一些比较有用的
+内建环境变量是在执行环境变量扩展的时候最先检查的, 其中有一些比较有用的
 
 -   `%ALLUSERSPROFILE%`
 
@@ -278,8 +332,7 @@ set命令的进一步使用可用来计算数字
 -   当前命令提示符窗口或批处理中定义的变量
 
 
-管道和重定向
-------------
+<h2 id="pipe-and-redirect">管道和重定向</h2>
 
 一个常见的场景, 查找使用特定网络端口的应用程序
 
