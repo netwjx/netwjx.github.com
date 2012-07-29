@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-29T18:07:27+08:00</updated>
+  <updated>2012-07-29T20:02:20+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,79 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[批量删除Catch.com笔记的小工具]]></title>
+    
+      <category term="Bookmarklet" />
+    
+      <category term="Javascript" />
+    
+    <link href="http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-07-29T18:12:00+08:00</published>
+    <updated>2012-07-29T18:12:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet</id>
+    <content type="html"><![CDATA[<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+
+<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
+
+<p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
+
+<ul>
+<li>IE <strong>添加到收藏夹</strong>, 使用了querySelector, 所以需要IE8及更高版本才支持.</li>
+<li>Firefox <strong>将此链接加为书签</strong></li>
+<li>Chrome 按<strong>Ctrl + Shift + B</strong>显示书签栏后把链接拖到书签栏上</li>
+</ul>
+
+
+<p>然后访问<a href="https://catch.com/">Catch.com</a>, 登录后点<strong>My Ideas</strong>, 先找个笔记点删除, 默认会弹出确认删除, 选中<strong>Do not show me this message again</strong> -> <strong>Delete</strong>.</p>
+
+<p>然后依次选中想删除的笔记, 在收藏夹(IE)/书签菜单(Firefox)/书签栏(Chrome)中点刚刚保存的书签, 就可以看到笔记被一个个的删除.</p>
+
+<!-- more -->
+
+
+<p>上述Bookmarklet的源码是</p>
+
+<figure class='code'><figcaption><span>bookmarklet.js Catch.com批量删除当前选中的笔记</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">l</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="sr">/https:\/\/catch\.com\/m/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">href</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;only in https://catch.com/m/ is work !&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;div.ud-notelist div[id^=full-]&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">notes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">chk</span> <span class="o">=</span> <span class="nx">notes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input[type=checkbox]&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">chk</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">notes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input[value=delete]&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}(</span><span class="nb">document</span><span class="p">,</span> <span class="nx">location</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里有一篇关于Bookmarklet和编写的资料, <a href="http://www.ruanyifeng.com/blog/2011/06/a_guide_for_writing_bookmarklet.html">Bookmarklet编写指南</a>.</p>
+
+<p>一个简单的在线Bookmarklet编写网页, <a href="http://ted.mielczarek.org/code/mozilla/bookmarklet.html">Bookmarklet Crunchinator</a>.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Windows命令行和批处理技巧]]></title>

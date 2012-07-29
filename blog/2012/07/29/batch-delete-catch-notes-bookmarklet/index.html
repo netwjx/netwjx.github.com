@@ -6,12 +6,12 @@
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>服装布料常识 - netwjx 混乱与有序</title>
+  <title>批量删除Catch.com笔记的小工具 - netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性. 棉 棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水. &hellip;"/>
+  <meta name="description" content="目前手机上使用Catch来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是Catch.com网站的My Ideas不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到My Ideas分类里面, 所以就有了下面这个工具. Catch. &hellip;"/>
   
-  <meta name="keywords" content="Live, Memo"/>
+  <meta name="keywords" content="Bookmarklet, Javascript"/>
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True"/>
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
   
-  <link rel="canonical" href="http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/"/>
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/"/>
   <link href="/favicon.png" rel="icon"/>
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"/>
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">服装布料常识</h1>
+      <h1 class="entry-title">批量删除Catch.com笔记的小工具</h1>
     
     
       <p class="meta">
@@ -85,7 +85,7 @@
   
 
 
-<time datetime="2012-07-15T11:39:00+08:00" pubdate data-updated="true">2012-07-15</time>
+<time datetime="2012-07-29T18:12:00+08:00" pubdate data-updated="true">2012-07-29</time>
         
          | <a href="#comments">评论</a>
         
@@ -94,106 +94,60 @@
   </header>
 
 
-<div class="entry-content"><p>平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性.</p>
+<div class="entry-content"><p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
 
-<h2>棉</h2>
+<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
 
-<p>棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水.</p>
+<p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
 
-<p>一般洗多次之后表面会起毛, 根据材料和织法, 轻重程度不同.</p>
+<ul>
+<li>IE <strong>添加到收藏夹</strong>, 使用了querySelector, 所以需要IE8及更高版本才支持.</li>
+<li>Firefox <strong>将此链接加为书签</strong></li>
+<li>Chrome 按<strong>Ctrl + Shift + B</strong>显示书签栏后把链接拖到书签栏上</li>
+</ul>
 
-<p>容易染色, 白色的不能和褪色的衣物一起洗, 有些衣服图案使用的印染技术不好图案会花, 发粘, 我说的是在以纯买的一件.</p>
+
+<p>然后访问<a href="https://catch.com/">Catch.com</a>, 登录后点<strong>My Ideas</strong>, 先找个笔记点删除, 默认会弹出确认删除, 选中<strong>Do not show me this message again</strong> -> <strong>Delete</strong>.</p>
+
+<p>然后依次选中想删除的笔记, 在收藏夹(IE)/书签菜单(Firefox)/书签栏(Chrome)中点刚刚保存的书签, 就可以看到笔记被一个个的删除.</p>
 
 <!-- more -->
 
 
-<p>纯棉(Pure Cotton) 一般还会和一些别的纤维混纺, 以拥有两种纤维的特性, 多数是合成纤维.</p>
+<p>上述Bookmarklet的源码是</p>
 
-<h3>莱卡/氨纶/聚氨酯 + 棉</h3>
-
-<p>莱卡(Lycra) 是杜邦公司的注册商标, 也就是只有杜邦授权的才能叫莱卡, 否则都叫氨纶(Spandex).</p>
-
-<p>加了氨纶的服装会弹性十分好, 能防止缩水, 也不会折皱, 吸水后比纯棉干的快, 洗多次后表面起毛比纯棉少很多.</p>
-
-<p>其它特性和纯棉一致. 一般T恤中氨纶会占1%-10%.</p>
-
-<h3>涤纶/聚酯纤维/的确凉 + 棉</h3>
-
-<p>涤纶(Terylene) 聚酯纤维(Polyester Fiber)算是第一大合成纤维, 价格可能比氨纶的便宜点.</p>
-
-<p>弹性比纯棉好, 但是比氨纶的差, 和纯棉混纺会有轻微缩水, 折皱情况和涤纶的含量有关, 越多折皱越不容易, 但是涤纶自身透气吸湿较差. 平时穿着不是很容易折皱, 洗多次后表面起毛少.</p>
-
-<p>其它特性和纯棉一致. 一般T恤中涤纶会占15%左右.</p>
-
-<h3>锦纶/尼龙/聚酰胺纤维 + 棉</h3>
-
-<p>尼龙(Nylon) 聚酰胺纤维(Polyamide Fibre) 是最早的合成纤维, 有光泽, 手感顺滑, 耐磨, 会折皱, 容易产生静电.</p>
-
-<p>一般会用于服装的面料, 比如羽绒服. 或者是需要耐磨的, 比如袜子.</p>
-
-<p>靠近火焰会缩, 燃烧有毛发味, 挺多把这个当羊毛材料用.</p>
-
-<h3>麻/亚麻 + 棉</h3>
-
-<p>亚麻(Flax) 是天然植物纤维, 透气效果极好, 吸湿, 吸水后干的十分快, 纯亚麻的穿着会有刺痒, 一般都是和纯棉混纺, 麻含量从35%到60%都有.</p>
-
-<p>一般亚麻混纺的织法都很粗犷, 有薄而不透的效果.</p>
-
-<p>不耐磨, 所以一般是不能机洗的, 只是现在可以有洗衣袋装起来洗, 避免扭到一起. 手洗的话也不能揉搓和使劲扭. 清洗时也不能使用酸性和碱性洗涤剂, 只能使用专用的中性洗涤剂. 洗多次之后会越来越软.</p>
-
-<h2>莫代尔/再生纤维素纤维</h2>
-
-<p>莫代尔(Modal) 原料是欧洲的灌木林, 和棉一样属于天然纤维, 柔软, 有光泽, 吸湿, 透气较纯棉好一些. 不容易被染色, 几乎不缩水, 特别是加了氨纶后.</p>
-
-<p>一般会和一些合成纤维混纺, 使布料具有一定的弹性. 也有和纯棉混纺.</p>
-
-<p>清洗多次没有明显的变化.</p>
-
-<h2>丝/蚕丝</h2>
-
-<p>丝(Silk) 天然动物纤维, 属于蛋白质纤维(Protein Fibre). 有光泽, 柔软, 透气优于纯棉, 会缩水.</p>
-
-<p>一般也可能加其它合成纤维, 比如氨纶, 以增加弹性, 减少缩水.</p>
-
-<p>只适合手洗, 不可揉搓, 不可拧干, 不能用洗衣粉, 洗衣皂, 香皂等洗涤品. 只能用专门的洗涤剂, 或者洗发水, 不能暴晒, 只能阴干.</p>
-
-<h2>帆布</h2>
-
-<p>帆布(Canvas) 是粗厚的棉织物或麻织物, 日常主要是帆布鞋, 帆布包. 坚硬, 耐磨, 相对于皮革比较透气, 重量轻.</p>
-
-<h2>皮革</h2>
-
-<p>主要是指动物毛皮, 衣服主要有牛皮, 猪皮, 小牛皮, 山羊皮, 绵羊皮. 皮革衣服普遍很贵, 并且只适用于特定场合, 所以基本不普及, 很多场合也有特性更好的合成纤维代替.</p>
-
-<p>另一个大量使用皮革的是鞋, 主要有牛皮, 羊皮, 猪皮, 当然现在也有部分场合被人造革代替.</p>
-
-<p>皮革都需要特别的护理, 不宜浸水, 需要防霉, 防蛀.</p>
-
-<h3>人造革/合成革</h3>
-
-<p>人造革主要是高分子聚合物, 主要原料是PVC, PU, 无纺布.</p>
-
-<p>早期的人造革耐磨都不如皮革, 还有过以人造革假冒皮革的, 但是现代制造出了一些比较好的人造革. 现在多数运动鞋都使用人造革, 比皮革轻, 有光泽, 颜色美观, 耐磨程度相当, 还易于加工, 日常护理相对较皮革容易.</p>
-
-<p>目前人造革就是透气上可能不如皮革, 一般鞋会通过设计透气孔, 搭配其它材料来改善透气.</p>
-
-<p>合成革和人造革据说是不同的东西, 不过我现在区分不出来, 在运动鞋的材料说明上很多也写的有合成革.</p>
-
-<p>白色运动鞋清洗完最好使用吸水纸包裹避光晾干, 也避免鞋面发黄.</p>
-
-<h2>参考</h2>
-
-<p>前文参考了以下网站的资料</p>
-
-<ul>
-<li><a href="http://zh.wikipedia.org/">Wikipedia 中文</a></li>
-<li><a href="http://en.wikipedia.org/">Wikipedia 英文</a></li>
-<li><a href="http://www.hudong.com/">互动百科</a></li>
-<li><a href="http://baike.baidu.com/">百度百科</a></li>
-</ul>
+<figure class='code'><figcaption><span>bookmarklet.js Catch.com批量删除当前选中的笔记</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">l</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="sr">/https:\/\/catch\.com\/m/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">href</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;only in https://catch.com/m/ is work !&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;div.ud-notelist div[id^=full-]&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">notes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">chk</span> <span class="o">=</span> <span class="nx">notes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input[type=checkbox]&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">chk</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">notes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input[value=delete]&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}(</span><span class="nb">document</span><span class="p">,</span> <span class="nx">location</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>使用 <a href="http://www.google.com/">Google</a> 搜索.</p>
+<p>这里有一篇关于Bookmarklet和编写的资料, <a href="http://www.ruanyifeng.com/blog/2011/06/a_guide_for_writing_bookmarklet.html">Bookmarklet编写指南</a>.</p>
+
+<p>一个简单的在线Bookmarklet编写网页, <a href="http://ted.mielczarek.org/code/mozilla/bookmarklet.html">Bookmarklet Crunchinator</a>.</p>
 </div>
 
 
@@ -216,12 +170,12 @@
   
 
 
-<time datetime="2012-07-15T11:39:00+08:00" pubdate data-updated="true">2012-07-15</time>
+<time datetime="2012-07-29T18:12:00+08:00" pubdate data-updated="true">2012-07-29</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/live/'>Live</a>, <a class='category' href='/blog/categories/memo/'>Memo</a>
+    <a class='category' href='/blog/categories/bookmarklet/'>Bookmarklet</a>, <a class='category' href='/blog/categories/javascript/'>Javascript</a>
   
 </span>
 
@@ -249,10 +203,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/" title="Previous Post: Unicode转义(\uXXXX)的编码和解码">&laquo; Unicode转义(\uXXXX)的编码和解码</a>
+        <a class="basic-alignment left" href="/blog/2012/07/29/windows-shell-and-bat-skills/" title="Previous Post: Windows命令行和批处理技巧">&laquo; Windows命令行和批处理技巧</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/07/19/portable-power-memo/" title="Next Post: 移动电源备忘">移动电源备忘 &raquo;</a>
       
     </p>
 
@@ -394,8 +346,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/';
-        var disqus_url = 'http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/';
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/';
         var disqus_script = 'embed.js';
       
     (function () {
