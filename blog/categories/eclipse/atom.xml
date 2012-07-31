@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[类别: Eclipse | netwjx]]></title>
+  <link href="http://netwjx.github.com/blog/categories/eclipse/atom.xml" rel="self"/>
+  <link href="http://netwjx.github.com/"/>
+  <updated>2012-07-31T22:07:53+08:00</updated>
+  <id>http://netwjx.github.com/</id>
+  <author>
+    <name><![CDATA[netwjx]]></name>
+    <email><![CDATA[netwjx@mail.com]]></email>
+    <uri>http://netwjx.github.com/</uri>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+  <icon>/favicon.png</icon>
+  <subtitle><![CDATA[混乱与有序]]></subtitle>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在Eclipse中的Java开发技巧(1)]]></title>
+    
+      <category term="Eclipse" />
+    
+      <category term="Java" />
+    
+      <category term="Tips" />
+    
+    <link href="http://netwjx.github.com/blog/2012/07/31/java-development-tips-in-eclipse-1/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-07-31T21:12:00+08:00</published>
+    <updated>2012-07-31T21:12:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/07/31/java-development-tips-in-eclipse-1</id>
+    <content type="html"><![CDATA[<p>这是我以前使用Eclipse时经常使用的一些小技巧, 多数都是比较基础的, 涉及的方面也比较的多. 觉得比较实用, 就整理成文.</p>
+
+<p>不分先后顺序, 只是想到什么就写什么, 因为内容比较多, 所以这篇是1.</p>
+
+<p>以英文版的介绍为主, 因为我发现很多人基本都只使用英文版.</p>
+
+<h2>快速测试简短代码</h2>
+
+<p>不是很熟悉字符串的查找, 截取等到底返回的是多少? 不清楚日期返回的年月日分别是几? 不清楚某个静态方法给特定值返回的是多少?</p>
+
+<p>这些经常会遇到的小问题, 基本都可以建立一个测试Java项目写个包含main的静态方法, 在里面写测试代码就行了. 但是这样始终很麻烦. 可以试试下面的这个功能:</p>
+
+<p>先确保右上已经选择的是 <strong>Java</strong>(Java perspective), 在随便一个Java项目中右键 -> <strong>New</strong> -> <strong>Other</strong>, 选择树状结构中的<strong>Java -> Java Run/Debug -> Scrapbook Page</strong>, 如下图</p>
+
+<p><img src="/i/e/scrapbook.png" alt="ScrapBook" /></p>
+
+<p>然后<strong>Next</strong>, 输入文件名, 比如<code>test</code>, <strong>Finish</strong>. 打开的窗口中可以输入类似下面的代码, 选择所有代码后点工具栏上的<strong>Display Result of Evaluating Selected Text</strong>, 如下图:</p>
+
+<p><img src="/i/e/scrapbook-1.png" alt="ScrapBook" /></p>
+
+<p>鼠标右键菜单中也有和菜单栏按钮等价的菜单项:</p>
+
+<p><img src="/i/e/scrapbook-2.png" alt="ScrapBook" /></p>
+
+<ul>
+<li><p>Inspect</p>
+
+<p>可以在弹出的小窗口中显示, 类似Eclipse中调试Java代码时的Inspect</p></li>
+<li><p>Display</p>
+
+<p>上文已经说过了, 它可以将这段表达式或最后一行语句的结果显示在编辑器中</p></li>
+<li><p>Execute</p>
+
+<p>这个和直接运行差不多, <code>System.out.println</code>这些会输出</p></li>
+<li><p>Set Imports</p>
+
+<p>设置默认导入哪些类, 包, 类似Java中<code>import</code>语句</p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/07/31/java-development-tips-in-eclipse-1/#comments">查看评论</a></p>]]></content>
+  </entry>
+  
+</feed>

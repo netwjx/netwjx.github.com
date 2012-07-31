@@ -121,6 +121,12 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>http://netwjx.github.com/blog/2012/07/31/java-development-tips-in-eclipse-1/</loc>
+        <lastmod>2012-07-31T22:05:29+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>http://netwjx.github.com/404.html</loc>
         <lastmod>2012-07-29T16:46:59+08:00</lastmod>
         <changefreq>yearly</changefreq>
@@ -128,13 +134,13 @@
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/archives/</loc>
-        <lastmod>2012-07-29T19:52:16+08:00</lastmod>
+        <lastmod>2012-07-31T22:05:29+08:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/</loc>
-        <lastmod>2012-07-29T19:52:16+08:00</lastmod>
+        <lastmod>2012-07-31T22:05:29+08:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>

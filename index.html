@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="目前手机上使用Catch来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是Catch.com网站的My Ideas不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到My Ideas分类里面, 所以就有了下面这个工具. Catch. &hellip;"/>
+  <meta name="description" content="这是我以前使用Eclipse时经常使用的一些小技巧, 多数都是比较基础的, 涉及的方面也比较的多. 觉得比较实用, 就整理成文. 不分先后顺序, 只是想到什么就写什么, 因为内容比较多, 所以这篇是1. 以英文版的介绍为主, 因为我发现很多人基本都只使用英文版. 快速测试简短代码 &hellip;"/>
   
   
 
@@ -66,6 +66,87 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-31T21:12:00+08:00" pubdate data-updated="true">2012-07-31</time>
+        
+         | <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#comments">评论</a><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是我以前使用Eclipse时经常使用的一些小技巧, 多数都是比较基础的, 涉及的方面也比较的多. 觉得比较实用, 就整理成文.</p>
+
+<p>不分先后顺序, 只是想到什么就写什么, 因为内容比较多, 所以这篇是1.</p>
+
+<p>以英文版的介绍为主, 因为我发现很多人基本都只使用英文版.</p>
+
+<h2>快速测试简短代码</h2>
+
+<p>不是很熟悉字符串的查找, 截取等到底返回的是多少? 不清楚日期返回的年月日分别是几? 不清楚某个静态方法给特定值返回的是多少?</p>
+
+<p>这些经常会遇到的小问题, 基本都可以建立一个测试Java项目写个包含main的静态方法, 在里面写测试代码就行了. 但是这样始终很麻烦. 可以试试下面的这个功能:</p>
+
+<p>先确保右上已经选择的是 <strong>Java</strong>(Java perspective), 在随便一个Java项目中右键 -> <strong>New</strong> -> <strong>Other</strong>, 选择树状结构中的<strong>Java -> Java Run/Debug -> Scrapbook Page</strong>, 如下图</p>
+
+<p><img src="/i/e/scrapbook.png" alt="ScrapBook" /></p>
+
+<p>然后<strong>Next</strong>, 输入文件名, 比如<code>test</code>, <strong>Finish</strong>. 打开的窗口中可以输入类似下面的代码, 选择所有代码后点工具栏上的<strong>Display Result of Evaluating Selected Text</strong>, 如下图:</p>
+
+<p><img src="/i/e/scrapbook-1.png" alt="ScrapBook" /></p>
+
+<p>鼠标右键菜单中也有和菜单栏按钮等价的菜单项:</p>
+
+<p><img src="/i/e/scrapbook-2.png" alt="ScrapBook" /></p>
+
+<ul>
+<li><p>Inspect</p>
+
+<p>可以在弹出的小窗口中显示, 类似Eclipse中调试Java代码时的Inspect</p></li>
+<li><p>Display</p>
+
+<p>上文已经说过了, 它可以将这段表达式或最后一行语句的结果显示在编辑器中</p></li>
+<li><p>Execute</p>
+
+<p>这个和直接运行差不多, <code>System.out.println</code>这些会输出</p></li>
+<li><p>Set Imports</p>
+
+<p>设置默认导入哪些类, 包, 类似Java中<code>import</code>语句</p></li>
+</ul>
+
+</div>
+  
+    <footer>
+  
+  
+      <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#comments">评论</a><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -410,54 +491,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-03T14:55:00+08:00" pubdate data-updated="true">2012-06-03</time>
-        
-         | <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#comments">评论</a><a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接<a href="/blog/categories/">分类</a> 哪样.</p>
-
-<p>以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#comments">评论</a><a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -471,6 +504,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">批量删除Catch.com笔记的小工具</a>
@@ -526,10 +563,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生&#8217;Object&#8217; 未定义</a>
       </li>
     
   </ul>
