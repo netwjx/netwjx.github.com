@@ -9,7 +9,7 @@ categories: Javascript Bookmarklet
 目前手机上使用[Catch][]来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是[Catch.com][Catch]网站的**My Ideas**不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到**My Ideas**分类里面, 所以就有了下面这个工具.
 
 
-<a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a>
+<a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;[class$=-notelist] div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a>
 
 这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键
 
@@ -31,7 +31,7 @@ categories: Javascript Bookmarklet
         alert('only in https://catch.com/m/ is work !');
         return;
     }
-    var notes = d.querySelectorAll('div.ud-notelist div[id^=full-]');
+    var notes = d.querySelectorAll('div[class$=-notelist] div[id^=full-]');
     for (var i = 0; i < notes.length; i++) {
         var chk = notes[i].querySelector('input[type=checkbox]');
         if (chk.checked) {

@@ -1,9 +1,0 @@
-{
-	"folders":
-	[
-		{
-			"path": "/C/Users/Netwjx/netwjx.github.com",
-			"folder_exclude_patterns": ["_deploy", ".gist-cache", ".pygments-cache", ".sass-cache"]
-		}
-	]
-}
