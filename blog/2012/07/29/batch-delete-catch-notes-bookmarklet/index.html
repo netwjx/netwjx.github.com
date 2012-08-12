@@ -9,7 +9,7 @@
   <title>批量删除Catch.com笔记的小工具 - netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="目前手机上使用Catch来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是Catch.com网站的My Ideas不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到My Ideas分类里面, 所以就有了下面这个工具. Catch. &hellip;"/>
+  <meta name="description" content="变更日志 2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器 目前手机上使用Catch来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是Catch.com网站的My Ideas不显示删除按钮, 而别的都会显示, &hellip;"/>
   
   <meta name="keywords" content="Bookmarklet, Javascript"/>
 
@@ -94,9 +94,18 @@
   </header>
 
 
-<div class="entry-content"><p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+<div class="entry-content"><h2>变更日志</h2>
 
-<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
+<ul>
+<li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
+</ul>
+
+
+<hr />
+
+<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+
+<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;[class$=-notelist] div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
 
 <p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
 
@@ -134,7 +143,7 @@
 </span><span class='line'>        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;only in https://catch.com/m/ is work !&#39;</span><span class="p">);</span>
 </span><span class='line'>        <span class="k">return</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;div.ud-notelist div[id^=full-]&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;div[class$=-notelist] div[id^=full-]&#39;</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">notes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">chk</span> <span class="o">=</span> <span class="nx">notes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input[type=checkbox]&#39;</span><span class="p">);</span>
 </span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">chk</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="p">{</span>
@@ -228,6 +237,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
       </li>
     
@@ -281,10 +294,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
       </li>
     
   </ul>

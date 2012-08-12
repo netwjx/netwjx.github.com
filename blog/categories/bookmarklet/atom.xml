@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Bookmarklet | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/bookmarklet/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-31T22:07:53+08:00</updated>
+  <updated>2012-08-12T14:05:42+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -30,9 +30,18 @@
     <published>2012-07-29T18:12:00+08:00</published>
     <updated>2012-07-29T18:12:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet</id>
-    <content type="html"><![CDATA[<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+    <content type="html"><![CDATA[<h2>变更日志</h2>
 
-<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
+<ul>
+<li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
+</ul>
+
+
+<hr />
+
+<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+
+<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;[class$=-notelist] div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
 
 <p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
 
@@ -59,7 +68,7 @@
     alert('only in https://catch.com/m/ is work !');
     return;
 }
-var notes = d.querySelectorAll('div.ud-notelist div[id^=full-]');
+var notes = d.querySelectorAll('div[class$=-notelist] div[id^=full-]');
 for (var i = 0; i &lt; notes.length; i++) {
     var chk = notes[i].querySelector('input[type=checkbox]');
     if (chk.checked) {

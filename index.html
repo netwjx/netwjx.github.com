@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="这是我以前使用Eclipse时经常使用的一些小技巧, 多数都是比较基础的, 涉及的方面也比较的多. 觉得比较实用, 就整理成文. 不分先后顺序, 只是想到什么就写什么, 因为内容比较多, 所以这篇是1. 以英文版的介绍为主, 因为我发现很多人基本都只使用英文版. 快速测试简短代码 &hellip;"/>
+  <meta name="description" content="这是这个系列的第2篇, 还是十分简单的技巧. 调试时的ScrapBook 上篇介绍到了ScrapBook, 在断点调试时也有类似的功能. 通过Window -> Show View -> Other, 在Show View窗口顶部的文本框输入Display, 应该会在下面看到Display, &hellip;"/>
   
   
 
@@ -72,6 +72,62 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-12T12:46:00+08:00" pubdate data-updated="true">2012-08-12</time>
+        
+         | <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#comments">评论</a><a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是这个系列的第2篇, 还是十分简单的技巧.</p>
+
+<h2>调试时的ScrapBook</h2>
+
+<p>上篇介绍到了ScrapBook, 在断点调试时也有类似的功能.</p>
+
+<p><img src="/i/e/display.png" alt="Display" /></p>
+
+<p>通过<strong>Window</strong> -> <strong>Show View</strong> -> <strong>Other</strong>, 在<strong>Show View</strong>窗口顶部的文本框输入<code>Display</code>, 应该会在下面看到<strong>Display</strong>, 点击即可打开上图所示界面.</p>
+
+<p>具体功能和上篇的ScrapBook基本一致, 只是用于调试时, 这个主要是可以在调试时, 把一些变量的值直接以文本方式展示, 甚至可以自己填些说明, 方便后续的调试参考.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#comments">评论</a><a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a></h1>
     
     
@@ -107,38 +163,11 @@
 
 <p>不是很熟悉字符串的查找, 截取等到底返回的是多少? 不清楚日期返回的年月日分别是几? 不清楚某个静态方法给特定值返回的是多少?</p>
 
-<p>这些经常会遇到的小问题, 基本都可以建立一个测试Java项目写个包含main的静态方法, 在里面写测试代码就行了. 但是这样始终很麻烦. 可以试试下面的这个功能:</p>
-
-<p>先确保右上已经选择的是 <strong>Java</strong>(Java perspective), 在随便一个Java项目中右键 -> <strong>New</strong> -> <strong>Other</strong>, 选择树状结构中的<strong>Java -> Java Run/Debug -> Scrapbook Page</strong>, 如下图</p>
-
-<p><img src="/i/e/scrapbook.png" alt="ScrapBook" /></p>
-
-<p>然后<strong>Next</strong>, 输入文件名, 比如<code>test</code>, <strong>Finish</strong>. 打开的窗口中可以输入类似下面的代码, 选择所有代码后点工具栏上的<strong>Display Result of Evaluating Selected Text</strong>, 如下图:</p>
-
-<p><img src="/i/e/scrapbook-1.png" alt="ScrapBook" /></p>
-
-<p>鼠标右键菜单中也有和菜单栏按钮等价的菜单项:</p>
-
-<p><img src="/i/e/scrapbook-2.png" alt="ScrapBook" /></p>
-
-<ul>
-<li><p>Inspect</p>
-
-<p>可以在弹出的小窗口中显示, 类似Eclipse中调试Java代码时的Inspect</p></li>
-<li><p>Display</p>
-
-<p>上文已经说过了, 它可以将这段表达式或最后一行语句的结果显示在编辑器中</p></li>
-<li><p>Execute</p>
-
-<p>这个和直接运行差不多, <code>System.out.println</code>这些会输出</p></li>
-<li><p>Set Imports</p>
-
-<p>设置默认导入哪些类, 包, 类似Java中<code>import</code>语句</p></li>
-</ul>
-
 </div>
   
     <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">继续阅读 &rarr;</a>
   
   
       <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#comments">评论</a><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#disqus_thread" class="comment-count"></a>
@@ -178,9 +207,18 @@
   </header>
 
 
-  <div class="entry-content"><p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+  <div class="entry-content"><h2>变更日志</h2>
 
-<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
+<ul>
+<li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
+</ul>
+
+
+<hr />
+
+<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+
+<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;[class$=-notelist] div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
 
 <p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
 
@@ -417,80 +455,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/01/blackberry-memo/">黑莓使用备忘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-01T18:58:00+08:00" pubdate data-updated="true">2012-07-01</time>
-        
-         | <a href="/blog/2012/07/01/blackberry-memo/#comments">评论</a><a href="/blog/2012/07/01/blackberry-memo/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我曾经使用过将近1年时间黑莓的手机, 期间零零碎碎的有一些使用资料, 这段时间整理成一篇独立的文章, 算是对过去的一些留念吧.</p>
-
-<h2>概况</h2>
-
-<p>购买黑莓主要是想试试全键盘的手机, 黑莓全键盘手机主要是两个系列, Bold 经典设计, Curve 小巧设计, 其实Curve和Bold的大小差异就是几毫米.</p>
-
-<p>不同时期黑莓手机就是屏幕, 性能, 外观差异, 比如7xxx 87xx 83xx 85xx 89xx. 同一时期的主要是网络制式, GPS, WiFi, 发行地区, 键盘Y/Z倒置之类的差异.</p>
-
-<p>黑莓的型号数字大小和发布日期最初是有些对应关系的, 但是后来就很混乱了, 不仔细找资料还真很难区分.</p>
-
-<h2>硬件</h2>
-
-<p><img class="right" src="/i/bb8310.png" title="BlackBerry 8310" alt="BlackBerry 8310"></p>
-
-<p>我购买的是水货的<a href="http://cn.blackberry.com/devices/blackberrycurve8300/">BlackBerry Curve 8310</a>, 以下简称<strong>bb8310</strong>, 铁灰色, 和图片上哪种颜色不同.</p>
-
-<ul>
-<li><p>GSM网络制式, 国内能用移动和联通的2G网络.</p></li>
-<li><p>支持GPRS/EDGE上网, EDGE是GPRS升级, 理论上快一点, 但是我没感觉到. EDGE移动的基站支持的比较多, 联通挺多的还是GPRS.</p></li>
-<li><p>Intel PXA901 312 MHz, 就实际使用的流畅感觉来说, <strong>所有点击操作都有延迟的感觉, 列表滚动经常短暂的卡顿.</strong></p></li>
-<li><p>内置存储 64M, 精简ROM后还能剩30M左右, 安装第三方应用都需要占用内置存储空间.</p></li>
-<li><p>支持MicroSD(TF)卡, 应该是不支持SDHC, 不过实际我用的是2G的, <strong>因为bb8310读写速度极慢, 写入速度低于1M/s</strong>.</p></li>
-<li><p>320x240解析度的TFT屏幕, <strong>阳光下可以看清字, 因为会自动调整背光强度.</strong></p></li>
-<li><p>带GPS, 带200w像素的摄像头, 无自动对焦, 带闪光灯, <strong>闪光灯实际当手电筒使用</strong>.</p></li>
-<li><p>无WiFi, <strong>有WiFi的那个型号只能使用系统自带浏览器上网, 第三方应用要折腾导入服务预订</strong></p></li>
-<li><p>轨迹球导航键, <strong>比侧边的滚轮能提供4个方向导航, 但是比更新型号的光学触控板更容易变油腻, 老化明显.</strong></p></li>
-<li><p>图片JPG, BMP, TIFF. 音乐AMR, MP3, WMA. 视频MPEG4, 3GP(H.263), <strong>不建议考虑视频, 即使是录制的视频质量也太差</strong>, 没有实际意义.</p></li>
-</ul>
-
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/07/01/blackberry-memo/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/07/01/blackberry-memo/#comments">评论</a><a href="/blog/2012/07/01/blackberry-memo/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -504,6 +468,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
@@ -559,10 +527,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a>
       </li>
     
   </ul>

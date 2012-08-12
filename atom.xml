@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-07-31T22:07:53+08:00</updated>
+  <updated>2012-08-12T14:05:42+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,61 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在Eclipse中的Java开发技巧(2)]]></title>
+    
+      <category term="Eclipse" />
+    
+      <category term="Java" />
+    
+      <category term="Tips" />
+    
+    <link href="http://netwjx.github.com/blog/2012/08/12/java-development-tips-in-eclipse-2/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-08-12T12:46:00+08:00</published>
+    <updated>2012-08-12T12:46:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/08/12/java-development-tips-in-eclipse-2</id>
+    <content type="html"><![CDATA[<p>这是这个系列的第2篇, 还是十分简单的技巧.</p>
+
+<h2>调试时的ScrapBook</h2>
+
+<p>上篇介绍到了ScrapBook, 在断点调试时也有类似的功能.</p>
+
+<p><img src="http://netwjx.github.com/i/e/display.png" alt="Display" /></p>
+
+<p>通过<strong>Window</strong> -> <strong>Show View</strong> -> <strong>Other</strong>, 在<strong>Show View</strong>窗口顶部的文本框输入<code>Display</code>, 应该会在下面看到<strong>Display</strong>, 点击即可打开上图所示界面.</p>
+
+<p>具体功能和上篇的ScrapBook基本一致, 只是用于调试时, 这个主要是可以在调试时, 把一些变量的值直接以文本方式展示, 甚至可以自己填些说明, 方便后续的调试参考.</p>
+
+<!-- more -->
+
+
+<h2>快速找到当前文件在项目中的位置</h2>
+
+<p>经常会需要查看当前编辑的文件在项目文件系统中的路径, 标签上只显示了文件名, 鼠标移上去可以看到路径, 但是如果想查看同目录下其它的文件就比较麻烦了. 下面是个快速找到当前文件在项目中位置的方式.</p>
+
+<p><img src="http://netwjx.github.com/i/e/link-with-editor.png" alt="Link With Editor" /></p>
+
+<p>因为点了<strong>Link With Editor</strong>后, 切换编辑的文件将总会自动转到对应的项目路径, 所以一般我会点两次恢复默认.</p>
+
+<h2>快速在临近的类和方法中跳转</h2>
+
+<p>上一段说的是针对所有文件都能生效的方法, 但是对于Java类来说, 想知道它在项目中的路径, 挺多时候实际目的是查看和它临近类, 那么可以使用<strong>Breadcrumb</strong>.</p>
+
+<p><img src="http://netwjx.github.com/i/e/breadcrumb.png" alt="Breadcrumb" /></p>
+
+<h2>两种不同风格的包浏览结构</h2>
+
+<p>在项目上可以显示两种不同的Java包结构, 通过点击<strong>Package Explorer</strong>或<strong>Project Explorer</strong>窗口右上的<strong>View Menu</strong> -> <strong>Package Presentation</strong> -> <strong>Flat</strong>或<strong>Hierarchical</strong>在两种风格中切换, 实际效果如图:</p>
+
+<p><img src="http://netwjx.github.com/i/e/package-presentation.png" alt="Package Presentation" /></p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/08/12/java-development-tips-in-eclipse-2/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在Eclipse中的Java开发技巧(1)]]></title>
@@ -41,6 +96,9 @@
 <h2>快速测试简短代码</h2>
 
 <p>不是很熟悉字符串的查找, 截取等到底返回的是多少? 不清楚日期返回的年月日分别是几? 不清楚某个静态方法给特定值返回的是多少?</p>
+
+<!-- more -->
+
 
 <p>这些经常会遇到的小问题, 基本都可以建立一个测试Java项目写个包含main的静态方法, 在里面写测试代码就行了. 但是这样始终很麻烦. 可以试试下面的这个功能:</p>
 
@@ -90,9 +148,18 @@
     <published>2012-07-29T18:12:00+08:00</published>
     <updated>2012-07-29T18:12:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet</id>
-    <content type="html"><![CDATA[<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+    <content type="html"><![CDATA[<h2>变更日志</h2>
 
-<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;div.ud-notelist div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
+<ul>
+<li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
+</ul>
+
+
+<hr />
+
+<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
+
+<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;[class$=-notelist] div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
 
 <p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
 
@@ -130,7 +197,7 @@
 </span><span class='line'>        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;only in https://catch.com/m/ is work !&#39;</span><span class="p">);</span>
 </span><span class='line'>        <span class="k">return</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;div.ud-notelist div[id^=full-]&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">notes</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;div[class$=-notelist] div[id^=full-]&#39;</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">notes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">chk</span> <span class="o">=</span> <span class="nx">notes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;input[type=checkbox]&#39;</span><span class="p">);</span>
 </span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">chk</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="p">{</span>
@@ -3894,30 +3961,6 @@ categories:
 <p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
 
       <p><a href="http://netwjx.github.com/blog/2012/03/18/octopress-note/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello Octopress]]></title>
-    
-      <category term="Hello World" />
-    
-    <link href="http://netwjx.github.com/blog/2012/03/18/hello-octopress/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-03-18T02:34:00+08:00</published>
-    <updated>2012-03-18T02:34:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/03/18/hello-octopress</id>
-    <content type="html"><![CDATA[<p>终于折腾起来了</p>
-
-<p>深深的感觉到在win上折腾实在是极端的痛苦啊</p>
-
-<p>基本是四处碰壁,还都是很难找到答案的</p>
-
-<p>5个小时就这样过去了</p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/03/18/hello-octopress/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
