@@ -6,6 +6,14 @@ comments: true
 categories: Javascript Bookmarklet
 ---
 
+变更日志
+--------
+
+-   2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器
+
+--------
+
+
 目前手机上使用[Catch][]来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是[Catch.com][Catch]网站的**My Ideas**不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到**My Ideas**分类里面, 所以就有了下面这个工具.
 
 

@@ -18,6 +18,8 @@ categories: Eclipse Java Tips
 
 不是很熟悉字符串的查找, 截取等到底返回的是多少? 不清楚日期返回的年月日分别是几? 不清楚某个静态方法给特定值返回的是多少?
 
+<!-- more -->
+
 这些经常会遇到的小问题, 基本都可以建立一个测试Java项目写个包含main的静态方法, 在里面写测试代码就行了. 但是这样始终很麻烦. 可以试试下面的这个功能:
 
 先确保右上已经选择的是 **Java**(Java perspective), 在随便一个Java项目中右键 -> **New** -> **Other**, 选择树状结构中的**Java -> Java Run/Debug -> Scrapbook Page**, 如下图
