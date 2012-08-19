@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="这是这个系列的第2篇, 还是十分简单的技巧. 调试时的ScrapBook 上篇介绍到了ScrapBook, 在断点调试时也有类似的功能. 通过Window -> Show View -> Other, 在Show View窗口顶部的文本框输入Display, 应该会在下面看到Display, &hellip;"/>
+  <meta name="description" content="这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置. 主要挑哪些很实用, 比较容易按到的. 自动完成 基本上有语法分析的编辑环境都会有自动完成, 经常的目的是提示类的方法等, Eclipse中自动完成是按Alt &hellip;"/>
   
   
 
@@ -66,6 +66,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-19T13:29:00+08:00" pubdate data-updated="true">2012-08-19</time>
+        
+         | <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#comments">评论</a><a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置.</p>
+
+<p>主要挑哪些很实用, 比较容易按到的.</p>
+
+<h2>自动完成</h2>
+
+<p>基本上有语法分析的编辑环境都会有自动完成, 经常的目的是提示类的方法等, Eclipse中自动完成是按<strong>Alt + /</strong>, 重复按可以在几个不同类目切换, 具体可以自己试试.</p>
+
+<p><strong>Alt + Shift + /</strong> 是用于参数提示, 和<strong>Alt + /</strong>效果差不多, 甚至有时能相互通用, 不过这个参数提示比较简单, 只有类型和参数名, 详细的还得在看方法提示时右边出现的说明.</p>
+
+<p><strong>Ctrl + Enter</strong> 这个不是单独使用, 而是在按了<strong>Alt + /</strong>之后使用, 用于修改一个方法调用, 因为按<strong>Enter</strong>将是插入代码. 具体见下图</p>
+
+<p><img src="/i/e/content-assist.png" alt="Content Assist" /></p>
+
+<p>在类一级, 即方法外面按<strong>Alt + /</strong>会提示可重写的方法.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#comments">评论</a><a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -405,56 +465,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-07T12:23:00+08:00" pubdate data-updated="true">2012-07-07</time>
-        
-         | <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">评论</a><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在涉及Web前端开发时, 有时会遇到<code>\uXXXX</code>格式表示的字符, 其中<code>XXXX</code>是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和<code>\n</code> <code>\r</code>同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式.</p>
-
-<p>多数时候遇到需要解码的情况多点, 所以会先介绍解码decode, 后介绍编码encode.</p>
-
-<p>下文会提供Javascript C# Java三种语言下不同方法的实现和简单说明, 会涉及到正则和位运算的典型用法.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">评论</a><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -468,6 +478,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a>
@@ -523,10 +537,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
       </li>
     
   </ul>

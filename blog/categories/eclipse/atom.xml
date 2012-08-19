@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Eclipse | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/eclipse/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-12T14:05:42+08:00</updated>
+  <updated>2012-08-19T17:26:42+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,202 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在Eclipse中的Java开发技巧(3)]]></title>
+    
+      <category term="Eclipse" />
+    
+      <category term="Java" />
+    
+      <category term="Tips" />
+    
+    <link href="http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-08-19T13:29:00+08:00</published>
+    <updated>2012-08-19T13:29:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3</id>
+    <content type="html"><![CDATA[<p>这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置.</p>
+
+<p>主要挑哪些很实用, 比较容易按到的.</p>
+
+<h2>自动完成</h2>
+
+<p>基本上有语法分析的编辑环境都会有自动完成, 经常的目的是提示类的方法等, Eclipse中自动完成是按<strong>Alt + /</strong>, 重复按可以在几个不同类目切换, 具体可以自己试试.</p>
+
+<p><strong>Alt + Shift + /</strong> 是用于参数提示, 和<strong>Alt + /</strong>效果差不多, 甚至有时能相互通用, 不过这个参数提示比较简单, 只有类型和参数名, 详细的还得在看方法提示时右边出现的说明.</p>
+
+<p><strong>Ctrl + Enter</strong> 这个不是单独使用, 而是在按了<strong>Alt + /</strong>之后使用, 用于修改一个方法调用, 因为按<strong>Enter</strong>将是插入代码. 具体见下图</p>
+
+<p><img src="/i/e/content-assist.png" alt="Content Assist" /></p>
+
+<p>在类一级, 即方法外面按<strong>Alt + /</strong>会提示可重写的方法.</p>
+
+<!-- more -->
+
+
+<h2>在不同场景下的 Ctrl+1</h2>
+
+<p><strong>Ctrl + 1</strong>是快速修正, 不同场合会有十分不同的功能, 我觉得它是Eclipse中使用频率仅次于<strong>Alt+/</strong>的快捷键.</p>
+
+<h3>创建变量方法和类</h3>
+
+<p>直接写变量赋值而不写变量类型时, 按<strong>Ctrl + 1</strong></p>
+
+<p><img src="/i/e/quick-fix-1.png" alt="Quick Fix" /></p>
+
+<p>快速修正的列表中</p>
+
+<ul>
+<li><p><strong>Create local variable 'a'</strong></p>
+
+<p>创建方法内变量, 上面已经有截图.</p></li>
+<li><p><strong>Create field 'a'</strong></p>
+
+<p>创建类变量.</p></li>
+<li><p><strong>Create parameter 'a'</strong></p>
+
+<p>创建方法参数.</p></li>
+<li><p><strong>Remove assignment</strong></p>
+
+<p>删除.</p></li>
+</ul>
+
+
+<p>直接写方法调用<code>foo("bar")</code>, 而不实现方法时, 按<strong>Ctrl + 1</strong>, 会有<strong>Create method 'methodName(paramType)'</strong>, <strong>Enter</strong>后会在合适的位置创建指定的方法空实现, 并且参数都已经写好, 按<strong>Tab</strong>键可以切换到返回类型和参数类型上调整, 最后<strong>Enter</strong>两次完成.</p>
+
+<p>类也可以用相似的方式创建, 先写<code>new Foo("Name")</code>, 然后<strong>Ctrl + 1</strong>, 选<strong>Create class 'Foo'</strong>. 如果是在方法调用中这么写<code>foo(new Bar())</code>, 并且<code>foo</code>方法的参数有具体的类型限制, 那么创建的类会继承参数指定的类型或实现参数的接口类型.</p>
+
+<p>如果现有类里面有, <strong>Ctrl + 1</strong>会出现<strong>Import 'Xxx' (xxx.xx)</strong>, 用于引入现有类.</p>
+
+<h3>添加接口方法的默认实现</h3>
+
+<p>在类声明上写了<code>implements IFoo</code>后, 按<strong>Ctrl + 1</strong>会有</p>
+
+<ul>
+<li><p><strong>Add unimplemented methods</strong></p>
+
+<p>添加未实现的接口方法.</p></li>
+<li><p><strong>Make type 'Xxx' abstract</strong></p>
+
+<p>修改当前类为抽象.</p></li>
+</ul>
+
+
+<p>还有抽象类的抽象方法也有类似的提示, 具体可以自行尝试, 套路基本和上面的一样.</p>
+
+<p>结合上段, 使用匿名内部类时, 输入<code>new InterfaceClass(){}</code>之后按<strong>Ctrl + 1</strong>, 也有<strong>Add unimplemented methods</strong>, 这在写UI程序时添加事件回调很有用.</p>
+
+<h3>移除默认生成的TODO</h3>
+
+<p>所有默认生成的方法都会有<code>// TODO Auto-generated method stub</code> 这段, 可以在那一行按<strong>Ctrl + 1</strong> -> <strong>Remove task tag</strong></p>
+
+<p>不过直接按删除行更直接点, <strong>Ctrl + D</strong></p>
+
+<h3>对没有错误的代码按<strong>Ctrl + 1</strong></h3>
+
+<p>这一般是在打算调整代码时用, 十分通用的比如重命名, 可以按<strong>Alt + Shift + R</strong>更直接点.</p>
+
+<p>在变量声明或赋值上按<strong>Ctrl + 1</strong>, 下面是一些比较有用的.</p>
+
+<ul>
+<li><p><strong>Convert local variable to field</strong></p>
+
+<p>把本地变量转换为类变量.</p></li>
+<li><p><strong>Split variable declaration</strong></p>
+
+<p>和下一项相反, 把变量声明和赋值分离, 在操作外部资源, 用<code>try finally</code>时很有用.</p></li>
+<li><p><strong>Join variable declaration</strong></p>
+
+<p>将变量赋值和声明合并为一行.</p></li>
+<li><p><strong>Extract to local variable</strong></p>
+
+<p>把变量扩展为本地变量, 一般是优化时使用, 访问本地变量比类变量快.</p></li>
+</ul>
+
+
+<p>在类变量上按<strong>Ctrl + 1</strong>有<strong>Create getter and setter for 'xxx'</strong>用于创建类变量的<code>get</code>和<code>set</code>方法, 如果是<code>boolean</code>类型会把<code>get</code>变成<code>is</code>.</p>
+
+<p>不过常见的情况是用菜单栏<strong>Source</strong> -> <strong>Generate Getters and Setters</strong>, 可以一次性把选择的类变量生成<code>get</code> <code>set</code>方法.</p>
+
+<h3>Eclipse的使用方法就是经常<strong>Ctrl + 1</strong></h3>
+
+<p>上面是我遇到的常用的地方, 还有很多地方都可以按<strong>Ctrl + 1</strong>, 可以自行尝试.</p>
+
+<h2>在最近编辑的地方跳转</h2>
+
+<ul>
+<li><p><strong>Ctrl + Q</strong></p>
+
+<p>在修改代码的时候很有用, 快速跳到刚刚修改的地方, 而不撤销代码的修改.</p></li>
+<li><p><strong>Alt + 方向左/方向右</strong></p>
+
+<p>这个也是在最近的相关文件的行中跳转, 但是我也不是很理解具体的规则, 只是偶尔用用看.</p></li>
+</ul>
+
+
+<h2>查看JavaAPI Doc</h2>
+
+<p>默认鼠标移上去就能看到, 但是需要悬停一会, 如果不想碰鼠标, 可以将光标移动到相关的类或者方法上按<strong>F2</strong>, 和鼠标悬停弹出的完全一样.</p>
+
+<h2>最大化编辑区域</h2>
+
+<p><strong>Ctrl + M</strong>, 看个人喜好, 我一般是临时用用, Eclipse可以把编辑窗口拖出来分离成左右或上下的, 最大化时仍旧保持左右或上下, 适合对比分析代码, 比如一个客户端, 一个服务端的代码.</p>
+
+<h2>关闭文件</h2>
+
+<p><strong>Ctrl + W</strong> 和几乎所有主流浏览器的关闭窗口快捷键一样, 大量的编辑器也是这个键, 经常用的话就会很自然了.</p>
+
+<h2>查找快捷键</h2>
+
+<p>上面提到的常用快捷键肯定有遗漏, 如果想自己找相关快捷键可以这样操作.</p>
+
+<p>菜单栏 <strong>Window</strong> -> <strong>Preferences</strong>, 在左侧顶部输入<code>Keys</code>, 一般就一个, 可以看到如下界面</p>
+
+<p><img src="/i/e/keys.png" alt="Keys" /></p>
+
+<p>一般<strong>Scheme</strong>保持<strong>Default</strong>不变, 在<strong>type filter text</strong>输入自己想知道的快捷键锁功能相关的单词, 然后在下面出现的快捷键上找, 并尝试.</p>
+
+<h2>基本通用的编辑快捷键</h2>
+
+<p>这些不限于在Eclipse中使用, 很多地方也可以用这些快捷键, <strong>彻底不了解的可以看, 其他人可无视</strong>.</p>
+
+<ul>
+<li><p><strong>Ctrl + 方向左/方向右</strong></p>
+
+<p>光标向左/右移动一个单词, 中文没有单词可能不适用, 不过在代码中很常用.</p></li>
+<li><p><strong>Shift + 方向左/方向右</strong></p>
+
+<p>向左/右选择一个字符, 可以重复按选择多个.</p></li>
+<li><p><strong>Shift + 方向上/方向下</strong></p>
+
+<p>从当前光标位置向上/下选一行, 可以配合左/右, 重复按来调整选择区域.</p></li>
+<li><p><strong>Ctrl + Shift + 方向左/方向右</strong></p>
+
+<p>向左/右选择一个单词, 可以配合上面提到的细节调整选择区域.</p></li>
+<li><p><strong>Ctrl + 方向上/方向下</strong></p>
+
+<p>滚动条上下滚动, 光标不移动, 一般是一次滚动一行.</p></li>
+<li><p><strong>Home</strong> <strong>End</strong></p>
+
+<p>移动到行首/行末, 配合<strong>Shift</strong>可以变成选择到行首/行末. 有些编辑器能自动检测行首缩进.</p></li>
+<li><p><strong>Page Down</strong> <strong>Page Up</strong></p>
+
+<p>上翻页, 下翻页, 配合<strong>Shift</strong>可以选择上一页/下一页的内容.</p></li>
+<li><p><strong>Ctrl + X/C/V</strong></p>
+
+<p>Windows平台最常用的, 剪贴, 复制, 粘贴.</p></li>
+<li><p><strong>Tab</strong></p>
+
+<p>单独按就是缩进, 根据编辑器的设置, 可能被替换为空格. 配合选中多行, <strong>Tab</strong>可以调整多行的缩进. 配合<strong>Shift</strong>可以反缩进, 即减少缩进, 文本向左移动. 这个不是十分通用, 不过多数编程环境都是这样的.</p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在Eclipse中的Java开发技巧(2)]]></title>

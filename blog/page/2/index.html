@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="我曾经使用过将近1年时间黑莓的手机, 期间零零碎碎的有一些使用资料, 这段时间整理成一篇独立的文章, 算是对过去的一些留念吧. 概况 购买黑莓主要是想试试全键盘的手机, 黑莓全键盘手机主要是两个系列, Bold 经典设计, Curve 小巧设计, 其实Curve和Bold的大小差异就是几毫米. &hellip;"/>
+  <meta name="description" content="在涉及Web前端开发时, 有时会遇到\uXXXX格式表示的字符, 其中XXXX是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和\n \r同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式. 多数时候遇到需要解码的情况多点, 所以会先介绍解码decode &hellip;"/>
   
   
 
@@ -66,6 +66,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-07T12:23:00+08:00" pubdate data-updated="true">2012-07-07</time>
+        
+         | <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">评论</a><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在涉及Web前端开发时, 有时会遇到<code>\uXXXX</code>格式表示的字符, 其中<code>XXXX</code>是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和<code>\n</code> <code>\r</code>同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式.</p>
+
+<p>多数时候遇到需要解码的情况多点, 所以会先介绍解码decode, 后介绍编码encode.</p>
+
+<p>下文会提供Javascript C# Java三种语言下不同方法的实现和简单说明, 会涉及到正则和位运算的典型用法.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#comments">评论</a><a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -480,70 +530,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-21T16:45:00+08:00" pubdate data-updated="true">2012-04-21</time>
-        
-         | <a href="/blog/2012/04/21/using-code-in-octopress/#comments">评论</a><a href="/blog/2012/04/21/using-code-in-octopress/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
-
-<p>源</p>
-
-<pre><code>``` js Javascript Hello World 
-    alert('hello world');
-```
-</code></pre>
-
-<p>效果</p>
-
-<figure class='code'><figcaption><span>Javascript Hello World </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
-
-<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/04/21/using-code-in-octopress/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/04/21/using-code-in-octopress/#comments">评论</a><a href="/blog/2012/04/21/using-code-in-octopress/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; 上一页</a>
@@ -559,6 +545,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a>
@@ -614,10 +604,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/21/camera-capture/">捕获摄像头信息</a>
       </li>
     
   </ul>

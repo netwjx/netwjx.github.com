@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-12T14:05:42+08:00</updated>
+  <updated>2012-08-19T17:26:42+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,202 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在Eclipse中的Java开发技巧(3)]]></title>
+    
+      <category term="Eclipse" />
+    
+      <category term="Java" />
+    
+      <category term="Tips" />
+    
+    <link href="http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-08-19T13:29:00+08:00</published>
+    <updated>2012-08-19T13:29:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3</id>
+    <content type="html"><![CDATA[<p>这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置.</p>
+
+<p>主要挑哪些很实用, 比较容易按到的.</p>
+
+<h2>自动完成</h2>
+
+<p>基本上有语法分析的编辑环境都会有自动完成, 经常的目的是提示类的方法等, Eclipse中自动完成是按<strong>Alt + /</strong>, 重复按可以在几个不同类目切换, 具体可以自己试试.</p>
+
+<p><strong>Alt + Shift + /</strong> 是用于参数提示, 和<strong>Alt + /</strong>效果差不多, 甚至有时能相互通用, 不过这个参数提示比较简单, 只有类型和参数名, 详细的还得在看方法提示时右边出现的说明.</p>
+
+<p><strong>Ctrl + Enter</strong> 这个不是单独使用, 而是在按了<strong>Alt + /</strong>之后使用, 用于修改一个方法调用, 因为按<strong>Enter</strong>将是插入代码. 具体见下图</p>
+
+<p><img src="http://netwjx.github.com/i/e/content-assist.png" alt="Content Assist" /></p>
+
+<p>在类一级, 即方法外面按<strong>Alt + /</strong>会提示可重写的方法.</p>
+
+<!-- more -->
+
+
+<h2>在不同场景下的 Ctrl+1</h2>
+
+<p><strong>Ctrl + 1</strong>是快速修正, 不同场合会有十分不同的功能, 我觉得它是Eclipse中使用频率仅次于<strong>Alt+/</strong>的快捷键.</p>
+
+<h3>创建变量方法和类</h3>
+
+<p>直接写变量赋值而不写变量类型时, 按<strong>Ctrl + 1</strong></p>
+
+<p><img src="http://netwjx.github.com/i/e/quick-fix-1.png" alt="Quick Fix" /></p>
+
+<p>快速修正的列表中</p>
+
+<ul>
+<li><p><strong>Create local variable &#8216;a&#8217;</strong></p>
+
+<p>创建方法内变量, 上面已经有截图.</p></li>
+<li><p><strong>Create field &#8216;a&#8217;</strong></p>
+
+<p>创建类变量.</p></li>
+<li><p><strong>Create parameter &#8216;a&#8217;</strong></p>
+
+<p>创建方法参数.</p></li>
+<li><p><strong>Remove assignment</strong></p>
+
+<p>删除.</p></li>
+</ul>
+
+
+<p>直接写方法调用<code>foo("bar")</code>, 而不实现方法时, 按<strong>Ctrl + 1</strong>, 会有<strong>Create method &#8216;methodName(paramType)&#8217;</strong>, <strong>Enter</strong>后会在合适的位置创建指定的方法空实现, 并且参数都已经写好, 按<strong>Tab</strong>键可以切换到返回类型和参数类型上调整, 最后<strong>Enter</strong>两次完成.</p>
+
+<p>类也可以用相似的方式创建, 先写<code>new Foo("Name")</code>, 然后<strong>Ctrl + 1</strong>, 选<strong>Create class &#8216;Foo&#8217;</strong>. 如果是在方法调用中这么写<code>foo(new Bar())</code>, 并且<code>foo</code>方法的参数有具体的类型限制, 那么创建的类会继承参数指定的类型或实现参数的接口类型.</p>
+
+<p>如果现有类里面有, <strong>Ctrl + 1</strong>会出现<strong>Import &#8216;Xxx&#8217; (xxx.xx)</strong>, 用于引入现有类.</p>
+
+<h3>添加接口方法的默认实现</h3>
+
+<p>在类声明上写了<code>implements IFoo</code>后, 按<strong>Ctrl + 1</strong>会有</p>
+
+<ul>
+<li><p><strong>Add unimplemented methods</strong></p>
+
+<p>添加未实现的接口方法.</p></li>
+<li><p><strong>Make type &#8216;Xxx&#8217; abstract</strong></p>
+
+<p>修改当前类为抽象.</p></li>
+</ul>
+
+
+<p>还有抽象类的抽象方法也有类似的提示, 具体可以自行尝试, 套路基本和上面的一样.</p>
+
+<p>结合上段, 使用匿名内部类时, 输入<code>new InterfaceClass(){}</code>之后按<strong>Ctrl + 1</strong>, 也有<strong>Add unimplemented methods</strong>, 这在写UI程序时添加事件回调很有用.</p>
+
+<h3>移除默认生成的TODO</h3>
+
+<p>所有默认生成的方法都会有<code>// TODO Auto-generated method stub</code> 这段, 可以在那一行按<strong>Ctrl + 1</strong> -> <strong>Remove task tag</strong></p>
+
+<p>不过直接按删除行更直接点, <strong>Ctrl + D</strong></p>
+
+<h3>对没有错误的代码按<strong>Ctrl + 1</strong></h3>
+
+<p>这一般是在打算调整代码时用, 十分通用的比如重命名, 可以按<strong>Alt + Shift + R</strong>更直接点.</p>
+
+<p>在变量声明或赋值上按<strong>Ctrl + 1</strong>, 下面是一些比较有用的.</p>
+
+<ul>
+<li><p><strong>Convert local variable to field</strong></p>
+
+<p>把本地变量转换为类变量.</p></li>
+<li><p><strong>Split variable declaration</strong></p>
+
+<p>和下一项相反, 把变量声明和赋值分离, 在操作外部资源, 用<code>try finally</code>时很有用.</p></li>
+<li><p><strong>Join variable declaration</strong></p>
+
+<p>将变量赋值和声明合并为一行.</p></li>
+<li><p><strong>Extract to local variable</strong></p>
+
+<p>把变量扩展为本地变量, 一般是优化时使用, 访问本地变量比类变量快.</p></li>
+</ul>
+
+
+<p>在类变量上按<strong>Ctrl + 1</strong>有<strong>Create getter and setter for &#8216;xxx&#8217;</strong>用于创建类变量的<code>get</code>和<code>set</code>方法, 如果是<code>boolean</code>类型会把<code>get</code>变成<code>is</code>.</p>
+
+<p>不过常见的情况是用菜单栏<strong>Source</strong> -> <strong>Generate Getters and Setters</strong>, 可以一次性把选择的类变量生成<code>get</code> <code>set</code>方法.</p>
+
+<h3>Eclipse的使用方法就是经常<strong>Ctrl + 1</strong></h3>
+
+<p>上面是我遇到的常用的地方, 还有很多地方都可以按<strong>Ctrl + 1</strong>, 可以自行尝试.</p>
+
+<h2>在最近编辑的地方跳转</h2>
+
+<ul>
+<li><p><strong>Ctrl + Q</strong></p>
+
+<p>在修改代码的时候很有用, 快速跳到刚刚修改的地方, 而不撤销代码的修改.</p></li>
+<li><p><strong>Alt + 方向左/方向右</strong></p>
+
+<p>这个也是在最近的相关文件的行中跳转, 但是我也不是很理解具体的规则, 只是偶尔用用看.</p></li>
+</ul>
+
+
+<h2>查看JavaAPI Doc</h2>
+
+<p>默认鼠标移上去就能看到, 但是需要悬停一会, 如果不想碰鼠标, 可以将光标移动到相关的类或者方法上按<strong>F2</strong>, 和鼠标悬停弹出的完全一样.</p>
+
+<h2>最大化编辑区域</h2>
+
+<p><strong>Ctrl + M</strong>, 看个人喜好, 我一般是临时用用, Eclipse可以把编辑窗口拖出来分离成左右或上下的, 最大化时仍旧保持左右或上下, 适合对比分析代码, 比如一个客户端, 一个服务端的代码.</p>
+
+<h2>关闭文件</h2>
+
+<p><strong>Ctrl + W</strong> 和几乎所有主流浏览器的关闭窗口快捷键一样, 大量的编辑器也是这个键, 经常用的话就会很自然了.</p>
+
+<h2>查找快捷键</h2>
+
+<p>上面提到的常用快捷键肯定有遗漏, 如果想自己找相关快捷键可以这样操作.</p>
+
+<p>菜单栏 <strong>Window</strong> -> <strong>Preferences</strong>, 在左侧顶部输入<code>Keys</code>, 一般就一个, 可以看到如下界面</p>
+
+<p><img src="http://netwjx.github.com/i/e/keys.png" alt="Keys" /></p>
+
+<p>一般<strong>Scheme</strong>保持<strong>Default</strong>不变, 在<strong>type filter text</strong>输入自己想知道的快捷键锁功能相关的单词, 然后在下面出现的快捷键上找, 并尝试.</p>
+
+<h2>基本通用的编辑快捷键</h2>
+
+<p>这些不限于在Eclipse中使用, 很多地方也可以用这些快捷键, <strong>彻底不了解的可以看, 其他人可无视</strong>.</p>
+
+<ul>
+<li><p><strong>Ctrl + 方向左/方向右</strong></p>
+
+<p>光标向左/右移动一个单词, 中文没有单词可能不适用, 不过在代码中很常用.</p></li>
+<li><p><strong>Shift + 方向左/方向右</strong></p>
+
+<p>向左/右选择一个字符, 可以重复按选择多个.</p></li>
+<li><p><strong>Shift + 方向上/方向下</strong></p>
+
+<p>从当前光标位置向上/下选一行, 可以配合左/右, 重复按来调整选择区域.</p></li>
+<li><p><strong>Ctrl + Shift + 方向左/方向右</strong></p>
+
+<p>向左/右选择一个单词, 可以配合上面提到的细节调整选择区域.</p></li>
+<li><p><strong>Ctrl + 方向上/方向下</strong></p>
+
+<p>滚动条上下滚动, 光标不移动, 一般是一次滚动一行.</p></li>
+<li><p><strong>Home</strong> <strong>End</strong></p>
+
+<p>移动到行首/行末, 配合<strong>Shift</strong>可以变成选择到行首/行末. 有些编辑器能自动检测行首缩进.</p></li>
+<li><p><strong>Page Down</strong> <strong>Page Up</strong></p>
+
+<p>上翻页, 下翻页, 配合<strong>Shift</strong>可以选择上一页/下一页的内容.</p></li>
+<li><p><strong>Ctrl + X/C/V</strong></p>
+
+<p>Windows平台最常用的, 剪贴, 复制, 粘贴.</p></li>
+<li><p><strong>Tab</strong></p>
+
+<p>单独按就是缩进, 根据编辑器的设置, 可能被替换为空格. 配合选中多行, <strong>Tab</strong>可以调整多行的缩进. 配合<strong>Shift</strong>可以反缩进, 即减少缩进, 文本向左移动. 这个不是十分通用, 不过多数编程环境都是这样的.</p></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在Eclipse中的Java开发技巧(2)]]></title>
@@ -3687,280 +3883,6 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>上述这些可能是因为要兼容旧版本做的一些妥协吧.</p>
 
       <p><a href="http://netwjx.github.com/blog/2012/03/25/unlock-google-play-android-market/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress 笔记]]></title>
-    
-      <category term="Octopress" />
-    
-      <category term="Ruby" />
-    
-    <link href="http://netwjx.github.com/blog/2012/03/18/octopress-note/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-03-18T14:43:00+08:00</published>
-    <updated>2012-03-18T14:43:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/03/18/octopress-note</id>
-    <content type="html"><![CDATA[<p>Octopress是一个blog框架, 基于Jekyll, 但是增加了很多方便的脚本, 并提供和github集成.</p>
-
-<p>blog是生成静态页, 配合github-pages可以使用默认的2级域名或者绑定自己的顶级域名使用, 当然也可以部署到自己的服务器上.</p>
-
-<p>这里主要是以我自己的环境来写, 即在Windows下使用Octopress. 因为Win下折腾这个中间出的问题很多.</p>
-
-<!--more -->
-
-
-<h2>安装前提</h2>
-
-<p>Octopress使用ruby编写, 所以需要ruby, Win下使用RubyInstaller</p>
-
-<ul>
-<li><a href="http://rubyinstaller.org">http://rubyinstaller.org</a> 因为神奇的原因我这里无法访问它.</li>
-<li><a href="http://rubyforge.org/projects/rubyinstaller/">http://rubyforge.org/projects/rubyinstaller/</a> 这里可以下载到, 我现在看到的RubyInstaller最高版本是1.9.3-p125</li>
-</ul>
-
-
-<p>上面的网页先别关, 还有一个devkit需要下载, 全称Development Kit, 用途是编译一些ruby中使用的c模块, 常见的比如sqlite</p>
-
-<p>那么下载的文件有</p>
-
-<ul>
-<li>rubyinstaller-1.9.3-p125.exe</li>
-<li>devkit-3.4.5r3-20091110.7z</li>
-</ul>
-
-
-<p>Octopress可以到<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 下载一份zip包, 如果已经有git环境则直接</p>
-
-<pre><code>git clone git://github.com/imathis/octopress.git myoctopress
-</code></pre>
-
-<p>我这里使用git, 那么应该会得到一个文件夹(下面提到将名为myoctopress目录), 内容和<a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a> 上显示的一样</p>
-
-<p>前期准备基本完成, 如果没有git而打算使用git看下段</p>
-
-<h3>没有git, 打算使用git</h3>
-
-<p>Win下使用简单的git是TortoiseGit</p>
-
-<ul>
-<li><a href="http://code.google.com/p/tortoisegit/">http://code.google.com/p/tortoisegit/</a> 因为神奇的原因它可能有时会无法访问</li>
-<li><a href="http://goo.gl/ZpyYx">http://goo.gl/ZpyYx</a> 我在金山快盘的共享, 密码为IYzDsp</li>
-</ul>
-
-
-<p>由于TortoiseGit的后端使用的是Git for Windows <a href="http://code.google.com/p/msysgit/">http://code.google.com/p/msysgit/</a> , 所以下载的文件有</p>
-
-<ul>
-<li>TortoiseGit-1.7.6.0-32bit.msi</li>
-<li>Git-1.7.8-preview20111206.exe</li>
-</ul>
-
-
-<p>版本可能不同, 名字应该都是相似的, 先安装<code>Git-1.7.8-preview20111206.exe</code>, 然后是<code>TortoiseGit-1.7.6.0-32bit.msi</code>, 然后右键菜单中就有TortoiseGit项了.</p>
-
-<p>建议将Git for Windows安装目录的bin目录加入到环境变量Path中, 默认是<code>C:\Program Files\Git\bin</code>, 因为Octopress中会使用系统中的git命令</p>
-
-<h2>安装Ruby</h2>
-
-<p><code>rubyinstaller-1.9.3-p125.exe</code>建议安装到<code>c:\ruby</code>, 因为devkit中的默认配置就是这个路径</p>
-
-<p>确保<code>C:\Ruby\bin</code>在你的环境变量Path中, 下面使用的ruby gem命令都需要</p>
-
-<p>然后是devkit-3.4.5r3-20091110.7z解压到<code>c:\ruby</code>.</p>
-
-<p>如果不是这个路径, 解压之后还需要到<code>devkit\msys\1.0.11\etc\fstab</code>修改文件内容.</p>
-
-<p>如果路径包含空格, 则需要将路径转换成8.3格式短文件名, 方法是<code>dir /-n</code>, 就可以看到8.3格式的</p>
-
-<p>建议将<code>C:\Ruby\devkit\msys\1.0.11\bin</code>也加入到环境变量Path中, 可以避免后续在安装ruby的fsevent模块时出现一个没有找到命令行的错误</p>
-
-<p>可以运行<code>C:\Ruby\devkit\msys\1.0.11\msys.bat</code>看看, 这个是msys的环境, 一个最小的UNIX环境, 类似Cygwin, 但是原理不同, 更快, 更小, 前面Git for Windows也是基于这个.</p>
-
-<p>打开<code>C:\Ruby\lib\ruby\1.9.1\i386-mingw32\rbconfig.rb</code>, 找到62行附近, 查找<code>-Wno-missing-field-initializers</code>, 将其删除, 我这里是复制一份新的修改并注释原来的</p>
-
-<pre><code>#CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-missing-field-initializers -Wno-long-long"
-CONFIG["warnflags"] = "-Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-long-long"
-</code></pre>
-
-<p>这么做可以避免在安装ruby的本地c模块时调用gcc失败的问题, 我遇到的是无法安装RedCloth模块, 可能是devkit里面附带的gcc版本旧, 不支持这个选项吧.</p>
-
-<h3>修改gem的源服务器地址</h3>
-
-<p>因为神奇的原因gem可能会下载任何东西失败, 修改后可解决这个问题</p>
-
-<p>gem是ruby的包管理程序, 类似debian的apt-get</p>
-
-<p>打开命令行</p>
-
-<pre><code>gem sources --remove http://rubygems.org/
-gem sources -a http://ruby.taobao.org/
-gem sources -l
-*** CURRENT SOURCES ***
-
-http://ruby.taobao.org
-</code></pre>
-
-<p>最后一个命令<code>gem sources -l</code>是查看当前的配置, 确保输出和上述的一致</p>
-
-<h2>安装Octopress</h2>
-
-<p>前面那么多准备都是为了这里, 主要参考http://octopress.org/docs/setup/.</p>
-
-<p>下述的命令行工作目录都是在myoctopress目录, 为了方便, 你可以在myoctopress目录创建一个cmd.cmd, 内容是</p>
-
-<pre><code>@start
-</code></pre>
-
-<p>命令行</p>
-
-<pre><code>gem install bundler
-</code></pre>
-
-<p>会需要一会时间, 完成后打开myoctopress目录下的Gemfile, 将<code>source "http://rubygems.org"</code>注释掉, 添加<code>source 'http://ruby.taobao.org/'</code>, 如下</p>
-
-<pre><code>#source "http://rubygems.org"
-source 'http://ruby.taobao.org/'
-</code></pre>
-
-<p>这样可以让bundle不会因为神奇的原因而容易出错, 然后命令行</p>
-
-<pre><code>bundle install
-</code></pre>
-
-<p>这会安装Octopress相关依赖的包, 比前一个命令需要更多的时间, 如果打算使用github的话可以看看下一段.</p>
-
-<p><code>bundle install</code>执行完毕后再</p>
-
-<pre><code>rake install
-</code></pre>
-
-<p>这个会创建好相关的目录结构</p>
-
-<p>接下来是设置如何部署, 参考<a href="http://octopress.org/docs/deploying/">http://octopress.org/docs/deploying/</a>, 我这里使用github</p>
-
-<h3>github上创建代码库</h3>
-
-<p><a href="http://pages.github.com">http://pages.github.com</a> 上有详细的说明, 我使用的是User Pages, 比如我的用户名是netwjx, 那么创建项目 netwjx.github.com</p>
-
-<p>后续还有关于域名绑定什么的就不多说了, 主要是修改CNAME记录和A记录的</p>
-
-<p>创建好之后能看到其git访问的地址, 比如我是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
-
-<p>按照github上的说明将提交用的ssh public key都折腾好, 如果以前用过github最好</p>
-
-<h2>设置部署github</h2>
-
-<p>参考<a href="http://octopress.org/docs/deploying/github/">http://octopress.org/docs/deploying/github/</a> , 命令行</p>
-
-<pre><code>rake setup_github_pages
-</code></pre>
-
-<p>输入git的地址,比如我的是 <code>git@github.com:netwjx/netwjx.github.com.git</code></p>
-
-<p>然后这个命令</p>
-
-<ul>
-<li>会把myoctopress中原来clone时的代码库origin改名为octopress,并将刚刚输入git地址作为origin的代码库地址.</li>
-<li>会把当前分支名称从master改为source</li>
-<li>其它Url的设置还有deploy目录设置等</li>
-</ul>
-
-
-<p>中间需要用到git命令, 所以之前安装Git for Windows后必须将其<code>bin</code>目录加入到Path中</p>
-
-<p>中间可能会在<code>My Octopress Page is coming soon</code>之后出现<code>hellip;</code>不是内部命令之类的错误, 可以不用管, 如果一定不想要出现这个错误可以修改myoctopress目录下的Rakefile, 搜<code>My Octopress Page is coming soon</code>, 在<code>&amp;hellip;</code>前加个<code>^</code>(这个是Windows cmd的转义符), 如下</p>
-
-<pre><code>system "echo 'My Octopress Page is coming soon ^&amp;hellip;' &gt; index.html"
-</code></pre>
-
-<p><code>rake setup_github_pages</code>命令最后出现<code>Now you can deploy to xxxxxxx with `rake deploy`</code>, 就表示成功.</p>
-
-<p>接下来</p>
-
-<pre><code>rake generate
-</code></pre>
-
-<p>将会在myoctopress的public目录中生成静态的文件, 可以使用下面的命令预览</p>
-
-<pre><code>rake preview
-</code></pre>
-
-<p>通过<a href="http://localhost:4000">http://localhost:4000</a>来访问, 现在应该只能看到空白的网站.</p>
-
-<h2>第一篇blog</h2>
-
-<p>参考<a href="http://octopress.org/docs/blogging/">http://octopress.org/docs/blogging/</a></p>
-
-<pre><code>rake new_post["title"]
-</code></pre>
-
-<p>将会在<code>source/_posts</code>目录中创建指定名称的markdown文件, 文件名前面会自动加上年月日. title不能有中文, 因为这个名字会在url中使用, 中文标题可以打开这个markdown文件后自行修改, 刚刚创建的markdown文件内容如下</p>
-
-<pre><code>---
-layout: post
-title: "title"
-date: 2012-03-18
-comments: true
-categories:
----
-</code></pre>
-
-<p>这段除了title改成自己需要的, 别的可以先不管, 详细的见这段开始提到的参考.</p>
-
-<p>如果刚刚没关闭<code>rake preview</code>, 那么现在浏览<a href="http://localhost:4000">http://localhost:4000</a>应该能看到有了新的变化.</p>
-
-<h2>提交到github</h2>
-
-<p>先把<code>rake preview</code>关掉, 命令行</p>
-
-<pre><code>rake deploy
-</code></pre>
-
-<p>如果是直接使用TortoiseGit, 而不是Git for Windows的话, 这里将会因为ssh配置相关而发生错误. 修改配置会另起一篇来说, 这里可以自行使用TortoiseGit来提交.</p>
-
-<p>先说明一下目录的情况</p>
-
-<ul>
-<li><code>myoctopress</code> 是source分支</li>
-<li><code>myoctopress/_deploy</code> 是master分支</li>
-</ul>
-
-
-<p>如果仅仅需要看到网站, 只需要在<code>myoctopress/_deploy</code>目录中用TortoiseGit的<code>Git Sync</code>, Remote Branch选择<code>master</code>, 然后Push即可</p>
-
-<p>如果同时需要将原始的markdown等文件也提交到github, 就是在<code>myoctopress</code>目录做类似的操作.</p>
-
-<p>先在<code>myoctopress</code>目录中把已经修改的文件和<code>source\_posts</code>目录下的新文件都<code>Git Commit -&gt; "source"</code></p>
-
-<p>然后<code>Git Sync</code>, 在Remote Branch选择<code>source</code>, 如果没有这个分支就自己填上, 再Push.</p>
-
-<p>如果Push请确认<code>Git Sync</code>时的Remote URL设置的是<code>origin</code>, 另外一个<code>octopress</code>是Octopress项目的Url, 所以Push会失败, 除非你获得了操作Octopress项目的权限.</p>
-
-<h3>结构说明</h3>
-
-<p>github上的<code>master</code>(网站)和<code>source</code>(原始文件), 与本地的对应分支/目录是平等的关系, 上面提交到github不能理解为从属关系, 了解git的话这个很容易理解.</p>
-
-<p>可以按照需要将<code>myoctopress/_deploy</code> (master分支) 目录放到任何Web服务器(当然会有一些绝对路径有问题)</p>
-
-<p>同样<code>myoctopress</code>(source分支)可以不向github上Push, 而保留在自己本机, 或者Push到U盘等其它备份的地方, 熟悉git的话这是很自然的事.</p>
-
-<h2>还剩下些</h2>
-
-<p>Octopress的文档中github相关都是使用git命令行, 上述的操作在Push时使用的是TortoiseGit,  使用Git for Windows操作github上的代码库以后另起一篇来说.</p>
-
-<p>这些是根据昨天的操作回忆而写的, 所以可能有疏漏和记忆偏差.</p>
-
-<p>Octopress的模版, 评论, 还有其它扩展可以Google, 以后用到也许会写些文章.</p>
-
-<p>Octopress自身的东西在<a href="http://octopress.org/docs/">http://octopress.org/docs/</a>上很全.</p>
-
-<p>我没学过ruby, 上面提及ruby相关的地方很可能概念有错.</p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/03/18/octopress-note/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
