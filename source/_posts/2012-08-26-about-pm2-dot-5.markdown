@@ -1,0 +1,194 @@
+---
+layout: post
+title: "关于PM2.5"
+date: 2012-08-26 14:18
+comments: true
+categories: Live Memo
+---
+
+<link href="/stylesheets/mytable.css" rel="stylesheet" type="text/css"/>
+
+这里整理了一些关于空气质量主要指标PM2.5的相关资料, 主要参考自[科学松鼠会关于PM2.5相关的文章](http://songshuhui.net/archives/tag/pm2-5), 和[雾谷飞鸿关于空气质量的文章](http://blogs.america.gov/mgck/2012/06/12/pm/), 只是将我认为关键点用简短的话列出来.
+
+-   空气污染主要检测可吸入颗粒物, 臭氧, 二氧化碳, 二氧化硫.
+-   颗粒物对人体影响是是最直接和严重的.
+-   小于10微米(下称PM10)的颗粒物就可能被吸入肺, 而小于2.5微米(下称PM2.5)的穿透力更强, 更不易被粘膜吸附或咳嗽排出.
+-   PM10主要来源于机械过程, 包括建筑施工, 道路扬尘和风.
+-   PM2.5主要来源于燃烧, 包括木材, 烟草, 煤炭, 柴油, 汽油.
+-   PM2.5比PM10能够吸附更多的有毒物质, 对呼吸系统和心血管系统危害大于PM10.
+-   PM2.5也极易吸附有机污染物和重金属, 使致癌和基因突变几率明显提高.
+-   所以联合国世界卫生组织(下称WHO)关于**颗粒物空气质量准则(AQG)**依据是PM2.5而不是PM10.
+-   空气污染物检测指标单位是**μg/m^3 **, 即**微克/立方米**.
+-   一般播报的是空气污染指数(API), 其相应的PM2.5浓度见下文的表格.
+-   背景PM2.5浓度在3-5之间, 即没有人为污染, 自然情况下的浓度.
+-   PM2.5浓度高的最明显的表现是**天空变成灰蒙蒙一片**, 空气能见度降低.
+
+
+空气污染指数(API)和PM2.5浓度对应的限值
+--------------------------------------
+
+<table class="mytable">
+    <tr>
+        <td>PM2.5浓度<br/>μg/m<sup>3</sup></td>
+        <td>15</td>
+        <td>40</td>
+        <td>65</td>
+        <td>150</td>
+        <td>250</td>
+        <td>350</td>
+        <td>500</td>
+    </tr>
+    <tr>
+        <td>API</td>
+        <td>50</td>
+        <td>100</td>
+        <td>150</td>
+        <td>200</td>
+        <td>300</td>
+        <td>400</td>
+        <td>500</td>
+    </tr>
+    <tr>
+        <td>国内标准</td>
+        <td style="background:#00e319">优</td>
+        <td style="background:#fefe1f">良</td>
+        <td style="background:#ff7d0a" colspan="2">轻微污染</td>
+        <td style="background:#ff0302">中度污染 API&lt;250</td>
+        <td style="background:#7d0122" colspan="2">重度污染 大于250</td>
+    </tr>
+    <tr>
+        <td>美国标准</td>
+        <td style="background:#00e319">良好</td>
+        <td style="background:#fefe1f">中等</td>
+        <td style="background:#ff7d0a">对敏感人群不健康</td>
+        <td style="background:#ff0302">不健康</td>
+        <td style="background:#98024b">非常不健康</td>
+        <td style="background:#7d0122" colspan="2">有毒害</td>
+    </tr>
+    <tr>
+        <td>香港标准</td>
+        <td style="background:#00e319">轻微 API&lt;25<br/>中等 API&lt;50</td>
+        <td style="background:#fefe1f">偏高</td>
+        <td style="background:#ff0302" colspan="2">甚高</td>
+        <td style="background:#7d0122" colspan="3">严重</td>
+    </tr>
+    <tr>
+        <td>加拿大标准</td>
+        <td style="background:#00e319">良好 API&lt;25<br/>中等 API&lt;50</td>
+        <td style="background:#fefe1f">较差</td>
+        <td style="background:#7d0122" colspan="5">极差</td>
+    </tr>
+</table>
+
+例如: PM2.5在15到40之间, 那么API就在50到100之间, 按照国内标准评级的话, 就是良.
+
+
+WHO关于颗粒物空气质量准则和过渡期目标
+-------------------------------------
+
+由于优先选择PM2.5, 所以PM10的就不列出来了, 想看可以看开头参考的文章.
+
+<table class="mytable">
+    <tr>
+        <th>&nbsp;</th>
+        <th>PM2.5 μg/m<sup>3</sup> 年均</th>
+        <th>PM2.5 μg/m<sup>3</sup> 日均</th>
+    </tr>
+    <tr>
+        <td>过渡期-1</td>
+        <td>35</td>
+        <td>75</td>
+    </tr>
+    <tr>
+        <td>过渡期-2</td>
+        <td>25</td>
+        <td>50</td>
+    </tr>
+    <tr>
+        <td>过渡期-3</td>
+        <td>15</td>
+        <td>37.5</td>
+    </tr>
+    <tr>
+        <td>准则(AQG)</td>
+        <td>10</td>
+        <td>25</td>
+    </tr>
+</table>
+
+
+一张图片
+--------
+
+2001-2006年卫星图片显示的全球PM2.5均值
+
+{% img http://songshuhui.net/wp-content/uploads/2011/08/483910main1_Global-PM2.5-map-670-600x300.jpg 618 309 2001-2006年卫星图片显示的全球PM2.5均值 %}
+
+上图来自 [New Map Offers a Global View of Health-Sapping Air Pollution](http://www.nasa.gov/topics/earth/features/health-sapping.html)
+
+国内尚没有执行WHO的颗粒物空气质量准则和过渡期目标(拟于2016年实施过渡期-1的目标), 但是北京和东 南沿海各个省份已经在发布PM2.5空气质量指数, 可以自行找当地的环保部门网站查看.
+
+智能手机可以找找有没有当地的空气质量报告软件, 有些地方性的手机软件有PM2.5的指数, 比如我现在用的是[全国空气质量](https://play.google.com/store/apps/details?id=com.cas.airquality).
+
+
+关于防护
+--------
+
+颗粒物分类, 包括PM2.5和PM10
+
+-   非油性颗粒物, 一般记作N, 典型的有水泥粉尘.
+-   油性颗粒物, 一般记作P, 典型的有厨房油烟, 汽车尾气, 沥青烟雾.
+
+避免接触为上策, 没办法的时候只能先用口罩.
+
+无论国内还是国外检测口罩防护效果使用的都是氯化钠气溶胶和石蜡油, 其粒径在0.02-2微米到之间, 捕获率是按照最小计算, 而不是平均值, 所以可以理解为对PM2.5的防护能力.
+
+NiOSH标准, 测试空气流量：85L/分钟
+
+<table class="mytable">
+    <tr>
+        <th>等级</th>
+        <th>捕获率</th>
+    </tr>
+    <tr>
+        <td>N95 R95 P95</td>
+        <td>≥95%</td>
+    </tr>
+    <tr>
+        <td>N99 R99 P99</td>
+        <td>≥99%</td>
+    </tr>
+    <tr>
+        <td>N100 R100 P100</td>
+        <td>≥99.97%</td>
+    </tr>
+</table>
+
+-   N针对非油性颗粒物.
+-   R和P针对油性和非油性颗粒物.
+-   R用于油性颗粒物防护使用时间不能超过8小时.
+-   P的使用时间遵循制造商的建议.
+
+中国GB2626-2006标准, 测试空气流量：85L/分钟
+
+<table class="mytable">
+    <tr>
+        <th>等级</th>
+        <th>捕获率</th>
+    </tr>
+    <tr>
+        <td>KN90 KP90</td>
+        <td>≥90%</td>
+    </tr>
+    <tr>
+        <td>KN95 KP95</td>
+        <td>≥95%</td>
+    </tr>
+    <tr>
+        <td>KN100 KP100</td>
+        <td>≥99.97%</td>
+    </tr>
+</table>
+
+-   KN针对非油性颗粒物.
+-   KP针对油性颗粒物.
