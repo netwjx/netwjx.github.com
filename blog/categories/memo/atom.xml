@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-19T17:26:42+08:00</updated>
+  <updated>2012-08-26T20:13:04+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,219 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[关于PM2.5]]></title>
+    
+      <category term="Live" />
+    
+      <category term="Memo" />
+    
+    <link href="http://netwjx.github.com/blog/2012/08/26/about-pm2-dot-5/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-08-26T14:18:00+08:00</published>
+    <updated>2012-08-26T14:18:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/08/26/about-pm2-dot-5</id>
+    <content type="html"><![CDATA[<p><link href="http://netwjx.github.com/stylesheets/mytable.css" rel="stylesheet" type="text/css"/></p>
+
+<p>这里整理了一些关于空气质量主要指标PM2.5的相关资料, 主要参考自<a href="http://songshuhui.net/archives/tag/pm2-5">科学松鼠会关于PM2.5相关的文章</a>, 和<a href="http://blogs.america.gov/mgck/2012/06/12/pm/">雾谷飞鸿关于空气质量的文章</a>, 只是将我认为关键点用简短的话列出来.</p>
+
+<ul>
+<li>空气污染主要检测可吸入颗粒物, 臭氧, 二氧化碳, 二氧化硫.</li>
+<li>颗粒物对人体影响是是最直接和严重的.</li>
+<li>小于10微米(下称PM10)的颗粒物就可能被吸入肺, 而小于2.5微米(下称PM2.5)的穿透力更强, 更不易被粘膜吸附或咳嗽排出.</li>
+<li>PM10主要来源于机械过程, 包括建筑施工, 道路扬尘和风.</li>
+<li>PM2.5主要来源于燃烧, 包括木材, 烟草, 煤炭, 柴油, 汽油.</li>
+<li>PM2.5比PM10能够吸附更多的有毒物质, 对呼吸系统和心血管系统危害大于PM10.</li>
+<li>PM2.5也极易吸附有机污染物和重金属, 使致癌和基因突变几率明显提高.</li>
+<li>所以联合国世界卫生组织(下称WHO)关于<strong>颗粒物空气质量准则(AQG)</strong>依据是PM2.5而不是PM10.</li>
+<li>空气污染物检测指标单位是<strong>μg/m<sup>3</sup> </strong>, 即<strong>微克/立方米</strong>.</li>
+<li>一般播报的是空气污染指数(API), 其相应的PM2.5浓度见下文的表格.</li>
+<li>背景PM2.5浓度在3-5之间, 即没有人为污染, 自然情况下的浓度.</li>
+<li>PM2.5浓度高的最明显的表现是<strong>天空变成灰蒙蒙一片</strong>, 空气能见度降低.</li>
+</ul>
+
+
+<h2>空气污染指数(API)和PM2.5浓度对应的限值</h2>
+
+<table class="mytable">
+    <tr>
+        <td>PM2.5浓度<br/>μg/m<sup>3</sup></td>
+        <td>15</td>
+        <td>40</td>
+        <td>65</td>
+        <td>150</td>
+        <td>250</td>
+        <td>350</td>
+        <td>500</td>
+    </tr>
+    <tr>
+        <td>API</td>
+        <td>50</td>
+        <td>100</td>
+        <td>150</td>
+        <td>200</td>
+        <td>300</td>
+        <td>400</td>
+        <td>500</td>
+    </tr>
+    <tr>
+        <td>国内标准</td>
+        <td style="background:#00e319">优</td>
+        <td style="background:#fefe1f">良</td>
+        <td style="background:#ff7d0a" colspan="2">轻微污染</td>
+        <td style="background:#ff0302">中度污染 API&lt;250</td>
+        <td style="background:#7d0122" colspan="2">重度污染 大于250</td>
+    </tr>
+    <tr>
+        <td>美国标准</td>
+        <td style="background:#00e319">良好</td>
+        <td style="background:#fefe1f">中等</td>
+        <td style="background:#ff7d0a">对敏感人群不健康</td>
+        <td style="background:#ff0302">不健康</td>
+        <td style="background:#98024b">非常不健康</td>
+        <td style="background:#7d0122" colspan="2">有毒害</td>
+    </tr>
+    <tr>
+        <td>香港标准</td>
+        <td style="background:#00e319">轻微 API&lt;25<br/>中等 API&lt;50</td>
+        <td style="background:#fefe1f">偏高</td>
+        <td style="background:#ff0302" colspan="2">甚高</td>
+        <td style="background:#7d0122" colspan="3">严重</td>
+    </tr>
+    <tr>
+        <td>加拿大标准</td>
+        <td style="background:#00e319">良好 API&lt;25<br/>中等 API&lt;50</td>
+        <td style="background:#fefe1f">较差</td>
+        <td style="background:#7d0122" colspan="5">极差</td>
+    </tr>
+</table>
+
+
+<p>例如: PM2.5在15到40之间, 那么API就在50到100之间, 按照国内标准评级的话, 就是良.</p>
+
+<h2>WHO关于颗粒物空气质量准则和过渡期目标</h2>
+
+<p>由于优先选择PM2.5, 所以PM10的就不列出来了, 想看可以看开头参考的文章.</p>
+
+<table class="mytable">
+    <tr>
+        <th>&nbsp;</th>
+        <th>PM2.5 μg/m<sup>3</sup> 年均</th>
+        <th>PM2.5 μg/m<sup>3</sup> 日均</th>
+    </tr>
+    <tr>
+        <td>过渡期-1</td>
+        <td>35</td>
+        <td>75</td>
+    </tr>
+    <tr>
+        <td>过渡期-2</td>
+        <td>25</td>
+        <td>50</td>
+    </tr>
+    <tr>
+        <td>过渡期-3</td>
+        <td>15</td>
+        <td>37.5</td>
+    </tr>
+    <tr>
+        <td>准则(AQG)</td>
+        <td>10</td>
+        <td>25</td>
+    </tr>
+</table>
+
+
+<h2>一张图片</h2>
+
+<p>2001-2006年卫星图片显示的全球PM2.5均值</p>
+
+<p><img src="http://songshuhui.net/wp-content/uploads/2011/08/483910main1_Global-PM2.5-map-670-600x300.jpg" width="618" height="309" title="2001-2006年卫星图片显示的全球PM2.5均值" ></p>
+
+<p>上图来自 <a href="http://www.nasa.gov/topics/earth/features/health-sapping.html">New Map Offers a Global View of Health-Sapping Air Pollution</a></p>
+
+<p>国内尚没有执行WHO的颗粒物空气质量准则和过渡期目标(拟于2016年实施过渡期-1的目标), 但是北京和东 南沿海各个省份已经在发布PM2.5空气质量指数, 可以自行找当地的环保部门网站查看.</p>
+
+<p>智能手机可以找找有没有当地的空气质量报告软件, 有些地方性的手机软件有PM2.5的指数, 比如我现在用的是<a href="https://play.google.com/store/apps/details?id=com.cas.airquality">全国空气质量</a>.</p>
+
+<h2>关于防护</h2>
+
+<p>颗粒物分类, 包括PM2.5和PM10</p>
+
+<ul>
+<li>非油性颗粒物, 一般记作N, 典型的有水泥粉尘.</li>
+<li>油性颗粒物, 一般记作P, 典型的有厨房油烟, 汽车尾气, 沥青烟雾.</li>
+</ul>
+
+
+<p>避免接触为上策, 没办法的时候只能先用口罩.</p>
+
+<p>无论国内还是国外检测口罩防护效果使用的都是氯化钠气溶胶和石蜡油, 其粒径在0.02-2微米到之间, 捕获率是按照最小计算, 而不是平均值, 所以可以理解为对PM2.5的防护能力.</p>
+
+<p>NiOSH标准, 测试空气流量：85L/分钟</p>
+
+<table class="mytable">
+    <tr>
+        <th>等级</th>
+        <th>捕获率</th>
+    </tr>
+    <tr>
+        <td>N95 R95 P95</td>
+        <td>≥95%</td>
+    </tr>
+    <tr>
+        <td>N99 R99 P99</td>
+        <td>≥99%</td>
+    </tr>
+    <tr>
+        <td>N100 R100 P100</td>
+        <td>≥99.97%</td>
+    </tr>
+</table>
+
+
+<ul>
+<li>N针对非油性颗粒物.</li>
+<li>R和P针对油性和非油性颗粒物.</li>
+<li>R用于油性颗粒物防护使用时间不能超过8小时.</li>
+<li>P的使用时间遵循制造商的建议.</li>
+</ul>
+
+
+<p>中国GB2626-2006标准, 测试空气流量：85L/分钟</p>
+
+<table class="mytable">
+    <tr>
+        <th>等级</th>
+        <th>捕获率</th>
+    </tr>
+    <tr>
+        <td>KN90 KP90</td>
+        <td>≥90%</td>
+    </tr>
+    <tr>
+        <td>KN95 KP95</td>
+        <td>≥95%</td>
+    </tr>
+    <tr>
+        <td>KN100 KP100</td>
+        <td>≥99.97%</td>
+    </tr>
+</table>
+
+
+<ul>
+<li>KN针对非油性颗粒物.</li>
+<li>KP针对油性颗粒物.</li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/08/26/about-pm2-dot-5/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[移动电源备忘]]></title>

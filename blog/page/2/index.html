@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="在涉及Web前端开发时, 有时会遇到\uXXXX格式表示的字符, 其中XXXX是16进制数字的字符串表示形式, 在js中这个叫Unicode转义字符, 和\n \r同属于转义字符. 在其他语言中也有类似的, 可能还有其它变形的格式. 多数时候遇到需要解码的情况多点, 所以会先介绍解码decode &hellip;"/>
+  <meta name="description" content="平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性. 棉 棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水. &hellip;"/>
   
   
 
@@ -66,6 +66,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/15/garment-fabric-knowledge/">服装布料常识</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-15T11:39:00+08:00" pubdate data-updated="true">2012-07-15</time>
+        
+         | <a href="/blog/2012/07/15/garment-fabric-knowledge/#comments">评论</a><a href="/blog/2012/07/15/garment-fabric-knowledge/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性.</p>
+
+<h2>棉</h2>
+
+<p>棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水.</p>
+
+<p>一般洗多次之后表面会起毛, 根据材料和织法, 轻重程度不同.</p>
+
+<p>容易染色, 白色的不能和褪色的衣物一起洗, 有些衣服图案使用的印染技术不好图案会花, 发粘, 我说的是在以纯买的一件.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/15/garment-fabric-knowledge/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/07/15/garment-fabric-knowledge/#comments">评论</a><a href="/blog/2012/07/15/garment-fabric-knowledge/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -444,92 +498,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-29T14:26:00+08:00" pubdate data-updated="true">2012-04-29</time>
-        
-         | <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">评论</a><a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>WinForms 开发中<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>是用于非UI线程中请求修改UI元素的方法, 一般配合<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>使用:</p>
-
-<figure class='code'><figcaption><span>Control.Invoke and Control.InvokeRequired</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Form1</span> <span class="p">:</span> <span class="n">Form</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">private</span> <span class="k">void</span> <span class="nf">Foo</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">InvokeRequired</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">Invoke</span><span class="p">((</span><span class="n">Action</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;)</span><span class="n">Foo</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">else</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">textBox1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">text</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>类似<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>的还有<a href="http://msdn.microsoft.com/zh-cn/library/0b1bf3y3.aspx">Control.BeginInvoke</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.endinvoke.aspx">Control.EndInvoke</a>, 它们是异步调用.</p>
-
-<p>这些方法和属性都依赖于<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>时, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>表示窗口句柄是否已创建, 它并不是指是否<code>new Form1()</code>过, 而是指是否<code>Show()</code>过, 包括<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.show.aspx">Show</a>, <a href="http://msdn.microsoft.com/zh-cn/library/c7ykbedk.aspx">ShowDialog</a>这些调用都会使<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>.</p>
-
-<p>而在<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>false</code>时, 比如刚刚<code>new Form1()</code>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>返回<code>false</code>, 调用<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>会抛出异常:</p>
-
-<pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
-</code></pre>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">评论</a><a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; 上一页</a>
@@ -545,6 +513,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a>
@@ -600,10 +572,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a>
       </li>
     
   </ul>
