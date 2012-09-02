@@ -9,6 +9,7 @@ categories: Javascript Bookmarklet
 变更日志
 --------
 
+-   2012-09-01 **Catch.com新版本已经可以批量删除了, 不再需要这个工具了**
 -   2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器
 
 --------
