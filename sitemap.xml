@@ -116,7 +116,7 @@
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/</loc>
-        <lastmod>2012-08-12T14:02:11+08:00</lastmod>
+        <lastmod>2012-09-01T11:52:03+08:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -140,7 +140,13 @@
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/2012/08/26/about-pm2-dot-5/</loc>
-        <lastmod>2012-08-26T20:09:15+08:00</lastmod>
+        <lastmod>2012-09-02T15:28:13+08:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/</loc>
+        <lastmod>2012-09-02T15:28:36+08:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -152,13 +158,13 @@
     </url>
     <url>
         <loc>http://netwjx.github.com/blog/archives/</loc>
-        <lastmod>2012-08-26T20:09:15+08:00</lastmod>
+        <lastmod>2012-09-02T15:28:36+08:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>http://netwjx.github.com/</loc>
-        <lastmod>2012-08-26T20:09:15+08:00</lastmod>
+        <lastmod>2012-09-02T15:28:36+08:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>

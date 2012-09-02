@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="WinForms 开发中Control.Invoke是用于非UI线程中请求修改UI元素的方法, 一般配合Control.InvokeRequired使用: Control.Invoke and Control.InvokeRequired1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11&#10;12&#10;13 &hellip;"/>
+  <meta name="description" content="之前发现Octopress产生的页面中, meta标签的content属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点. 插件代码如下 plugins/html_attr_filter.rb1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7 &hellip;"/>
   
   
 
@@ -66,6 +66,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-06T15:57:00+08:00" pubdate data-updated="true">2012-05-06</time>
+        
+         | <a href="/blog/2012/05/06/ruby-and-jekyll-note/#comments">评论</a><a href="/blog/2012/05/06/ruby-and-jekyll-note/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前发现<a href="http://octopress.org/">Octopress</a>产生的页面中, <strong>meta</strong>标签的<strong>content</strong>属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点.</p>
+
+<p>插件代码如下</p>
+
+<figure class='code'><figcaption><span>plugins/html_attr_filter.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># coding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#html attribute filter</span>
+</span><span class='line'><span class="k">module</span> <span class="nn">HtmlAttrFilters</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">html_attr</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">input</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\r\n|\r|\n/</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#13;&amp;#10;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#13;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#10;&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="o">.</span><span class="n">register_filter</span> <span class="no">HtmlAttrFilters</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
+
+<figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/05/06/ruby-and-jekyll-note/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/05/06/ruby-and-jekyll-note/#comments">评论</a><a href="/blog/2012/05/06/ruby-and-jekyll-note/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -426,62 +506,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/25/unlock-google-play-android-market/">Google Play/Android Market 解锁</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-25T22:09:00+08:00" pubdate data-updated="true">2012-03-25</time>
-        
-         | <a href="/blog/2012/03/25/unlock-google-play-android-market/#comments">评论</a><a href="/blog/2012/03/25/unlock-google-play-android-market/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Android Market刚改名叫Google Play不久,不明白为什么改成这个名字,难道Play后面还有Game?</p>
-
-<p>说说标题上的事,如果使用浏览器查找应用,应用是免费的,但是安装哪里会提示&#8221;此商品无法在您设备所在的国家/地区安装&#8221;.</p>
-
-<p>在Google帐号设置里面怎么改都没作用.</p>
-
-<p>而用手机搜索,要么搜不到,要么搜到了点安装仍旧是上面的提示.</p>
-
-<p>上面提示的依据只依据一个 <strong>手机卡的网络运营商</strong>.</p>
-
-<p>搜到一些解决办法是使用Market Enabler,但是我尝试的结果是没作用,应该是升级到了Google Play以前的方法失效了.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/03/25/unlock-google-play-android-market/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/03/25/unlock-google-play-android-market/#comments">评论</a><a href="/blog/2012/03/25/unlock-google-play-android-market/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; 上一页</a>
@@ -497,6 +521,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a>
@@ -552,10 +580,6 @@
     
       <li class="post">
         <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
       </li>
     
   </ul>

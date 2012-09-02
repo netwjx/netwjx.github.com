@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Javascript | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-26T20:13:04+08:00</updated>
+  <updated>2012-09-02T15:33:02+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -33,6 +33,7 @@
     <content type="html"><![CDATA[<h2>变更日志</h2>
 
 <ul>
+<li>2012-09-01 <strong>Catch.com新版本已经可以批量删除了, 不再需要这个工具了</strong></li>
 <li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
 </ul>
 

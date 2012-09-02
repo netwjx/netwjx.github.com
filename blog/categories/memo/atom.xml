@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-26T20:13:04+08:00</updated>
+  <updated>2012-09-02T15:33:02+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -48,6 +48,9 @@
 <li>背景PM2.5浓度在3-5之间, 即没有人为污染, 自然情况下的浓度.</li>
 <li>PM2.5浓度高的最明显的表现是<strong>天空变成灰蒙蒙一片</strong>, 空气能见度降低.</li>
 </ul>
+
+
+<!-- more -->
 
 
 <h2>空气污染指数(API)和PM2.5浓度对应的限值</h2>

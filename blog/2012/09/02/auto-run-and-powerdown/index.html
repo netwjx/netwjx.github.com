@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>自动运行和关机批处理 - netwjx 混乱与有序</title>
+  <meta name="author" content="netwjx"/>
+  
+  <meta name="description" content="之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能. 使用方式: 复制下来用记事本保存为bat文件, 可以放桌面.&#10;自动关机 双点批处理, &hellip;"/>
+  
+  <meta name="keywords" content="Bat, Cmd, Command, Shell, Windows"/>
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True"/>
+  <meta name="MobileOptimized" content="320"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/"/>
+  <link href="/favicon.png" rel="icon"/>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"/>
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="netwjx" type="application/atom+xml"/>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">netwjx</a></h1>
+  
+    <h2>混乱与有序</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="订阅Feed">Feed</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:netwjx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="搜索"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/categories/">分类</a></li>
+  <li><a href="/blog/archives">存档</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">自动运行和关机批处理</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-02T13:43:00+08:00" pubdate data-updated="true">2012-09-02</time>
+        
+         | <a href="#comments">评论</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能.</p>
+
+<p>使用方式:</p>
+
+<ul>
+<li>复制下来用记事本保存为bat文件, 可以放桌面.</li>
+<li><p>自动关机</p>
+
+<p>双点批处理, 按照提示输入要等待的分钟数, 可以输入<code>3*60+15</code>这样的数学表达式, 只能是整数, 确定后就会在指定时间之后关机.</p></li>
+<li><p>自动运行程序</p>
+
+<p>将打算自动运行的程序或快捷方式拖到这个批处理文件上, 然后会出现和自动关机相似的提示, 一样的输入, 确定后不要关闭, 时间到之后会自动运行这个程序并关闭自身.</p>
+
+<p>命令行下也可以, 第一个参数是要运行的程序, 后续的是要运行程序的参数. 然后按照提示信息来, 和上面的一样.</p></li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>代码部分:</p>
+
+<figure class='code'><figcaption><span>Auto-Powerdown.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'><span class="p">@</span><span class="k">echo</span> <span class="k">off</span>
+</span><span class='line'><span class="k">if</span> <span class="s2">&quot;%1&quot;</span><span class="o">==</span><span class="s2">&quot;&quot;</span> (<span class="k">goto</span> <span class="nl">POWERDOWN</span>) <span class="k">else</span> <span class="k">goto</span> <span class="nl">RUN</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:POWERDOWN</span>
+</span><span class='line'>title 自动关机
+</span><span class='line'>shutdown <span class="n">/a</span> <span class="m">2</span><span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">if</span> not <span class="k">errorlevel</span> <span class="m">1</span> (
+</span><span class='line'>    <span class="k">echo</span> 已取消上次设置的自动关机
+</span><span class='line'>    <span class="k">echo</span>.
+</span><span class='line'>)
+</span><span class='line'><span class="k">echo</span> 请输入多久之后关闭计算机?
+</span><span class='line'><span class="k">goto</span> <span class="nl">INPUT</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:POWERDOWN1</span>
+</span><span class='line'><span class="k">echo</span> 现在时间: <span class="nv">%date%</span> <span class="nv">%time%</span><span class="p">,</span> 将在<span class="nv">%mins%</span>分钟后关闭计算机.
+</span><span class='line'><span class="k">set</span> <span class="n">/a</span> mins<span class="o">=</span><span class="nv">%mins%</span>*<span class="m">60</span>
+</span><span class='line'>shutdown <span class="n">/s</span> <span class="n">/t</span> <span class="nv">%mins%</span> <span class="p">&gt;</span><span class="n">nul</span> <span class="m">2</span>&gt;&amp;<span class="m">1</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 成功<span class="p">,</span> 任意键关闭窗口<span class="p">,</span> 取消自动关机请重新双点 <span class="nv">%~nx0</span>.
+</span><span class='line'><span class="k">pause</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">goto</span> <span class="nl">:EOF</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:RUN</span>
+</span><span class='line'>title <span class="nv">%~n1</span> 自动运行
+</span><span class='line'><span class="k">echo</span> 请输入多久之后运行程序
+</span><span class='line'><span class="k">echo</span>   <span class="nv">%1</span>
+</span><span class='line'><span class="k">goto</span> <span class="nl">INPUT</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:RUN1</span>
+</span><span class='line'><span class="k">echo</span> 现在时间: <span class="nv">%date%</span> <span class="nv">%time%</span><span class="p">,</span> 将在<span class="nv">%mins%</span>分钟后运行程序 <span class="nv">%~nx1</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 等待中<span class="p">,</span> 请不要关闭当前窗口<span class="p">,</span> 取消自动运行请直接关闭当前窗口.
+</span><span class='line'><span class="k">set</span> <span class="n">/a</span> mins<span class="o">=</span><span class="nv">%mins%</span>*<span class="m">60</span>+<span class="m">1</span>
+</span><span class='line'>ping -l <span class="m">0</span> -n <span class="nv">%mins%</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 运行程序 <span class="nv">%1</span>
+</span><span class='line'>start <span class="s2">&quot;&quot;</span> <span class="s2">&quot;%1&quot;</span> <span class="s2">&quot;%2&quot;</span> <span class="s2">&quot;%3&quot;</span> <span class="s2">&quot;%4&quot;</span> <span class="s2">&quot;%5&quot;</span> <span class="s2">&quot;%6&quot;</span> <span class="s2">&quot;%7&quot;</span> <span class="s2">&quot;%8&quot;</span> <span class="s2">&quot;%9&quot;</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 成功<span class="p">,</span> <span class="m">10</span>秒后自动关闭.
+</span><span class='line'>ping -l <span class="m">0</span> -n <span class="m">10</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">goto</span> <span class="nl">:EOF</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:INPUT</span>
+</span><span class='line'><span class="k">echo</span> 单位:分钟<span class="p">,</span> 例如: <span class="m">3</span>*<span class="m">60</span>+<span class="m">15</span> 表示<span class="m">3</span>小时<span class="m">15</span>分钟后
+</span><span class='line'><span class="k">set</span> <span class="n">/p</span> str<span class="o">=</span>:
+</span><span class='line'><span class="k">if</span> not <span class="k">defined</span> str <span class="k">goto</span> <span class="nl">INPUTERROR</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="n">/a</span> mins<span class="o">=</span><span class="nv">%str%</span>
+</span><span class='line'><span class="k">if</span> <span class="nv">%mins%</span> <span class="o">LEQ</span> <span class="m">0</span> <span class="k">goto</span> <span class="nl">INPUTERROR</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="s2">&quot;%1&quot;</span><span class="o">==</span><span class="s2">&quot;&quot;</span> (<span class="k">goto</span> <span class="nl">POWERDOWN1</span>) <span class="k">else</span> <span class="k">goto</span> <span class="nl">RUN1</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:INPUTERROR</span>
+</span><span class='line'><span class="k">echo</span> 请输入有效的数字<span class="p">,</span> 任意键继续<span class="p">,</span> 退出请直接关闭.
+</span><span class='line'><span class="k">pause</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">goto</span> <span class="nl">INPUT</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><a href="/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">netwjx</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-02T13:43:00+08:00" pubdate data-updated="true">2012-09-02</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bat/'>Bat</a>, <a class='category' href='/blog/categories/cmd/'>Cmd</a>, <a class='category' href='/blog/categories/command/'>Command</a>, <a class='category' href='/blog/categories/shell/'>Shell</a>, <a class='category' href='/blog/categories/windows/'>Windows</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  <div id="jiathis_box">
+    <div id="jiathis_style_32x32">
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_kaixin001"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+  </div>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/26/about-pm2-dot-5/" title="Previous Post: 关于PM2.5">&laquo; 关于PM2.5</a>
+      
+      
+    </p>
+
+  </footer>
+</article>
+
+  <section>
+    <h1><a name="comments"></a>评论</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>近期日志</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">批量删除Catch.com笔记的小工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/19/portable-power-memo/">移动电源备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/15/garment-fabric-knowledge/">服装布料常识</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/01/blackberry-memo/">黑莓使用备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+    <h1 class="dsq-widget-title">近期评论</h1>
+	<div id="recentcomments" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+    <h1 class="dsq-widget-title">热门话题</h1>
+	<div id="popularthreads" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=10"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+
+
+
+
+<section>
+	<h1>我的书签</h1>
+	<div id="delicious"></div>
+	<script type="text/javascript">
+        $(window).on('load',function(){
+            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=10&sort=date&callback=renderDeliciousLinks').appendTo('head');
+        });
+	</script>
+	<a href="http://d.me/netwjx">我的书签 &raquo;</a>
+</section>
+
+
+
+<section>
+  <h1>许可</h1>
+  <div id="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/2.5/cn/88x31.png" /></a><br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/">知识共享署名-相同方式共享 2.5</a></div>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - netwjx -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'netwjxblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

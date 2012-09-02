@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-26T20:13:04+08:00</updated>
+  <updated>2012-09-02T15:33:02+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,182 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[自动运行和关机批处理]]></title>
+    
+      <category term="Bat" />
+    
+      <category term="Cmd" />
+    
+      <category term="Command" />
+    
+      <category term="Shell" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-09-02T13:43:00+08:00</published>
+    <updated>2012-09-02T13:43:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown</id>
+    <content type="html"><![CDATA[<p>之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能.</p>
+
+<p>使用方式:</p>
+
+<ul>
+<li>复制下来用记事本保存为bat文件, 可以放桌面.</li>
+<li><p>自动关机</p>
+
+<p>双点批处理, 按照提示输入要等待的分钟数, 可以输入<code>3*60+15</code>这样的数学表达式, 只能是整数, 确定后就会在指定时间之后关机.</p></li>
+<li><p>自动运行程序</p>
+
+<p>将打算自动运行的程序或快捷方式拖到这个批处理文件上, 然后会出现和自动关机相似的提示, 一样的输入, 确定后不要关闭, 时间到之后会自动运行这个程序并关闭自身.</p>
+
+<p>命令行下也可以, 第一个参数是要运行的程序, 后续的是要运行程序的参数. 然后按照提示信息来, 和上面的一样.</p></li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>代码部分:</p>
+
+<figure class='code'><figcaption><span>Auto-Powerdown.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'><span class="p">@</span><span class="k">echo</span> <span class="k">off</span>
+</span><span class='line'><span class="k">if</span> <span class="s2">&quot;%1&quot;</span><span class="o">==</span><span class="s2">&quot;&quot;</span> (<span class="k">goto</span> <span class="nl">POWERDOWN</span>) <span class="k">else</span> <span class="k">goto</span> <span class="nl">RUN</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:POWERDOWN</span>
+</span><span class='line'>title 自动关机
+</span><span class='line'>shutdown <span class="n">/a</span> <span class="m">2</span><span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">if</span> not <span class="k">errorlevel</span> <span class="m">1</span> (
+</span><span class='line'>    <span class="k">echo</span> 已取消上次设置的自动关机
+</span><span class='line'>    <span class="k">echo</span>.
+</span><span class='line'>)
+</span><span class='line'><span class="k">echo</span> 请输入多久之后关闭计算机?
+</span><span class='line'><span class="k">goto</span> <span class="nl">INPUT</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:POWERDOWN1</span>
+</span><span class='line'><span class="k">echo</span> 现在时间: <span class="nv">%date%</span> <span class="nv">%time%</span><span class="p">,</span> 将在<span class="nv">%mins%</span>分钟后关闭计算机.
+</span><span class='line'><span class="k">set</span> <span class="n">/a</span> mins<span class="o">=</span><span class="nv">%mins%</span>*<span class="m">60</span>
+</span><span class='line'>shutdown <span class="n">/s</span> <span class="n">/t</span> <span class="nv">%mins%</span> <span class="p">&gt;</span><span class="n">nul</span> <span class="m">2</span>&gt;&amp;<span class="m">1</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 成功<span class="p">,</span> 任意键关闭窗口<span class="p">,</span> 取消自动关机请重新双点 <span class="nv">%~nx0</span>.
+</span><span class='line'><span class="k">pause</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">goto</span> <span class="nl">:EOF</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:RUN</span>
+</span><span class='line'>title <span class="nv">%~n1</span> 自动运行
+</span><span class='line'><span class="k">echo</span> 请输入多久之后运行程序
+</span><span class='line'><span class="k">echo</span>   <span class="nv">%1</span>
+</span><span class='line'><span class="k">goto</span> <span class="nl">INPUT</span>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:RUN1</span>
+</span><span class='line'><span class="k">echo</span> 现在时间: <span class="nv">%date%</span> <span class="nv">%time%</span><span class="p">,</span> 将在<span class="nv">%mins%</span>分钟后运行程序 <span class="nv">%~nx1</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 等待中<span class="p">,</span> 请不要关闭当前窗口<span class="p">,</span> 取消自动运行请直接关闭当前窗口.
+</span><span class='line'><span class="k">set</span> <span class="n">/a</span> mins<span class="o">=</span><span class="nv">%mins%</span>*<span class="m">60</span>+<span class="m">1</span>
+</span><span class='line'>ping -l <span class="m">0</span> -n <span class="nv">%mins%</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 运行程序 <span class="nv">%1</span>
+</span><span class='line'>start <span class="s2">&quot;&quot;</span> <span class="s2">&quot;%1&quot;</span> <span class="s2">&quot;%2&quot;</span> <span class="s2">&quot;%3&quot;</span> <span class="s2">&quot;%4&quot;</span> <span class="s2">&quot;%5&quot;</span> <span class="s2">&quot;%6&quot;</span> <span class="s2">&quot;%7&quot;</span> <span class="s2">&quot;%8&quot;</span> <span class="s2">&quot;%9&quot;</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">echo</span> 成功<span class="p">,</span> <span class="m">10</span>秒后自动关闭.
+</span><span class='line'>ping -l <span class="m">0</span> -n <span class="m">10</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">goto</span> <span class="nl">:EOF</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:INPUT</span>
+</span><span class='line'><span class="k">echo</span> 单位:分钟<span class="p">,</span> 例如: <span class="m">3</span>*<span class="m">60</span>+<span class="m">15</span> 表示<span class="m">3</span>小时<span class="m">15</span>分钟后
+</span><span class='line'><span class="k">set</span> <span class="n">/p</span> str<span class="o">=</span>:
+</span><span class='line'><span class="k">if</span> not <span class="k">defined</span> str <span class="k">goto</span> <span class="nl">INPUTERROR</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="n">/a</span> mins<span class="o">=</span><span class="nv">%str%</span>
+</span><span class='line'><span class="k">if</span> <span class="nv">%mins%</span> <span class="o">LEQ</span> <span class="m">0</span> <span class="k">goto</span> <span class="nl">INPUTERROR</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="s2">&quot;%1&quot;</span><span class="o">==</span><span class="s2">&quot;&quot;</span> (<span class="k">goto</span> <span class="nl">POWERDOWN1</span>) <span class="k">else</span> <span class="k">goto</span> <span class="nl">RUN1</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">:INPUTERROR</span>
+</span><span class='line'><span class="k">echo</span> 请输入有效的数字<span class="p">,</span> 任意键继续<span class="p">,</span> 退出请直接关闭.
+</span><span class='line'><span class="k">pause</span> <span class="p">&gt;</span><span class="n">nul</span>
+</span><span class='line'><span class="k">echo</span>.
+</span><span class='line'><span class="k">goto</span> <span class="nl">INPUT</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><a href="http://netwjx.github.com/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[关于PM2.5]]></title>
@@ -48,6 +224,9 @@
 <li>背景PM2.5浓度在3-5之间, 即没有人为污染, 自然情况下的浓度.</li>
 <li>PM2.5浓度高的最明显的表现是<strong>天空变成灰蒙蒙一片</strong>, 空气能见度降低.</li>
 </ul>
+
+
+<!-- more -->
 
 
 <h2>空气污染指数(API)和PM2.5浓度对应的限值</h2>
@@ -560,6 +739,7 @@
     <content type="html"><![CDATA[<h2>变更日志</h2>
 
 <ul>
+<li>2012-09-01 <strong>Catch.com新版本已经可以批量删除了, 不再需要这个工具了</strong></li>
 <li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
 </ul>
 
@@ -3920,97 +4100,6 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>可以利用setTimeout让一些操作在事件触发完毕后再执行, 关于setTimeout的特性可以参考<a href="http://ejohn.org/blog/how-javascript-timers-work/">How JavaScript Timers Work</a></p>
 
       <p><a href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[爬山备忘]]></title>
-    
-      <category term="Live" />
-    
-      <category term="Memo" />
-    
-    <link href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-04-07T18:49:00+08:00</published>
-    <updated>2012-04-07T18:49:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/04/07/mountain-climbing</id>
-    <content type="html"><![CDATA[<p>前几天去爬山,记下中间需要注意的事项,有些备忘的适用场景不限于爬山.</p>
-
-<h2>准备工作</h2>
-
-<p>下面只是尽量列出,按需要准备</p>
-
-<!--more -->
-
-
-<ol>
-<li><p>建议在确保前一天睡眠充足的情况下做下面的准备</p></li>
-<li><p>提前查看天气预报,气温,决定穿着的薄厚,一般带一件挡风的外套</p>
-
-<p>如果有可能下雨,准备把雨伞</p></li>
-<li><p>查询路线,包括到山脚下的路线和爬山的路线,记录沿途的标识</p></li>
-<li><p>查询路线顺便估计时间,尽量将登顶或休息放到合适的时间</p></li>
-<li><p>如果是节假日,估计中间可能会堵车之类的事,考虑不容易误点的交通方式或线路</p></li>
-<li><p>准备舒适的鞋子,会步行挺久,所以这个很重要,不建议穿新鞋</p></li>
-<li><p>手机,电子设备充电,如果有电子地图,考虑预先下载好地图,山上可能会有无信号的区域.</p></li>
-<li><p>水和零食,山上的东西会很贵,一般是山下的3倍.水不能太少,也不宜太多,以具体到每人的实际情况决定</p>
-
-<p>容易出汗的人会需要更多的水</p>
-
-<p>爬山途中温度会比较高,不宜带太多遇热会融化的零食,比如巧克力</p>
-
-<p>必要的话用双肩包携带</p></li>
-<li><p>如果人多,可以考虑带纸牌,野餐垫,其它想带的东西,当然还是量力而行,也估计好时间,不要负担太多</p>
-
-<p>相机,考虑是否一定有必要,除了手机可能作为替代,目的地也许还有其它途径可以拍照</p></li>
-<li><p>风景区的话,在网上找一份风景区的简单宣传资料,里面的电话 缩略地图可能会用到</p>
-
-<p>有GPS或类似功能的设备虽然可以定位,但是山上的小路多,一般互联网上的地图都没有山上的详图,而卫星地图有可能没对准,树木茂盛等原因不容易找到自己的位置,而宣传资料上一般会有简略爬山路线</p></li>
-<li><p>简单估计下山计划,如果有缆车下山速度会很快,这样可以有多一些时间在山上.</p>
-
-<p>下山路线,如果可能的话多考虑几条路线</p>
-
-<p>下山的实现,下山后休息的地点,交通方式</p></li>
-<li><p>上述按需要记录到纸上或电子设备,确保电子设备不会中途电量耗尽</p></li>
-<li><p>如果路线是人烟稀少的,请确保有一个家人知道行程安排,什么时间到什么地方</p></li>
-</ol>
-
-
-<h2>出行</h2>
-
-<ol>
-<li><p>携带上面提及的水和零食等,手机,钱包,钥匙,卡(公交 银行 信用卡等)</p></li>
-<li><p>女的考虑怎么化妆,避免出汗后会花的</p></li>
-<li><p>行进途中如果自己感觉身体状况异常,必须立即告知其它同行的人,并理解停下来实施缓解措施.状态异常比如眩晕</p>
-
-<p>爬山消耗不小,身体处于脱水状态不是很好,别刻意不喝水,只要中途能买到水.毕竟爬山还是出来玩嘛</p>
-
-<p>因为在一直活动,喝水不宜大口喝</p>
-
-<p>同时也注意同行的人,有些人性格内向可能会勉强自己,避免同行的人发生状况</p></li>
-<li><p>中途需要休息就休息,没必要挑战自己的极限,爬山需要耐久</p>
-
-<p>可能会有人中途下山</p></li>
-<li><p>山上会有风,出汗后不宜吹风太多,容易感冒,挡风的外套在这里比较有用</p></li>
-<li><p>别做傻事,山上会有一些比较险的地形.同时也注意同行的人中哪些可能会干傻事的人,虽然这样的人很少</p></li>
-<li><p>在计划的最迟下山时间即将到来前开始下山,可以考虑乘缆车下山,如果有的话</p></li>
-<li><p>早点休息,一般这个时候会比较累</p></li>
-</ol>
-
-
-<h2>其它事项</h2>
-
-<ol>
-<li><p>任何人多的地方都要注意小偷,避免注意力被转移</p>
-
-<p>给被偷留下二手准备,至少要有一个人做这样的准备,准备如怎么回家</p></li>
-</ol>
-
-
-      <p><a href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

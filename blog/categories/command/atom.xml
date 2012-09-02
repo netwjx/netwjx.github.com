@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Command | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/command/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-08-26T20:13:04+08:00</updated>
+  <updated>2012-09-02T15:33:02+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,121 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[自动运行和关机批处理]]></title>
+    
+      <category term="Bat" />
+    
+      <category term="Cmd" />
+    
+      <category term="Command" />
+    
+      <category term="Shell" />
+    
+      <category term="Windows" />
+    
+    <link href="http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-09-02T13:43:00+08:00</published>
+    <updated>2012-09-02T13:43:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown</id>
+    <content type="html"><![CDATA[<p>之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能.</p>
+
+<p>使用方式:</p>
+
+<ul>
+<li>复制下来用记事本保存为bat文件, 可以放桌面.</li>
+<li><p>自动关机</p>
+
+<p>双点批处理, 按照提示输入要等待的分钟数, 可以输入<code>3*60+15</code>这样的数学表达式, 只能是整数, 确定后就会在指定时间之后关机.</p></li>
+<li><p>自动运行程序</p>
+
+<p>将打算自动运行的程序或快捷方式拖到这个批处理文件上, 然后会出现和自动关机相似的提示, 一样的输入, 确定后不要关闭, 时间到之后会自动运行这个程序并关闭自身.</p>
+
+<p>命令行下也可以, 第一个参数是要运行的程序, 后续的是要运行程序的参数. 然后按照提示信息来, 和上面的一样.</p></li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>代码部分:</p>
+
+<p>``` bat Auto-Powerdown.bat
+@echo off
+if "%1"=="" (goto POWERDOWN) else goto RUN</p>
+
+<p>:POWERDOWN
+title 自动关机
+shutdown /a 2>nul
+if not errorlevel 1 (</p>
+
+<pre><code>echo 已取消上次设置的自动关机
+echo.
+</code></pre>
+
+<p>)
+echo 请输入多久之后关闭计算机?
+goto INPUT</p>
+
+<p>:POWERDOWN1
+echo 现在时间: %date% %time%, 将在%mins%分钟后关闭计算机.
+set /a mins=%mins%*60
+shutdown /s /t %mins% >nul 2>&amp;1
+echo.
+echo 成功, 任意键关闭窗口, 取消自动关机请重新双点 %~nx0.
+pause >nul
+goto :EOF</p>
+
+<p>:RUN
+title %~n1 自动运行
+echo 请输入多久之后运行程序
+echo   %1
+goto INPUT</p>
+
+<p>:RUN1
+echo 现在时间: %date% %time%, 将在%mins%分钟后运行程序 %~nx1
+echo.
+echo 等待中, 请不要关闭当前窗口, 取消自动运行请直接关闭当前窗口.
+set /a mins=%mins%*60+1
+ping -l 0 -n %mins% 127.0.0.1 >nul
+echo.
+echo 运行程序 %1
+start "" "%1" "%2" "%3" "%4" "%5" "%6" "%7" "%8" "%9"
+echo.
+echo 成功, 10秒后自动关闭.
+ping -l 0 -n 10 127.0.0.1 >nul
+goto :EOF</p>
+
+<p>:INPUT
+echo 单位:分钟, 例如: 3*60+15 表示3小时15分钟后
+set /p str=:
+if not defined str goto INPUTERROR</p>
+
+<p>set /a mins=%str%
+if %mins% LEQ 0 goto INPUTERROR</p>
+
+<p>if "%1"=="" (goto POWERDOWN1) else goto RUN1</p>
+
+<p>:INPUTERROR
+echo 请输入有效的数字, 任意键继续, 退出请直接关闭.
+pause >nul
+echo.
+goto INPUT</p>
+
+<p>```</p>
+
+<ul>
+<li><a href="/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/09/02/auto-run-and-powerdown/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Windows命令行和批处理技巧]]></title>

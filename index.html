@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="这里整理了一些关于空气质量主要指标PM2.5的相关资料, 主要参考自科学松鼠会关于PM2.5相关的文章, 和雾谷飞鸿关于空气质量的文章, 只是将我认为关键点用简短的话列出来. 空气污染主要检测可吸入颗粒物, 臭氧, 二氧化碳, 二氧化硫.&#10;颗粒物对人体影响是是最直接和严重的.&#10;小于10微米( &hellip;"/>
+  <meta name="description" content="之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能. 使用方式: 复制下来用记事本保存为bat文件, 可以放桌面.&#10;自动关机 双点批处理, &hellip;"/>
   
   
 
@@ -72,6 +72,67 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-02T13:43:00+08:00" pubdate data-updated="true">2012-09-02</time>
+        
+         | <a href="/blog/2012/09/02/auto-run-and-powerdown/#comments">评论</a><a href="/blog/2012/09/02/auto-run-and-powerdown/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能.</p>
+
+<p>使用方式:</p>
+
+<ul>
+<li>复制下来用记事本保存为bat文件, 可以放桌面.</li>
+<li><p>自动关机</p>
+
+<p>双点批处理, 按照提示输入要等待的分钟数, 可以输入<code>3*60+15</code>这样的数学表达式, 只能是整数, 确定后就会在指定时间之后关机.</p></li>
+<li><p>自动运行程序</p>
+
+<p>将打算自动运行的程序或快捷方式拖到这个批处理文件上, 然后会出现和自动关机相似的提示, 一样的输入, 确定后不要关闭, 时间到之后会自动运行这个程序并关闭自身.</p>
+
+<p>命令行下也可以, 第一个参数是要运行的程序, 后续的是要运行程序的参数. 然后按照提示信息来, 和上面的一样.</p></li>
+</ul>
+
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/09/02/auto-run-and-powerdown/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/09/02/auto-run-and-powerdown/#comments">评论</a><a href="/blog/2012/09/02/auto-run-and-powerdown/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a></h1>
     
     
@@ -117,183 +178,11 @@
 </ul>
 
 
-<h2>空气污染指数(API)和PM2.5浓度对应的限值</h2>
-
-<table class="mytable">
-    <tr>
-        <td>PM2.5浓度<br/>μg/m<sup>3</sup></td>
-        <td>15</td>
-        <td>40</td>
-        <td>65</td>
-        <td>150</td>
-        <td>250</td>
-        <td>350</td>
-        <td>500</td>
-    </tr>
-    <tr>
-        <td>API</td>
-        <td>50</td>
-        <td>100</td>
-        <td>150</td>
-        <td>200</td>
-        <td>300</td>
-        <td>400</td>
-        <td>500</td>
-    </tr>
-    <tr>
-        <td>国内标准</td>
-        <td style="background:#00e319">优</td>
-        <td style="background:#fefe1f">良</td>
-        <td style="background:#ff7d0a" colspan="2">轻微污染</td>
-        <td style="background:#ff0302">中度污染 API&lt;250</td>
-        <td style="background:#7d0122" colspan="2">重度污染 大于250</td>
-    </tr>
-    <tr>
-        <td>美国标准</td>
-        <td style="background:#00e319">良好</td>
-        <td style="background:#fefe1f">中等</td>
-        <td style="background:#ff7d0a">对敏感人群不健康</td>
-        <td style="background:#ff0302">不健康</td>
-        <td style="background:#98024b">非常不健康</td>
-        <td style="background:#7d0122" colspan="2">有毒害</td>
-    </tr>
-    <tr>
-        <td>香港标准</td>
-        <td style="background:#00e319">轻微 API&lt;25<br/>中等 API&lt;50</td>
-        <td style="background:#fefe1f">偏高</td>
-        <td style="background:#ff0302" colspan="2">甚高</td>
-        <td style="background:#7d0122" colspan="3">严重</td>
-    </tr>
-    <tr>
-        <td>加拿大标准</td>
-        <td style="background:#00e319">良好 API&lt;25<br/>中等 API&lt;50</td>
-        <td style="background:#fefe1f">较差</td>
-        <td style="background:#7d0122" colspan="5">极差</td>
-    </tr>
-</table>
-
-
-<p>例如: PM2.5在15到40之间, 那么API就在50到100之间, 按照国内标准评级的话, 就是良.</p>
-
-<h2>WHO关于颗粒物空气质量准则和过渡期目标</h2>
-
-<p>由于优先选择PM2.5, 所以PM10的就不列出来了, 想看可以看开头参考的文章.</p>
-
-<table class="mytable">
-    <tr>
-        <th>&nbsp;</th>
-        <th>PM2.5 μg/m<sup>3</sup> 年均</th>
-        <th>PM2.5 μg/m<sup>3</sup> 日均</th>
-    </tr>
-    <tr>
-        <td>过渡期-1</td>
-        <td>35</td>
-        <td>75</td>
-    </tr>
-    <tr>
-        <td>过渡期-2</td>
-        <td>25</td>
-        <td>50</td>
-    </tr>
-    <tr>
-        <td>过渡期-3</td>
-        <td>15</td>
-        <td>37.5</td>
-    </tr>
-    <tr>
-        <td>准则(AQG)</td>
-        <td>10</td>
-        <td>25</td>
-    </tr>
-</table>
-
-
-<h2>一张图片</h2>
-
-<p>2001-2006年卫星图片显示的全球PM2.5均值</p>
-
-<p><img src="http://songshuhui.net/wp-content/uploads/2011/08/483910main1_Global-PM2.5-map-670-600x300.jpg" width="618" height="309" title="2001-2006年卫星图片显示的全球PM2.5均值" ></p>
-
-<p>上图来自 <a href="http://www.nasa.gov/topics/earth/features/health-sapping.html">New Map Offers a Global View of Health-Sapping Air Pollution</a></p>
-
-<p>国内尚没有执行WHO的颗粒物空气质量准则和过渡期目标(拟于2016年实施过渡期-1的目标), 但是北京和东 南沿海各个省份已经在发布PM2.5空气质量指数, 可以自行找当地的环保部门网站查看.</p>
-
-<p>智能手机可以找找有没有当地的空气质量报告软件, 有些地方性的手机软件有PM2.5的指数, 比如我现在用的是<a href="https://play.google.com/store/apps/details?id=com.cas.airquality">全国空气质量</a>.</p>
-
-<h2>关于防护</h2>
-
-<p>颗粒物分类, 包括PM2.5和PM10</p>
-
-<ul>
-<li>非油性颗粒物, 一般记作N, 典型的有水泥粉尘.</li>
-<li>油性颗粒物, 一般记作P, 典型的有厨房油烟, 汽车尾气, 沥青烟雾.</li>
-</ul>
-
-
-<p>避免接触为上策, 没办法的时候只能先用口罩.</p>
-
-<p>无论国内还是国外检测口罩防护效果使用的都是氯化钠气溶胶和石蜡油, 其粒径在0.02-2微米到之间, 捕获率是按照最小计算, 而不是平均值, 所以可以理解为对PM2.5的防护能力.</p>
-
-<p>NiOSH标准, 测试空气流量：85L/分钟</p>
-
-<table class="mytable">
-    <tr>
-        <th>等级</th>
-        <th>捕获率</th>
-    </tr>
-    <tr>
-        <td>N95 R95 P95</td>
-        <td>≥95%</td>
-    </tr>
-    <tr>
-        <td>N99 R99 P99</td>
-        <td>≥99%</td>
-    </tr>
-    <tr>
-        <td>N100 R100 P100</td>
-        <td>≥99.97%</td>
-    </tr>
-</table>
-
-
-<ul>
-<li>N针对非油性颗粒物.</li>
-<li>R和P针对油性和非油性颗粒物.</li>
-<li>R用于油性颗粒物防护使用时间不能超过8小时.</li>
-<li>P的使用时间遵循制造商的建议.</li>
-</ul>
-
-
-<p>中国GB2626-2006标准, 测试空气流量：85L/分钟</p>
-
-<table class="mytable">
-    <tr>
-        <th>等级</th>
-        <th>捕获率</th>
-    </tr>
-    <tr>
-        <td>KN90 KP90</td>
-        <td>≥90%</td>
-    </tr>
-    <tr>
-        <td>KN95 KP95</td>
-        <td>≥95%</td>
-    </tr>
-    <tr>
-        <td>KN100 KP100</td>
-        <td>≥99.97%</td>
-    </tr>
-</table>
-
-
-<ul>
-<li>KN针对非油性颗粒物.</li>
-<li>KP针对油性颗粒物.</li>
-</ul>
-
 </div>
   
     <footer>
+  
+      <a rel="full-article" href="/blog/2012/08/26/about-pm2-dot-5/">继续阅读 &rarr;</a>
   
   
       <a href="/blog/2012/08/26/about-pm2-dot-5/#comments">评论</a><a href="/blog/2012/08/26/about-pm2-dot-5/#disqus_thread" class="comment-count"></a>
@@ -506,6 +395,7 @@
   <div class="entry-content"><h2>变更日志</h2>
 
 <ul>
+<li>2012-09-01 <strong>Catch.com新版本已经可以批量删除了, 不再需要这个工具了</strong></li>
 <li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
 </ul>
 
@@ -591,62 +481,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/19/portable-power-memo/">移动电源备忘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-19T21:17:00+08:00" pubdate data-updated="true">2012-07-19</time>
-        
-         | <a href="/blog/2012/07/19/portable-power-memo/#comments">评论</a><a href="/blog/2012/07/19/portable-power-memo/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>买了移动电源之后就计划写点关于移动电源的事, 翻看todo的时候才想起来该把这个补上.</p>
-
-<p>因为有2个手机和NDS, 手机一个是之前提过的黑莓8310, 另外一个是小米手机, 而平时玩小米手机时间挺多, 再加上临近过年, 要回家, 路上肯定会玩手机, 很可能电力不足.</p>
-
-<p>在淘宝上搜移动电源的话, 品牌主要是<a href="http://www.yoobao.com/">羽博</a>和<a href="http://www.pisen.com.cn/">品胜</a>的, 外观时尚, 体积和电容量给设备充一次是没问题.</p>
-
-<p>在电玩网站发现还有<a href="http://www.powerunite.com.cn/">联力众(续航大师)</a>, <a href="http://www.sino-ele.cn/">西诺电子</a>, <a href="http://www.tposchina.com/">TPOS</a>, <a href="http://www.fanmei.net/">微发</a>, 因为是给电玩充电的, 所以电容量都比较大, 相应体积重量也提高了.</p>
-
-<p>另外还有淘宝聚划算和淘宝试用中心还有一些我感觉很冷门的品牌, 如力杰, 还是做时尚外观, 电容量一般充一次没问题.</p>
-
-<p>移动电源目前都是锂电池, 因为锂电池有可能发生爆炸, 所以我专门找了些关于锂电池拆机的评测, 主要在电玩网站上有, 下面是我根据回忆整理的一些信息.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/07/19/portable-power-memo/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/07/19/portable-power-memo/#comments">评论</a><a href="/blog/2012/07/19/portable-power-memo/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -660,6 +494,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a>
@@ -715,10 +553,6 @@
     
       <li class="post">
         <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
       </li>
     
   </ul>

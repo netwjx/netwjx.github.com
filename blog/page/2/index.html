@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性. 棉 棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水. &hellip;"/>
+  <meta name="description" content="买了移动电源之后就计划写点关于移动电源的事, 翻看todo的时候才想起来该把这个补上. 因为有2个手机和NDS, 手机一个是之前提过的黑莓8310, 另外一个是小米手机, 而平时玩小米手机时间挺多, 再加上临近过年, 要回家, 路上肯定会玩手机, 很可能电力不足. 在淘宝上搜移动电源的话, &hellip;"/>
   
   
 
@@ -66,6 +66,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/19/portable-power-memo/">移动电源备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-19T21:17:00+08:00" pubdate data-updated="true">2012-07-19</time>
+        
+         | <a href="/blog/2012/07/19/portable-power-memo/#comments">评论</a><a href="/blog/2012/07/19/portable-power-memo/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>买了移动电源之后就计划写点关于移动电源的事, 翻看todo的时候才想起来该把这个补上.</p>
+
+<p>因为有2个手机和NDS, 手机一个是之前提过的黑莓8310, 另外一个是小米手机, 而平时玩小米手机时间挺多, 再加上临近过年, 要回家, 路上肯定会玩手机, 很可能电力不足.</p>
+
+<p>在淘宝上搜移动电源的话, 品牌主要是<a href="http://www.yoobao.com/">羽博</a>和<a href="http://www.pisen.com.cn/">品胜</a>的, 外观时尚, 体积和电容量给设备充一次是没问题.</p>
+
+<p>在电玩网站发现还有<a href="http://www.powerunite.com.cn/">联力众(续航大师)</a>, <a href="http://www.sino-ele.cn/">西诺电子</a>, <a href="http://www.tposchina.com/">TPOS</a>, <a href="http://www.fanmei.net/">微发</a>, 因为是给电玩充电的, 所以电容量都比较大, 相应体积重量也提高了.</p>
+
+<p>另外还有淘宝聚划算和淘宝试用中心还有一些我感觉很冷门的品牌, 如力杰, 还是做时尚外观, 电容量一般充一次没问题.</p>
+
+<p>移动电源目前都是锂电池, 因为锂电池有可能发生爆炸, 所以我专门找了些关于锂电池拆机的评测, 主要在电玩网站上有, 下面是我根据回忆整理的一些信息.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/19/portable-power-memo/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/07/19/portable-power-memo/#comments">评论</a><a href="/blog/2012/07/19/portable-power-memo/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -418,86 +474,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-06T15:57:00+08:00" pubdate data-updated="true">2012-05-06</time>
-        
-         | <a href="/blog/2012/05/06/ruby-and-jekyll-note/#comments">评论</a><a href="/blog/2012/05/06/ruby-and-jekyll-note/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>之前发现<a href="http://octopress.org/">Octopress</a>产生的页面中, <strong>meta</strong>标签的<strong>content</strong>属性没有处理换行, 今天尝试自己写个插件来处理这个地方, 因为没有学过Ruby, 下面的操作基本都是临时找资料, 所以记录一些重点.</p>
-
-<p>插件代码如下</p>
-
-<figure class='code'><figcaption><span>plugins/html_attr_filter.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># coding: utf-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#html attribute filter</span>
-</span><span class='line'><span class="k">module</span> <span class="nn">HtmlAttrFilters</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">html_attr</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">input</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\r\n|\r|\n/</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#13;&amp;#10;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#13;&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">=&gt;</span><span class="s1">&#39;&amp;#10;&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="o">.</span><span class="n">register_filter</span> <span class="no">HtmlAttrFilters</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>修改<code>source/_includes/head.html</code>中<code>&lt;meta name="description"</code>所在的行</p>
-
-<figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{ description | strip_html | condense_spaces | truncate:150 | html_attr }}&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后<code>rake generate</code>就能看到<code>&lt;meta name="description"</code>的<strong>content</strong>已经不会有换行了, 下面说说中间涉及的相关东西.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/05/06/ruby-and-jekyll-note/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/05/06/ruby-and-jekyll-note/#comments">评论</a><a href="/blog/2012/05/06/ruby-and-jekyll-note/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; 上一页</a>
@@ -513,6 +489,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a>
@@ -568,10 +548,6 @@
     
       <li class="post">
         <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/">WinForms开发中SynchronizationContext和Invoke的使用注意事项</a>
       </li>
     
   </ul>
