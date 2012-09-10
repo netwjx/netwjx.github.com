@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Eclipse | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/eclipse/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-09-02T15:33:02+08:00</updated>
+  <updated>2012-09-10T22:08:11+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -32,7 +32,12 @@
     <published>2012-08-19T13:29:00+08:00</published>
     <updated>2012-08-19T13:29:00+08:00</updated>
     <id>http://netwjx.github.com/blog/2012/08/19/java-development-tips-in-eclipse-3</id>
-    <content type="html"><![CDATA[<p>这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置.</p>
+    <content type="html"><![CDATA[<ul>
+<li>2012-09-10 增加和网友交流发现的很实用的快捷键, 和补充一些快捷键</li>
+</ul>
+
+
+<p>这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置.</p>
 
 <p>主要挑哪些很实用, 比较容易按到的.</p>
 
@@ -134,6 +139,18 @@
 <p>在类变量上按<strong>Ctrl + 1</strong>有<strong>Create getter and setter for 'xxx'</strong>用于创建类变量的<code>get</code>和<code>set</code>方法, 如果是<code>boolean</code>类型会把<code>get</code>变成<code>is</code>.</p>
 
 <p>不过常见的情况是用菜单栏<strong>Source</strong> -> <strong>Generate Getters and Setters</strong>, 可以一次性把选择的类变量生成<code>get</code> <code>set</code>方法.</p>
+
+<h3>快速打开文件</h3>
+
+<p>在多数情况下, 项目中名称重复的文件并不多, 特别是在做jsp开发的时候, 可以使用<strong>Ctrl + Shift + R</strong>, 输入文件名称就能很快的打开相关的文件.</p>
+
+<p>这段来自和网友的交流.</p>
+
+<h3>快速在当前文件内的方法间跳转</h3>
+
+<p>上篇介绍的<strong>Breadcrumb</strong>需要鼠标点才能完成上述目的, 也可以用<strong>Ctrl + O</strong>打开临时的<strong>Outline</strong>试图, 可以输入文本过滤, 或者用方向键选择, 最后按<strong>Enter</strong>转向到指定的方法.</p>
+
+<p>这个在全屏编辑的时候很有用.</p>
 
 <h3>Eclipse的使用方法就是经常<strong>Ctrl + 1</strong></h3>
 
