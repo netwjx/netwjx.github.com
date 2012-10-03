@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-09-10T22:08:11+08:00</updated>
+  <updated>2012-10-03T17:25:50+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,177 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在Firefox下设置location不生效]]></title>
+    
+      <category term="Error" />
+    
+      <category term="Firefox" />
+    
+      <category term="Javascript" />
+    
+      <category term="Memo" />
+    
+      <category term="jQuery" />
+    
+    <link href="http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-10-01T16:26:00+08:00</published>
+    <updated>2012-10-01T16:26:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox</id>
+    <content type="html"><![CDATA[<p>项目中使用的窗口组件加载内容是使用<code>iframe</code>实现的, 以前遇到的各种问题总是在IE下, 但是之前又发现一个很奇怪的问题, 仅在Firefox下出现.</p>
+
+<p>具体表现为窗口组件关闭时再将相关的父级或<code>iframe</code>重定向到新的地址, 结果在Firefox下没看到重定向, 也没在错误控制台看到任何错误信息.</p>
+
+<p>前提: 以下所有的都不涉及跨域的问题, 只描述Firefox下运行的情况, 目前我的Firefox版本是15.0.1.</p>
+
+<p>关键结构如下, <code>$</code>表示jQuery:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">dialog</span><span class="p">()</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">ifrm</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;iframe id=&quot;Dialog1&quot;&gt;&#39;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>        <span class="nx">ifrm</span><span class="p">.</span><span class="nx">openWindow</span> <span class="o">=</span> <span class="nb">window</span><span class="p">;</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">dialogClose</span><span class="p">(</span><span class="nx">frameElement</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="nx">frameElement</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">(</span><span class="nx">frameElement</span><span class="p">.</span><span class="nx">openWindow</span> <span class="o">||</span> <span class="nb">window</span><span class="p">).</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">id=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;parent.dialog()&quot;</span><span class="nt">&gt;</span>打开<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- 打开窗口时 --&gt;</span>
+</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">id=</span><span class="s">&quot;Dialog1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;parent.dialogClose(frameElement, &#39;other.html&#39;)&quot;</span><span class="nt">&gt;</span>关闭并重定向 #main 的地址<span class="nt">&lt;/button&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一些需要说明的实际情况</p>
+
+<ul>
+<li>窗口是指顶级页面的<code>window</code>和<code>iframe</code>中的<code>window</code>. 窗口下是指<code>window.document</code>和下面的所有DOM元素.</li>
+<li>在<code>#main</code>中<code>parent.dialog()</code>实际是自动探测或指定在哪个父级打开窗口.
+
+<ul>
+<li>在<code>Dialog1</code>中<code>parent.dialogClose</code>实际是哪个窗口打开就重定向那个窗口, 或者指定重定向哪个窗口.</li>
+</ul>
+</li>
+<li><code>&lt;iframe id="Dialog1"&gt;</code> 是按照实际打开的情况自动分配的id, 这里使用固定的id方便说明.</li>
+</ul>
+
+
+<p>上述代码运行后的结果没有产生重定向, 加了<code>try catch</code>后:</p>
+
+<pre><code>An error occurred throwing an exception
+</code></pre>
+
+<p>出错行在 <code>(frameElement.openWindow || window).location = url;</code>.</p>
+
+<!-- more -->
+
+
+<p>怀疑可能是不能识别默认属性, 换成<code>location.href</code>试试</p>
+
+<pre><code>"Component returned failure code: 0x804b000a (NS_ERROR_MALFORMED_URI) [nsIDOMLocation.href]"
+</code></pre>
+
+<p>在<a href="https://developer.mozilla.org/en-US/docs/DOM/window.location#Methods">MDN window.location</a>发现有<code>assign</code>和<code>replace</code>也可以用来重定向</p>
+
+<p><code>assign</code>正常执行了, 但是<code>replace</code></p>
+
+<pre><code>"Component returned failure code: 0x804b000a (NS_ERROR_MALFORMED_URI) [nsIDOMLocation.replace]"
+</code></pre>
+
+<p>想到可能和上下文有关吧, 试试用目标<code>window.setTimeout</code>, 传入字符串参数, 执行正常了.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">(</span><span class="nx">frameElement</span><span class="p">.</span><span class="nx">openWindow</span> <span class="o">||</span> <span class="nb">window</span><span class="p">).</span><span class="nx">setTimeout</span><span class="p">(</span><span class="s1">&#39;location=&quot;&#39;</span> <span class="o">+</span> <span class="nx">url</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述所有尝试的代码示例:</p>
+
+<iframe style="width: 100%; height: 510px" src="http://jsfiddle.net/sLDmC/69/embedded/js,resources,html,css,result/light/"></iframe>
+
+
+<ul>
+<li>所有<code>iframe</code>加载的页面都在这一个里面, 根据不同的Url Query执行不同的代码.</li>
+<li><code>openWindow.</code>表示重定向的是按钮所在窗口.</li>
+<li>水平分割线下面的是重定向当前窗口.</li>
+<li>蓝线以下是一些输出的信息, 以及发生异常时的异常信息.</li>
+<li>重定向成功会显示一个红色背景的成功, 发生异常会在日志中显示出来.</li>
+<li>重定向成功后, <strong>Result</strong>标签页右边有个<strong>Run again</strong>可以恢复开始状态.</li>
+</ul>
+
+
+<h2>另一方面</h2>
+
+<p>虽然问题算是解决了, 但是为什么在哪种情况会发生异常, 仅在Firefox下. 还有没有其它可以回避这个异常的方式.</p>
+
+<p>想想上面代码有些怪怪的就是, 先从DOM树中移除了<code>iframe</code>, 如果想办法调整一下移除和重定向的顺序, 就有了下面的示例:</p>
+
+<iframe style="width: 100%; height: 510px" src="http://jsfiddle.net/sLDmC/68/embedded/js,resources,html,css,result/light/"></iframe>
+
+
+<p>可以看到所有的重定向都成功了.</p>
+
+<h2>总结</h2>
+
+<ul>
+<li>尽量避免使用<code>iframe</code>.</li>
+<li>尽量使用一种方式进行跨<code>iframe</code>间的调用, 比如setTimeout方式.
+
+<ul>
+<li>调用参数尽量用基本类型, 比如字符串, 数字, 复杂的可以用JSON格式字符串.</li>
+</ul>
+</li>
+<li>尽量规避从DOM树移除当前<code>iframe</code>后还需要执行代码的情况.
+
+<ul>
+<li>实在无法规避就需要十分注意前后的执行顺序.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>当然如果和我一样是维护原有项目, 有很多地方不能随便修改, 遇到麻烦就只能大量摸索了. 比如上文中的尝试.</p>
+
+<h2>附:使用location的assign()和replace()的注意点</h2>
+
+<p>在<code>iframe</code>中<code>location.assign()</code>必须确保当前<code>iframe</code>已加载一个页面, 不然会发生错误</p>
+
+<pre><code>"Component returned failure code: 0x804b000a (NS_ERROR_MALFORMED_URI) [nsIDOMLocation.assign]"
+</code></pre>
+
+<p>对于已加载页面的则正常, 例子:</p>
+
+<iframe style="width: 100%; height: 370px" src="http://jsfiddle.net/gQvmx/13/embedded/js,resources,html,css,result/light/"></iframe>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[自动运行和关机批处理]]></title>
@@ -4064,59 +4235,6 @@ parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
 <p>不过这个代码的应用场景我还是想不出来, 即使有这样的场景, 也可以有别的变通办法可以不需要这样截取.</p>
 
       <p><a href="http://netwjx.github.com/blog/2012/04/15/substring-with-bytes-length/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[在jQuery中发生'Object' 未定义]]></title>
-    
-      <category term="Error" />
-    
-      <category term="IE" />
-    
-      <category term="Javascript" />
-    
-      <category term="jQuery" />
-    
-    <link href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-04-15T13:09:00+08:00</published>
-    <updated>2012-04-15T13:09:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery</id>
-    <content type="html"><![CDATA[<p>之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 <code>'Object' 未定义</code> 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下.</p>
-
-<p>在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, document未定义之类的.</p>
-
-<p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
-
-<!--more -->
-
-
-<p>记得以前遇到过类似的现象, 这次仔细找了下发现了这个:</p>
-
-<p><a href="http://stackoverflow.com/questions/8389261/ie9-throws-exceptions-when-loading-scripts-in-iframe-why">IE9 throws exceptions when loading scripts in iframe. Why?</a></p>
-
-<p>以及msdn的 <a href="http://msdn.microsoft.com/en-us/library/gg622929%28v=VS.85%29.aspx?ppud=4">APIs Are Not Available if iFrame Is Removed from DOM Tree</a></p>
-
-<p>简单的说是在包含iframe的页面中, 如果这个iframe被移除后, 其内部的Javascript和DOM API都会无法被调用.</p>
-
-<p>上述<strong>特性</strong>在ie9标准下有效, 往后更新的版本应该也是如此.</p>
-
-<p>上面只是根本原因, 实际会有一些比较复杂的表现方式, 比如在jQuery中类似 <code>$('#id').appendTo('#foo')</code> 的代码将会先从DOM树中移除, 然后再添加进去, 这将会诱发上述现象.</p>
-
-<p>其它的比如jQuery EasyUI的Layout, 它的实现方式会修改DOM结构, 这将会移除和重新创建包含iframe的元素.</p>
-
-<h2>处理办法</h2>
-
-<p>简单的可以是避免在IE9标准模式渲染.</p>
-
-<p>麻烦点的就是先不设置iframe的src, 等移除iframe操作完成后再设置, 一般可以考虑在window.onload时做这个操作.</p>
-
-<p>可以利用setTimeout让一些操作在事件触发完毕后再执行, 关于setTimeout的特性可以参考<a href="http://ejohn.org/blog/how-javascript-timers-work/">How JavaScript Timers Work</a></p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/04/15/object-undefined-in-jquery/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

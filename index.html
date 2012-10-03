@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="之前在使用下载软件的完成后自动关机时, 关机失败, 还有导致无法启动, 可能是第三方软件在关机时的实现不够可靠吧. 也懒得找网上专门的自动关机软件, 就写了个自动关机的批处理, 也顺带实现自动运行程序的功能. 使用方式: 复制下来用记事本保存为bat文件, 可以放桌面.&#10;自动关机 双点批处理, &hellip;"/>
+  <meta name="description" content="项目中使用的窗口组件加载内容是使用iframe实现的, 以前遇到的各种问题总是在IE下, 但是之前又发现一个很奇怪的问题, 仅在Firefox下出现. 具体表现为窗口组件关闭时再将相关的父级或iframe重定向到新的地址, 结果在Firefox下没看到重定向, 也没在错误控制台看到任何错误信息. &hellip;"/>
   
   
 
@@ -66,6 +66,116 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">在Firefox下设置location不生效</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-01T16:26:00+08:00" pubdate data-updated="true">2012-10-01</time>
+        
+         | <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/#comments">评论</a><a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>项目中使用的窗口组件加载内容是使用<code>iframe</code>实现的, 以前遇到的各种问题总是在IE下, 但是之前又发现一个很奇怪的问题, 仅在Firefox下出现.</p>
+
+<p>具体表现为窗口组件关闭时再将相关的父级或<code>iframe</code>重定向到新的地址, 结果在Firefox下没看到重定向, 也没在错误控制台看到任何错误信息.</p>
+
+<p>前提: 以下所有的都不涉及跨域的问题, 只描述Firefox下运行的情况, 目前我的Firefox版本是15.0.1.</p>
+
+<p>关键结构如下, <code>$</code>表示jQuery:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">dialog</span><span class="p">()</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">ifrm</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;iframe id=&quot;Dialog1&quot;&gt;&#39;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>        <span class="nx">ifrm</span><span class="p">.</span><span class="nx">openWindow</span> <span class="o">=</span> <span class="nb">window</span><span class="p">;</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">dialogClose</span><span class="p">(</span><span class="nx">frameElement</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="nx">frameElement</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">(</span><span class="nx">frameElement</span><span class="p">.</span><span class="nx">openWindow</span> <span class="o">||</span> <span class="nb">window</span><span class="p">).</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">id=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;parent.dialog()&quot;</span><span class="nt">&gt;</span>打开<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- 打开窗口时 --&gt;</span>
+</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">id=</span><span class="s">&quot;Dialog1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">&quot;parent.dialogClose(frameElement, &#39;other.html&#39;)&quot;</span><span class="nt">&gt;</span>关闭并重定向 #main 的地址<span class="nt">&lt;/button&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一些需要说明的实际情况</p>
+
+<ul>
+<li>窗口是指顶级页面的<code>window</code>和<code>iframe</code>中的<code>window</code>. 窗口下是指<code>window.document</code>和下面的所有DOM元素.</li>
+<li>在<code>#main</code>中<code>parent.dialog()</code>实际是自动探测或指定在哪个父级打开窗口.
+
+<ul>
+<li>在<code>Dialog1</code>中<code>parent.dialogClose</code>实际是哪个窗口打开就重定向那个窗口, 或者指定重定向哪个窗口.</li>
+</ul>
+</li>
+<li><code>&lt;iframe id="Dialog1"&gt;</code> 是按照实际打开的情况自动分配的id, 这里使用固定的id方便说明.</li>
+</ul>
+
+
+<p>上述代码运行后的结果没有产生重定向, 加了<code>try catch</code>后:</p>
+
+<pre><code>An error occurred throwing an exception
+</code></pre>
+
+<p>出错行在 <code>(frameElement.openWindow || window).location = url;</code>.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/#comments">评论</a><a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -438,54 +548,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-29T18:05:00+08:00" pubdate data-updated="true">2012-07-29</time>
-        
-         | <a href="/blog/2012/07/29/windows-shell-and-bat-skills/#comments">评论</a><a href="/blog/2012/07/29/windows-shell-and-bat-skills/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
-
-<p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/07/29/windows-shell-and-bat-skills/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/07/29/windows-shell-and-bat-skills/#comments">评论</a><a href="/blog/2012/07/29/windows-shell-and-bat-skills/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -499,6 +561,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">在Firefox下设置location不生效</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
@@ -554,10 +620,6 @@
     
       <li class="post">
         <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
       </li>
     
   </ul>

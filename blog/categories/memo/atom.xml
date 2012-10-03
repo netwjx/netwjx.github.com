@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-09-10T22:08:11+08:00</updated>
+  <updated>2012-10-03T17:25:50+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,142 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在Firefox下设置location不生效]]></title>
+    
+      <category term="Error" />
+    
+      <category term="Firefox" />
+    
+      <category term="Javascript" />
+    
+      <category term="Memo" />
+    
+      <category term="jQuery" />
+    
+    <link href="http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-10-01T16:26:00+08:00</published>
+    <updated>2012-10-01T16:26:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox</id>
+    <content type="html"><![CDATA[<p>项目中使用的窗口组件加载内容是使用<code>iframe</code>实现的, 以前遇到的各种问题总是在IE下, 但是之前又发现一个很奇怪的问题, 仅在Firefox下出现.</p>
+
+<p>具体表现为窗口组件关闭时再将相关的父级或<code>iframe</code>重定向到新的地址, 结果在Firefox下没看到重定向, 也没在错误控制台看到任何错误信息.</p>
+
+<p>前提: 以下所有的都不涉及跨域的问题, 只描述Firefox下运行的情况, 目前我的Firefox版本是15.0.1.</p>
+
+<p>关键结构如下, <code>$</code>表示jQuery:</p>
+
+<p>``` html</p>
+
+<script>
+    function dialog()
+        var ifrm = $('<iframe id="Dialog1">').appendTo('body')[0];
+        ifrm.openWindow = window;
+        // ...
+
+    function dialogClose(frameElement, url)
+        $(frameElement).remove();
+        (frameElement.openWindow || window).location = url;
+</script>
+
+
+
+
+<iframe id="main">
+    <button onclick="parent.dialog()">打开</button>
+
+<!-- 打开窗口时 -->
+<iframe id="Dialog1">
+    <button onclick="parent.dialogClose(frameElement, 'other.html')">关闭并重定向 #main 的地址</button>
+```
+
+一些需要说明的实际情况
+
+-   窗口是指顶级页面的`window`和`iframe`中的`window`. 窗口下是指`window.document`和下面的所有DOM元素.
+-   在`#main`中`parent.dialog()`实际是自动探测或指定在哪个父级打开窗口.
+    -   在`Dialog1`中`parent.dialogClose`实际是哪个窗口打开就重定向那个窗口, 或者指定重定向哪个窗口.
+-   `<iframe id="Dialog1">` 是按照实际打开的情况自动分配的id, 这里使用固定的id方便说明.
+
+
+上述代码运行后的结果没有产生重定向, 加了`try catch`后:
+
+    An error occurred throwing an exception
+
+出错行在 `(frameElement.openWindow || window).location = url;`.
+
+<!-- more -->
+
+怀疑可能是不能识别默认属性, 换成`location.href`试试
+
+    "Component returned failure code: 0x804b000a (NS_ERROR_MALFORMED_URI) [nsIDOMLocation.href]"
+
+在[MDN window.location](https://developer.mozilla.org/en-US/docs/DOM/window.location#Methods)发现有`assign`和`replace`也可以用来重定向
+
+`assign`正常执行了, 但是`replace`
+
+    "Component returned failure code: 0x804b000a (NS_ERROR_MALFORMED_URI) [nsIDOMLocation.replace]"
+
+想到可能和上下文有关吧, 试试用目标`window.setTimeout`, 传入字符串参数, 执行正常了.
+
+``` js
+    (frameElement.openWindow || window).setTimeout('location="' + url + '"', 0)
+```
+
+上述所有尝试的代码示例:
+
+<iframe style="width: 100%; height: 510px" src="http://jsfiddle.net/sLDmC/69/embedded/js,resources,html,css,result/light/"></iframe>
+
+-   所有`iframe`加载的页面都在这一个里面, 根据不同的Url Query执行不同的代码.
+-   `openWindow.`表示重定向的是按钮所在窗口.
+-   水平分割线下面的是重定向当前窗口.
+-   蓝线以下是一些输出的信息, 以及发生异常时的异常信息.
+-   重定向成功会显示一个红色背景的成功, 发生异常会在日志中显示出来.
+-   重定向成功后, **Result**标签页右边有个**Run again**可以恢复开始状态.
+
+
+另一方面
+--------
+
+虽然问题算是解决了, 但是为什么在哪种情况会发生异常, 仅在Firefox下. 还有没有其它可以回避这个异常的方式.
+
+想想上面代码有些怪怪的就是, 先从DOM树中移除了`iframe`, 如果想办法调整一下移除和重定向的顺序, 就有了下面的示例:
+
+<iframe style="width: 100%; height: 510px" src="http://jsfiddle.net/sLDmC/68/embedded/js,resources,html,css,result/light/"></iframe>
+
+可以看到所有的重定向都成功了.
+
+
+总结
+----
+
+-   尽量避免使用`iframe`.
+-   尽量使用一种方式进行跨`iframe`间的调用, 比如setTimeout方式.
+    -   调用参数尽量用基本类型, 比如字符串, 数字, 复杂的可以用JSON格式字符串.
+-   尽量规避从DOM树移除当前`iframe`后还需要执行代码的情况.
+    -   实在无法规避就需要十分注意前后的执行顺序.
+
+当然如果和我一样是维护原有项目, 有很多地方不能随便修改, 遇到麻烦就只能大量摸索了. 比如上文中的尝试.
+
+
+附:使用location的assign()和replace()的注意点
+--------------------------------------------
+
+在`iframe`中`location.assign()`必须确保当前`iframe`已加载一个页面, 不然会发生错误
+
+    "Component returned failure code: 0x804b000a (NS_ERROR_MALFORMED_URI) [nsIDOMLocation.assign]"
+
+对于已加载页面的则正常, 例子:
+
+<iframe style="width: 100%; height: 370px" src="http://jsfiddle.net/gQvmx/13/embedded/js,resources,html,css,result/light/"></iframe>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[关于PM2.5]]></title>
@@ -807,97 +943,6 @@
 <p>黑莓公司现在的状况很差, 股价大跌, 公司高层的频繁变动, 还有政策变动, 裁员, 新产品销量达不到预期, 可能和Android关系更多, 反正是这个坎很难过.</p>
 
       <p><a href="http://netwjx.github.com/blog/2012/07/01/blackberry-memo/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[爬山备忘]]></title>
-    
-      <category term="Live" />
-    
-      <category term="Memo" />
-    
-    <link href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-04-07T18:49:00+08:00</published>
-    <updated>2012-04-07T18:49:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/04/07/mountain-climbing</id>
-    <content type="html"><![CDATA[<p>前几天去爬山,记下中间需要注意的事项,有些备忘的适用场景不限于爬山.</p>
-
-<h2>准备工作</h2>
-
-<p>下面只是尽量列出,按需要准备</p>
-
-<!--more -->
-
-
-<ol>
-<li><p>建议在确保前一天睡眠充足的情况下做下面的准备</p></li>
-<li><p>提前查看天气预报,气温,决定穿着的薄厚,一般带一件挡风的外套</p>
-
-<p>如果有可能下雨,准备把雨伞</p></li>
-<li><p>查询路线,包括到山脚下的路线和爬山的路线,记录沿途的标识</p></li>
-<li><p>查询路线顺便估计时间,尽量将登顶或休息放到合适的时间</p></li>
-<li><p>如果是节假日,估计中间可能会堵车之类的事,考虑不容易误点的交通方式或线路</p></li>
-<li><p>准备舒适的鞋子,会步行挺久,所以这个很重要,不建议穿新鞋</p></li>
-<li><p>手机,电子设备充电,如果有电子地图,考虑预先下载好地图,山上可能会有无信号的区域.</p></li>
-<li><p>水和零食,山上的东西会很贵,一般是山下的3倍.水不能太少,也不宜太多,以具体到每人的实际情况决定</p>
-
-<p>容易出汗的人会需要更多的水</p>
-
-<p>爬山途中温度会比较高,不宜带太多遇热会融化的零食,比如巧克力</p>
-
-<p>必要的话用双肩包携带</p></li>
-<li><p>如果人多,可以考虑带纸牌,野餐垫,其它想带的东西,当然还是量力而行,也估计好时间,不要负担太多</p>
-
-<p>相机,考虑是否一定有必要,除了手机可能作为替代,目的地也许还有其它途径可以拍照</p></li>
-<li><p>风景区的话,在网上找一份风景区的简单宣传资料,里面的电话 缩略地图可能会用到</p>
-
-<p>有GPS或类似功能的设备虽然可以定位,但是山上的小路多,一般互联网上的地图都没有山上的详图,而卫星地图有可能没对准,树木茂盛等原因不容易找到自己的位置,而宣传资料上一般会有简略爬山路线</p></li>
-<li><p>简单估计下山计划,如果有缆车下山速度会很快,这样可以有多一些时间在山上.</p>
-
-<p>下山路线,如果可能的话多考虑几条路线</p>
-
-<p>下山的实现,下山后休息的地点,交通方式</p></li>
-<li><p>上述按需要记录到纸上或电子设备,确保电子设备不会中途电量耗尽</p></li>
-<li><p>如果路线是人烟稀少的,请确保有一个家人知道行程安排,什么时间到什么地方</p></li>
-</ol>
-
-
-<h2>出行</h2>
-
-<ol>
-<li><p>携带上面提及的水和零食等,手机,钱包,钥匙,卡(公交 银行 信用卡等)</p></li>
-<li><p>女的考虑怎么化妆,避免出汗后会花的</p></li>
-<li><p>行进途中如果自己感觉身体状况异常,必须立即告知其它同行的人,并理解停下来实施缓解措施.状态异常比如眩晕</p>
-
-<p>爬山消耗不小,身体处于脱水状态不是很好,别刻意不喝水,只要中途能买到水.毕竟爬山还是出来玩嘛</p>
-
-<p>因为在一直活动,喝水不宜大口喝</p>
-
-<p>同时也注意同行的人,有些人性格内向可能会勉强自己,避免同行的人发生状况</p></li>
-<li><p>中途需要休息就休息,没必要挑战自己的极限,爬山需要耐久</p>
-
-<p>可能会有人中途下山</p></li>
-<li><p>山上会有风,出汗后不宜吹风太多,容易感冒,挡风的外套在这里比较有用</p></li>
-<li><p>别做傻事,山上会有一些比较险的地形.同时也注意同行的人中哪些可能会干傻事的人,虽然这样的人很少</p></li>
-<li><p>在计划的最迟下山时间即将到来前开始下山,可以考虑乘缆车下山,如果有的话</p></li>
-<li><p>早点休息,一般这个时候会比较累</p></li>
-</ol>
-
-
-<h2>其它事项</h2>
-
-<ol>
-<li><p>任何人多的地方都要注意小偷,避免注意力被转移</p>
-
-<p>给被偷留下二手准备,至少要有一个人做这样的准备,准备如怎么回家</p></li>
-</ol>
-
-
-      <p><a href="http://netwjx.github.com/blog/2012/04/07/mountain-climbing/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

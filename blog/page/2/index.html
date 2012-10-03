@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="买了移动电源之后就计划写点关于移动电源的事, 翻看todo的时候才想起来该把这个补上. 因为有2个手机和NDS, 手机一个是之前提过的黑莓8310, 另外一个是小米手机, 而平时玩小米手机时间挺多, 再加上临近过年, 要回家, 路上肯定会玩手机, 很可能电力不足. 在淘宝上搜移动电源的话, &hellip;"/>
+  <meta name="description" content="有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧. 下面代码示例中rem表示对下一行的注释, 一般下一行以&gt;开始, 表示在命令提示符中输入的, &hellip;"/>
   
   
 
@@ -66,6 +66,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-29T18:05:00+08:00" pubdate data-updated="true">2012-07-29</time>
+        
+         | <a href="/blog/2012/07/29/windows-shell-and-bat-skills/#comments">评论</a><a href="/blog/2012/07/29/windows-shell-and-bat-skills/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>有时不方便使用通用编程语言完成一些常见的目标, 会考虑使用命令行, 但是命令行的资料不容易找, 主要因为它有不少是字母和符号, 基本上搜索引擎会忽略这些特殊符号, 所以这里收集一些这方面的技巧.</p>
+
+<p>下面代码示例中<code>rem</code>表示对下一行的注释, 一般下一行以<code>&gt;</code>开始, 表示在命令提示符中输入的, 再下一行表示大概的输出. 整块的代码一般是文件内容, 将会以文件中的形式表现.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/07/29/windows-shell-and-bat-skills/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/07/29/windows-shell-and-bat-skills/#comments">评论</a><a href="/blog/2012/07/29/windows-shell-and-bat-skills/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -399,81 +447,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-19T19:54:00+08:00" pubdate data-updated="true">2012-05-19</time>
-        
-         | <a href="/blog/2012/05/19/csharp-delegate-and-lambda/#comments">评论</a><a href="/blog/2012/05/19/csharp-delegate-and-lambda/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>C#算是个多范式编程语言, 除了传统的OO风格, 还可以在部分范围中使用函数式编程的风格, 这里整理一下C#中委托和Lambda实践中的各种写法.</p>
-
-<p>这里不会解释具体的代码含义, 仅仅介绍写法, 可能不适合刚开始学习.</p>
-
-<h2>声明委托类型</h2>
-
-<p>使用前必须要有具体的委托类型, 下面的例子中会使用到这些常用的委托类型</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">delegate</span> <span class="k">void</span> <span class="nf">Action</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">delegate</span> <span class="k">void</span> <span class="n">Action</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">T1</span><span class="p">,</span> <span class="k">in</span> <span class="n">T2</span><span class="p">&gt;(</span><span class="n">T1</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">T2</span> <span class="n">arg2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">delegate</span> <span class="kt">bool</span> <span class="n">Predicate</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">T</span><span class="p">&gt;(</span><span class="n">T</span> <span class="n">obj</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">delegate</span> <span class="n">TResult</span> <span class="n">Func</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">T1</span><span class="p">,</span> <span class="k">in</span> <span class="n">T2</span><span class="p">,</span> <span class="k">out</span> <span class="n">TResult</span><span class="p">&gt;(</span><span class="n">T1</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">T2</span> <span class="n">arg2</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>Action</code>和<code>Action&lt;in T1, in T2&gt;</code>是在dotnet 3.5 sp1出现的一个很实用的委托, 类似的还有1-16个参数的, 这里主要使用这2种.</p>
-
-<p><code>Predicate</code>是从dotnet 2.0就出现的, 一般是在泛型集合的查询中使用.</p>
-
-<p><code>Func&lt;in T1, in T2, out TResult&gt;</code>也是dotnet 3.5 sp1出现的, 和<code>Action</code>基本一样, 也有1-16个参数的, 和Action不同的是这个委托都声明有返回值类型, 而不是<code>Action</code>的void.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/05/19/csharp-delegate-and-lambda/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/05/19/csharp-delegate-and-lambda/#comments">评论</a><a href="/blog/2012/05/19/csharp-delegate-and-lambda/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; 上一页</a>
@@ -489,6 +462,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">在Firefox下设置location不生效</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
@@ -544,10 +521,6 @@
     
       <li class="post">
         <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/06/ruby-and-jekyll-note/">Ruby 和 Jekyll 的笔记</a>
       </li>
     
   </ul>
