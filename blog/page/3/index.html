@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="C#算是个多范式编程语言, 除了传统的OO风格, 还可以在部分范围中使用函数式编程的风格, 这里整理一下C#中委托和Lambda实践中的各种写法. 这里不会解释具体的代码含义, 仅仅介绍写法, 可能不适合刚开始学习. 声明委托类型 使用前必须要有具体的委托类型, &hellip;"/>
+  <meta name="description" content="在一个使用IPC进行单机跨进称的通讯时发生了 RemotingException : 拒绝访问 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下. &hellip;"/>
   
   
 
@@ -66,6 +66,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-03T12:09:00+08:00" pubdate data-updated="true">2012-06-03</time>
+        
+         | <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">评论</a><a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在一个使用IPC进行单机跨进称的通讯时发生了 <code>RemotingException : 拒绝访问</code> 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下.</p>
+
+<p>发生这个异常的场景是一个Windows服务程序在IPC信道注册, 另外一个桌面程序连接到IPC信道通讯, 重点是在IPC信道注册的程序是Windows服务, 默认情况下它将运行在LocalSystem帐号下, 连接这个IPC信道的是另外的用户启动的进程.</p>
+
+<p>错误的原因是向IPC信道注册时, 默认的授权是相同用户的进程才可以访问这个IPC信道, 可以通过下面的代码修改默认授权:</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#comments">评论</a><a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -481,56 +531,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/15/object-undefined-in-jquery/">在jQuery中发生&#8217;Object&#8217; 未定义</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-15T13:09:00+08:00" pubdate data-updated="true">2012-04-15</time>
-        
-         | <a href="/blog/2012/04/15/object-undefined-in-jquery/#comments">评论</a><a href="/blog/2012/04/15/object-undefined-in-jquery/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 <code>'Object' 未定义</code> 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下.</p>
-
-<p>在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, document未定义之类的.</p>
-
-<p>仅ie9下有这个现象, 忽略这个错误后仍能正常打开页面, 没有任何功能有问题.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/04/15/object-undefined-in-jquery/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/04/15/object-undefined-in-jquery/#comments">评论</a><a href="/blog/2012/04/15/object-undefined-in-jquery/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; 上一页</a>
@@ -546,6 +546,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">在Firefox下设置location不生效</a>
@@ -601,10 +605,6 @@
     
       <li class="post">
         <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
       </li>
     
   </ul>

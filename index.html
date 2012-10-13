@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="项目中使用的窗口组件加载内容是使用iframe实现的, 以前遇到的各种问题总是在IE下, 但是之前又发现一个很奇怪的问题, 仅在Firefox下出现. 具体表现为窗口组件关闭时再将相关的父级或iframe重定向到新的地址, 结果在Firefox下没看到重定向, 也没在错误控制台看到任何错误信息. &hellip;"/>
+  <meta name="description" content="很早就想过要对笔记本购买做个备忘, 方便自己也方便别人查阅, 前几天列了个大纲, 现在把具体的填完. 这不是针对特定品牌, 特定型号的备忘, 只是对购买笔记本中注意点的记录, 从软硬件, 到卖场交易等等. 外观 购买时需要首先确定一些重要的外观需求, 比如大小, 接口设计, 键盘. 屏幕 &hellip;"/>
   
   
 
@@ -66,6 +66,72 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-12T21:58:00+08:00" pubdate data-updated="true">2012-10-12</time>
+        
+         | <a href="/blog/2012/10/12/buy-notebook-memo/#comments">评论</a><a href="/blog/2012/10/12/buy-notebook-memo/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很早就想过要对笔记本购买做个备忘, 方便自己也方便别人查阅, 前几天列了个大纲, 现在把具体的填完.</p>
+
+<p>这不是针对特定品牌, 特定型号的备忘, 只是对购买笔记本中注意点的记录, 从软硬件, 到卖场交易等等.</p>
+
+<h2>外观</h2>
+
+<p>购买时需要首先确定一些重要的外观需求, 比如大小, 接口设计, 键盘.</p>
+
+<h3>屏幕</h3>
+
+<p>屏幕从整体上决定了后面要说的体积和重量, 所以放在最开始.</p>
+
+<p>屏幕尺寸, 14英寸的为主, 15英寸的会有额外的小键盘区域, 13及更低的<strong>可能会没有光驱</strong>.</p>
+
+<p>屏幕长宽比, 之前的都是4:3的, 现在的主要是16:9和16:10, 这个影响最大的是<strong>打算另外买笔记本包的时候</strong>, 一定要确定电脑包的长度是否足够, 避免到时候不能用.</p>
+
+<p>屏幕解析度, 目前主流是1366x768, 13 14 15英寸多数都一样, 未来可能会有解析度更高的屏幕出现.</p>
+
+<p>液晶屏幕面板, 现在主要是TN面板, 主要响应速度快, 也有一些是IPS面板, 显示色彩更多, 更逼真, 就是响应慢点, 可能会有轻微拖尾.</p>
+
+<p>哑光和镜面屏, 主要是在背后有强光的时候, 屏幕是否会反光. 另外, 哑光屏仔细看可能会看到很多彩色的点, 镜面屏一般比较清澈.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/10/12/buy-notebook-memo/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/10/12/buy-notebook-memo/#comments">评论</a><a href="/blog/2012/10/12/buy-notebook-memo/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -477,77 +543,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">批量删除Catch.com笔记的小工具</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-29T18:12:00+08:00" pubdate data-updated="true">2012-07-29</time>
-        
-         | <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/#comments">评论</a><a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>变更日志</h2>
-
-<ul>
-<li>2012-09-01 <strong>Catch.com新版本已经可以批量删除了, 不再需要这个工具了</strong></li>
-<li>2012-08-11 Catch.com的代码有变, 修改了一下中间的CSS选择器</li>
-</ul>
-
-
-<hr />
-
-<p>目前手机上使用<a href="https://catch.com/">Catch</a>来记录和收集手机上看到的各种信息, 在电脑上查看之后会删除, 但是奇怪的是<a href="https://catch.com/">Catch.com</a>网站的<strong>My Ideas</strong>不显示删除按钮, 而别的都会显示, 但是在手机上收集的信息默认不选择的时候都会保存到<strong>My Ideas</strong>分类里面, 所以就有了下面这个工具.</p>
-
-<p><a href="javascript:(function(d, l) {if (!/https:\/\/catch\.com\/m/.test(l.href)) {alert(&#39;only in https://catch.com/m/ is work !&#39;);return;}var notes = d.querySelectorAll(&#39;[class$=-notelist] div[id&#94;=full-]&#39;);for (var i = 0; i < notes.length; i++) {var chk = notes[i].querySelector(&#39;input[type=checkbox]&#39;);if (chk.checked) {notes[i].querySelector(&#39;input[value=delete]&#39;).click();}}}(document, location));">Catch.com批量删除当前选中的笔记</a></p>
-
-<p>这是一个Bookmarklet, 使用方式是在上面这个链接上鼠标右键</p>
-
-<ul>
-<li>IE <strong>添加到收藏夹</strong>, 使用了querySelector, 所以需要IE8及更高版本才支持.</li>
-<li>Firefox <strong>将此链接加为书签</strong></li>
-<li>Chrome 按<strong>Ctrl + Shift + B</strong>显示书签栏后把链接拖到书签栏上</li>
-</ul>
-
-
-<p>然后访问<a href="https://catch.com/">Catch.com</a>, 登录后点<strong>My Ideas</strong>, 先找个笔记点删除, 默认会弹出确认删除, 选中<strong>Do not show me this message again</strong> -> <strong>Delete</strong>.</p>
-
-<p>然后依次选中想删除的笔记, 在收藏夹(IE)/书签菜单(Firefox)/书签栏(Chrome)中点刚刚保存的书签, 就可以看到笔记被一个个的删除.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/#comments">评论</a><a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -561,6 +556,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">在Firefox下设置location不生效</a>
@@ -616,10 +615,6 @@
     
       <li class="post">
         <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/19/csharp-delegate-and-lambda/">C#委托和Lambda表达式</a>
       </li>
     
   </ul>
