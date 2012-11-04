@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="很早就想过要对笔记本购买做个备忘, 方便自己也方便别人查阅, 前几天列了个大纲, 现在把具体的填完. 这不是针对特定品牌, 特定型号的备忘, 只是对购买笔记本中注意点的记录, 从软硬件, 到卖场交易等等. 更新日志 最近的修改在列表开始 2012-10-16 增加验机篇章 外观 &hellip;"/>
+  <meta name="description" content="这是8月份写了一份草稿, 但是一直都觉得这个主题组织起来比较纠结, 现在觉得不该再拖了, 先把之前的理解都整理出来吧. 异步加载这个名称不是很贴切, 实际上有三部分, 非阻塞(不暂停页面渲染) 下载 执行. 只是叫异步加载字数少点, 请不要完全从这个字面理解其意义. 主要用于外链的js文件, &hellip;"/>
   
   
 
@@ -66,6 +66,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/04/javascript-async-load/">Javascript异步加载</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-04T17:50:00+08:00" pubdate data-updated="true">2012-11-04</time>
+        
+         | <a href="/blog/2012/11/04/javascript-async-load/#comments">评论</a><a href="/blog/2012/11/04/javascript-async-load/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是8月份写了一份草稿, 但是一直都觉得这个主题组织起来比较纠结, 现在觉得不该再拖了, 先把之前的理解都整理出来吧.</p>
+
+<p>异步加载这个名称不是很贴切, 实际上有三部分, 非阻塞(不暂停页面渲染) 下载 执行. 只是叫异步加载字数少点, 请不要完全从这个字面理解其意义.</p>
+
+<p>主要用于外链的js文件, 会带来下面的好处:</p>
+
+<ul>
+<li>页面内容显示更快, 特别对于定义在<code>&lt;head&gt;</code>和文档开始处的外链js.</li>
+<li>使用第三方Javascript时, 如果第三方无法访问, 也不会使页面很长时间是空白.</li>
+<li>使用一些手法可以控制页面内容的显示顺序, 比如重要的先显示.</li>
+<li>模块化Javascript, 使用<a href="#jsloader">Javascript模块加载器</a>管理大量相互依赖的Javascript.</li>
+</ul>
+
+
+<p>如果仅仅想页面内容显示的更快, 可以简单的把脚本放置在文档结尾, 比如<code>&lt;/body&gt;</code>标签前.</p>
+
+<p>异步加载的js文件有一个限制的:</p>
+
+<ul>
+<li>不能使用<code>document.write()</code>, 因为页面已经加载完成, 再调用会覆盖现有页面的内容.</li>
+</ul>
+
+
+<p>下面是异步加载的一些实现方式.</p>
+
+<h2>使用script标签的defer属性</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">defer</span> <span class="na">src=</span><span class="s">&quot;javascript.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用了<code>defer</code>属性的<code>&lt;script&gt;</code>标签下载时不会暂停页面渲染, 当页面解析完后执行, 即常说的<code>DOM Ready</code>之后, <code>window load</code>之前.</p>
+
+<p>如果有多个<code>&lt;script defer&gt;</code>将会按照DOM中的顺序执行, 多个前后依赖的脚本可以放心使用.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/11/04/javascript-async-load/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/11/04/javascript-async-load/#comments">评论</a><a href="/blog/2012/11/04/javascript-async-load/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -498,60 +578,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-31T21:12:00+08:00" pubdate data-updated="true">2012-07-31</time>
-        
-         | <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#comments">评论</a><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是我以前使用Eclipse时经常使用的一些小技巧, 多数都是比较基础的, 涉及的方面也比较的多. 觉得比较实用, 就整理成文.</p>
-
-<p>不分先后顺序, 只是想到什么就写什么, 因为内容比较多, 所以这篇是1.</p>
-
-<p>以英文版的介绍为主, 因为我发现很多人基本都只使用英文版.</p>
-
-<h2>快速测试简短代码</h2>
-
-<p>不是很熟悉字符串的查找, 截取等到底返回的是多少? 不清楚日期返回的年月日分别是几? 不清楚某个静态方法给特定值返回的是多少?</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#comments">评论</a><a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -565,6 +591,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/04/javascript-async-load/">Javascript异步加载</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a>
@@ -620,10 +650,6 @@
     
       <li class="post">
         <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
       </li>
     
   </ul>

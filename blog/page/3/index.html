@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="在一个使用IPC进行单机跨进称的通讯时发生了 RemotingException : 拒绝访问 异常, 期间查找异常原因的时候发现中文不大容易搜到正确的答案, 也可能是因为Remoting是已经不再支持的技术吧, 因为历史的原因还不能使用WCF, 所以这里将这个异常的原因和解决办法介绍一下. &hellip;"/>
+  <meta name="description" content="Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接分类 哪样. 以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的. "/>
   
   
 
@@ -66,6 +66,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-03T14:55:00+08:00" pubdate data-updated="true">2012-06-03</time>
+        
+         | <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#comments">评论</a><a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Octopress默认有存档页, 但是没有能列出所有分类的页面, 我试图找这方面的插件, 但是尝试使用的一些都不是很理想, 所以尝试自己写了一个这样的插件, 效果就如导航栏链接<a href="/blog/categories/">分类</a> 哪样.</p>
+
+<p>以下是代码, 多数代码都是从Jeykll插件示例中抄的, 第一次写实用的ruby程序, 也没多想注释什么的.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#comments">评论</a><a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -481,56 +529,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-15T18:35:00+08:00" pubdate data-updated="true">2012-04-15</time>
-        
-         | <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
-
-<blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
-
-<p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/04/15/substring-with-bytes-length/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; 上一页</a>
@@ -546,6 +544,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/04/javascript-async-load/">Javascript异步加载</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a>
@@ -601,10 +603,6 @@
     
       <li class="post">
         <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
       </li>
     
   </ul>

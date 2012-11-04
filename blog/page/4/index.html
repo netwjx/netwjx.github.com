@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="之前发现一个比较奇怪的现象, 一个很典型的页面, 总是在打开时会在jQuery中的一个位置发生 'Object' 未定义 的错误, 并且只在首次打开, 编译需要时间, 加载也比平时慢点的情况下. 在不使用jQuery的页面也发生类似现象, 错误可能是window未定义, &hellip;"/>
+  <meta name="description" content="在搜文本换行算法的时候发现了编写一个截取字符串的函数, 问题是 编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。 但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。 "/>
   
   
 
@@ -66,6 +66,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/15/substring-with-bytes-length/">截取指定字节长度的字符串</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-15T18:35:00+08:00" pubdate data-updated="true">2012-04-15</time>
+        
+         | <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在搜文本换行算法的时候发现了<a href="http://www.iteye.com/topic/1037773">编写一个截取字符串的函数</a>, 问题是</p>
+
+<blockquote><p>编写一个截取字符串的函数，输入为一个<strong>字符串</strong>和<strong>字节数</strong>，输出为<strong>按字节截取的字符串</strong>。</p>
+
+<p>但是要保证汉字<strong>不被截半个</strong>，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，应该输出为“我ABC”而不是“我ABC+汉的半个”。</p></blockquote>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/04/15/substring-with-bytes-length/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/04/15/substring-with-bytes-length/#comments">评论</a><a href="/blog/2012/04/15/substring-with-bytes-length/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -337,6 +387,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/11/04/javascript-async-load/">Javascript异步加载</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a>
       </li>
     
@@ -390,10 +444,6 @@
     
       <li class="post">
         <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/03/remotingexception-access-is-denied-in-net-remoting-ipcchannel/">使用.Net Remoting的IpcChannel时发生 RemotingException : 拒绝访问 异常</a>
       </li>
     
   </ul>
