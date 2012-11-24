@@ -4,7 +4,7 @@
 	<div id="delicious"></div>
 	<script type="text/javascript">
         $(window).on('load',function(){
-            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/{{ site.delicious_user }}?count={{ site.delicious_count }}&sort=date&callback=renderDeliciousLinks').appendTo('head');
+            $(document.createElement('script')).attr('type','text/javascript').attr('src','http://feeds.delicious.com/v2/json/{{ site.delicious_user }}?count={{ site.delicious_count }}&sort=date&callback=renderDeliciousLinks').appendTo('head');
         });
 	</script>
 	<a href="http://d.me/{{ site.delicious_user }}">我的书签 &raquo;</a>
