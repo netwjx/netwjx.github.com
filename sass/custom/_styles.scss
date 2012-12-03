@@ -1,2 +1,18 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+article {
+    h1, h2, h3, h4, h5, h6 {
+        text-shadow: 1px 1px 2px #555;
+    }
+    p, li {
+        text-shadow: 0 1px 0 #999;
+    }
+}
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
