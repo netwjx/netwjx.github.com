@@ -17,6 +17,7 @@ categories: Notebook Memo
 最近的修改在列表开始
 
 1.  2012-10-16  增加验机篇章
+1.  2012-12-03  增加颜色, CPU规格链接
 
 
 
@@ -51,13 +52,15 @@ categories: Notebook Memo
 重量一般14英寸的笔记本带上电池在2-2.5kg之间, 如果再加电源的话, 在3kg左右.
 
 
-### 材质
+### 材质和颜色
 
 主要外壳部分一般是工程塑料, 磨砂或镜面处理. 掌托部分有些可能会使用金属拉丝的工艺, 当然仍旧是工程塑料的材质.
 
 磨砂的反光少, 镜面的沾指纹看起来很明显, 但是也容易擦. 表面有光泽的样子比较吸引人.
 
 另一类材料是镁铝合金, 价格会高一些, 这个手摸就能分辨出来.
+
+红色白色等亮丽的颜色对女性可能更有吸引力, 可能不耐脏, 很容易显灰尘, 有划痕的话也会很明显, 需要在使用中多注意养护.
 
 
 ### 周边接口
@@ -148,7 +151,12 @@ categories: Notebook Memo
 
 ### 内在总结
 
-没有提CPU? 我感觉CPU这东西是一分钱一分货, 性能参考[Comparison of Mobile Processors (CPU Benchmarks)](http://www.notebookcheck.net/Mobile-Processors-Benchmarklist.2436.0.html). 一般主流价位的笔记本, 其CPU性价比最高.
+没有提CPU? 我感觉CPU这东西是一分钱一分货, 性能参考[Comparison of Mobile Processors (CPU Benchmarks)](http://www.notebookcheck.net/Mobile-Processors-Benchmarklist.2436.0.html). 一般主流价位的笔记本其CPU性价比最高.
+
+CPU详细的对比参见下面这两个链接, 分别来自Intel和AMD的官方, 目前多数笔记本都是Intel的CPU:
+
+-   [Intel 查找和比较英特尔产品规格](http://ark.intel.com/zh-cn#MobileProducts-MobileProcessors)
+-   [AMD  采用AMD加速处理器的笔记本](http://www.amd.com/CN/PRODUCTS/NOTEBOOK/APU/MAINSTREAM/Pages/mainstream.aspx#7)
 
 内存一般看主流, 现阶段比较尴尬, 因为普遍笔记本能识别的只有3G左右内存, 等64位Windows和相关的软件流行的时候才能使用更大的内存.
 
@@ -213,7 +221,7 @@ categories: Notebook Memo
 1.  看外包装有没有明显被碰撞的地方, 凹陷什么的.
 1.  拆开, 里面的包装纸是泡沫塑料的, 可以垫桌子上.
 1.  看主机的外壳是否有**划痕**, 对着光看, 还有屏幕和键盘那一面.
-1.  主机掌托可能会贴一些厂商的标, 比如Intel, 上面的燃料有些是指甲扣不掉的, 有些能扣掉.
+1.  主机掌托可能会贴一些厂商的标签, 比如Intel Core的标签, 标签上的染料有些是指甲扣不掉的, 有些能扣掉.
     -   我这是Intel, nVIDIA的扣不掉.
     -   nVIDIA Optimus上面的能扣掉.
 1.  看电池和主机上电池触点是否有**磨损的痕迹**, 出厂测试会留下一次痕迹.
