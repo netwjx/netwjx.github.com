@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="这是8月份写了一份草稿, 但是一直都觉得这个主题组织起来比较纠结, 现在觉得不该再拖了, 先把之前的理解都整理出来吧. 异步加载这个名称不是很贴切, 实际上有三部分, 非阻塞(不暂停页面渲染) 下载 执行. 只是叫异步加载字数少点, 请不要完全从这个字面理解其意义. 主要用于外链的js文件, &hellip;"/>
+  <meta name="description" content="它们有什么联系? 其实没什么特别的联系, 所以是杂念, 没什么头绪, 就是想到了, 我一个个说来. Dropbox的故事 Dropbox是很出名的网盘服务, 也可以叫它云端存储服务, 它的客户端能够自动同步多个电脑间的文件夹, 当然这个功能在现在十分常见了, 只是在他出现之前, &hellip;"/>
   
   
 
@@ -66,6 +66,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-24T21:08:00+08:00" pubdate data-updated="true">2012-11-24</time>
+        
+         | <a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/#comments">评论</a><a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>它们有什么联系? 其实没什么特别的联系, 所以是杂念, 没什么头绪, 就是想到了, 我一个个说来.</p>
+
+<h2>Dropbox的故事</h2>
+
+<p><a href="http://dropbox.com/">Dropbox</a>是很出名的网盘服务, 也可以叫它云端存储服务, 它的客户端能够自动同步多个电脑间的文件夹, 当然这个功能在现在十分常见了, 只是在他出现之前, 多数网盘服务都是以Web形式为主的. 它给免费用户提供2G空间, 通过邀请其它用户可以扩容空间, 基本上后来的网盘都是这种套路. 额外还有根据订购的套餐按月付费.</p>
+
+<p><a href="http://ycombinator.com/">Y Combinator</a>是一家很有意思的风险投资公司, 它只向最早期的创业团队投资. 而<a href="http://dropbox.com/">Dropbox</a>是它最成功的投资之一.</p>
+
+<p><img class="right" src="http://www.ruanyifeng.com/images/hnp_cover_b.jpg" width="318" title="Hackers and Painters" ></p>
+
+<p><a href="http://ycombinator.com/">Y Combinator</a>的创始人是<a href="http://www.paulgraham.com/">Paul Grahm</a>, 被誉为<a href="http://www.programmer.com.cn/11408/">硅谷创业之父</a>, 他曾经从事过程序员的工作. <a href="http://www.ruanyifeng.com/blog/">阮一峰的网络日志</a> <a href="http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html">我要翻译Paul Graham了</a>上面介绍的很不错, 引用首段:</p>
+
+<blockquote><p>下面，我就告诉你，我为什么那么想翻译Paul Graham。</p><p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p><p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html'>我要翻译Paul Graham了</a></cite></footer></blockquote>
+
+
+<p>这就引出了<a href="http://www.paulgraham.com/">Paul Grahm</a>写的书<a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006624">Hackers and Painters: Big Ideas from the Computer Age</a>, 注意英文副标题, 可以直译为<strong>计算机时代的伟大想法</strong>. 这本书的中译版是<a href="http://www.ruanyifeng.com/docs/pg/">黑客与画家</a>, 译者是上面提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>.</p>
+
+<p>这里有一个有趣的故事, <a href="http://www.syncoo.com/why-dropbox-is-more-popular-than-similar-tools.htm">为什么 Dropbox 比其它同类产品更受欢迎?</a> 有趣的在于其中回答这个问题的人中有<a href="http://dropbox.com/">Dropbox</a>的竞争产品 - <a href="http://www.syncplicity.com/">Syncplicity</a>的联合创始人, 其中不乏他的多年思考总结, 以及一些行业的内幕轶事.</p>
+
+<p>这是<a href="http://dropbox.com/">Dropbox</a>的故事.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/#comments">评论</a><a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -187,6 +252,7 @@
 
 <ol>
 <li>2012-10-16  增加验机篇章</li>
+<li>2012-12-03  增加颜色, CPU规格链接</li>
 </ol>
 
 
@@ -522,62 +588,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-12T12:46:00+08:00" pubdate data-updated="true">2012-08-12</time>
-        
-         | <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#comments">评论</a><a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是这个系列的第2篇, 还是十分简单的技巧.</p>
-
-<h2>调试时的ScrapBook</h2>
-
-<p>上篇介绍到了ScrapBook, 在断点调试时也有类似的功能.</p>
-
-<p><img src="/i/e/display.png" alt="Display" /></p>
-
-<p>通过<strong>Window</strong> -> <strong>Show View</strong> -> <strong>Other</strong>, 在<strong>Show View</strong>窗口顶部的文本框输入<code>Display</code>, 应该会在下面看到<strong>Display</strong>, 点击即可打开上图所示界面.</p>
-
-<p>具体功能和上篇的ScrapBook基本一致, 只是用于调试时, 这个主要是可以在调试时, 把一些变量的值直接以文本方式展示, 甚至可以自己填些说明, 方便后续的调试参考.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#comments">评论</a><a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -591,6 +601,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/11/04/javascript-async-load/">Javascript异步加载</a>
@@ -628,37 +642,13 @@
         <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">批量删除Catch.com笔记的小工具</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/07/29/windows-shell-and-bat-skills/">Windows命令行和批处理技巧</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/19/portable-power-memo/">移动电源备忘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/15/garment-fabric-knowledge/">服装布料常识</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/07/encode-and-decode-unicode-escape-string/">Unicode转义(\uXXXX)的编码和解码</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/01/blackberry-memo/">黑莓使用备忘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/03/category-cloud-plugin-with-jekyll/">Jekyll插件:分类云</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
     <h1 class="dsq-widget-title">近期评论</h1>
 	<div id="recentcomments" class="dsq-widget">
-		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=7&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
 	</div>
 	<a href="http://disqus.com/">Powered by Disqus</a>
 </section>
@@ -667,7 +657,7 @@
 <section>
     <h1 class="dsq-widget-title">热门话题</h1>
 	<div id="popularthreads" class="dsq-widget">
-		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=10"></script>
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=7"></script>
 	</div>
 	<a href="http://disqus.com/">Powered by Disqus</a>
 </section>
@@ -682,7 +672,7 @@
 	<div id="delicious"></div>
 	<script type="text/javascript">
         $(window).on('load',function(){
-            $(document.createElement('script')).attr('type','').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=10&sort=date&callback=renderDeliciousLinks').appendTo('head');
+            $(document.createElement('script')).attr('type','text/javascript').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=7&sort=date&callback=renderDeliciousLinks').appendTo('head');
         });
 	</script>
 	<a href="http://d.me/netwjx">我的书签 &raquo;</a>

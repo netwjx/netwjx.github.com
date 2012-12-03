@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-11-04T18:32:16+08:00</updated>
+  <updated>2012-12-03T17:16:12+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,126 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dropbox, Stack Overflow 和 Ruby on Rails 杂念]]></title>
+    
+      <category term="Book" />
+    
+      <category term="IT" />
+    
+      <category term="Memo" />
+    
+      <category term="Saas" />
+    
+    <link href="http://netwjx.github.com/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-11-24T21:08:00+08:00</published>
+    <updated>2012-11-24T21:08:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails</id>
+    <content type="html"><![CDATA[<p>它们有什么联系? 其实没什么特别的联系, 所以是杂念, 没什么头绪, 就是想到了, 我一个个说来.</p>
+
+<h2>Dropbox的故事</h2>
+
+<p><a href="http://dropbox.com/">Dropbox</a>是很出名的网盘服务, 也可以叫它云端存储服务, 它的客户端能够自动同步多个电脑间的文件夹, 当然这个功能在现在十分常见了, 只是在他出现之前, 多数网盘服务都是以Web形式为主的. 它给免费用户提供2G空间, 通过邀请其它用户可以扩容空间, 基本上后来的网盘都是这种套路. 额外还有根据订购的套餐按月付费.</p>
+
+<p><a href="http://ycombinator.com/">Y Combinator</a>是一家很有意思的风险投资公司, 它只向最早期的创业团队投资. 而<a href="http://dropbox.com/">Dropbox</a>是它最成功的投资之一.</p>
+
+<p><img class="right" src="http://www.ruanyifeng.com/images/hnp_cover_b.jpg" width="318" title="Hackers and Painters" ></p>
+
+<p><a href="http://ycombinator.com/">Y Combinator</a>的创始人是<a href="http://www.paulgraham.com/">Paul Grahm</a>, 被誉为<a href="http://www.programmer.com.cn/11408/">硅谷创业之父</a>, 他曾经从事过程序员的工作. <a href="http://www.ruanyifeng.com/blog/">阮一峰的网络日志</a> <a href="http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html">我要翻译Paul Graham了</a>上面介绍的很不错, 引用首段:</p>
+
+<p><blockquote><p>下面，我就告诉你，我为什么那么想翻译Paul Graham。</p></p><p><p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p></p><p><p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html'>我要翻译Paul Graham了</a></cite></footer></blockquote></p>
+
+<p>这就引出了<a href="http://www.paulgraham.com/">Paul Grahm</a>写的书<a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006624">Hackers and Painters: Big Ideas from the Computer Age</a>, 注意英文副标题, 可以直译为<strong>计算机时代的伟大想法</strong>. 这本书的中译版是<a href="http://www.ruanyifeng.com/docs/pg/">黑客与画家</a>, 译者是上面提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>.</p>
+
+<p>这里有一个有趣的故事, <a href="http://www.syncoo.com/why-dropbox-is-more-popular-than-similar-tools.htm">为什么 Dropbox 比其它同类产品更受欢迎?</a> 有趣的在于其中回答这个问题的人中有<a href="http://dropbox.com/">Dropbox</a>的竞争产品 - <a href="http://www.syncplicity.com/">Syncplicity</a>的联合创始人, 其中不乏他的多年思考总结, 以及一些行业的内幕轶事.</p>
+
+<p>这是<a href="http://dropbox.com/">Dropbox</a>的故事.</p>
+
+<!-- more -->
+
+
+<h2>Stack Overflow的故事</h2>
+
+<p><a href="http://stackoverflow.com/">Stack Overflow</a>是一个免费的问答网站, 很类似国内的<a href="http://zhidao.baidu.com/">百度知道</a>, 不过它有浓郁的Geek和技术文化, <code>Stack Overflow</code>在程序中是堆栈溢出错误, 这是软件开发工作中一种很棘手, 很不容易处理的严重错误, <a href="http://stackoverflow.com/">Stack Overflow</a>还有相关的其它领域的一系列问答网站, 如体育, 各种外语, 电影电视, 个人理财等.</p>
+
+<p>对我来说, 我日常工作中Google搜索问题时, 能在<a href="http://stackoverflow.com/">Stack Overflow</a>上得到十分有价值的答案, 甚至可以将工作分为<a href="http://heikezhi.com/2011/05/12/does-stackoverflow-make-us-lazy/">有Stack Overflow前和有了Stack Overflow之后</a>.</p>
+
+<p><a href="http://stackoverflow.com/">Stack Overflow</a>属于<a href="http://stackexchange.com/">Stack Exchange</a>公司的产品, <a href="http://stackexchange.com/">Stack Exchange</a>下的一系列问答网站全都没有广告, 也没有向用户收费的服务, <a href="http://stackexchange.com/">Stack Exchange</a>也获得了风险投资, 不过这里要说的是在哪之前.</p>
+
+<p><a href="http://www.joelonsoftware.com/">Joel Spolsky</a>是<a href="http://stackexchange.com/about/team">Stack Exchange的联合创始人</a>, 可以看到<a href="http://stackexchange.com/">Stack Exchange</a>团队很多人耍宝的GIF动画, <a href="http://www.joelonsoftware.com/">Joel Spolsky</a>同时也是<a href="http://www.fogcreek.com/">Fog Creek</a>的创始人, <a href="http://www.fogcreek.com/">Fog Creek</a>有一些不错的团队协作产品:</p>
+
+<ul>
+<li><a href="https://trello.com/">Trello</a>  在线协作工具, 在一个界面上组织多个项目, 实时沟通, 分派任务等.</li>
+<li><a href="http://www.fogcreek.com/fogbugz/">FogBugz</a>  Bug跟踪工具, 在线申请立即开通, 可以和第三方工具和服务集成.</li>
+<li><a href="http://www.fogcreek.com/kiln/">Kiln</a>  分布式版本控制系统(基于<a href="http://mercurial.selenic.com/">Mercurial</a>), 代码审查工具, 仍然是在线申请开通, 可以和FogBugz集成.</li>
+<li><a href="https://www.copilot.com/">Copilot</a>  提供在线技术支持, 主要是修正电脑使用中的一些问题.</li>
+</ul>
+
+
+<p>除了<a href="https://trello.com/">Trello</a>是免费的外(无广告), 其它的都是免费试用 + 根据套餐按月付费, 提供基于Web和移动平台的客户端.</p>
+
+<p><img class="right" src="http://i260.photobucket.com/albums/ii7/ruanyf/blog/bg2009120201.jpg" width="318" title="软件随想录" ></p>
+
+<p><a href="http://www.joelonsoftware.com/">Joel Spolsky</a>的个人Blog名字叫<a href="http://www.joelonsoftware.com/">Joel on Software</a>, 他将自己Blog上的一些文章整理到一起, 出了本书叫<a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel on Software</a>, 国内有出中文翻译<a href="http://www.ruanyifeng.com/mjos/">软件随想录</a>, 译者还是上文提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>, <a href="http://www.ruanyifeng.com/mjos/">点击这里</a>进去可以看到部分篇章, 里面讨论了软件开发中很多有趣的话题.</p>
+
+<p>这里引用一段<a href="http://www.joelonsoftware.com/">Joel Spolsky</a>的介绍:</p>
+
+<p><blockquote><p>Joel Spolsky（乔尔•斯波尔斯基）是一个世界闻名的软件开发流程专家。</p></p><p><p>他的网站“Joel谈软件”在全世界程序员中非常流行，被译成了30多种语言。</p></p><p><p>作为纽约的Fog Creek Software公司的创始人，他开发了FogBugz软件，这是一个在软件开发团队中非常流行的项目管理系统。</p></p><p><p>Joel曾经在微软公司工作，是Excel开发团队的一员，他设计了VBA（Excel的宏语言）。他还曾在Juno Online Services公司工作，开发了几百万用户使用的互联网客户端。</p></p><p><p>他已经出版了三本书：User Interface Design for Programmers（《程序员之用户界面设计》，Apress, 2001），《Joel谈软件》（Joel on Software, Apress, 2004），以及Smart and Gets Things Done（《巧妙完成工作》，Apress, 2007）。</p></p><p><p>他还是The Best Software Writing I（《最佳软件文选（第一辑）》，Apress, 2005）的编辑。</p></p><p><p>Joel从耶鲁大学获得计算机科学本科学位。</p></p><p><p>他曾在以色列国防军（Israeli Defense Forces）中服伞兵役，并且是以色列哈纳顿集体农场（Kibbutz Hanaton）的共同创始人之一。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2008/10/i_will_translate_more_joel_on_software.html'>我要翻译《Joel on Software》了！</a></cite></footer></blockquote></p>
+
+<p>这是<a href="http://stackoverflow.com/">Stack Overflow</a>的故事.</p>
+
+<h2>Ruby on Rails的故事</h2>
+
+<p><a href="http://rubyonrails.org/">Ruby on Rails</a>是我在做Java工程师时接触到的, 感叹它巧妙的设计, 在当时给Java世界带来了巨大的震撼, 原来Web应用也可以这样开发! 时至今日, <a href="http://rubyonrails.org/">Ruby on Rails</a>依然是<a href="http://www.ruby-lang.org/en/">Ruby</a>社区中的明星项目.</p>
+
+<p>在之后的多年中我还陆续接触过<a href="http://groovy.codehaus.org/">Groovy</a> <a href="http://www.djangoproject.com/">Django</a> <a href="http://www.web2py.com/">web2py</a> <a href="http://www.playframework.org/">Apache Play</a> <a href="http://www.asp.net/mvc">ASP.Net MVC</a>, 它们或多或少都能看到<a href="http://rubyonrails.org/">Ruby on Rails</a>的影子.</p>
+
+<p><img class="right" src="http://37signals.com/images/front-cover.png" width="318" title="REWORK: The new business book from 37signals." ></p>
+
+<p><a href="http://rubyonrails.org/">Ruby on Rails</a>的作者是<a href="http://david.heinemeierhansson.com/">David Heinemeier Hansson</a>, 以下是他自己的简介, 我简单翻译成中文:</p>
+
+<p><blockquote><p>我是Ruby on Rails的作者, 37signals的合伙人, 纽约时报(NYT)畅销书作家, 公开演说家, 业余摄影师, 和赛车手.</p><footer><strong>David Heinemeier Hansson</strong> <cite><a href='http://david.heinemeierhansson.com/'>David Heinemeier Hansson</a></cite></footer></blockquote></p>
+
+<p>这里畅销书指的是<a href="http://37signals.com/rework">Rework</a>, 除了<a href="http://www.nytimes.com/">纽约时报(NYT)</a>外还有<a href="http://wsj.com/">华尔街日报(WSJ)</a>和<a href="http://www.thesundaytimes.co.uk/">The Sunday Times</a>, 由<a href="http://37signals.com/svn/writers/jf">Jason Fried</a>和<a href="http://david.heinemeierhansson.com/">David Heinemeier Hansson</a>合著, 封面是个揉了的纸团, 豆瓣网有<a href="http://book.douban.com/subject/5320866/">Rework</a>的中文简介.</p>
+
+<p>还有一本<a href="http://gettingreal.37signals.com/">Getting Real</a>, 副标题是: 小规模，更快速，更高质量的软件构建方法, 翻译引用自<a href="http://cnborn.net/docs/getting_real/index.html">CNBorn</a>. 这是一本更多讲软件开发, 非技术方面的东西.</p>
+
+<p>上面这两本书都可以<strong>免费</strong>从作者网站上下载的, 但是它们的实体书同样销售的不错, 也确实, 这种书需要反复的来回看, 领悟.</p>
+
+<p><a href="http://37signals.com/">37signals</a>这家公司同样很有意思, 他们有几个在线协作产品:</p>
+
+<ul>
+<li><a href="http://basecamp.com/">Basecamp</a>  项目管理工具, 跟踪项目的讨论, 相关文件, 事件.</li>
+<li><a href="http://highrisehq.com/">Highrise</a>  简单的CRM系统, 保存整理便笺和Email会话, 跟踪客户反馈和交易, 在公司 部门 团队中共享信息.</li>
+<li><a href="http://campfirenow.com/">Campfire</a>  实时沟通, 类似IM, 但是专门设计用于小组.</li>
+</ul>
+
+
+<p>这些产品都是基于Web, 以及提供移动平台客户端, 并根据套餐按月付费.</p>
+
+<p>他们有与众不同的内部工作方式, <a href="http://www.aqee.net/jason-fried-why-i-run-a-flat-company/">为什么我要把公司做成扁平型</a>, 作者是<a href="http://37signals.com/">37signals</a>的创始人<a href="http://37signals.com/svn/writers/jf">Jason Fried</a>.</p>
+
+<p>在<a href="http://37signals.com/about">关于</a>还可以看到<a href="http://en.wikipedia.org/wiki/Jeff_Bezos">Jeff Bezos</a>, 他是作为<a href="http://37signals.com/">37signals</a>的顾问, 当然他更出名的是作为<a href="http://www.amazon.com/">亚马逊 Amazon.com</a>的创始人和CEO.</p>
+
+<p>这是<a href="http://rubyonrails.org/">Ruby on Rails</a>的故事.</p>
+
+<h2>末尾</h2>
+
+<p>上面提到的网站和产品多数是英文的, 还有受限于我国的网络问题而无法访问.</p>
+
+<p>上面提及的书基本都不涉及技术细节, 都很适合IT从业者反复阅读, 而<a href="http://37signals.com/rework">Rework</a>更是适合各种人群阅读.</p>
+
+<p>即使未来不打算从事创业, 但是也很有助于辨别优秀的创业者, 合作方, 投资目标, 抑或是改善自己的日常工作</p>
+
+<p>我仍旧无法用概括性的文字来描述我为什么要写上面的文字, 暂且作为对一些有趣资料的介绍吧.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[笔记本购买备忘]]></title>
@@ -40,6 +160,7 @@
 
 <ol>
 <li>2012-10-16  增加验机篇章</li>
+<li>2012-12-03  增加颜色, CPU规格链接</li>
 </ol>
 
 
@@ -72,13 +193,15 @@
 
 <p>重量一般14英寸的笔记本带上电池在2-2.5kg之间, 如果再加电源的话, 在3kg左右.</p>
 
-<h3>材质</h3>
+<h3>材质和颜色</h3>
 
 <p>主要外壳部分一般是工程塑料, 磨砂或镜面处理. 掌托部分有些可能会使用金属拉丝的工艺, 当然仍旧是工程塑料的材质.</p>
 
 <p>磨砂的反光少, 镜面的沾指纹看起来很明显, 但是也容易擦. 表面有光泽的样子比较吸引人.</p>
 
 <p>另一类材料是镁铝合金, 价格会高一些, 这个手摸就能分辨出来.</p>
+
+<p>红色白色等亮丽的颜色对女性可能更有吸引力, 可能不耐脏, 很容易显灰尘, 有划痕的话也会很明显, 需要在使用中多注意养护.</p>
 
 <h3>周边接口</h3>
 
@@ -183,7 +306,15 @@
 
 <h3>内在总结</h3>
 
-<p>没有提CPU? 我感觉CPU这东西是一分钱一分货, 性能参考<a href="http://www.notebookcheck.net/Mobile-Processors-Benchmarklist.2436.0.html">Comparison of Mobile Processors (CPU Benchmarks)</a>. 一般主流价位的笔记本, 其CPU性价比最高.</p>
+<p>没有提CPU? 我感觉CPU这东西是一分钱一分货, 性能参考<a href="http://www.notebookcheck.net/Mobile-Processors-Benchmarklist.2436.0.html">Comparison of Mobile Processors (CPU Benchmarks)</a>. 一般主流价位的笔记本其CPU性价比最高.</p>
+
+<p>CPU详细的对比参见下面这两个链接, 分别来自Intel和AMD的官方, 目前多数笔记本都是Intel的CPU:</p>
+
+<ul>
+<li><a href="http://ark.intel.com/zh-cn#MobileProducts-MobileProcessors">Intel 查找和比较英特尔产品规格</a></li>
+<li><a href="http://www.amd.com/CN/PRODUCTS/NOTEBOOK/APU/MAINSTREAM/Pages/mainstream.aspx#7">AMD  采用AMD加速处理器的笔记本</a></li>
+</ul>
+
 
 <p>内存一般看主流, 现阶段比较尴尬, 因为普遍笔记本能识别的只有3G左右内存, 等64位Windows和相关的软件流行的时候才能使用更大的内存.</p>
 
@@ -247,7 +378,7 @@
 <li>看外包装有没有明显被碰撞的地方, 凹陷什么的.</li>
 <li>拆开, 里面的包装纸是泡沫塑料的, 可以垫桌子上.</li>
 <li>看主机的外壳是否有<strong>划痕</strong>, 对着光看, 还有屏幕和键盘那一面.</li>
-<li>主机掌托可能会贴一些厂商的标, 比如Intel, 上面的燃料有些是指甲扣不掉的, 有些能扣掉.
+<li>主机掌托可能会贴一些厂商的标签, 比如Intel Core的标签, 标签上的染料有些是指甲扣不掉的, 有些能扣掉.
 
 <ul>
 <li>我这是Intel, nVIDIA的扣不掉.</li>
@@ -756,125 +887,6 @@
 <p>文中图片来自搜索引擎找到的, 懒得自己处理, 上面的水印还在, 不是我可以给做广告啊.</p>
 
       <p><a href="http://netwjx.github.com/blog/2012/07/19/portable-power-memo/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[服装布料常识]]></title>
-    
-      <category term="Live" />
-    
-      <category term="Memo" />
-    
-    <link href="http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-07-15T11:39:00+08:00</published>
-    <updated>2012-07-15T11:39:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge</id>
-    <content type="html"><![CDATA[<p>平时买衣服发现有很多的布料种类, 还有很多别名, 各自的特性, 舒适也总搞不清, 这里整理一些我所知道的一些布料和特性.</p>
-
-<h2>棉</h2>
-
-<p>棉(Cotton) 是天然植物纤维, 日常使用的最多的一种, 柔软, 穿着舒适, 吸湿, 透气, 弹性几乎没有, 容易折皱, 需要熨烫才能弄平, 可以机洗, 必然会缩水.</p>
-
-<p>一般洗多次之后表面会起毛, 根据材料和织法, 轻重程度不同.</p>
-
-<p>容易染色, 白色的不能和褪色的衣物一起洗, 有些衣服图案使用的印染技术不好图案会花, 发粘, 我说的是在以纯买的一件.</p>
-
-<!-- more -->
-
-
-<p>纯棉(Pure Cotton) 一般还会和一些别的纤维混纺, 以拥有两种纤维的特性, 多数是合成纤维.</p>
-
-<h3>莱卡/氨纶/聚氨酯 + 棉</h3>
-
-<p>莱卡(Lycra) 是杜邦公司的注册商标, 也就是只有杜邦授权的才能叫莱卡, 否则都叫氨纶(Spandex).</p>
-
-<p>加了氨纶的服装会弹性十分好, 能防止缩水, 也不会折皱, 吸水后比纯棉干的快, 洗多次后表面起毛比纯棉少很多.</p>
-
-<p>其它特性和纯棉一致. 一般T恤中氨纶会占1%-10%.</p>
-
-<h3>涤纶/聚酯纤维/的确凉 + 棉</h3>
-
-<p>涤纶(Terylene) 聚酯纤维(Polyester Fiber)算是第一大合成纤维, 价格可能比氨纶的便宜点.</p>
-
-<p>弹性比纯棉好, 但是比氨纶的差, 和纯棉混纺会有轻微缩水, 折皱情况和涤纶的含量有关, 越多折皱越不容易, 但是涤纶自身透气吸湿较差. 平时穿着不是很容易折皱, 洗多次后表面起毛少.</p>
-
-<p>其它特性和纯棉一致. 一般T恤中涤纶会占15%左右.</p>
-
-<h3>锦纶/尼龙/聚酰胺纤维 + 棉</h3>
-
-<p>尼龙(Nylon) 聚酰胺纤维(Polyamide Fibre) 是最早的合成纤维, 有光泽, 手感顺滑, 耐磨, 会折皱, 容易产生静电.</p>
-
-<p>一般会用于服装的面料, 比如羽绒服. 或者是需要耐磨的, 比如袜子.</p>
-
-<p>靠近火焰会缩, 燃烧有毛发味, 挺多把这个当羊毛材料用.</p>
-
-<h3>麻/亚麻 + 棉</h3>
-
-<p>亚麻(Flax) 是天然植物纤维, 透气效果极好, 吸湿, 吸水后干的十分快, 纯亚麻的穿着会有刺痒, 一般都是和纯棉混纺, 麻含量从35%到60%都有.</p>
-
-<p>一般亚麻混纺的织法都很粗犷, 有薄而不透的效果.</p>
-
-<p>不耐磨, 所以一般是不能机洗的, 只是现在可以有洗衣袋装起来洗, 避免扭到一起. 手洗的话也不能揉搓和使劲扭. 清洗时也不能使用酸性和碱性洗涤剂, 只能使用专用的中性洗涤剂. 洗多次之后会越来越软.</p>
-
-<h2>莫代尔/再生纤维素纤维</h2>
-
-<p>莫代尔(Modal) 原料是欧洲的灌木林, 和棉一样属于天然纤维, 柔软, 有光泽, 吸湿, 透气较纯棉好一些. 不容易被染色, 几乎不缩水, 特别是加了氨纶后.</p>
-
-<p>一般会和一些合成纤维混纺, 使布料具有一定的弹性. 也有和纯棉混纺.</p>
-
-<p>清洗多次没有明显的变化.</p>
-
-<h2>丝/蚕丝</h2>
-
-<p>丝(Silk) 天然动物纤维, 属于蛋白质纤维(Protein Fibre). 有光泽, 柔软, 透气优于纯棉, 会缩水.</p>
-
-<p>一般也可能加其它合成纤维, 比如氨纶, 以增加弹性, 减少缩水.</p>
-
-<p>只适合手洗, 不可揉搓, 不可拧干, 不能用洗衣粉, 洗衣皂, 香皂等洗涤品. 只能用专门的洗涤剂, 或者洗发水, 不能暴晒, 只能阴干.</p>
-
-<h2>帆布</h2>
-
-<p>帆布(Canvas) 是粗厚的棉织物或麻织物, 日常主要是帆布鞋, 帆布包. 坚硬, 耐磨, 相对于皮革比较透气, 重量轻.</p>
-
-<h2>皮革</h2>
-
-<p>主要是指动物毛皮, 衣服主要有牛皮, 猪皮, 小牛皮, 山羊皮, 绵羊皮. 皮革衣服普遍很贵, 并且只适用于特定场合, 所以基本不普及, 很多场合也有特性更好的合成纤维代替.</p>
-
-<p>另一个大量使用皮革的是鞋, 主要有牛皮, 羊皮, 猪皮, 当然现在也有部分场合被人造革代替.</p>
-
-<p>皮革都需要特别的护理, 不宜浸水, 需要防霉, 防蛀.</p>
-
-<h3>人造革/合成革</h3>
-
-<p>人造革主要是高分子聚合物, 主要原料是PVC, PU, 无纺布.</p>
-
-<p>早期的人造革耐磨都不如皮革, 还有过以人造革假冒皮革的, 但是现代制造出了一些比较好的人造革. 现在多数运动鞋都使用人造革, 比皮革轻, 有光泽, 颜色美观, 耐磨程度相当, 还易于加工, 日常护理相对较皮革容易.</p>
-
-<p>目前人造革就是透气上可能不如皮革, 一般鞋会通过设计透气孔, 搭配其它材料来改善透气.</p>
-
-<p>合成革和人造革据说是不同的东西, 不过我现在区分不出来, 在运动鞋的材料说明上很多也写的有合成革.</p>
-
-<p>白色运动鞋清洗完最好使用吸水纸包裹避光晾干, 也避免鞋面发黄.</p>
-
-<h2>参考</h2>
-
-<p>前文参考了以下网站的资料</p>
-
-<ul>
-<li><a href="http://zh.wikipedia.org/">Wikipedia 中文</a></li>
-<li><a href="http://en.wikipedia.org/">Wikipedia 英文</a></li>
-<li><a href="http://www.hudong.com/">互动百科</a></li>
-<li><a href="http://baike.baidu.com/">百度百科</a></li>
-</ul>
-
-
-<p>使用 <a href="http://www.google.com/">Google</a> 搜索.</p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/07/15/garment-fabric-knowledge/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-11-04T18:32:16+08:00</updated>
+  <updated>2012-12-03T17:16:12+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,129 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dropbox, Stack Overflow 和 Ruby on Rails 杂念]]></title>
+    
+      <category term="Book" />
+    
+      <category term="IT" />
+    
+      <category term="Memo" />
+    
+      <category term="Saas" />
+    
+    <link href="http://netwjx.github.com/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-11-24T21:08:00+08:00</published>
+    <updated>2012-11-24T21:08:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails</id>
+    <content type="html"><![CDATA[<p>它们有什么联系? 其实没什么特别的联系, 所以是杂念, 没什么头绪, 就是想到了, 我一个个说来.</p>
+
+<h2>Dropbox的故事</h2>
+
+<p><a href="http://dropbox.com/">Dropbox</a>是很出名的网盘服务, 也可以叫它云端存储服务, 它的客户端能够自动同步多个电脑间的文件夹, 当然这个功能在现在十分常见了, 只是在他出现之前, 多数网盘服务都是以Web形式为主的. 它给免费用户提供2G空间, 通过邀请其它用户可以扩容空间, 基本上后来的网盘都是这种套路. 额外还有根据订购的套餐按月付费.</p>
+
+<p><a href="http://ycombinator.com/">Y Combinator</a>是一家很有意思的风险投资公司, 它只向最早期的创业团队投资. 而<a href="http://dropbox.com/">Dropbox</a>是它最成功的投资之一.</p>
+
+<p><img class="right" src="http://www.ruanyifeng.com/images/hnp_cover_b.jpg" width="318" title="Hackers and Painters" ></p>
+
+<p><a href="http://ycombinator.com/">Y Combinator</a>的创始人是<a href="http://www.paulgraham.com/">Paul Grahm</a>, 被誉为<a href="http://www.programmer.com.cn/11408/">硅谷创业之父</a>, 他曾经从事过程序员的工作. <a href="http://www.ruanyifeng.com/blog/">阮一峰的网络日志</a> <a href="http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html">我要翻译Paul Graham了</a>上面介绍的很不错, 引用首段:</p>
+
+<blockquote><p>下面，我就告诉你，我为什么那么想翻译Paul Graham。</p><p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p><p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html'>我要翻译Paul Graham了</a></cite></footer></blockquote>
+
+
+<p>这就引出了<a href="http://www.paulgraham.com/">Paul Grahm</a>写的书<a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006624">Hackers and Painters: Big Ideas from the Computer Age</a>, 注意英文副标题, 可以直译为<strong>计算机时代的伟大想法</strong>. 这本书的中译版是<a href="http://www.ruanyifeng.com/docs/pg/">黑客与画家</a>, 译者是上面提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>.</p>
+
+<p>这里有一个有趣的故事, <a href="http://www.syncoo.com/why-dropbox-is-more-popular-than-similar-tools.htm">为什么 Dropbox 比其它同类产品更受欢迎?</a> 有趣的在于其中回答这个问题的人中有<a href="http://dropbox.com/">Dropbox</a>的竞争产品 - <a href="http://www.syncplicity.com/">Syncplicity</a>的联合创始人, 其中不乏他的多年思考总结, 以及一些行业的内幕轶事.</p>
+
+<p>这是<a href="http://dropbox.com/">Dropbox</a>的故事.</p>
+
+<!-- more -->
+
+
+<h2>Stack Overflow的故事</h2>
+
+<p><a href="http://stackoverflow.com/">Stack Overflow</a>是一个免费的问答网站, 很类似国内的<a href="http://zhidao.baidu.com/">百度知道</a>, 不过它有浓郁的Geek和技术文化, <code>Stack Overflow</code>在程序中是堆栈溢出错误, 这是软件开发工作中一种很棘手, 很不容易处理的严重错误, <a href="http://stackoverflow.com/">Stack Overflow</a>还有相关的其它领域的一系列问答网站, 如体育, 各种外语, 电影电视, 个人理财等.</p>
+
+<p>对我来说, 我日常工作中Google搜索问题时, 能在<a href="http://stackoverflow.com/">Stack Overflow</a>上得到十分有价值的答案, 甚至可以将工作分为<a href="http://heikezhi.com/2011/05/12/does-stackoverflow-make-us-lazy/">有Stack Overflow前和有了Stack Overflow之后</a>.</p>
+
+<p><a href="http://stackoverflow.com/">Stack Overflow</a>属于<a href="http://stackexchange.com/">Stack Exchange</a>公司的产品, <a href="http://stackexchange.com/">Stack Exchange</a>下的一系列问答网站全都没有广告, 也没有向用户收费的服务, <a href="http://stackexchange.com/">Stack Exchange</a>也获得了风险投资, 不过这里要说的是在哪之前.</p>
+
+<p><a href="http://www.joelonsoftware.com/">Joel Spolsky</a>是<a href="http://stackexchange.com/about/team">Stack Exchange的联合创始人</a>, 可以看到<a href="http://stackexchange.com/">Stack Exchange</a>团队很多人耍宝的GIF动画, <a href="http://www.joelonsoftware.com/">Joel Spolsky</a>同时也是<a href="http://www.fogcreek.com/">Fog Creek</a>的创始人, <a href="http://www.fogcreek.com/">Fog Creek</a>有一些不错的团队协作产品:</p>
+
+<ul>
+<li><a href="https://trello.com/">Trello</a>  在线协作工具, 在一个界面上组织多个项目, 实时沟通, 分派任务等.</li>
+<li><a href="http://www.fogcreek.com/fogbugz/">FogBugz</a>  Bug跟踪工具, 在线申请立即开通, 可以和第三方工具和服务集成.</li>
+<li><a href="http://www.fogcreek.com/kiln/">Kiln</a>  分布式版本控制系统(基于<a href="http://mercurial.selenic.com/">Mercurial</a>), 代码审查工具, 仍然是在线申请开通, 可以和FogBugz集成.</li>
+<li><a href="https://www.copilot.com/">Copilot</a>  提供在线技术支持, 主要是修正电脑使用中的一些问题.</li>
+</ul>
+
+
+<p>除了<a href="https://trello.com/">Trello</a>是免费的外(无广告), 其它的都是免费试用 + 根据套餐按月付费, 提供基于Web和移动平台的客户端.</p>
+
+<p><img class="right" src="http://i260.photobucket.com/albums/ii7/ruanyf/blog/bg2009120201.jpg" width="318" title="软件随想录" ></p>
+
+<p><a href="http://www.joelonsoftware.com/">Joel Spolsky</a>的个人Blog名字叫<a href="http://www.joelonsoftware.com/">Joel on Software</a>, 他将自己Blog上的一些文章整理到一起, 出了本书叫<a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel on Software</a>, 国内有出中文翻译<a href="http://www.ruanyifeng.com/mjos/">软件随想录</a>, 译者还是上文提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>, <a href="http://www.ruanyifeng.com/mjos/">点击这里</a>进去可以看到部分篇章, 里面讨论了软件开发中很多有趣的话题.</p>
+
+<p>这里引用一段<a href="http://www.joelonsoftware.com/">Joel Spolsky</a>的介绍:</p>
+
+<blockquote><p>Joel Spolsky（乔尔•斯波尔斯基）是一个世界闻名的软件开发流程专家。</p><p>他的网站“Joel谈软件”在全世界程序员中非常流行，被译成了30多种语言。</p><p>作为纽约的Fog Creek Software公司的创始人，他开发了FogBugz软件，这是一个在软件开发团队中非常流行的项目管理系统。</p><p>Joel曾经在微软公司工作，是Excel开发团队的一员，他设计了VBA（Excel的宏语言）。他还曾在Juno Online Services公司工作，开发了几百万用户使用的互联网客户端。</p><p>他已经出版了三本书：User Interface Design for Programmers（《程序员之用户界面设计》，Apress, 2001），《Joel谈软件》（Joel on Software, Apress, 2004），以及Smart and Gets Things Done（《巧妙完成工作》，Apress, 2007）。</p><p>他还是The Best Software Writing I（《最佳软件文选（第一辑）》，Apress, 2005）的编辑。</p><p>Joel从耶鲁大学获得计算机科学本科学位。</p><p>他曾在以色列国防军（Israeli Defense Forces）中服伞兵役，并且是以色列哈纳顿集体农场（Kibbutz Hanaton）的共同创始人之一。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2008/10/i_will_translate_more_joel_on_software.html'>我要翻译《Joel on Software》了！</a></cite></footer></blockquote>
+
+
+<p>这是<a href="http://stackoverflow.com/">Stack Overflow</a>的故事.</p>
+
+<h2>Ruby on Rails的故事</h2>
+
+<p><a href="http://rubyonrails.org/">Ruby on Rails</a>是我在做Java工程师时接触到的, 感叹它巧妙的设计, 在当时给Java世界带来了巨大的震撼, 原来Web应用也可以这样开发! 时至今日, <a href="http://rubyonrails.org/">Ruby on Rails</a>依然是<a href="http://www.ruby-lang.org/en/">Ruby</a>社区中的明星项目.</p>
+
+<p>在之后的多年中我还陆续接触过<a href="http://groovy.codehaus.org/">Groovy</a> <a href="http://www.djangoproject.com/">Django</a> <a href="http://www.web2py.com/">web2py</a> <a href="http://www.playframework.org/">Apache Play</a> <a href="http://www.asp.net/mvc">ASP.Net MVC</a>, 它们或多或少都能看到<a href="http://rubyonrails.org/">Ruby on Rails</a>的影子.</p>
+
+<p><img class="right" src="http://37signals.com/images/front-cover.png" width="318" title="REWORK: The new business book from 37signals." ></p>
+
+<p><a href="http://rubyonrails.org/">Ruby on Rails</a>的作者是<a href="http://david.heinemeierhansson.com/">David Heinemeier Hansson</a>, 以下是他自己的简介, 我简单翻译成中文:</p>
+
+<blockquote><p>我是Ruby on Rails的作者, 37signals的合伙人, 纽约时报(NYT)畅销书作家, 公开演说家, 业余摄影师, 和赛车手.</p><footer><strong>David Heinemeier Hansson</strong> <cite><a href='http://david.heinemeierhansson.com/'>David Heinemeier Hansson</a></cite></footer></blockquote>
+
+
+<p>这里畅销书指的是<a href="http://37signals.com/rework">Rework</a>, 除了<a href="http://www.nytimes.com/">纽约时报(NYT)</a>外还有<a href="http://wsj.com/">华尔街日报(WSJ)</a>和<a href="http://www.thesundaytimes.co.uk/">The Sunday Times</a>, 由<a href="http://37signals.com/svn/writers/jf">Jason Fried</a>和<a href="http://david.heinemeierhansson.com/">David Heinemeier Hansson</a>合著, 封面是个揉了的纸团, 豆瓣网有<a href="http://book.douban.com/subject/5320866/">Rework</a>的中文简介.</p>
+
+<p>还有一本<a href="http://gettingreal.37signals.com/">Getting Real</a>, 副标题是: 小规模，更快速，更高质量的软件构建方法, 翻译引用自<a href="http://cnborn.net/docs/getting_real/index.html">CNBorn</a>. 这是一本更多讲软件开发, 非技术方面的东西.</p>
+
+<p>上面这两本书都可以<strong>免费</strong>从作者网站上下载的, 但是它们的实体书同样销售的不错, 也确实, 这种书需要反复的来回看, 领悟.</p>
+
+<p><a href="http://37signals.com/">37signals</a>这家公司同样很有意思, 他们有几个在线协作产品:</p>
+
+<ul>
+<li><a href="http://basecamp.com/">Basecamp</a>  项目管理工具, 跟踪项目的讨论, 相关文件, 事件.</li>
+<li><a href="http://highrisehq.com/">Highrise</a>  简单的CRM系统, 保存整理便笺和Email会话, 跟踪客户反馈和交易, 在公司 部门 团队中共享信息.</li>
+<li><a href="http://campfirenow.com/">Campfire</a>  实时沟通, 类似IM, 但是专门设计用于小组.</li>
+</ul>
+
+
+<p>这些产品都是基于Web, 以及提供移动平台客户端, 并根据套餐按月付费.</p>
+
+<p>他们有与众不同的内部工作方式, <a href="http://www.aqee.net/jason-fried-why-i-run-a-flat-company/">为什么我要把公司做成扁平型</a>, 作者是<a href="http://37signals.com/">37signals</a>的创始人<a href="http://37signals.com/svn/writers/jf">Jason Fried</a>.</p>
+
+<p>在<a href="http://37signals.com/about">关于</a>还可以看到<a href="http://en.wikipedia.org/wiki/Jeff_Bezos">Jeff Bezos</a>, 他是作为<a href="http://37signals.com/">37signals</a>的顾问, 当然他更出名的是作为<a href="http://www.amazon.com/">亚马逊 Amazon.com</a>的创始人和CEO.</p>
+
+<p>这是<a href="http://rubyonrails.org/">Ruby on Rails</a>的故事.</p>
+
+<h2>末尾</h2>
+
+<p>上面提到的网站和产品多数是英文的, 还有受限于我国的网络问题而无法访问.</p>
+
+<p>上面提及的书基本都不涉及技术细节, 都很适合IT从业者反复阅读, 而<a href="http://37signals.com/rework">Rework</a>更是适合各种人群阅读.</p>
+
+<p>即使未来不打算从事创业, 但是也很有助于辨别优秀的创业者, 合作方, 投资目标, 抑或是改善自己的日常工作</p>
+
+<p>我仍旧无法用概括性的文字来描述我为什么要写上面的文字, 暂且作为对一些有趣资料的介绍吧.</p>
+
+      <p><a href="http://netwjx.github.com/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Javascript异步加载]]></title>
@@ -407,6 +530,7 @@
 
 <ol>
 <li>2012-10-16  增加验机篇章</li>
+<li>2012-12-03  增加颜色, CPU规格链接</li>
 </ol>
 
 
@@ -439,13 +563,15 @@
 
 <p>重量一般14英寸的笔记本带上电池在2-2.5kg之间, 如果再加电源的话, 在3kg左右.</p>
 
-<h3>材质</h3>
+<h3>材质和颜色</h3>
 
 <p>主要外壳部分一般是工程塑料, 磨砂或镜面处理. 掌托部分有些可能会使用金属拉丝的工艺, 当然仍旧是工程塑料的材质.</p>
 
 <p>磨砂的反光少, 镜面的沾指纹看起来很明显, 但是也容易擦. 表面有光泽的样子比较吸引人.</p>
 
 <p>另一类材料是镁铝合金, 价格会高一些, 这个手摸就能分辨出来.</p>
+
+<p>红色白色等亮丽的颜色对女性可能更有吸引力, 可能不耐脏, 很容易显灰尘, 有划痕的话也会很明显, 需要在使用中多注意养护.</p>
 
 <h3>周边接口</h3>
 
@@ -550,7 +676,15 @@
 
 <h3>内在总结</h3>
 
-<p>没有提CPU? 我感觉CPU这东西是一分钱一分货, 性能参考<a href="http://www.notebookcheck.net/Mobile-Processors-Benchmarklist.2436.0.html">Comparison of Mobile Processors (CPU Benchmarks)</a>. 一般主流价位的笔记本, 其CPU性价比最高.</p>
+<p>没有提CPU? 我感觉CPU这东西是一分钱一分货, 性能参考<a href="http://www.notebookcheck.net/Mobile-Processors-Benchmarklist.2436.0.html">Comparison of Mobile Processors (CPU Benchmarks)</a>. 一般主流价位的笔记本其CPU性价比最高.</p>
+
+<p>CPU详细的对比参见下面这两个链接, 分别来自Intel和AMD的官方, 目前多数笔记本都是Intel的CPU:</p>
+
+<ul>
+<li><a href="http://ark.intel.com/zh-cn#MobileProducts-MobileProcessors">Intel 查找和比较英特尔产品规格</a></li>
+<li><a href="http://www.amd.com/CN/PRODUCTS/NOTEBOOK/APU/MAINSTREAM/Pages/mainstream.aspx#7">AMD  采用AMD加速处理器的笔记本</a></li>
+</ul>
+
 
 <p>内存一般看主流, 现阶段比较尴尬, 因为普遍笔记本能识别的只有3G左右内存, 等64位Windows和相关的软件流行的时候才能使用更大的内存.</p>
 
@@ -614,7 +748,7 @@
 <li>看外包装有没有明显被碰撞的地方, 凹陷什么的.</li>
 <li>拆开, 里面的包装纸是泡沫塑料的, 可以垫桌子上.</li>
 <li>看主机的外壳是否有<strong>划痕</strong>, 对着光看, 还有屏幕和键盘那一面.</li>
-<li>主机掌托可能会贴一些厂商的标, 比如Intel, 上面的燃料有些是指甲扣不掉的, 有些能扣掉.
+<li>主机掌托可能会贴一些厂商的标签, 比如Intel Core的标签, 标签上的染料有些是指甲扣不掉的, 有些能扣掉.
 
 <ul>
 <li>我这是Intel, nVIDIA的扣不掉.</li>
@@ -4533,131 +4667,6 @@ echo completed
 <p>如果需要在<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>之后, 相关的UI元素变得可用时再执行相关代码, 可以自行定义事件, 实现相关的触发和绑定, 确保<code>new Form1</code>和<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>在同一个线程中调用, 在具体的多线程环境中解决办法会表现的完全不同.</p>
 
       <p><a href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[在Octopress中使用代码高亮]]></title>
-    
-      <category term="Jekyll" />
-    
-      <category term="Octopress" />
-    
-    <link href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-04-21T16:45:00+08:00</published>
-    <updated>2012-04-21T16:45:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress</id>
-    <content type="html"><![CDATA[<p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
-
-<p>源</p>
-
-<pre><code>``` js Javascript Hello World 
-    alert('hello world');
-```
-</code></pre>
-
-<p>效果</p>
-
-<figure class='code'><figcaption><span>Javascript Hello World </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
-
-<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题.</p>
-
-<!-- more -->
-
-
-<p>下面的修改会和版本有关, 我目前使用的Octopress版本是<code>2.0 2012/3/8 Commit:9f40242b1e7eb0098f0ef3c508c7bed7e647b982</code></p>
-
-<p>将<code>Gemfile.lock</code>的<strong>33行</strong></p>
-
-<pre><code>pygments.rb (0.1.3)
-</code></pre>
-
-<p>修改为</p>
-
-<pre><code>pygments.rb (0.2.11)
-</code></pre>
-
-<p>以及<strong>40行</strong></p>
-
-<pre><code>rubypython (0.5.1)
-</code></pre>
-
-<p>修改为</p>
-
-<pre><code>rubypython (0.5.3)
-</code></pre>
-
-<p>注意上面的修改不要改变原有的缩进, 然后在命令行下执行</p>
-
-<pre><code>bundle install
-</code></pre>
-
-<p>这将会使用<a href="http://gembundler.com/">bundler</a>这个依赖管理工具安装新版本的<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>和<a href="http://rubypython.rubyforge.org/">rubypython</a>.</p>
-
-<p>如果还有问题请参考<a href="http://hivan.me/octopress-install-to-windows8/">Windows 8安装Octopress记录</a>的<strong>部署Python</strong>部分.</p>
-
-<h2>Octopress代码高亮的工作原理</h2>
-
-<p>如果上面的还是不能使用代码高亮就需要了解原理之后在自行判断如何处理.</p>
-
-<p><a href="http://octopress.org">Octopress</a>的代码高亮实际是<a href="http://jekyllrb.com/">Jekyll</a>的代码高亮, 其中插件<code>Backtick Code Blocks</code> <code>Code Blocks</code> <code>Include Code</code> 这些插件都有代码高亮功能, 其代码高亮都使用<code>Pygments Code</code>插件, 这个插件如名字所示, 其使用的gem库是<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>.</p>
-
-<p><a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>包含有<a href="http://pygments.org/">pygments</a>的代码, 可以在Ruby安装目录下的<code>\lib\ruby\gems\1.9.1\gems\pygments.rb-0.2.11\vendor</code>中看到.</p>
-
-<p>使用<a href="http://gembundler.com/">bundler</a>安装<a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>时会自动的安装它依赖的<a href="http://rubypython.rubyforge.org/">rubypython</a>.</p>
-
-<p><a href="https://github.com/tmm1/pygments.rb/">pygments.rb</a>使用<a href="http://rubypython.rubyforge.org/">rubypython</a>的方式为<a href="https://github.com/ffi/ffi">ffi</a>, 这个是ruby中调用C语言写的库的工具, 在这里是调用<code>python27.dll</code>.</p>
-
-<h2>备用方案</h2>
-
-<p>上述的方法还是不能正常使用代码高亮的话, 还可以使用一些后备的方法.</p>
-
-<h3>Gist插件</h3>
-
-<p>在<a href="https://gist.github.com/">github:gist</a>上贴代码, 并使用类似下面的代码</p>
-
-<pre><code>{% gist 2436351 %}
-</code></pre>
-
-<p>将展示为</p>
-
-<div><script src='https://gist.github.com/2436351.js?file='></script>
-<noscript><pre><code>var parser = document.createElement('a');
-parser.href = &quot;http://example.com:3000/pathname/?search=test#hash&quot;;
-
-parser.protocol; // =&gt; &quot;http:&quot;
-parser.host;     // =&gt; &quot;example.com&quot;
-parser.port;     // =&gt; &quot;3000&quot;
-parser.pathname; // =&gt; &quot;/pathname/&quot;
-parser.search;   // =&gt; &quot;?search=test&quot;
-parser.hash;     // =&gt; &quot;#hash&quot;</code></pre></noscript></div>
-
-
-<p><a href="http://octopress.org/docs/plugins/gist-tag/">Gist Tag 插件的更多资料</a></p>
-
-<h3>jsFiddle插件</h3>
-
-<p>这个更适合用于web前端相关的html css js的展示, 使用类似下面的代码</p>
-
-<pre><code>{% jsfiddle 3h5A4/3 %}
-</code></pre>
-
-<p>将展示为</p>
-
-<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/3h5A4/3/embedded/js,resources,html,css,result/light/"></iframe>
-
-
-<p><a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsFiddle Tag 插件的更多资料</a></p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/04/21/using-code-in-octopress/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
