@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="最近有做一个从摄像头获取信息的程序, 期间查找了各种方案, 这里列出一些总结. 实现方案 avicap32.dll 的实现 Win32API 主要使用capGetDriverDescriptionA函数获取获取摄像头设备, &hellip;"/>
+  <meta name="description" content="在Octopress中使用代码高亮, 实际就是Jekyll的Pygments代码高亮, 效果如下 源 ``` js Javascript Hello World alert('hello world');&#10;``` 效果 Javascript Hello World 1&#10;alert(&#39; &hellip;"/>
   
   
 
@@ -66,6 +66,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/21/using-code-in-octopress/">在Octopress中使用代码高亮</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-21T16:45:00+08:00" pubdate data-updated="true">2012-04-21</time>
+        
+         | <a href="/blog/2012/04/21/using-code-in-octopress/#comments">评论</a><a href="/blog/2012/04/21/using-code-in-octopress/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在<a href="http://octopress.org">Octopress</a>中使用代码高亮, 实际就是<a href="http://jekyllrb.com/">Jekyll</a>的<a href="http://pygments.org/">Pygments</a>代码高亮, 效果如下</p>
+
+<p>源</p>
+
+<pre><code>``` js Javascript Hello World 
+    alert('hello world');
+```
+</code></pre>
+
+<p>效果</p>
+
+<figure class='code'><figcaption><span>Javascript Hello World </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而默认安装<a href="http://octopress.org">Octopress</a>时对代码高亮还是不支持的, 还需要安装<a href="http://python.org/">Python</a>, 我没有使用<a href="http://www.activestate.com/activepython">ActivePython</a>, 而是<a href="http://python.org/getit/">CPython</a>, 安装好后应该会有<code>c:\Windows\System32\python27.dll</code>.</p>
+
+<p>但是现在还可能会出现<code>Could not open library’.dll’</code>的问题.</p>
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/04/21/using-code-in-octopress/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/04/21/using-code-in-octopress/#comments">评论</a><a href="/blog/2012/04/21/using-code-in-octopress/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
   
   
     <article>
@@ -382,56 +446,9 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/18/hello-octopress/">Hello Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-18T02:34:00+08:00" pubdate data-updated="true">2012-03-18</time>
-        
-         | <a href="/blog/2012/03/18/hello-octopress/#comments">评论</a><a href="/blog/2012/03/18/hello-octopress/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>终于折腾起来了</p>
-
-<p>深深的感觉到在win上折腾实在是极端的痛苦啊</p>
-
-<p>基本是四处碰壁,还都是很难找到答案的</p>
-
-<p>5个小时就这样过去了</p>
-</div>
-  
-    <footer>
-  
-  
-      <a href="/blog/2012/03/18/hello-octopress/#comments">评论</a><a href="/blog/2012/03/18/hello-octopress/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; 上一页</a>
     
     <a href="/blog/archives">存档</a>
     
@@ -444,6 +461,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/">函数的Currying (Javascript 和 Scala)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a>
@@ -479,10 +500,6 @@
     
       <li class="post">
         <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">批量删除Catch.com笔记的小工具</a>
       </li>
     
   </ul>

@@ -3,7 +3,7 @@
   <title><![CDATA[netwjx]]></title>
   <link href="http://netwjx.github.com/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-12-03T17:16:12+08:00</updated>
+  <updated>2012-12-05T22:23:08+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,310 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[函数的Currying (Javascript 和 Scala)]]></title>
+    
+      <category term="Javascript" />
+    
+      <category term="Memo" />
+    
+      <category term="Scala" />
+    
+    <link href="http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-12-05T13:52:00+08:00</published>
+    <updated>2012-12-05T13:52:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala</id>
+    <content type="html"><![CDATA[<p>Currying或者Curry, 中文有翻译成<a href="http://book.51cto.com/art/200806/77578.htm">科里化</a>. 我最早了解它是在一篇讲<a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">Groovy中函数式编程</a>的文章中, 之后又在<a href="http://www.python.org/">Python</a>中<a href="http://code.activestate.com/recipes/52549/">遇到同样的东西</a>. 最近在看<a href="http://www.scala-lang.org/">Scala</a>的介绍时<a href="http://www.scala-lang.org/node/135">又看到了</a>, 而且发现<a href="http://www.scala-lang.org/">Scala</a>设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力<a href="http://www.nafine.com/Work_View.php?id=271">奇强</a><sup>-<sup>.</sup></sup></p>
+
+<p>Currying是<a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">函数式编程</a>中一种<a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">高阶函数</a>的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似<a href="https://www.google.com/search?q=builder+pattern">Builder模式</a>, 一般译作构建器模式 建造者模式.</p>
+
+<p>Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 你可以把这个过程想象成调用一个参数很多的函数.</p>
+
+<p>Javascript中完全可以按照传统OO的方式实现Builder模式, 但使用Currying更轻量级 简单, 考虑下面的代码:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">func</span><span class="p">(</span><span class="nx">v</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">n</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>执行输出</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span>
+</span><span class='line'><span class="mi">3</span><span class="p">,</span><span class="mi">6</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>modN函数有2个参数, 示例中可以同时提供所有的参数, 当然这是相当理想的情况. 实际可能不同的参数在不同的阶段提供:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">];</span>  <span class="c1">// 提供相关参数</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="c1">// 提供相关参数</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这种方式需要有一个变量用来保存参数, 而如果使用Currying可以这样:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">curry</span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">curry</span><span class="p">(</span><span class="mi">3</span><span class="p">)));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>根据需要可以<code>curry()</code>多个参数或<code>curry()</code>多次. 上文中使用的<code>curry</code>函数的实现:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">curry</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">p</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">concat</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是最轻量级 最简单的实现方式, 深入挖掘Javascript语言的表达力应该还会出现更巧妙的设计.</p>
+
+<h2>Currying的来由</h2>
+
+<p>考虑体积计算公式<code>体积 = 长 x 宽 x 高</code>, 假设已知长为10, 那么这个公式就变成了<code>体积 = 10 x 宽 x 高</code>, 进一步已知宽为7, 那么公式就变为<code>体积 = 10 x 7 x 高</code>, 这种转换即Currying.</p>
+
+<p>这是最通俗的描述, 比较正式的可以参考<a href="http://www.wikipedia.org/">维基百科</a>的<a href="http://en.wikipedia.org/wiki/Currying">Currying</a>词条.</p>
+
+<h2>Scala语言中的Currying</h2>
+
+<p>之所以要额外提<a href="http://www.scala-lang.org/">Scala</a>, 是因为它是原生支持Currying的语言, 相对比通过类库支持能提供更巧妙的语法, 参见下面的代码:</p>
+
+<figure class='code'><figcaption><span>A Tour of Scala: Currying </span><a href='http://www.scala-lang.org/node/135'>来源</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">CurryTest</span> <span class="k">extends</span> <span class="nc">Application</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 这种声明就是支持Currying的函数, 每个参数用 ( ) 分隔开</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">modN</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">((</span><span class="n">x</span> <span class="o">%</span> <span class="n">n</span><span class="o">)</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 参数p是有1个Int类型参数的函数, 返回Boolean类型</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">filter</span><span class="o">(</span><span class="n">xs</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">p</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Boolean</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">isEmpty</span><span class="o">)</span> <span class="n">xs</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">p</span><span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">head</span><span class="o">))</span> <span class="n">xs</span><span class="o">.</span><span class="n">head</span> <span class="o">::</span> <span class="n">filter</span><span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">tail</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">else</span> <span class="n">filter</span><span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">tail</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">val</span> <span class="n">nums</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// modN2引用的是包含1个Int类型参数, 并返回Boolean类型的函数, 结尾的下划线是Scala中的语法</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">modN2</span> <span class="k">=</span> <span class="n">modN</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="k">_</span>
+</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="n">filter</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">modN2</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 不需要赋值的就不需要结尾的下划线了</span>
+</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="n">filter</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">modN</span><span class="o">(</span><span class="mi">3</span><span class="o">)))</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述代码只是加了额外的注释, 调整了下顺序, 和来源中的代码等价.</p>
+
+<p>最重要的, <a href="http://www.scala-lang.org/">Scala</a>是静态类型语言, 开发环境可以提供每次<code>Currying</code>之后的<strong>函数提示信息</strong>, 并能够做<strong>编译时检查</strong>, 而<a href="http://groovy.codehaus.org/">Groovy</a>, <a href="http://www.python.org/">Python</a>, Javascript只能依赖约定, 错误会在运行时发生, 必须有其它的措施确保同步修改关联的代码.</p>
+
+<h2>偏函数 Partial function</h2>
+
+<p>和Currying很像, 只是另外一种更灵活的语法, 可以不按照参数顺序提供参数, 比如Scala的示例代码:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">i</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">j</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
+</span><span class='line'><span class="k">val</span> <span class="n">add5</span> <span class="k">=</span> <span class="n">add</span><span class="o">(</span><span class="k">_:</span> <span class="kt">Int</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+</span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">add5</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考[Wikipedia][]的<a href="http://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application">Contrast with partial function application</a> 和 <a href="http://en.wikipedia.org/wiki/Partial_function">Partial function</a></p>
+
+<h2>Javascript中更常见的传递大量参数的方式</h2>
+
+<p>Javascript是动态语言, 开发环境无法提供太多提示信息, 上文提到的Currying更适合一些比较稳定的, 不经常变动的API.</p>
+
+<p>实际项目中如果函数参数很多, 并且可能在不同的地方提供参数, 则会使用参数对象的方式:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">opt</span><span class="p">.</span><span class="nx">num</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">num</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">opt</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">x</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">x</span> <span class="o">%</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">num</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">opt2</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">num</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+</span><span class='line'>    <span class="nx">opt3</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">num</span><span class="o">:</span> <span class="mi">3</span> <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">opt2</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt2</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">opt3</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt3</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个看起来和Builder模式十分相像, 参数都提供有默认值, <code>num</code>和<code>x</code>可以使用更有意义的名称以使阅读性更好一些, 但也付出了不少编码工作.</p>
+
+<p>从<a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">Firefox 2.0</a>开始支持<strong>解构赋值</strong><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29">New in JavaScript 1.7: Destructuring assignment</a>, 这个特性可以让实现<code>modN</code>少了一些纠结:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="p">{</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">x</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">num</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">num</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>原文中还有解构赋值的很多<a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Looping_across_values_in_an_array_of_objects">高级用法</a>, 但是到目前为之还没看到其它浏览器提供支持, 也没有进入ECMAScript标准, 只能在比如Firefox扩展开发时爽爽.</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="http://www.cnblogs.com/fox23/archive/2009/10/22/intro-to-Lambda-calculus-and-currying.html">Lambda演算与科里化(Currying)</a></li>
+<li><a href="http://book.51cto.com/art/200806/77578.htm">《JavaScript王者归来》第二十二章 科里化（Currying）小节</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">实战 Groovy: 用 curry 过的闭包进行函数式编程</a></li>
+<li><a href="http://code.activestate.com/recipes/52549/">curry &#8211; associating parameters with a function (Python recipe)</a></li>
+<li><a href="http://www.scala-lang.org/node/135">A Tour of Scala: Currying</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">跨越边界: JavaScript 语言特性</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">维基百科 高阶函数 词条</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Currying">维基百科 Currying 词条</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Partial_function">维基百科 Partial function 词条</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29">New in JavaScript 1.7 : Destructuring assignment 解构赋值</a></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dropbox, Stack Overflow 和 Ruby on Rails 杂念]]></title>
@@ -49,14 +353,16 @@
 <blockquote><p>下面，我就告诉你，我为什么那么想翻译Paul Graham。</p><p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p><p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html'>我要翻译Paul Graham了</a></cite></footer></blockquote>
 
 
+
+
+<!-- more -->
+
+
 <p>这就引出了<a href="http://www.paulgraham.com/">Paul Grahm</a>写的书<a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006624">Hackers and Painters: Big Ideas from the Computer Age</a>, 注意英文副标题, 可以直译为<strong>计算机时代的伟大想法</strong>. 这本书的中译版是<a href="http://www.ruanyifeng.com/docs/pg/">黑客与画家</a>, 译者是上面提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>.</p>
 
 <p>这里有一个有趣的故事, <a href="http://www.syncoo.com/why-dropbox-is-more-popular-than-similar-tools.htm">为什么 Dropbox 比其它同类产品更受欢迎?</a> 有趣的在于其中回答这个问题的人中有<a href="http://dropbox.com/">Dropbox</a>的竞争产品 - <a href="http://www.syncplicity.com/">Syncplicity</a>的联合创始人, 其中不乏他的多年思考总结, 以及一些行业的内幕轶事.</p>
 
 <p>这是<a href="http://dropbox.com/">Dropbox</a>的故事.</p>
-
-<!-- more -->
-
 
 <h2>Stack Overflow的故事</h2>
 
@@ -4485,188 +4791,6 @@ echo completed
 <p>发现一个特别的地方是Javascript中正则可以使用的选项有<code>igm</code>, 而Ruby是<code>imxo</code>, 见<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">这里</a><strong>的Options</strong></p>
 
       <p><a href="http://netwjx.github.com/blog/2012/05/06/ruby-and-jekyll-note/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[WinForms开发中SynchronizationContext和Invoke的使用注意事项]]></title>
-    
-      <category term="CSharp" />
-    
-      <category term="Thread" />
-    
-      <category term="WinForms" />
-    
-    <link href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-04-29T14:26:00+08:00</published>
-    <updated>2012-04-29T14:26:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke</id>
-    <content type="html"><![CDATA[<p>WinForms 开发中<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>是用于非UI线程中请求修改UI元素的方法, 一般配合<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>使用:</p>
-
-<figure class='code'><figcaption><span>Control.Invoke and Control.InvokeRequired</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Form1</span> <span class="p">:</span> <span class="n">Form</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">private</span> <span class="k">void</span> <span class="nf">Foo</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">InvokeRequired</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">Invoke</span><span class="p">((</span><span class="n">Action</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;)</span><span class="n">Foo</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">else</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">textBox1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">text</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>类似<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>的还有<a href="http://msdn.microsoft.com/zh-cn/library/0b1bf3y3.aspx">Control.BeginInvoke</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.endinvoke.aspx">Control.EndInvoke</a>, 它们是异步调用.</p>
-
-<p>这些方法和属性都依赖于<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>时, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>表示窗口句柄是否已创建, 它并不是指是否<code>new Form1()</code>过, 而是指是否<code>Show()</code>过, 包括<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.show.aspx">Show</a>, <a href="http://msdn.microsoft.com/zh-cn/library/c7ykbedk.aspx">ShowDialog</a>这些调用都会使<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>true</code>.</p>
-
-<p>而在<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.ishandlecreated.aspx">IsHandleCreated</a>为<code>false</code>时, 比如刚刚<code>new Form1()</code>, <a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.control.invokerequired.aspx">Control.InvokeRequired</a>返回<code>false</code>, 调用<a href="http://msdn.microsoft.com/zh-cn/library/zyzhdc6b.aspx">Control.Invoke</a>会抛出异常:</p>
-
-<pre><code>System.InvalidOperationException: 在创建窗口句柄之前，不能在控件上调用 Invoke 或 BeginInvoke。
-</code></pre>
-
-<!-- more -->
-
-
-<p>当在非UI线程和多个窗口之间操作时, 可能会有一些麻烦的情况发生, 这种情况可能会考虑使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>.</p>
-
-<p><a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.aspx">SynchronizationContext</a>可以在当前线程第一次<code>new Form1()</code>之后通过<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>取得, 之后使用<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.post.aspx">Post</a>和<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.send.aspx">Send</a>实现在UI线程执行指定的委托, 下面使用的<a href="http://msdn.microsoft.com/zh-cn/library/system.windows.forms.windowsformssynchronizationcontext.aspx">WindowsFormsSynchronizationContext</a>.Current在WinForms程序中等价于<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>:</p>
-
-<figure class='code'><figcaption><span>SynchronizationContext.Post</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Form1</span> <span class="p">:</span> <span class="n">Form</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">public</span> <span class="k">static</span> <span class="n">SynchronizationContext</span> <span class="n">SyncContext</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">public</span> <span class="nf">Form1</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="n">InitializeComponent</span><span class="p">();</span>
-</span><span class='line'>        <span class="n">SyncContext</span> <span class="p">=</span> <span class="n">WindowsFormsSynchronizationContext</span><span class="p">.</span><span class="n">Current</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">private</span> <span class="k">void</span> <span class="nf">Foo</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>      <span class="n">SyncContext</span><span class="p">.</span><span class="n">Post</span><span class="p">(</span><span class="k">delegate</span><span class="p">(</span><span class="kt">object</span> <span class="n">obj</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">{</span>
-</span><span class='line'>          <span class="n">textBox1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">text</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">},</span> <span class="k">null</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>从<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>的文档可知它只会返回当前线程的同步上下文, 要在别的线程中访问需要自行保存它的引用, 即这里属性<code>SyncContext</code>, 使用时确保在访问<code>SyncContext</code>之前<code>new Form1()</code>过一次, 且只能一次, 否则后续的会覆盖之前的, 在符合需求的情况下会很自然想到单例模式:</p>
-
-<figure class='code'><figcaption><span>线程安全的单例模式</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">static</span> <span class="n">Form1</span><span class="p">[]</span> <span class="n">_Instance</span> <span class="p">=</span> <span class="p">{</span> <span class="k">null</span> <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">public</span> <span class="k">static</span> <span class="n">Form1</span> <span class="n">Instance</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">get</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">_Instance</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="k">lock</span> <span class="p">(</span><span class="n">_Instance</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">{</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">_Instance</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-</span><span class='line'>                <span class="p">{</span>
-</span><span class='line'>                    <span class="n">_Instance</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Form1</span><span class="p">();</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">_Instance</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>目前看起来是没什么问题了, 现实总是会出点问题, 比如<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.current.aspx">SynchronizationContext.Current</a>总是返回当前线程的, 结合上述的单例模式, 如果第一次访问<code>Instance</code>属性是在别的线程中, 测试代码如下:</p>
-
-<figure class='code'><figcaption><span>在不同的线程中访问Form1.Instance</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">new</span> <span class="nf">Thread</span><span class="p">(</span><span class="k">delegate</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">Form1</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">Debug</span><span class="p">.</span><span class="n">Assert</span><span class="p">(</span><span class="n">SynchronizationContext</span><span class="p">.</span><span class="n">Current</span> <span class="p">!=</span> <span class="k">null</span><span class="p">);</span>
-</span><span class='line'><span class="p">}).</span><span class="n">Start</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Thread</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">3000</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">var</span> <span class="n">f</span> <span class="p">=</span> <span class="n">Form1</span><span class="p">.</span><span class="n">Instance</span><span class="p">;</span>
-</span><span class='line'><span class="n">Debug</span><span class="p">.</span><span class="n">Assert</span><span class="p">(</span><span class="n">SynchronizationContext</span><span class="p">.</span><span class="n">Current</span> <span class="p">==</span> <span class="k">null</span><span class="p">);</span>
-</span><span class='line'><span class="n">Application</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面代码的两处断言都通过了, 这种情况下<a href="http://msdn.microsoft.com/zh-cn/library/system.threading.synchronizationcontext.post.aspx">Form1.SyncContext.Post</a>仍旧可以调用, 但是将<strong>不产生任何效果</strong>, 也<strong>不抛出异常</strong>, 因为<code>new Form1()</code>的那个线程已经结束了, 以及那个线程并没有执行消息循环<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>.</p>
-
-<p>如果需要在<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>之后, 相关的UI元素变得可用时再执行相关代码, 可以自行定义事件, 实现相关的触发和绑定, 确保<code>new Form1</code>和<a href="http://msdn.microsoft.com/zh-cn/library/ms157902.aspx">Application.Run</a>在同一个线程中调用, 在具体的多线程环境中解决办法会表现的完全不同.</p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/04/29/winforms-synchronizationcontext-and-invoke/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>

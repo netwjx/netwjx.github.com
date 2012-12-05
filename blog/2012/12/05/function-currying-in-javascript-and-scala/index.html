@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>函数的Currying (Javascript 和 Scala) - netwjx 混乱与有序</title>
+  <meta name="author" content="netwjx"/>
+  
+  <meta name="description" content="Currying或者Curry, 中文有翻译成科里化. 我最早了解它是在一篇讲Groovy中函数式编程的文章中, 之后又在Python中遇到同样的东西. 最近在看Scala的介绍时又看到了, 而且发现Scala设计的明显更好, 然后就成了这篇文章, &hellip;"/>
+  
+  <meta name="keywords" content="Javascript, Memo, Scala"/>
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True"/>
+  <meta name="MobileOptimized" content="320"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  
+  <link rel="canonical" href="http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/"/>
+  <link href="/favicon.png" rel="icon"/>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"/>
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="netwjx" type="application/atom+xml"/>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">netwjx</a></h1>
+  
+    <h2>混乱与有序</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="订阅Feed">Feed</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:netwjx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="搜索"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/categories/">分类</a></li>
+  <li><a href="/blog/archives">存档</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">函数的Currying (Javascript 和 Scala)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-05T13:52:00+08:00" pubdate data-updated="true">2012-12-05</time>
+        
+         | <a href="#comments">评论</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Currying或者Curry, 中文有翻译成<a href="http://book.51cto.com/art/200806/77578.htm">科里化</a>. 我最早了解它是在一篇讲<a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">Groovy中函数式编程</a>的文章中, 之后又在<a href="http://www.python.org/">Python</a>中<a href="http://code.activestate.com/recipes/52549/">遇到同样的东西</a>. 最近在看<a href="http://www.scala-lang.org/">Scala</a>的介绍时<a href="http://www.scala-lang.org/node/135">又看到了</a>, 而且发现<a href="http://www.scala-lang.org/">Scala</a>设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力<a href="http://www.nafine.com/Work_View.php?id=271">奇强</a><sup>-<sup>.</sup></sup></p>
+
+<p>Currying是<a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">函数式编程</a>中一种<a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">高阶函数</a>的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似<a href="https://www.google.com/search?q=builder+pattern">Builder模式</a>, 一般译作构建器模式 建造者模式.</p>
+
+<p>Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 你可以把这个过程想象成调用一个参数很多的函数.</p>
+
+<p>Javascript中完全可以按照传统OO的方式实现Builder模式, 但使用Currying更轻量级 简单, 考虑下面的代码:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">func</span><span class="p">(</span><span class="nx">v</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">n</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>执行输出</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span>
+</span><span class='line'><span class="mi">3</span><span class="p">,</span><span class="mi">6</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>modN函数有2个参数, 示例中可以同时提供所有的参数, 当然这是相当理想的情况. 实际可能不同的参数在不同的阶段提供:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">];</span>  <span class="c1">// 提供相关参数</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="c1">// 提供相关参数</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">x</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这种方式需要有一个变量用来保存参数, 而如果使用Currying可以这样:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">curry</span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">modN</span><span class="p">.</span><span class="nx">curry</span><span class="p">(</span><span class="mi">3</span><span class="p">)));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>根据需要可以<code>curry()</code>多个参数或<code>curry()</code>多次. 上文中使用的<code>curry</code>函数的实现:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">curry</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">p</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">concat</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是最轻量级 最简单的实现方式, 深入挖掘Javascript语言的表达力应该还会出现更巧妙的设计.</p>
+
+<h2>Currying的来由</h2>
+
+<p>考虑体积计算公式<code>体积 = 长 x 宽 x 高</code>, 假设已知长为10, 那么这个公式就变成了<code>体积 = 10 x 宽 x 高</code>, 进一步已知宽为7, 那么公式就变为<code>体积 = 10 x 7 x 高</code>, 这种转换即Currying.</p>
+
+<p>这是最通俗的描述, 比较正式的可以参考<a href="http://www.wikipedia.org/">维基百科</a>的<a href="http://en.wikipedia.org/wiki/Currying">Currying</a>词条.</p>
+
+<h2>Scala语言中的Currying</h2>
+
+<p>之所以要额外提<a href="http://www.scala-lang.org/">Scala</a>, 是因为它是原生支持Currying的语言, 相对比通过类库支持能提供更巧妙的语法, 参见下面的代码:</p>
+
+<figure class='code'><figcaption><span>A Tour of Scala: Currying </span><a href='http://www.scala-lang.org/node/135'>来源</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">CurryTest</span> <span class="k">extends</span> <span class="nc">Application</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 这种声明就是支持Currying的函数, 每个参数用 ( ) 分隔开</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">modN</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">((</span><span class="n">x</span> <span class="o">%</span> <span class="n">n</span><span class="o">)</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 参数p是有1个Int类型参数的函数, 返回Boolean类型</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">filter</span><span class="o">(</span><span class="n">xs</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">p</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Boolean</span><span class="o">)</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">isEmpty</span><span class="o">)</span> <span class="n">xs</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">p</span><span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">head</span><span class="o">))</span> <span class="n">xs</span><span class="o">.</span><span class="n">head</span> <span class="o">::</span> <span class="n">filter</span><span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">tail</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">else</span> <span class="n">filter</span><span class="o">(</span><span class="n">xs</span><span class="o">.</span><span class="n">tail</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">val</span> <span class="n">nums</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// modN2引用的是包含1个Int类型参数, 并返回Boolean类型的函数, 结尾的下划线是Scala中的语法</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">modN2</span> <span class="k">=</span> <span class="n">modN</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span><span class="k">_</span>
+</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="n">filter</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">modN2</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 不需要赋值的就不需要结尾的下划线了</span>
+</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="n">filter</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">modN</span><span class="o">(</span><span class="mi">3</span><span class="o">)))</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述代码只是加了额外的注释, 调整了下顺序, 和来源中的代码等价.</p>
+
+<p>最重要的, <a href="http://www.scala-lang.org/">Scala</a>是静态类型语言, 开发环境可以提供每次<code>Currying</code>之后的<strong>函数提示信息</strong>, 并能够做<strong>编译时检查</strong>, 而<a href="http://groovy.codehaus.org/">Groovy</a>, <a href="http://www.python.org/">Python</a>, Javascript只能依赖约定, 错误会在运行时发生, 必须有其它的措施确保同步修改关联的代码.</p>
+
+<h2>偏函数 Partial function</h2>
+
+<p>和Currying很像, 只是另外一种更灵活的语法, 可以不按照参数顺序提供参数, 比如Scala的示例代码:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">i</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">j</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
+</span><span class='line'><span class="k">val</span> <span class="n">add5</span> <span class="k">=</span> <span class="n">add</span><span class="o">(</span><span class="k">_:</span> <span class="kt">Int</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+</span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">add5</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考[Wikipedia][]的<a href="http://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application">Contrast with partial function application</a> 和 <a href="http://en.wikipedia.org/wiki/Partial_function">Partial function</a></p>
+
+<h2>Javascript中更常见的传递大量参数的方式</h2>
+
+<p>Javascript是动态语言, 开发环境无法提供太多提示信息, 上文提到的Currying更适合一些比较稳定的, 不经常变动的API.</p>
+
+<p>实际项目中如果函数参数很多, 并且可能在不同的地方提供参数, 则会使用参数对象的方式:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">opt</span><span class="p">.</span><span class="nx">num</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">num</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">opt</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">x</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">x</span> <span class="o">%</span> <span class="nx">opt</span><span class="p">.</span><span class="nx">num</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">opt2</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">num</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+</span><span class='line'>    <span class="nx">opt3</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">num</span><span class="o">:</span> <span class="mi">3</span> <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">opt2</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt2</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">opt3</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt3</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个看起来和Builder模式十分相像, 参数都提供有默认值, <code>num</code>和<code>x</code>可以使用更有意义的名称以使阅读性更好一些, 但也付出了不少编码工作.</p>
+
+<p>从<a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">Firefox 2.0</a>开始支持<strong>解构赋值</strong><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29">New in JavaScript 1.7: Destructuring assignment</a>, 这个特性可以让实现<code>modN</code>少了一些纠结:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">opt</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="p">{</span> <span class="nx">num</span><span class="p">,</span> <span class="nx">x</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">opt</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">num</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">num</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>原文中还有解构赋值的很多<a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Looping_across_values_in_an_array_of_objects">高级用法</a>, 但是到目前为之还没看到其它浏览器提供支持, 也没有进入ECMAScript标准, 只能在比如Firefox扩展开发时爽爽.</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="http://www.cnblogs.com/fox23/archive/2009/10/22/intro-to-Lambda-calculus-and-currying.html">Lambda演算与科里化(Currying)</a></li>
+<li><a href="http://book.51cto.com/art/200806/77578.htm">《JavaScript王者归来》第二十二章 科里化（Currying）小节</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">实战 Groovy: 用 curry 过的闭包进行函数式编程</a></li>
+<li><a href="http://code.activestate.com/recipes/52549/">curry &#8211; associating parameters with a function (Python recipe)</a></li>
+<li><a href="http://www.scala-lang.org/node/135">A Tour of Scala: Currying</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">跨越边界: JavaScript 语言特性</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">维基百科 高阶函数 词条</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Currying">维基百科 Currying 词条</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Partial_function">维基百科 Partial function 词条</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29">New in JavaScript 1.7 : Destructuring assignment 解构赋值</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">netwjx</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-05T13:52:00+08:00" pubdate data-updated="true">2012-12-05</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>Javascript</a>, <a class='category' href='/blog/categories/memo/'>Memo</a>, <a class='category' href='/blog/categories/scala/'>Scala</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+  <div id="jiathis_box">
+    <div id="jiathis_style_32x32">
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_kaixin001"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+  </div>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/" title="Previous Post: Dropbox, Stack Overflow 和 Ruby on Rails 杂念">&laquo; Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a>
+      
+      
+    </p>
+
+  </footer>
+</article>
+
+  <section>
+    <h1><a name="comments"></a>评论</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>近期日志</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/">函数的Currying (Javascript 和 Scala)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/04/javascript-async-load/">Javascript异步加载</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/12/buy-notebook-memo/">笔记本购买备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/01/set-location-is-invalid-in-firefox/">在Firefox下设置location不生效</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/02/auto-run-and-powerdown/">自动运行和关机批处理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/26/about-pm2-dot-5/">关于PM2.5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/12/java-development-tips-in-eclipse-2/">在Eclipse中的Java开发技巧(2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+    <h1 class="dsq-widget-title">近期评论</h1>
+	<div id="recentcomments" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/recent_comments_widget.js?num_items=7&hide_avatars=1&avatar_size=32&excerpt_length=100"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+<section>
+    <h1 class="dsq-widget-title">热门话题</h1>
+	<div id="popularthreads" class="dsq-widget">
+		<script type="text/javascript" src="http://netwjxblog.disqus.com/popular_threads_widget.js?num_items=7"></script>
+	</div>
+	<a href="http://disqus.com/">Powered by Disqus</a>
+</section>
+
+
+
+
+
+
+<section>
+	<h1>我的书签</h1>
+	<div id="delicious"></div>
+	<script type="text/javascript">
+        $(window).on('load',function(){
+            $(document.createElement('script')).attr('type','text/javascript').attr('src','http://feeds.delicious.com/v2/json/netwjx?count=7&sort=date&callback=renderDeliciousLinks').appendTo('head');
+        });
+	</script>
+	<a href="http://d.me/netwjx">我的书签 &raquo;</a>
+</section>
+
+
+
+<section>
+  <h1>许可</h1>
+  <div id="license"><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/2.5/cn/88x31.png" /></a><br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/cn/">知识共享署名-相同方式共享 2.5</a></div>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - netwjx -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'netwjxblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/';
+        var disqus_url = 'http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

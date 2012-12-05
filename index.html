@@ -9,7 +9,7 @@
   <title>netwjx 混乱与有序</title>
   <meta name="author" content="netwjx"/>
   
-  <meta name="description" content="它们有什么联系? 其实没什么特别的联系, 所以是杂念, 没什么头绪, 就是想到了, 我一个个说来. Dropbox的故事 Dropbox是很出名的网盘服务, 也可以叫它云端存储服务, 它的客户端能够自动同步多个电脑间的文件夹, 当然这个功能在现在十分常见了, 只是在他出现之前, &hellip;"/>
+  <meta name="description" content="Currying或者Curry, 中文有翻译成科里化. 我最早了解它是在一篇讲Groovy中函数式编程的文章中, 之后又在Python中遇到同样的东西. 最近在看Scala的介绍时又看到了, 而且发现Scala设计的明显更好, 然后就成了这篇文章, &hellip;"/>
   
   
 
@@ -72,6 +72,111 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/">函数的Currying (Javascript 和 Scala)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-05T13:52:00+08:00" pubdate data-updated="true">2012-12-05</time>
+        
+         | <a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/#comments">评论</a><a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/#disqus_thread" class="comment-count"></a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Currying或者Curry, 中文有翻译成<a href="http://book.51cto.com/art/200806/77578.htm">科里化</a>. 我最早了解它是在一篇讲<a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">Groovy中函数式编程</a>的文章中, 之后又在<a href="http://www.python.org/">Python</a>中<a href="http://code.activestate.com/recipes/52549/">遇到同样的东西</a>. 最近在看<a href="http://www.scala-lang.org/">Scala</a>的介绍时<a href="http://www.scala-lang.org/node/135">又看到了</a>, 而且发现<a href="http://www.scala-lang.org/">Scala</a>设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力<a href="http://www.nafine.com/Work_View.php?id=271">奇强</a><sup>-<sup>.</sup></sup></p>
+
+<p>Currying是<a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">函数式编程</a>中一种<a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">高阶函数</a>的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似<a href="https://www.google.com/search?q=builder+pattern">Builder模式</a>, 一般译作构建器模式 建造者模式.</p>
+
+<p>Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 你可以把这个过程想象成调用一个参数很多的函数.</p>
+
+<p>Javascript中完全可以按照传统OO的方式实现Builder模式, 但使用Currying更轻量级 简单, 考虑下面的代码:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">func</span><span class="p">(</span><span class="nx">v</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">modN</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">n</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">modN</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+    <footer>
+  
+      <a rel="full-article" href="/blog/2012/12/05/function-currying-in-javascript-and-scala/">继续阅读 &rarr;</a>
+  
+  
+      <a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/#comments">评论</a><a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/#disqus_thread" class="comment-count"></a>
+  
+    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a></h1>
     
     
@@ -112,11 +217,7 @@
 <blockquote><p>下面，我就告诉你，我为什么那么想翻译Paul Graham。</p><p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p><p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html'>我要翻译Paul Graham了</a></cite></footer></blockquote>
 
 
-<p>这就引出了<a href="http://www.paulgraham.com/">Paul Grahm</a>写的书<a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006624">Hackers and Painters: Big Ideas from the Computer Age</a>, 注意英文副标题, 可以直译为<strong>计算机时代的伟大想法</strong>. 这本书的中译版是<a href="http://www.ruanyifeng.com/docs/pg/">黑客与画家</a>, 译者是上面提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>.</p>
 
-<p>这里有一个有趣的故事, <a href="http://www.syncoo.com/why-dropbox-is-more-popular-than-similar-tools.htm">为什么 Dropbox 比其它同类产品更受欢迎?</a> 有趣的在于其中回答这个问题的人中有<a href="http://dropbox.com/">Dropbox</a>的竞争产品 - <a href="http://www.syncplicity.com/">Syncplicity</a>的联合创始人, 其中不乏他的多年思考总结, 以及一些行业的内幕轶事.</p>
-
-<p>这是<a href="http://dropbox.com/">Dropbox</a>的故事.</p>
 
 </div>
   
@@ -523,71 +624,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">在Eclipse中的Java开发技巧(3)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-19T13:29:00+08:00" pubdate data-updated="true">2012-08-19</time>
-        
-         | <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#comments">评论</a><a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#disqus_thread" class="comment-count"></a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>2012-09-10 增加和网友交流发现的很实用的快捷键, 和补充一些快捷键</li>
-</ul>
-
-
-<p>这篇主要是默认设置下的常用的快捷键, 类似vim这类编辑器, 形成一个标准可以带来一些好处, 诸如方便交流, 不需要备份恢复太多自定义配置.</p>
-
-<p>主要挑哪些很实用, 比较容易按到的.</p>
-
-<h2>自动完成</h2>
-
-<p>基本上有语法分析的编辑环境都会有自动完成, 经常的目的是提示类的方法等, Eclipse中自动完成是按<strong>Alt + /</strong>, 重复按可以在几个不同类目切换, 具体可以自己试试.</p>
-
-<p><strong>Alt + Shift + /</strong> 是用于参数提示, 和<strong>Alt + /</strong>效果差不多, 甚至有时能相互通用, 不过这个参数提示比较简单, 只有类型和参数名, 详细的还得在看方法提示时右边出现的说明.</p>
-
-<p><strong>Ctrl + Enter</strong> 这个不是单独使用, 而是在按了<strong>Alt + /</strong>之后使用, 用于修改一个方法调用, 因为按<strong>Enter</strong>将是插入代码. 具体见下图</p>
-
-<p><img src="/i/e/content-assist.png" alt="Content Assist" /></p>
-
-<p>在类一级, 即方法外面按<strong>Alt + /</strong>会提示可重写的方法.</p>
-
-</div>
-  
-    <footer>
-  
-      <a rel="full-article" href="/blog/2012/08/19/java-development-tips-in-eclipse-3/">继续阅读 &rarr;</a>
-  
-  
-      <a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#comments">评论</a><a href="/blog/2012/08/19/java-development-tips-in-eclipse-3/#disqus_thread" class="comment-count"></a>
-  
-    </footer>
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; 上一页</a>
@@ -601,6 +637,10 @@
     <section>
   <h1>近期日志</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/05/function-currying-in-javascript-and-scala/">函数的Currying (Javascript 和 Scala)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/11/24/dropbox-stack-overflow-and-ruby-on-rails/">Dropbox, Stack Overflow 和 Ruby on Rails 杂念</a>
@@ -636,10 +676,6 @@
     
       <li class="post">
         <a href="/blog/2012/07/31/java-development-tips-in-eclipse-1/">在Eclipse中的Java开发技巧(1)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/29/batch-delete-catch-notes-bookmarklet/">批量删除Catch.com笔记的小工具</a>
       </li>
     
   </ul>

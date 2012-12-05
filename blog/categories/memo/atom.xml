@@ -3,7 +3,7 @@
   <title><![CDATA[类别: Memo | netwjx]]></title>
   <link href="http://netwjx.github.com/blog/categories/memo/atom.xml" rel="self"/>
   <link href="http://netwjx.github.com/"/>
-  <updated>2012-12-03T17:16:12+08:00</updated>
+  <updated>2012-12-05T22:23:08+08:00</updated>
   <id>http://netwjx.github.com/</id>
   <author>
     <name><![CDATA[netwjx]]></name>
@@ -14,6 +14,252 @@
   <icon>/favicon.png</icon>
   <subtitle><![CDATA[混乱与有序]]></subtitle>
 
+  
+  <entry>
+    <title type="html"><![CDATA[函数的Currying (Javascript 和 Scala)]]></title>
+    
+      <category term="Javascript" />
+    
+      <category term="Memo" />
+    
+      <category term="Scala" />
+    
+    <link href="http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/"/>
+    <author>
+      <name><![CDATA[netwjx]]></name>
+      <uri>http://netwjx.github.com/</uri>
+    </author>
+    <published>2012-12-05T13:52:00+08:00</published>
+    <updated>2012-12-05T13:52:00+08:00</updated>
+    <id>http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala</id>
+    <content type="html"><![CDATA[<p>Currying或者Curry, 中文有翻译成<a href="http://book.51cto.com/art/200806/77578.htm">科里化</a>. 我最早了解它是在一篇讲<a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">Groovy中函数式编程</a>的文章中, 之后又在<a href="http://www.python.org/">Python</a>中<a href="http://code.activestate.com/recipes/52549/">遇到同样的东西</a>. 最近在看<a href="http://www.scala-lang.org/">Scala</a>的介绍时<a href="http://www.scala-lang.org/node/135">又看到了</a>, 而且发现<a href="http://www.scala-lang.org/">Scala</a>设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力<a href="http://www.nafine.com/Work_View.php?id=271">奇强</a><sup>-<sup>{%</sup></sup> endraw %}.</p>
+
+<p>Currying是<a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">函数式编程</a>中一种<a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">高阶函数</a>的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似<a href="https://www.google.com/search?q=builder+pattern">Builder模式</a>, 一般译作构建器模式 建造者模式.</p>
+
+<p>Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 你可以把这个过程想象成调用一个参数很多的函数.</p>
+
+<p>Javascript中完全可以按照传统OO的方式实现Builder模式, 但使用Currying更轻量级 简单, 考虑下面的代码:</p>
+
+<p>``` js
+function filter(list, func) {</p>
+
+<pre><code>var ret = [];
+for (var i = 0; i &lt; list.length; i++) {
+    var v = list[i];
+    if (func(v)) {
+        ret.push(v);
+    }
+}
+return ret;
+</code></pre>
+
+<p>}</p>
+
+<p>function modN(n, x) {</p>
+
+<pre><code>return x % n === 0;
+</code></pre>
+
+<p>}</p>
+
+<p>var nums = [1, 2, 3, 4, 5, 6, 7, 8];</p>
+
+<p>console.log(filter(nums, function(x) {</p>
+
+<pre><code>return modN(2, x);
+</code></pre>
+
+<p>}));</p>
+
+<p>console.log(filter(nums, function(x) {</p>
+
+<pre><code>return modN(3, x);
+</code></pre>
+
+<p>}));
+```</p>
+
+<!-- more -->
+
+
+<p>执行输出</p>
+
+<p><code>
+2,4,6,8
+3,6
+</code></p>
+
+<p>modN函数有2个参数, 示例中可以同时提供所有的参数, 当然这是相当理想的情况. 实际可能不同的参数在不同的阶段提供:</p>
+
+<p>``` js
+var p = [2];  // 提供相关参数
+console.log(filter(nums, function(x) {</p>
+
+<pre><code>p[1] = x;
+return modN.apply(this, p);
+</code></pre>
+
+<p>}));</p>
+
+<p>p[0] = 3;  // 提供相关参数
+console.log(filter(nums, function(x) {</p>
+
+<pre><code>p[1] = x
+return modN.apply(this, p);
+</code></pre>
+
+<p>}));
+```</p>
+
+<p>这种方式需要有一个变量用来保存参数, 而如果使用Currying可以这样:</p>
+
+<p><code>js
+console.log(filter(nums, modN.curry(2)));
+console.log(filter(nums, modN.curry(3)));
+</code></p>
+
+<p>根据需要可以<code>curry()</code>多个参数或<code>curry()</code>多次. 上文中使用的<code>curry</code>函数的实现:</p>
+
+<p>``` js
+Function.prototype.curry = function() {</p>
+
+<pre><code>var func = this,
+    p = Array.prototype.slice.call(arguments, 0);
+return function() {
+    return func.apply(this, p.concat.apply(p, arguments));
+};
+</code></pre>
+
+<p>};
+```</p>
+
+<p>这是最轻量级 最简单的实现方式, 深入挖掘Javascript语言的表达力应该还会出现更巧妙的设计.</p>
+
+<h2>Currying的来由</h2>
+
+<p>考虑体积计算公式<code>体积 = 长 x 宽 x 高</code>, 假设已知长为10, 那么这个公式就变成了<code>体积 = 10 x 宽 x 高</code>, 进一步已知宽为7, 那么公式就变为<code>体积 = 10 x 7 x 高</code>, 这种转换即Currying.</p>
+
+<p>这是最通俗的描述, 比较正式的可以参考<a href="http://www.wikipedia.org/">维基百科</a>的<a href="http://en.wikipedia.org/wiki/Currying">Currying</a>词条.</p>
+
+<h2>Scala语言中的Currying</h2>
+
+<p>之所以要额外提<a href="http://www.scala-lang.org/">Scala</a>, 是因为它是原生支持Currying的语言, 相对比通过类库支持能提供更巧妙的语法, 参见下面的代码:</p>
+
+<p>``` scala A Tour of Scala: Currying http://www.scala-lang.org/node/135 来源
+object CurryTest extends Application {</p>
+
+<p>  // 这种声明就是支持Currying的函数, 每个参数用 ( ) 分隔开
+  def modN(n: Int)(x: Int) = ((x % n) == 0)</p>
+
+<p>  // 参数p是有1个Int类型参数的函数, 返回Boolean类型
+  def filter(xs: List[Int], p: Int => Boolean): List[Int] =</p>
+
+<pre><code>if (xs.isEmpty) xs
+else if (p(xs.head)) xs.head :: filter(xs.tail, p)
+else filter(xs.tail, p)
+</code></pre>
+
+<p>  val nums = List(1, 2, 3, 4, 5, 6, 7, 8)</p>
+
+<p>  // modN2引用的是包含1个Int类型参数, 并返回Boolean类型的函数, 结尾的下划线是Scala中的语法
+  val modN2 = modN(2)_
+  println(filter(nums, modN2))</p>
+
+<p>  // 不需要赋值的就不需要结尾的下划线了
+  println(filter(nums, modN(3)))
+}
+```</p>
+
+<p>上述代码只是加了额外的注释, 调整了下顺序, 和来源中的代码等价.</p>
+
+<p>最重要的, <a href="http://www.scala-lang.org/">Scala</a>是静态类型语言, 开发环境可以提供每次<code>Currying</code>之后的<strong>函数提示信息</strong>, 并能够做<strong>编译时检查</strong>, 而<a href="http://groovy.codehaus.org/">Groovy</a>, <a href="http://www.python.org/">Python</a>, Javascript只能依赖约定, 错误会在运行时发生, 必须有其它的措施确保同步修改关联的代码.</p>
+
+<h2>偏函数 Partial function</h2>
+
+<p>和Currying很像, 只是另外一种更灵活的语法, 可以不按照参数顺序提供参数, 比如Scala的示例代码:</p>
+
+<p><code>scala
+def add(i: Int, j: Int) = i + j
+val add5 = add(_: Int, 5)
+println(add5(2))
+</code></p>
+
+<p>参考[Wikipedia][]的<a href="http://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application">Contrast with partial function application</a> 和 <a href="http://en.wikipedia.org/wiki/Partial_function">Partial function</a></p>
+
+<h2>Javascript中更常见的传递大量参数的方式</h2>
+
+<p>Javascript是动态语言, 开发环境无法提供太多提示信息, 上文提到的Currying更适合一些比较稳定的, 不经常变动的API.</p>
+
+<p>实际项目中如果函数参数很多, 并且可能在不同的地方提供参数, 则会使用参数对象的方式:</p>
+
+<p>``` js
+function modN(opt) {</p>
+
+<pre><code>opt.num = opt.num || 1;
+opt.x = opt.x || 1;
+return opt.x % opt.num === 0;
+</code></pre>
+
+<p>}</p>
+
+<p>var opt2 = { num: 2 },</p>
+
+<pre><code>opt3 = { num: 3 };
+</code></pre>
+
+<p>console.log(filter(nums, function(x) {</p>
+
+<pre><code>opt2.x = x;
+return modN(opt2);
+</code></pre>
+
+<p>}));</p>
+
+<p>console.log(filter(nums, function(x) {</p>
+
+<pre><code>opt3.x = x;
+return modN(opt3);
+</code></pre>
+
+<p>}));
+```</p>
+
+<p>这个看起来和Builder模式十分相像, 参数都提供有默认值, <code>num</code>和<code>x</code>可以使用更有意义的名称以使阅读性更好一些, 但也付出了不少编码工作.</p>
+
+<p>从<a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">Firefox 2.0</a>开始支持<strong>解构赋值</strong><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29">New in JavaScript 1.7: Destructuring assignment</a>, 这个特性可以让实现<code>modN</code>少了一些纠结:</p>
+
+<p>``` js
+function modN(opt) {</p>
+
+<pre><code>var { num, x } = opt;
+num = num || 1;
+x = x || 1;
+return x % num === 0;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>原文中还有解构赋值的很多<a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Looping_across_values_in_an_array_of_objects">高级用法</a>, 但是到目前为之还没看到其它浏览器提供支持, 也没有进入ECMAScript标准, 只能在比如Firefox扩展开发时爽爽.</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="http://www.cnblogs.com/fox23/archive/2009/10/22/intro-to-Lambda-calculus-and-currying.html">Lambda演算与科里化(Currying)</a></li>
+<li><a href="http://book.51cto.com/art/200806/77578.htm">《JavaScript王者归来》第二十二章 科里化（Currying）小节</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">实战 Groovy: 用 curry 过的闭包进行函数式编程</a></li>
+<li><a href="http://code.activestate.com/recipes/52549/">curry -- associating parameters with a function (Python recipe)</a></li>
+<li><a href="http://www.scala-lang.org/node/135">A Tour of Scala: Currying</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">跨越边界: JavaScript 语言特性</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">维基百科 高阶函数 词条</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Currying">维基百科 Currying 词条</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Partial_function">维基百科 Partial function 词条</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7#Destructuring_assignment_%28Merge_into_own_page.2Fsection%29">New in JavaScript 1.7 : Destructuring assignment 解构赋值</a></li>
+</ul>
+
+
+      <p><a href="http://netwjx.github.com/blog/2012/12/05/function-currying-in-javascript-and-scala/#comments">查看评论</a></p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dropbox, Stack Overflow 和 Ruby on Rails 杂念]]></title>
@@ -42,20 +288,26 @@
 
 <p><a href="http://ycombinator.com/">Y Combinator</a>是一家很有意思的风险投资公司, 它只向最早期的创业团队投资. 而<a href="http://dropbox.com/">Dropbox</a>是它最成功的投资之一.</p>
 
-<p><img class="right" src="http://www.ruanyifeng.com/images/hnp_cover_b.jpg" width="318" title="Hackers and Painters" ></p>
+<p>{% img right http://www.ruanyifeng.com/images/hnp_cover_b.jpg 318 Hackers and Painters %}</p>
 
 <p><a href="http://ycombinator.com/">Y Combinator</a>的创始人是<a href="http://www.paulgraham.com/">Paul Grahm</a>, 被誉为<a href="http://www.programmer.com.cn/11408/">硅谷创业之父</a>, 他曾经从事过程序员的工作. <a href="http://www.ruanyifeng.com/blog/">阮一峰的网络日志</a> <a href="http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html">我要翻译Paul Graham了</a>上面介绍的很不错, 引用首段:</p>
 
-<p><blockquote><p>下面，我就告诉你，我为什么那么想翻译Paul Graham。</p></p><p><p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p></p><p><p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html'>我要翻译Paul Graham了</a></cite></footer></blockquote></p>
+<p>{% blockquote 阮一峰 http://www.ruanyifeng.com/blog/2009/12/i_will_translate_paul_graham.html 我要翻译Paul Graham了 %}
+下面，我就告诉你，我为什么那么想翻译Paul Graham。</p>
+
+<p>他1964年出生于英国，在康奈尔大学读完本科，然后在哈佛大学获得计算机科学博士学位。1995年，他创办了Viaweb，帮助个人用户在网上开店，这是世界上第一个互联网应用程序。1998年夏天，Yahoo!公司收购了Viaweb，收购价约为5000万美元。</p>
+
+<p>此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。
+{% endblockquote %}</p>
+
+<!-- more -->
+
 
 <p>这就引出了<a href="http://www.paulgraham.com/">Paul Grahm</a>写的书<a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006624">Hackers and Painters: Big Ideas from the Computer Age</a>, 注意英文副标题, 可以直译为<strong>计算机时代的伟大想法</strong>. 这本书的中译版是<a href="http://www.ruanyifeng.com/docs/pg/">黑客与画家</a>, 译者是上面提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>.</p>
 
 <p>这里有一个有趣的故事, <a href="http://www.syncoo.com/why-dropbox-is-more-popular-than-similar-tools.htm">为什么 Dropbox 比其它同类产品更受欢迎?</a> 有趣的在于其中回答这个问题的人中有<a href="http://dropbox.com/">Dropbox</a>的竞争产品 - <a href="http://www.syncplicity.com/">Syncplicity</a>的联合创始人, 其中不乏他的多年思考总结, 以及一些行业的内幕轶事.</p>
 
 <p>这是<a href="http://dropbox.com/">Dropbox</a>的故事.</p>
-
-<!-- more -->
-
 
 <h2>Stack Overflow的故事</h2>
 
@@ -77,13 +329,29 @@
 
 <p>除了<a href="https://trello.com/">Trello</a>是免费的外(无广告), 其它的都是免费试用 + 根据套餐按月付费, 提供基于Web和移动平台的客户端.</p>
 
-<p><img class="right" src="http://i260.photobucket.com/albums/ii7/ruanyf/blog/bg2009120201.jpg" width="318" title="软件随想录" ></p>
+<p>{% img right http://i260.photobucket.com/albums/ii7/ruanyf/blog/bg2009120201.jpg 318 软件随想录 %}</p>
 
 <p><a href="http://www.joelonsoftware.com/">Joel Spolsky</a>的个人Blog名字叫<a href="http://www.joelonsoftware.com/">Joel on Software</a>, 他将自己Blog上的一些文章整理到一起, 出了本书叫<a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel on Software</a>, 国内有出中文翻译<a href="http://www.ruanyifeng.com/mjos/">软件随想录</a>, 译者还是上文提到的<a href="http://www.ruanyifeng.com/blog/">阮一峰</a>, <a href="http://www.ruanyifeng.com/mjos/">点击这里</a>进去可以看到部分篇章, 里面讨论了软件开发中很多有趣的话题.</p>
 
 <p>这里引用一段<a href="http://www.joelonsoftware.com/">Joel Spolsky</a>的介绍:</p>
 
-<p><blockquote><p>Joel Spolsky（乔尔•斯波尔斯基）是一个世界闻名的软件开发流程专家。</p></p><p><p>他的网站“Joel谈软件”在全世界程序员中非常流行，被译成了30多种语言。</p></p><p><p>作为纽约的Fog Creek Software公司的创始人，他开发了FogBugz软件，这是一个在软件开发团队中非常流行的项目管理系统。</p></p><p><p>Joel曾经在微软公司工作，是Excel开发团队的一员，他设计了VBA（Excel的宏语言）。他还曾在Juno Online Services公司工作，开发了几百万用户使用的互联网客户端。</p></p><p><p>他已经出版了三本书：User Interface Design for Programmers（《程序员之用户界面设计》，Apress, 2001），《Joel谈软件》（Joel on Software, Apress, 2004），以及Smart and Gets Things Done（《巧妙完成工作》，Apress, 2007）。</p></p><p><p>他还是The Best Software Writing I（《最佳软件文选（第一辑）》，Apress, 2005）的编辑。</p></p><p><p>Joel从耶鲁大学获得计算机科学本科学位。</p></p><p><p>他曾在以色列国防军（Israeli Defense Forces）中服伞兵役，并且是以色列哈纳顿集体农场（Kibbutz Hanaton）的共同创始人之一。</p><footer><strong>阮一峰</strong> <cite><a href='http://www.ruanyifeng.com/blog/2008/10/i_will_translate_more_joel_on_software.html'>我要翻译《Joel on Software》了！</a></cite></footer></blockquote></p>
+<p>{% blockquote 阮一峰 http://www.ruanyifeng.com/blog/2008/10/i_will_translate_more_joel_on_software.html 我要翻译《Joel on Software》了！ %}
+Joel Spolsky（乔尔•斯波尔斯基）是一个世界闻名的软件开发流程专家。</p>
+
+<p>他的网站“Joel谈软件”在全世界程序员中非常流行，被译成了30多种语言。</p>
+
+<p>作为纽约的Fog Creek Software公司的创始人，他开发了FogBugz软件，这是一个在软件开发团队中非常流行的项目管理系统。</p>
+
+<p>Joel曾经在微软公司工作，是Excel开发团队的一员，他设计了VBA（Excel的宏语言）。他还曾在Juno Online Services公司工作，开发了几百万用户使用的互联网客户端。</p>
+
+<p>他已经出版了三本书：User Interface Design for Programmers（《程序员之用户界面设计》，Apress, 2001），《Joel谈软件》（Joel on Software, Apress, 2004），以及Smart and Gets Things Done（《巧妙完成工作》，Apress, 2007）。</p>
+
+<p>他还是The Best Software Writing I（《最佳软件文选（第一辑）》，Apress, 2005）的编辑。</p>
+
+<p>Joel从耶鲁大学获得计算机科学本科学位。</p>
+
+<p>他曾在以色列国防军（Israeli Defense Forces）中服伞兵役，并且是以色列哈纳顿集体农场（Kibbutz Hanaton）的共同创始人之一。
+{% endblockquote %}</p>
 
 <p>这是<a href="http://stackoverflow.com/">Stack Overflow</a>的故事.</p>
 
@@ -93,11 +361,13 @@
 
 <p>在之后的多年中我还陆续接触过<a href="http://groovy.codehaus.org/">Groovy</a> <a href="http://www.djangoproject.com/">Django</a> <a href="http://www.web2py.com/">web2py</a> <a href="http://www.playframework.org/">Apache Play</a> <a href="http://www.asp.net/mvc">ASP.Net MVC</a>, 它们或多或少都能看到<a href="http://rubyonrails.org/">Ruby on Rails</a>的影子.</p>
 
-<p><img class="right" src="http://37signals.com/images/front-cover.png" width="318" title="REWORK: The new business book from 37signals." ></p>
+<p>{% img right http://37signals.com/images/front-cover.png 318 REWORK: The new business book from 37signals. %}</p>
 
 <p><a href="http://rubyonrails.org/">Ruby on Rails</a>的作者是<a href="http://david.heinemeierhansson.com/">David Heinemeier Hansson</a>, 以下是他自己的简介, 我简单翻译成中文:</p>
 
-<p><blockquote><p>我是Ruby on Rails的作者, 37signals的合伙人, 纽约时报(NYT)畅销书作家, 公开演说家, 业余摄影师, 和赛车手.</p><footer><strong>David Heinemeier Hansson</strong> <cite><a href='http://david.heinemeierhansson.com/'>David Heinemeier Hansson</a></cite></footer></blockquote></p>
+<p>{% blockquote David Heinemeier Hansson http://david.heinemeierhansson.com/ David Heinemeier Hansson %}
+我是Ruby on Rails的作者, 37signals的合伙人, 纽约时报(NYT)畅销书作家, 公开演说家, 业余摄影师, 和赛车手.
+{% endblockquote %}</p>
 
 <p>这里畅销书指的是<a href="http://37signals.com/rework">Rework</a>, 除了<a href="http://www.nytimes.com/">纽约时报(NYT)</a>外还有<a href="http://wsj.com/">华尔街日报(WSJ)</a>和<a href="http://www.thesundaytimes.co.uk/">The Sunday Times</a>, 由<a href="http://37signals.com/svn/writers/jf">Jason Fried</a>和<a href="http://david.heinemeierhansson.com/">David Heinemeier Hansson</a>合著, 封面是个揉了的纸团, 豆瓣网有<a href="http://book.douban.com/subject/5320866/">Rework</a>的中文简介.</p>
 
@@ -517,7 +787,7 @@
 
 上述所有尝试的代码示例:
 
-<iframe style="width: 100%; height: 510px" src="http://jsfiddle.net/sLDmC/69/embedded/js,resources,html,css,result/light/"></iframe>
+{% jsfiddle sLDmC/69 default default 510px %}
 
 -   所有`iframe`加载的页面都在这一个里面, 根据不同的Url Query执行不同的代码.
 -   `openWindow.`表示重定向的是按钮所在窗口.
@@ -534,7 +804,7 @@
 
 想想上面代码有些怪怪的就是, 先从DOM树中移除了`iframe`, 如果想办法调整一下移除和重定向的顺序, 就有了下面的示例:
 
-<iframe style="width: 100%; height: 510px" src="http://jsfiddle.net/sLDmC/68/embedded/js,resources,html,css,result/light/"></iframe>
+{% jsfiddle sLDmC/68 default default 510px %}
 
 可以看到所有的重定向都成功了.
 
@@ -560,7 +830,7 @@
 
 对于已加载页面的则正常, 例子:
 
-<iframe style="width: 100%; height: 370px" src="http://jsfiddle.net/gQvmx/13/embedded/js,resources,html,css,result/light/"></iframe>
+{% jsfiddle gQvmx/13 default default 370px %}
 
 
       <p><a href="http://netwjx.github.com/blog/2012/10/01/set-location-is-invalid-in-firefox/#comments">查看评论</a></p>]]></content>
@@ -699,7 +969,7 @@
 
 <p>2001-2006年卫星图片显示的全球PM2.5均值</p>
 
-<p><img src="http://songshuhui.net/wp-content/uploads/2011/08/483910main1_Global-PM2.5-map-670-600x300.jpg" width="618" height="309" title="2001-2006年卫星图片显示的全球PM2.5均值" ></p>
+<p>{% img http://songshuhui.net/wp-content/uploads/2011/08/483910main1_Global-PM2.5-map-670-600x300.jpg 618 309 2001-2006年卫星图片显示的全球PM2.5均值 %}</p>
 
 <p>上图来自 <a href="http://www.nasa.gov/topics/earth/features/health-sapping.html">New Map Offers a Global View of Health-Sapping Air Pollution</a></p>
 
@@ -780,113 +1050,6 @@
 
 
       <p><a href="http://netwjx.github.com/blog/2012/08/26/about-pm2-dot-5/#comments">查看评论</a></p>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[移动电源备忘]]></title>
-    
-      <category term="Memo" />
-    
-      <category term="Portable" />
-    
-      <category term="Power" />
-    
-    <link href="http://netwjx.github.com/blog/2012/07/19/portable-power-memo/"/>
-    <author>
-      <name><![CDATA[netwjx]]></name>
-      <uri>http://netwjx.github.com/</uri>
-    </author>
-    <published>2012-07-19T21:17:00+08:00</published>
-    <updated>2012-07-19T21:17:00+08:00</updated>
-    <id>http://netwjx.github.com/blog/2012/07/19/portable-power-memo</id>
-    <content type="html"><![CDATA[<p>买了移动电源之后就计划写点关于移动电源的事, 翻看todo的时候才想起来该把这个补上.</p>
-
-<p>因为有2个手机和NDS, 手机一个是之前提过的黑莓8310, 另外一个是小米手机, 而平时玩小米手机时间挺多, 再加上临近过年, 要回家, 路上肯定会玩手机, 很可能电力不足.</p>
-
-<p>在淘宝上搜移动电源的话, 品牌主要是<a href="http://www.yoobao.com/">羽博</a>和<a href="http://www.pisen.com.cn/">品胜</a>的, 外观时尚, 体积和电容量给设备充一次是没问题.</p>
-
-<p>在电玩网站发现还有<a href="http://www.powerunite.com.cn/">联力众(续航大师)</a>, <a href="http://www.sino-ele.cn/">西诺电子</a>, <a href="http://www.tposchina.com/">TPOS</a>, <a href="http://www.fanmei.net/">微发</a>, 因为是给电玩充电的, 所以电容量都比较大, 相应体积重量也提高了.</p>
-
-<p>另外还有淘宝聚划算和淘宝试用中心还有一些我感觉很冷门的品牌, 如力杰, 还是做时尚外观, 电容量一般充一次没问题.</p>
-
-<p>移动电源目前都是锂电池, 因为锂电池有可能发生爆炸, 所以我专门找了些关于锂电池拆机的评测, 主要在电玩网站上有, 下面是我根据回忆整理的一些信息.</p>
-
-<!-- more -->
-
-
-<h2>锂电池和聚合物电池</h2>
-
-<p><img class="left" src="http://image.made-in-china.com/2f0j00QMbtBfNRaIqk/Li-ion-Battery-Cylinder-18650-18490-17650-14500-.jpg" width="260" title="18650锂电芯" alt="18650锂电芯"></p>
-
-<p><strong>锂电池</strong> 指的是传统的锂离子电池, 一般移动电源中使用的锂电池是18650圆柱形锂电芯, 18650的意思是18mm直径, 65mm高度的圆柱形.</p>
-
-<p>羽博和品胜的移动电源使用的是这个电芯, 多数笔记本也使用的是这样的电池.</p>
-
-<p>在高温中工作是一定会爆炸的, 漏液什么的现在应该几乎见不到了.</p>
-
-<hr />
-
-<p><img class="right" src="http://i05.c.aliimg.com/img/ibank/2011/502/186/449681205_886818038.jpg" width="260" title="ATL聚合物电芯" alt="ATL聚合物电芯"></p>
-
-<p><strong>聚合物电池</strong> 指的是聚合物锂离子电池, 还是锂电池, 只是一般聚合物电池的特性可以做成片状, 现在新的手机哪些高容量电池都是这种的. 而且聚合物电池不会爆炸,</p>
-
-<p>电玩网站提到的移动电源基本都使用的是ATL电芯.</p>
-
-<p>我看过一个视频是把电池放下面点火的铁盘上加热, 最后膨胀, 冒烟, 但是没有爆炸. 对照视频中的锂离子电池在加热到一定程度就爆炸, 电池残骸飞出去了.</p>
-
-<h2>移动电源的电容量</h2>
-
-<p>电池的电容量一般是mhA标注, 1000mhA的意思是以1000mA电流, 电池的额定电压放电, 能持续放电1小时.</p>
-
-<p>考虑电容量不能简单的除以现在电池的容量, 应按照放电时间来计算是比较靠谱的.</p>
-
-<p>比如我的小米手机充电器的放电是5V 1A, 充满1930mhA的小米手机电池, 需要2小时40分钟左右.</p>
-
-<p>我购买的微发移动电源, 电容量是8800mhA, 因为锂电池的放电电压不足5V, 所以会有升压电路. 如果要提供5V 1A的输出, 输出电流可能在1300mhA左右, 因为锂电池会随着持续放电而电压降低, 一般是从4.2V到3.2V, 低于3V会使电芯受损, 所以一般都有过放电保护, 越往后需要的输出电流越多.</p>
-
-<p>使用1300mhA计算, 那么8800mhA以5V 1A输出能持续放电6小时46分钟左右, 用总放电时间除以充满一次点需要的时间, 结果就是2次半左右, 以我实际使用的测试情况来计算也是如此.</p>
-
-<p><blockquote><p></p></p><p><p>简单估算方法: 充满1000mhA的电池, 移动电源需要消耗大概1800mhA的电量.</p></p><p><p></p></blockquote></p>
-
-<h2>移动电源的输出效率</h2>
-
-<p>简单的可以理解为转换效率高能对电池利用的更多, 比如微发8800mhA电源在1A的输出下可以达到97%的输出效率. 一般在90%以上为佳.</p>
-
-<p>这个参数一般看不到, 最好是看看评测, 一般移动电源有一个最佳的放电电流, 能够得到十分高的转换效率, 在这种情况下工作对移动电源利用的最多.</p>
-
-<p>和这个参数关联最大的是移动电源的电路用料, 这个我不是很熟悉, 就是看到微发的拆解中提到钽电容, 可以作为参考.</p>
-
-<h2>接口, 线材, 设计</h2>
-
-<p><img class="right" src="http://image.shutterstock.com/display_pic_with_logo/427411/427411,1277141040,1/stock-photo-usb-mini-usb-and-micro-usb-cable-55662274.jpg" width="300" title="USB, Mini-USB, Micro-USB" alt="USB, Mini-USB, Micro-USB"></p>
-
-<p>移动电源上的接口最好是标准USB口, 大, 牢固, 也很耐用. 一般还有独立的充电接口, 会为了和放电接口区分开而使用不同的接口, 我觉得最好是其它USB接口, 这样比较通用, 比如目前流行的MicroUSB, 以及以前挺流行的MiniUSB. MicroUSB更好点, 它更牢固.</p>
-
-<p>充电线一般有1拖2 + N种转接头, 或者是1拖2固定接口, 我建议用固定接口, 因为转接头可能会有接触不良, 而成为最薄弱的环节.</p>
-
-<p>再者现在很多设备充电线都是USB口, 移动电源的充电线不一定总是能用到, 针对没有USB口充电线的设备买个对应的充电线就行了.</p>
-
-<p>设计其实没什么好说的, 高亮LED用于照明, 接口尽量设计为方便放包中的同时给设备充电为好.</p>
-
-<h2>总结</h2>
-
-<p>以前看的时候羽博和品胜还没有明显能确定是聚合物电芯的移动电源, 现在应该都有了吧, 这个得找具体的评测.</p>
-
-<p>当时我购买的是微发8800mhA的, 但是并不推荐现在仍旧购买这个, 因为现在已经有超过10000mhA的移动电源了.</p>
-
-<p>电容量篇说过如何评估移动电源能充电的次数, 一般越大越重, 体积也越大, 选购应先确定一个理想的电容量范围, 然后就是自己决定外观接口设计, 品牌, 电芯类型这些东西.</p>
-
-<p>电池这个东西是一分钱一分货, 只要不是特别去挑便宜, 一般不会被骗到.</p>
-
-<p>虽然聚合物电池不会爆炸, 但是高温环境电池还是会膨胀, 也会影响到电器性能的, 所以应该减少和避免移动电源和电子设备在高温环境中.</p>
-
-<h3>附</h3>
-
-<p>在找这些资料的时候, 还发现有人自己做移动电源, 用的都是上乘的材料, 主要是外壳看起来比较粗糙, 后来的好很多, 有开淘宝店卖自己做的电源, 有兴趣的可以看看. <a href="http://shop67813373.taobao.com/">小于电源</a></p>
-
-<p>文中图片来自搜索引擎找到的, 懒得自己处理, 上面的水印还在, 不是我可以给做广告啊.</p>
-
-      <p><a href="http://netwjx.github.com/blog/2012/07/19/portable-power-memo/#comments">查看评论</a></p>]]></content>
   </entry>
   
 </feed>
