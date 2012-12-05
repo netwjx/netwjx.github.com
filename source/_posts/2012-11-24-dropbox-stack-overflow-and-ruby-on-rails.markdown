@@ -29,6 +29,7 @@ Dropbox的故事
 此后，他架起了个人网站paulgraham.com，在上面撰写了许许多多关于软件和创业的文章，以深刻的见解和清晰的表达而著称，迅速引起了轰动。2005年，他身体力行，创建了风险投资公司Y Combinator，将自己的理论转化为实践，目前已经资助了80多家创业公司。现在，他是公认的互联网创业权威。
 {% endblockquote %}
 
+<!-- more -->
 
 这就引出了[Paul Grahm][Paul]写的书[Hackers and Painters: Big Ideas from the Computer Age][hackpaint], 注意英文副标题, 可以直译为**计算机时代的伟大想法**. 这本书的中译版是[黑客与画家][], 译者是上面提到的[阮一峰][].
 
@@ -44,7 +45,6 @@ Dropbox的故事
 [阮一峰]: http://www.ruanyifeng.com/blog/
 [Syncplicity]: http://www.syncplicity.com/
 
-<!-- more -->
 
 
 Stack Overflow的故事
