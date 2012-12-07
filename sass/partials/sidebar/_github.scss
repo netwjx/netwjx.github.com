@@ -1,0 +1,16 @@
+#gh_repos {
+  li {
+    clear: both;
+    overflow: hidden;
+    a {
+      font-size: 110%;
+      font-weight: bold;
+      float: left;
+    }
+    p {
+      color: #ccc;
+      font-size: 90%;
+      text-indent: .5em;
+    }
+  }
+}
