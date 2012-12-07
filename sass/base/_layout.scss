@@ -45,10 +45,16 @@ $header-padding-bottom: 1.5em !default;
 
 body {
   -webkit-text-size-adjust: none;
-  max-width: $max-width;
+  //max-width: $max-width;
   position: relative;
-  margin: 0 auto;
-  > header, > nav, > footer, #content > article, #content > div > article, #content > div > section {
+  //margin: 0 auto;
+  > header, > nav, > footer, > div {
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  > header div, > nav div, > footer > p, #content > article, #content > div > article, #content > div > section {
     @extend .group;
     padding-left: $pad-min;
     padding-right: $pad-min;
