@@ -60,8 +60,10 @@ default_asides:
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
 blog_index_asides:
-  - asides/recent_posts.html
+  - asides/tips.html
+  - asides/github.html
   - asides/google_reader.html
+  - asides/recent_posts.html
   - asides/disqus_recent_comments.html
   - asides/delicious.html
   - custom/asides/license.html
@@ -69,15 +71,19 @@ blog_index_asides:
 # post_asides:
 page_asides:
   - asides/recent_posts.html
+  - asides/disqus_recent_comments.html
   - custom/asides/license.html
 
 # ----------------------- #
 #   3rd Party Settings    #
 # ----------------------- #
 
+# Github Ribbon
+github_ribbon: netwjx
+
 # Github repositories
-github_user:
-github_repo_count: 0
+github_user: netwjx
+github_repo_count: 3
 github_show_profile_link: true
 github_skip_forks: true
 
