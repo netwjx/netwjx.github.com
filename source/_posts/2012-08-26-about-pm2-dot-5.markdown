@@ -6,8 +6,6 @@ comments: true
 categories: Live Memo
 ---
 
-<link href="/stylesheets/mytable.css" rel="stylesheet" type="text/css"/>
-
 这里整理了一些关于空气质量主要指标PM2.5的相关资料, 主要参考自[科学松鼠会关于PM2.5相关的文章](http://songshuhui.net/archives/tag/pm2-5), 和[雾谷飞鸿关于空气质量的文章](http://blogs.america.gov/mgck/2012/06/12/pm/), 只是将我认为关键点用简短的话列出来.
 
 -   空气污染主要检测可吸入颗粒物, 臭氧, 二氧化碳, 二氧化硫.
