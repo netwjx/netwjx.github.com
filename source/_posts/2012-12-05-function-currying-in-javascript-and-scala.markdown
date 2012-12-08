@@ -6,7 +6,8 @@ comments: true
 categories: Javascript Scala Memo
 ---
 
-Currying或者Curry, 中文有翻译成[科里化][]. 我最早了解它是在一篇讲[Groovy中函数式编程][Groovy Curry]的文章中, 之后又在[Python][]中[遇到同样的东西][Python Curry]. 最近在看[Scala][]的介绍时[又看到了][Scala Curry], 而且发现[Scala][]设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力[奇强](http://www.nafine.com/Work_View.php?id=271){% raw %}^-^{% endraw %}.
+Currying或者Curry, 中文有翻译成[科里化][]. 我最早了解它是在一篇讲[Groovy中函数式编程][Groovy Curry]的文章中, 之后又在[Python][]中[遇到同样的东西][Python Curry]. 最近在看[Scala][]的介绍时[又看到了][Scala Curry], 而且发现[Scala][]设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力[奇强](http://www.nafine.com/Work_View.php?id=271)&#94;-&#94;.
+
 
 Currying是[函数式编程][跨越边界: JavaScript 语言特性]中一种[高阶函数][wiki 高阶函数]的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似[Builder模式](https://www.google.com/search?q=builder+pattern), 一般译作构建器模式 建造者模式. 
 
