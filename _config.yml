@@ -62,11 +62,11 @@ default_asides:
 blog_index_asides:
   - asides/tips.html
   - asides/github.html
-  - asides/reading.html
   - asides/recent_posts.html
   - asides/disqus_recent_comments.html
   - asides/delicious.html
   - custom/asides/license.html
+  - asides/reading.html
 
 # post_asides:
 page_asides:
