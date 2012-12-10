@@ -8,10 +8,11 @@ categories: Javascript Scala Memo
 
 Currying或者Curry, 中文有翻译成[科里化][]. 我最早了解它是在一篇讲[Groovy中函数式编程][Groovy Curry]的文章中, 之后又在[Python][]中[遇到同样的东西][Python Curry]. 最近在看[Scala][]的介绍时[又看到了][Scala Curry], 而且发现[Scala][]设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力[奇强](http://www.nafine.com/Work_View.php?id=271)&#94;-&#94;.
 
+我不确定把Currying记作[科里化][]是否更容易理解, 所以下文还是依旧使用Currying吧.
 
 Currying是[函数式编程][跨越边界: JavaScript 语言特性]中一种[高阶函数][wiki 高阶函数]的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似[Builder模式](https://www.google.com/search?q=builder+pattern), 一般译作构建器模式 建造者模式. 
 
-Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 你可以把这个过程想象成调用一个参数很多的函数.
+Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 可以把这个过程想象成调用一个参数很多的函数.
 
 Javascript中完全可以按照传统OO的方式实现Builder模式, 但使用Currying更轻量级 简单, 考虑下面的代码:
 
@@ -133,7 +134,36 @@ object CurryTest extends Application {
 偏函数 Partial function
 ------------------------
 
-和Currying很像, 只是另外一种更灵活的语法, 可以不按照参数顺序提供参数, 比如Scala的示例代码:
+可以译作偏函数, 即提供部分参数值的函数, 和Currying很像, 只是另外一种更灵活的语法, 可以不按照参数顺序提供参数.
+
+在[John Resig][]的Blog有一篇[介绍Partial function和Currying的文章][Partial Application in JavaScript], 贴个简单的代码片段:
+
+``` js Partial Application in JavaScript http://ejohn.org/blog/partial-functions-in-javascript/ 代码来源
+  var delay = setTimeout.partial(undefined, 10);
+ 
+  delay(function(){
+    alert( "A call to this function will be temporarily delayed." );
+  });
+```
+
+`partial()`的实现:
+
+``` js Partial Application in JavaScript http://ejohn.org/blog/partial-functions-in-javascript/ 代码来源
+Function.prototype.partial = function(){
+  var fn = this, args = Array.prototype.slice.call(arguments);
+  return function(){
+    var arg = 0;
+    for ( var i = 0; i < args.length && arg < arguments.length; i++ )
+      if ( args[i] === undefined )
+        args[i] = arguments[arg++];
+    return fn.apply(this, args);
+  };
+};
+```
+
+里面还有一个`curry`函数, 基本和上文中的差不多, 有兴趣的可以点[Partial Application in JavaScript][]
+
+[Scala][]也有Partial function的实现, 依旧是静态类型, 示例代码:
 
 ``` scala
 def add(i: Int, j: Int) = i + j
@@ -216,3 +246,5 @@ function modN(opt) {
 [Groovy]: http://groovy.codehaus.org/
 [Python]: http://www.python.org/
 [Firefox]: http://www.mozilla.org/en-US/firefox/fx/#desktop
+[John Resig]: http://ejohn.org/blog/
+[Partial Application in JavaScript]: http://ejohn.org/blog/partial-functions-in-javascript/
