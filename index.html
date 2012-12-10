@@ -97,9 +97,11 @@
 
   <div class="entry-content"><p>Currying或者Curry, 中文有翻译成<a href="http://book.51cto.com/art/200806/77578.htm">科里化</a>. 我最早了解它是在一篇讲<a href="http://www.ibm.com/developerworks/cn/java/j-pg08235/">Groovy中函数式编程</a>的文章中, 之后又在<a href="http://www.python.org/">Python</a>中<a href="http://code.activestate.com/recipes/52549/">遇到同样的东西</a>. 最近在看<a href="http://www.scala-lang.org/">Scala</a>的介绍时<a href="http://www.scala-lang.org/node/135">又看到了</a>, 而且发现<a href="http://www.scala-lang.org/">Scala</a>设计的明显更好, 然后就成了这篇文章, 使用Javascript作为主要语言是因为我使用Javascript的时间更长, 并且Javascript这门语言的表达能力<a href="http://www.nafine.com/Work_View.php?id=271">奇强</a>&#94;-&#94;.</p>
 
+<p>我不确定把Currying记作<a href="http://book.51cto.com/art/200806/77578.htm">科里化</a>是否更容易理解, 所以下文还是依旧使用Currying吧.</p>
+
 <p>Currying是<a href="http://www.ibm.com/developerworks/cn/java/j-cb12196/">函数式编程</a>中一种<a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">高阶函数</a>的典型应用, 如果非要把它对应到传统OO中的话, 那么它类似<a href="https://www.google.com/search?q=builder+pattern">Builder模式</a>, 一般译作构建器模式 建造者模式.</p>
 
-<p>Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 你可以把这个过程想象成调用一个参数很多的函数.</p>
+<p>Builder模式可以简单理解为创建一个复杂的对象需要依赖多个参数, 要提供的参数又依赖于不同的方法, 使用Builder模式让每个方法只关注自己提供的参数, 最终根据全部参数创建出对象来. 对象实例最终是拿来调用的, 可以把这个过程想象成调用一个参数很多的函数.</p>
 
 <p>Javascript中完全可以按照传统OO的方式实现Builder模式, 但使用Currying更轻量级 简单, 考虑下面的代码:</p>
 
